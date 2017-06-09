@@ -7,13 +7,15 @@
 
 DWIDGET_USE_NAMESPACE
 
-class Widget : public DBlurEffectWidget
+class MainFrame : public DBlurEffectWidget
 {
     Q_OBJECT
 
 public:
-    Widget(QWidget *parent = 0);
-    ~Widget();
+    MainFrame(QWidget *parent = 0);
+    ~MainFrame();
+
+    void loadPlugins();
 
 private:
     QHBoxLayout *m_mainLayout;

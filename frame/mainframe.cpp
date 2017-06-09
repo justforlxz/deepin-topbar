@@ -1,6 +1,6 @@
-#include "Widget.h"
+#include "mainframe.h"
 #include "topbar.h"
-#include "XcbMisc.h"
+#include "xcb-misc/XcbMisc.h"
 #include <X11/X.h>
 #include <X11/Xutil.h>
 #include <QApplication>
@@ -8,7 +8,7 @@
 #include <QRect>
 #include <DPlatformWindowHandle>
 
-Widget::Widget(QWidget *parent)
+MainFrame::MainFrame(QWidget *parent)
     : DBlurEffectWidget(parent),
       m_mainLayout(new QHBoxLayout)
 {
@@ -60,7 +60,7 @@ Widget::Widget(QWidget *parent)
     setLayout(m_mainLayout);
 }
 
-Widget::~Widget()
+MainFrame::~MainFrame()
 {
 
 }

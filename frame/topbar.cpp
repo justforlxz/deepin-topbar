@@ -2,9 +2,6 @@
 #include <QLabel>
 #include <QIcon>
 
-
-#include "timewidget.h"
-
 TopBar::TopBar(QWidget *parent) :
     QFrame(parent),
     m_mainLayout(new QHBoxLayout)
@@ -17,9 +14,6 @@ TopBar::TopBar(QWidget *parent) :
     m_mainLayout->addSpacing(2);
     m_mainLayout->addWidget(systemName);
     m_mainLayout->addStretch();
-
-    TimeWidget *timeWidget = new TimeWidget;
-    m_mainLayout->addWidget(timeWidget, 5, Qt::AlignRight);
 
     m_mainLayout->addSpacing(5);
     m_mainLayout->setMargin(0);
