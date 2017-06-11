@@ -22,3 +22,6 @@ build*/
 
 # vim tmp file
 *.swp
+
+#bin file
+dde-topbar
