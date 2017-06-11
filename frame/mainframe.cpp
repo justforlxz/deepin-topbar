@@ -28,7 +28,38 @@ MainFrame::MainFrame(QWidget *parent)
     handle->setBorderWidth(0);
     handle->setEnableSystemResize(false);
 
+    setFixedHeight(TOPHEIGHT);
+
+    m_desktopWidget = QApplication::desktop();
+
+    screenChanged();
+
+//    raise();
+//    activateWindow();
+
+    TopBar *bar = new TopBar;
+    m_mainLayout->addWidget(bar);
+
+    m_mainLayout->setMargin(0);
+    m_mainLayout->setSpacing(0);
+    setLayout(m_mainLayout);
+
+    connect(m_desktopWidget, &QDesktopWidget::resized, this, &MainFrame::screenChanged);
+}
+
+MainFrame::~MainFrame()
+{
+    m_desktopWidget->deleteLater();
+}
+
+void MainFrame::screenChanged()
+{
+    QRect screen = m_desktopWidget->screenGeometry(m_desktopWidget->primaryScreen());
+    resize(screen.width(), TOPHEIGHT);
+    move(screen.x(), 0);
+
     //register type to Dock
+
     XcbMisc * xcb = XcbMisc::instance();
     xcb->set_window_type(winId(), XcbMisc::Dock);
 
@@ -39,7 +70,7 @@ MainFrame::MainFrame(QWidget *parent)
     uint strutStart = 0;
     uint strutEnd = 0;
 
-    const QPoint p(0, 0);
+    const QPoint p(screen.x(), 0);
     const QRect r = QRect(p, size());
 
     orientation = XcbMisc::OrientationTop;
@@ -57,26 +88,4 @@ MainFrame::MainFrame(QWidget *parent)
     xcb_atom_t atoms[1];
     atoms[0] = m_ewmh_connection._NET_WM_WINDOW_TYPE_DESKTOP;
     xcb_ewmh_set_wm_window_type(&m_ewmh_connection, winId(), 1, atoms);
-
-//    raise();
-//    activateWindow();
-
-    move(0, 0);
-
-    QDesktopWidget *desktop = QApplication::desktop();
-    QRect screen = desktop->screenGeometry();
-
-    resize(screen.width(), 25);
-
-    TopBar *bar = new TopBar;
-    m_mainLayout->addWidget(bar);
-
-    m_mainLayout->setMargin(0);
-    m_mainLayout->setSpacing(0);
-    setLayout(m_mainLayout);
-}
-
-MainFrame::~MainFrame()
-{
-
 }
