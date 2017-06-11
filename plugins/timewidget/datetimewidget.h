@@ -1,17 +1,16 @@
 #ifndef DATETIMEWIDGET_H
 #define DATETIMEWIDGET_H
 
-#include <QWidget>
+#include <QLabel>
 
-class DateTimeWidget : public QWidget
+class DateTimeWidget : public QLabel
 {
     Q_OBJECT
 public:
     explicit DateTimeWidget(QWidget *parent = 0);
 
-signals:
-
 public slots:
+    void updateTime();
 };
 
 #endif // DATETIMEWIDGET_H

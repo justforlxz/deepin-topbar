@@ -16,7 +16,7 @@ MainFrame::MainFrame(QWidget *parent)
     : DBlurEffectWidget(parent),
       m_mainLayout(new QHBoxLayout)
 {
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
+    setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
 
     setBlendMode(InWindowBlend);
@@ -27,13 +27,6 @@ MainFrame::MainFrame(QWidget *parent)
     handle->setWindowRadius(0);
     handle->setBorderWidth(0);
     handle->setEnableSystemResize(false);
-
-    move(0, 0);
-
-    QDesktopWidget *desktop = QApplication::desktop();
-    QRect screen = desktop->screenGeometry();
-
-    resize(screen.width(), 20);
 
     //register type to Dock
     XcbMisc * xcb = XcbMisc::instance();
@@ -65,7 +58,15 @@ MainFrame::MainFrame(QWidget *parent)
     atoms[0] = m_ewmh_connection._NET_WM_WINDOW_TYPE_DESKTOP;
     xcb_ewmh_set_wm_window_type(&m_ewmh_connection, winId(), 1, atoms);
 
-    lower();
+//    raise();
+//    activateWindow();
+
+    move(0, 0);
+
+    QDesktopWidget *desktop = QApplication::desktop();
+    QRect screen = desktop->screenGeometry();
+
+    resize(screen.width(), 25);
 
     TopBar *bar = new TopBar;
     m_mainLayout->addWidget(bar);

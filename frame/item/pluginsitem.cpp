@@ -4,6 +4,7 @@
 #include <QDBusPendingReply>
 #include <QDBusObjectPath>
 #include <QPoint>
+#include <QMouseEvent>
 
 PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString &itemKey, QWidget *parent) :
     QWidget(parent),
@@ -89,6 +90,12 @@ const QPoint PluginsItem::popupMarkPoint()
     p += QPoint(r.width() / 2, r.height() + offset);
 
     return p;
+}
+
+void PluginsItem::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::RightButton)
+        return showContextMenu();
 }
 
 void PluginsItem::hidePopup()

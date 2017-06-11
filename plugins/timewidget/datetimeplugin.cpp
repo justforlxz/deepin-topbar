@@ -14,7 +14,7 @@ DateTimePlugin::~DateTimePlugin()
 
 const QString DateTimePlugin::pluginName() const
 {
-    return QString("");
+    return QString("datetime");
 }
 
 void DateTimePlugin::init(PluginProxyInterface *proxyInter)
@@ -26,21 +26,29 @@ void DateTimePlugin::init(PluginProxyInterface *proxyInter)
 
 int DateTimePlugin::itemSortKey(const QString &itemKey)
 {
+    Q_UNUSED(itemKey);
+
     return 0;
 }
 
 QWidget *DateTimePlugin::itemWidget(const QString &itemKey)
 {
+    Q_UNUSED(itemKey);
+
     return m_centralWidget;
 }
 
 QWidget *DateTimePlugin::itemTipsWidget(const QString &itemKey)
 {
+    Q_UNUSED(itemKey);
+
     return m_tips;
 }
 
 const QString DateTimePlugin::itemCommand(const QString &itemKey)
 {
+    Q_UNUSED(itemKey);
+
     return QString("dde-datetime");
 }
 

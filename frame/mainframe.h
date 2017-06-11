@@ -15,8 +15,6 @@ public:
     MainFrame(QWidget *parent = 0);
     ~MainFrame();
 
-    void loadPlugins();
-
 private:
     QHBoxLayout *m_mainLayout;
 };

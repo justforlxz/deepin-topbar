@@ -27,7 +27,7 @@ public:
     const QString itemCommand(const QString &itemKey) override;
     const QString itemContextMenu(const QString &itemKey) override;
 
-    void invokedMenuItem(const QString &itemKey, const QString &menuId, const bool checked);
+    void invokedMenuItem(const QString &itemKey, const QString &menuId, const bool checked) Q_DECL_OVERRIDE;
 
 private:
     PluginProxyInterface *m_proxyInter;

@@ -1,8 +1,12 @@
 #include "pluginscontroller.h"
+#include "pluginsitemcontroller.h"
+#include "pluginloader.h"
 
-PluginsController::PluginsController(QObject *parent) : QObject(parent)
+PluginsController::PluginsController(PluginsItemController *itemControllerInter) :
+    QObject(itemControllerInter),
+    m_itemControllerInter(itemControllerInter)
 {
-
+    QTimer::singleShot(1, this, &PluginsController::startLoader);
 }
 
 void PluginsController::itemAdded(PluginsItemInterface * const itemInter, const QString &itemKey)
@@ -51,6 +55,17 @@ void PluginsController::requestContextMenu(PluginsItemInterface * const itemInte
     Q_ASSERT(item);
 
 
+}
+
+void PluginsController::startLoader()
+{
+    PluginLoader *loader = new PluginLoader(this);
+    connect(loader, &PluginLoader::finished, loader, &PluginLoader::deleteLater, Qt::QueuedConnection);
+    connect(loader, &PluginLoader::pluginFounded, this, &PluginsController::loadPlugin, Qt::QueuedConnection);
+
+    QTimer::singleShot(1, loader, [=]{
+        loader->start(QThread::LowestPriority);
+    });
 }
 
 void PluginsController::loadPlugin(const QString &pluginFile)

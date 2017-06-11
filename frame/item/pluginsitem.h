@@ -2,7 +2,7 @@
 #define PLUGINSITEM_H
 
 #include "../interfaces/pluginsiteminterface.h"
-#include "../dbus/dbusmenumanager.h"
+#include "dbus/dbusmenumanager.h"
 #include <QWidget>
 
 class PluginsItem : public QWidget
@@ -23,6 +23,9 @@ signals:
 public slots:
     void showContextMenu();
     const QPoint popupMarkPoint();
+
+protected:
+    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
 private:
     void hidePopup();

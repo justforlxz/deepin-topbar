@@ -6,21 +6,21 @@
 
 include(../../interfaces/interfaces.pri)
 
-QT       += core gui
+QT        += core gui widgets
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+TEMPLATE   = lib
+CONFIG    += c++11 link_pkgconfig
+TARGET     = $$qtLibraryTarget(datetime)
+DESTDIR    = $$_PRO_FILE_PWD_/../
+DISTFILES += datetime.json
 
-TARGET = TimeWIdget
-TEMPLATE = lib
-CONFIG         += c++11 link_pkgconfig
-
-SOURCES += \
+SOURCES   += \
     datetimewidget.cpp \
     datetimeplugin.cpp
 
-HEADERS  += \
+HEADERS   += \
     datetimewidget.h \
     datetimeplugin.h
 
 target.path = $${PREFIX}/lib/dde-topbar/plugins/
-INSTALLS += target
+INSTALLS   += target

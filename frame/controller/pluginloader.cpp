@@ -2,7 +2,8 @@
 #include <QDir>
 #include <QLibrary>
 
-PluginLoader::PluginLoader(QObject *parent)
+PluginLoader::PluginLoader(QObject *parent) :
+    QThread(parent)
 {
 
 }

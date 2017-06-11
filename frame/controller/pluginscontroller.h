@@ -2,15 +2,17 @@
 #define PLUGINSCONTROLLER_H
 
 #include "../interfaces/pluginproxyinterface.h"
-#include "../item/pluginsitem.h"
+#include "item/pluginsitem.h"
 
 #include <QObject>
+
+class PluginsItemController;
 
 class PluginsController : public QObject, PluginProxyInterface
 {
     Q_OBJECT
 public:
-    explicit PluginsController(QObject *parent = 0);
+    explicit PluginsController(PluginsItemController *itemControllerInter = 0);
 
     // implements PluginProxyInterface
     void itemAdded(PluginsItemInterface * const itemInter, const QString &itemKey);
@@ -23,7 +25,8 @@ signals:
     void pluginItemRemoved(PluginsItem *pluginItem) const;
     void pluginItemUpdated(PluginsItem *pluginItem) const;
 
-public slots:
+private slots:
+    void startLoader();
     void loadPlugin(const QString &pluginFile);
 
 private:
@@ -31,6 +34,7 @@ private:
 
 private:
     QMap<PluginsItemInterface *, QMap<QString, PluginsItem *>> m_pluginList;
+    PluginsItemController *m_itemControllerInter;
 };
 
 #endif // PLUGINSCONTROLLER_H
