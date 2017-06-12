@@ -16,7 +16,7 @@ MainFrame::MainFrame(QWidget *parent)
     : DBlurEffectWidget(parent),
       m_mainLayout(new QHBoxLayout)
 {
-    setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
     setAttribute(Qt::WA_TranslucentBackground);
 
     setBlendMode(InWindowBlend);

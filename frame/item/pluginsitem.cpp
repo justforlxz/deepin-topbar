@@ -64,6 +64,7 @@ void PluginsItem::showContextMenu()
     menuObject.insert("y", QJsonValue(p.y()));
     menuObject.insert("isDockMenu", QJsonValue(true));
     menuObject.insert("menuJsonContent", QJsonValue(menuJson));
+    menuObject.insert("direction", "top");
 
     const QDBusObjectPath path = result.argumentAt(0).value<QDBusObjectPath>();
     DBusMenu *menuInter = new DBusMenu(path.path(), this);
@@ -86,7 +87,7 @@ const QPoint PluginsItem::popupMarkPoint()
     } while (w);
 
     const QRect r = rect();
-    const int offset = 2;
+    const int offset = 4;
     p += QPoint(r.width() / 2, r.height() + offset);
 
     return p;
