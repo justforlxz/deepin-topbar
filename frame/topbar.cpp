@@ -9,7 +9,7 @@ TopBar::TopBar(QWidget *parent) :
 {
     QLabel *systemIcon = new QLabel;
     systemIcon->setPixmap(QIcon::fromTheme("dde").pixmap(20, 20));
-    QLabel *systemName = new QLabel("Deepin 15.4.1");
+    QLabel *systemName = new QLabel("Deepin 15.4");
     m_mainLayout->addSpacing(5);
     m_mainLayout->addWidget(systemIcon);
     m_mainLayout->addSpacing(2);
