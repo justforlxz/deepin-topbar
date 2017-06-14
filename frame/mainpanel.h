@@ -1,16 +1,18 @@
-#ifndef TOPBAR_H
-#define TOPBAR_H
+#ifndef MAINPANEL_H
+#define MAINPANEL_H
 
 #include "controller/pluginsitemcontroller.h"
 #include "item/pluginsitem.h"
-#include <QFrame>
 #include <QHBoxLayout>
+#include <QWidget>
 
-class TopBar : public QFrame
+class MainPanel : public QWidget
 {
     Q_OBJECT
 public:
-    explicit TopBar(QWidget *parent = 0);
+    explicit MainPanel(QWidget *parent = nullptr);
+    void initUI();
+    void initConnect();
 
 private slots:
     void itemInserted(const int index, PluginsItem *item);
@@ -21,4 +23,4 @@ private:
     PluginsItemController *m_itemController;
 };
 
-#endif // TOPBAR_H
+#endif // MAINPANEL_H
