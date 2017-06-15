@@ -12,6 +12,14 @@ public:
     explicit PluginsItem(PluginsItemInterface* const pluginInter, const QString &itemKey, QWidget *parent = 0);
     ~PluginsItem();
 
+    enum ItemType {
+        Indicator,
+        Plugin,
+        DateTime
+    };
+
+    ItemType itemType() const;
+
 private:
     void invokedMenuItem(const QString &itemId, const bool checked);
     const QString contextMenu() const;

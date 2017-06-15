@@ -27,6 +27,16 @@ PluginsItem::~PluginsItem()
 
 }
 
+PluginsItem::ItemType PluginsItem::itemType() const
+{
+    if (m_pluginInter->pluginName() == "indicator")
+        return Indicator;
+    if (m_pluginInter->pluginName() == "datetime")
+        return DateTime;
+
+    return Plugin;
+}
+
 void PluginsItem::invokedMenuItem(const QString &itemId, const bool checked)
 {
     m_pluginInter->invokedMenuItem(m_itemKey, itemId, checked);
