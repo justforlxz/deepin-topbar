@@ -3,9 +3,10 @@
 
 #include "mediacontrol.h"
 #include "DBus/dbusmediaplayer2.h"
-#include <QWidget>
+#include <QFrame>
+#include <QLabel>
 
-class MediaControlWidget : public QWidget
+class MediaControlWidget : public QFrame
 {
     Q_OBJECT
 public:
@@ -15,6 +16,7 @@ public:
 private:
     MediaControl *m_mediaControl;
     DBusMediaPlayer2 *m_mediaInter;
+    QLabel *m_mediaTitle;
 };
 
 #endif // MEDIACONTROLWIDGET_H

@@ -2,18 +2,30 @@
 #include <QHBoxLayout>
 #include <QDBusInterface>
 
-MediaControlWidget::MediaControlWidget(QWidget *parent) : QWidget(parent)
+MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent)
 {
-    initMpris();
+    setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    m_mediaControl = new MediaControl(this);
+    setFixedWidth(100);
+
+    initMpris();
+
+    m_mediaTitle = new QLabel;
+    m_mediaControl = new MediaControl;
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
 
+    mainLayout->addWidget(m_mediaControl);
+    mainLayout->addWidget(m_mediaTitle);
+
     setLayout(mainLayout);
+//    m_mediaControl->raise();
+//    m_mediaControl->activateWindow();
+//    m_mediaControl->move(0, 0);
+
 }
 
 void MediaControlWidget::initMpris()

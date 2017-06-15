@@ -97,6 +97,8 @@ void PluginsItem::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::RightButton)
         return showContextMenu();
+
+    QWidget::mousePressEvent(event);
 }
 
 void PluginsItem::hidePopup()

@@ -2,10 +2,7 @@
 #define MEDIACONTROL_H
 
 #include <QFrame>
-
-#include <dimagebutton.h>
-
-DWIDGET_USE_NAMESPACE
+#include <QLabel>
 
 class MediaControl : public QFrame
 {
@@ -13,15 +10,30 @@ class MediaControl : public QFrame
 public:
     explicit MediaControl(QWidget *parent = 0);
 
+    enum PlayState {
+        Play,
+        Pause,
+        Stop,
+        Last,
+        Previous
+    };
+
 signals:
     void requestPrevious();
     void requestLast();
     void requestPause();
 
+public slots:
+    void setPlayState(PlayState state);
+
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
+
 private:
-    DImageButton *m_lastBtn;
-    DImageButton *m_previousBtn;
-    DImageButton *m_pauseBtn;
+    QLabel *m_lastBtn;
+    QLabel *m_previousBtn;
+    QLabel *m_pauseBtn;
+    PlayState m_playState;
 };
 
 #endif // MEDIACONTROL_H

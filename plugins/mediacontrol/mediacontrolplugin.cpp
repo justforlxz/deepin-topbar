@@ -55,21 +55,7 @@ const QString MediaControlPlugin::itemContextMenu(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    QList<QVariant> items;
-    items.reserve(1);
-
-    QMap<QString, QVariant> settings;
-    settings["itemId"] = "play";
-    settings["itemText"] = tr("play media");
-    settings["isActive"] = true;
-    items.push_back(settings);
-
-    QMap<QString, QVariant> menu;
-    menu["items"] = items;
-    menu["checkableMenu"] = false;
-    menu["singleCheck"] = false;
-
-    return QJsonDocument::fromVariant(menu).toJson();
+    return QString();
 }
 
 void MediaControlPlugin::invokedMenuItem(const QString &itemKey, const QString &menuId, const bool checked)
@@ -77,9 +63,4 @@ void MediaControlPlugin::invokedMenuItem(const QString &itemKey, const QString &
     Q_UNUSED(itemKey)
     Q_UNUSED(checked)
     Q_UNUSED(menuId)
-
-//    if (menuId == "open")
-//        QProcess::startDetached("dbus-send --print-reply --dest=com.deepin.dde.ControlCenter /com/deepin/dde/ControlCenter com.deepin.dde.ControlCenter.ShowModule \"string:datetime\"");
-//    else
-//        m_centralWidget->toggleHourFormat();
 }

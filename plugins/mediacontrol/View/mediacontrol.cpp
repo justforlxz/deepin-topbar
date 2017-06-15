@@ -1,19 +1,31 @@
 #include "mediacontrol.h"
 #include <QHBoxLayout>
+#include <QEvent>
+#include <QPixmap>
+#include <QDebug>
 
 MediaControl::MediaControl(QWidget *parent) : QFrame(parent)
 {
+    setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
+
+    setStyleSheet("QLabel {"
+                  "background: transparent;"
+                  "}");
 
     setFixedWidth(100);
 
-    m_lastBtn = new DImageButton(":/img/Icons/next_normal.png",
-                                 ":/img/Icons/next_hover.png",
-                                 ":/img/Icons/next_press.png");
-    m_previousBtn = new DImageButton(":/img/Icons/previous_normal.png",
-                                     ":/img/Icons/previous_hover.png",
-                                     ":/img/Icons/previous_press.png");
-    m_pauseBtn = new DImageButton;
+    m_lastBtn = new QLabel;
+    m_lastBtn->setPixmap(QPixmap(":/img/Icons/next_normal.png"));
+    m_lastBtn->installEventFilter(this);
+
+    m_previousBtn = new QLabel;
+    m_previousBtn->setPixmap(QPixmap(":/img/Icons/previous_normal.png"));
+    m_previousBtn->installEventFilter(this);
+
+    m_pauseBtn = new QLabel;
+    m_pauseBtn->setPixmap(QPixmap(":/img/Icons/pause_normal.png"));
+    m_pauseBtn->installEventFilter(this);
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
@@ -25,7 +37,89 @@ MediaControl::MediaControl(QWidget *parent) : QFrame(parent)
 
     setLayout(layout);
 
-    connect(m_lastBtn, &DImageButton::clicked, this, &MediaControl::requestLast);
-    connect(m_previousBtn, &DImageButton::clicked, this, &MediaControl::requestPrevious);
-    connect(m_pauseBtn, &DImageButton::clicked, this, &MediaControl::requestPause);
+    setPlayState(Stop);
+}
+
+void MediaControl::setPlayState(MediaControl::PlayState state)
+{
+    m_playState = state;
+
+    switch (state) {
+    case Play:
+        m_pauseBtn->setPixmap(QPixmap(":/img/Icons/pause_normal.png"));
+        break;
+    case Stop:
+        break;
+    case Pause:
+        m_pauseBtn->setPixmap(QPixmap(":/img/Icons/start_normal.png"));
+        break;
+    case Last:
+        break;
+    case Previous:
+        break;
+    default:
+        break;
+    }
+}
+
+bool MediaControl::eventFilter(QObject *watched, QEvent *event)
+{
+    if (m_playState == Stop) {
+        return false;
+    }
+
+    if (watched == m_lastBtn) {
+        if (event->type() == QEvent::Enter || event->type() == QEvent::MouseButtonRelease) {
+            m_lastBtn->setPixmap(QPixmap(":/img/Icons/next_hover.png"));
+        }
+        if (event->type() == QEvent::Leave) {
+            m_lastBtn->setPixmap(QPixmap(":/img/Icons/next_normal.png"));
+        }
+        if (event->type() == QEvent::MouseButtonPress) {
+            m_lastBtn->setPixmap(QPixmap(":/img/Icons/next_press.png"));
+            emit requestLast();
+        }
+    }
+
+    if (watched == m_previousBtn) {
+        if (event->type() == QEvent::Enter || event->type() == QEvent::MouseButtonRelease) {
+            m_previousBtn->setPixmap(QPixmap(":/img/Icons/previous_hover.png"));
+        }
+        if (event->type() == QEvent::Leave) {
+            m_previousBtn->setPixmap(QPixmap(":/img/Icons/previous_normal.png"));
+        }
+        if (event->type() == QEvent::MouseButtonPress) {
+            m_previousBtn->setPixmap(QPixmap(":/img/Icons/previous_press.png"));
+            emit requestPrevious();
+        }
+    }
+
+    if (watched == m_pauseBtn) {
+        if (m_playState == Pause) {
+            if (event->type() == QEvent::Enter || event->type() == QEvent::MouseButtonRelease) {
+                m_pauseBtn->setPixmap(QPixmap(":/img/Icons/start_hover.png"));
+            }
+            if (event->type() == QEvent::Leave) {
+                m_pauseBtn->setPixmap(QPixmap(":/img/Icons/start_normal.png"));
+            }
+            if (event->type() == QEvent::MouseButtonPress) {
+                m_pauseBtn->setPixmap(QPixmap(":/img/Icons/start_press.png"));
+                emit requestLast();
+            }
+        }
+        if (m_playState == Play) {
+            if (event->type() == QEvent::Enter || event->type() == QEvent::MouseButtonRelease) {
+                m_pauseBtn->setPixmap(QPixmap(":/img/Icons/pause_hover.png"));
+            }
+            if (event->type() == QEvent::Leave) {
+                m_pauseBtn->setPixmap(QPixmap(":/img/Icons/pause_normal.png"));
+            }
+            if (event->type() == QEvent::MouseButtonPress) {
+                m_pauseBtn->setPixmap(QPixmap(":/img/Icons/pause_press.png"));
+                emit requestLast();
+            }
+        }
+    }
+
+    return false;
 }
