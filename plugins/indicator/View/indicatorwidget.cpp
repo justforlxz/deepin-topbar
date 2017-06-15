@@ -1,6 +1,7 @@
 #include "indicatorwidget.h"
 #include <QHBoxLayout>
 #include <QIcon>
+#include <QMouseEvent>
 
 IndicatorWidget::IndicatorWidget(QWidget *parent) : QWidget(parent)
 {
@@ -58,6 +59,8 @@ void IndicatorWidget::addEntry(const QDBusObjectPath &entryPath, const int index
     DBusDockEntry *entry = new DBusDockEntry(entryPath.path());
     m_entryList.append(entry);
 
+    m_activeWindow = entry;
+
     connect(entry, &DBusDockEntry::ActiveChanged, this, &IndicatorWidget::refreshActiveWindow, Qt::UniqueConnection);
 
     refreshActiveWindow();
@@ -91,4 +94,26 @@ void IndicatorWidget::refreshActiveWindow()
             return;
         }
     }
+
+    if (!m_menuIsActive) {
+        m_entry->setNormalIcon("");
+        m_entry->setHoverIcon("");
+        m_entry->setPressIcon("");
+        m_entry->setText("");
+    }
+}
+
+void IndicatorWidget::mousePressEvent(QMouseEvent *event)
+{
+    QWidget::mousePressEvent(event);
+
+    if (event->buttons() == Qt::RightButton)
+        m_menuIsActive = true;
+}
+
+void IndicatorWidget::mouseReleaseEvent(QMouseEvent *event)
+{
+    QWidget::mouseReleaseEvent(event);
+
+    m_menuIsActive = false;
 }
