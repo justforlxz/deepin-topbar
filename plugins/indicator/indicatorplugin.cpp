@@ -75,6 +75,6 @@ void IndicatorPlugin::invokedMenuItem(const QString &itemKey, const QString &men
     Q_UNUSED(menuId)
 
     if (menuId == "Exit") {
-        // send exit
+        m_centralWidget->closeWindow();
     }
 }

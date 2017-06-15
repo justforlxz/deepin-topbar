@@ -6,8 +6,8 @@
 
 include(../../interfaces/interfaces.pri)
 
-QT       += core gui widgets
-
+QT       += core gui widgets x11extras dbus
+PKGCONFIG += dtkwidget dtkbase dtkutil
 TEMPLATE = lib
 CONFIG    += c++11 link_pkgconfig
 TARGET     = $$qtLibraryTarget(indicator)
@@ -29,13 +29,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         indicatorplugin.cpp \
-    View/indicatorwidget.cpp
+    View/indicatorwidget.cpp \
+    DBus/dbusdock.cpp \
+    DBus/dbusdockentry.cpp
 
 HEADERS += \
         indicatorplugin.h \
-    View/indicatorwidget.h
+    View/indicatorwidget.h \
+    DBus/dbusdock.h \
+    DBus/dbusdockentry.h
 
-unix {
-    target.path = $${PREFIX}/lib/dde-topbar/plugins/
-    INSTALLS   += target
-}
+target.path = $${PREFIX}/lib/dde-topbar/plugins/
+INSTALLS   += target
