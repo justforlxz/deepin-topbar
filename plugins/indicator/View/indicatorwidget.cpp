@@ -65,7 +65,6 @@ void IndicatorWidget::addEntry(const QDBusObjectPath &entryPath, const int index
 
 void IndicatorWidget::removeEntry(const QString &entryID)
 {
-    qDebug() << "ssssss";
     for (int i = 0; i != m_entryList.count(); i++) {
         if (m_entryList.at(i)->id() == entryID) {
             DBusDockEntry *entry = m_entryList.at(i);
