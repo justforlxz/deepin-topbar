@@ -1,4 +1,5 @@
 #include "mainframe.h"
+#include "frame.h"
 #include <DApplication>
 
 DWIDGET_USE_NAMESPACE
@@ -12,8 +13,14 @@ int main(int argc, char *argv[])
         a.setApplicationName("dde-topbar");
         a.setApplicationVersion("1.0");
 
-        MainFrame w;
-        w.show();
+        Frame *frame = new Frame;
+        frame->registerDesktop();
+        frame->show();
+        frame->lower();
+
+        MainFrame *mainFrame = new MainFrame;
+        mainFrame->registerDesktop();
+        mainFrame->show();
 
         return a.exec();
     }

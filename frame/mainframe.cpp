@@ -1,6 +1,5 @@
 #include "mainframe.h"
 #include "mainpanel.h"
-#include "xcb-misc/XcbMisc.h"
 #include <X11/X.h>
 #include <X11/Xutil.h>
 #include <xcb/xcb.h>
@@ -9,7 +8,14 @@
 #include <QScreen>
 #include <QApplication>
 #include <QRect>
-#include <QTimer>
+#include <DForeignWindow>
+
+DWIDGET_USE_NAMESPACE
+
+#define DEFINE_CONST_CHAR(Name) const char _##Name[] = "_d_" #Name
+
+// functions
+DEFINE_CONST_CHAR(getWindows);
 
 MainFrame::MainFrame(QWidget *parent): QFrame(parent)
 {
@@ -20,11 +26,8 @@ MainFrame::MainFrame(QWidget *parent): QFrame(parent)
 
     init();
     initAnimation();
-    initConnect();
-
     screenChanged();
-    connect(m_desktopWidget, &QDesktopWidget::resized, this, &MainFrame::screenChanged);
-
+    initConnect();
 }
 
 MainFrame::~MainFrame()
@@ -32,14 +35,34 @@ MainFrame::~MainFrame()
     m_desktopWidget->deleteLater();
 }
 
+void MainFrame::registerDesktop()
+{
+    QFunctionPointer wmClientList = Q_NULLPTR;
+    QList<DForeignWindow*> windowList;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    wmClientList = qApp->platformFunction(_getWindows);
+#endif
+
+    if (wmClientList) {
+        for (WId wid : reinterpret_cast<QVector<quint32>(*)()>(wmClientList)()) {
+            if (DForeignWindow *w = DForeignWindow::fromWinId(wid)) {
+                windowList << w;
+            }
+        }
+    }
+
+    for (DForeignWindow *window : windowList) {
+       if (window->wmClass() == "dde-desktop") {
+           windowHandle()->setParent(window);
+           break;
+       }
+    }
+}
+
 void MainFrame::init()
 {
     m_desktopWidget = QApplication::desktop();
-
-    m_blurEffectWidget = new DBlurEffectWidget(this);
-    m_blurEffectWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
-    m_blurEffectWidget->setMaskColor(DBlurEffectWidget::LightColor);
-    m_blurEffectWidget->lower();
 
     m_mainPanel = new MainPanel(this);
 
@@ -53,6 +76,8 @@ void MainFrame::init()
 
 void MainFrame::initConnect()
 {
+    connect(m_desktopWidget, &QDesktopWidget::resized, this, &MainFrame::screenChanged);
+
 //    connect(m_launcherInter, &LauncherInter::Shown, this, [=]{
 //        m_hideWithLauncher->start();
 //    });
@@ -89,7 +114,7 @@ void MainFrame::initAnimation()
 //    m_hideWithLauncher->setDuration(300);
 //    m_hideWithLauncher->setStartValue(QPoint(m_mainPanel->x(), 0));
 //    m_hideWithLauncher->setEndValue(QPoint(m_mainPanel->x(), -m_mainPanel->height()));
-//    m_hideWithLauncher->setEasingCurve(QEasingCurve::InOutCubic);
+    //    m_hideWithLauncher->setEasingCurve(QEasingCurve::InOutCubic);
 }
 
 void MainFrame::screenChanged()
@@ -97,29 +122,14 @@ void MainFrame::screenChanged()
     QRect screen = m_desktopWidget->screenGeometry(m_desktopWidget->primaryScreen());
     resize(screen.width(), TOPHEIGHT);
     m_mainPanel->resize(screen.width(), TOPHEIGHT);
-    m_blurEffectWidget->resize(screen.width(), TOPHEIGHT);
     move(screen.x(), 0);
     m_mainPanel->move(0, 0);
-    m_blurEffectWidget->move(0, 0);
 
-    //register type to Dock
+    xcb_ewmh_connection_t m_ewmh_connection;
+    xcb_intern_atom_cookie_t *cookie = xcb_ewmh_init_atoms(QX11Info::connection(), &m_ewmh_connection);
+    xcb_ewmh_init_atoms_replies(&m_ewmh_connection, cookie, NULL);
 
-    XcbMisc * xcb = XcbMisc::instance();
-    xcb->clear_strut_partial(winId());
-
-    XcbMisc::Orientation orientation = XcbMisc::OrientationTop;
-    uint strut = 0;
-    uint strutStart = 0;
-    uint strutEnd = 0;
-
-    const QPoint p(screen.x(), 0);
-    const QRect r = QRect(p, size());
-
-    orientation = XcbMisc::OrientationTop;
-    strut = r.bottom() + 2;
-    strutStart = r.left();
-    strutEnd = r.right();
-
-    xcb->set_strut_partial(winId(), orientation, strut, strutStart, strutEnd);
-    xcb->set_window_type(winId(), XcbMisc::Dock);
+    xcb_atom_t atoms[1];
+    atoms[0] = m_ewmh_connection._NET_WM_WINDOW_TYPE_DESKTOP;
+    xcb_ewmh_set_wm_window_type(&m_ewmh_connection, winId(), 1, atoms);
 }
