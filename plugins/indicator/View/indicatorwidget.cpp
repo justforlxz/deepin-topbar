@@ -94,26 +94,4 @@ void IndicatorWidget::refreshActiveWindow()
             return;
         }
     }
-
-    if (!m_menuIsActive) {
-        m_entry->setNormalIcon("");
-        m_entry->setHoverIcon("");
-        m_entry->setPressIcon("");
-        m_entry->setText("");
-    }
-}
-
-void IndicatorWidget::mousePressEvent(QMouseEvent *event)
-{
-    QWidget::mousePressEvent(event);
-
-    if (event->buttons() == Qt::RightButton)
-        m_menuIsActive = true;
-}
-
-void IndicatorWidget::mouseReleaseEvent(QMouseEvent *event)
-{
-    QWidget::mouseReleaseEvent(event);
-
-    m_menuIsActive = false;
 }

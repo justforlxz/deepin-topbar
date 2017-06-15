@@ -25,16 +25,11 @@ private slots:
     void removeEntry(const QString &entryID);
     void refreshActiveWindow();
 
-protected:
-    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-
 private:
     DBusDock *m_dockInter;
     QList<DBusDockEntry *> m_entryList;
     DPushButton *m_entry;
     DBusDockEntry *m_activeWindow;
-    bool m_menuIsActive;
 };
 
 #endif // INDICATORWIDGET_H
