@@ -41,11 +41,6 @@ void IndicatorWidget::initUI()
     setLayout(mainLayout);
 }
 
-void IndicatorWidget::closeWindow()
-{
-    m_dockInter->CloseWindow(m_activeWindow->currentWindow());
-}
-
 void IndicatorWidget::getAllEntry()
 {
     for (const QDBusObjectPath &entryPath : m_dockInter->entries())
@@ -58,8 +53,6 @@ void IndicatorWidget::addEntry(const QDBusObjectPath &entryPath, const int index
 
     DBusDockEntry *entry = new DBusDockEntry(entryPath.path());
     m_entryList.append(entry);
-
-    m_activeWindow = entry;
 
     connect(entry, &DBusDockEntry::ActiveChanged, this, &IndicatorWidget::refreshActiveWindow, Qt::UniqueConnection);
 
@@ -90,8 +83,11 @@ void IndicatorWidget::refreshActiveWindow()
             m_entry->setHoverIcon(icon);
             m_entry->setPressIcon(icon);
             m_entry->setText(entry->name());
-            m_activeWindow = entry;
             return;
         }
     }
+
+    m_entry->setNormalIcon("");
+    m_entry->setHoverIcon("");
+    m_entry->setPressIcon("");
 }

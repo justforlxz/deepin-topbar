@@ -51,21 +51,7 @@ const QString IndicatorPlugin::itemContextMenu(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    QList<QVariant> items;
-    items.reserve(1);
-
-    QMap<QString, QVariant> settings;
-    settings["itemId"] = "Exit";
-    settings["itemText"] = tr("Exit");
-    settings["isActive"] = true;
-    items.push_back(settings);
-
-    QMap<QString, QVariant> menu;
-    menu["items"] = items;
-    menu["checkableMenu"] = false;
-    menu["singleCheck"] = false;
-
-    return QJsonDocument::fromVariant(menu).toJson();
+    return QString();
 }
 
 void IndicatorPlugin::invokedMenuItem(const QString &itemKey, const QString &menuId, const bool checked)
@@ -73,8 +59,4 @@ void IndicatorPlugin::invokedMenuItem(const QString &itemKey, const QString &men
     Q_UNUSED(itemKey)
     Q_UNUSED(checked)
     Q_UNUSED(menuId)
-
-    if (menuId == "Exit") {
-        m_centralWidget->closeWindow();
-    }
 }
