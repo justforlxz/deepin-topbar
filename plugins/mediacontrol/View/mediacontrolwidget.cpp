@@ -9,10 +9,9 @@ MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent)
 
     setFixedWidth(100);
 
-    initMpris();
-
     m_mediaTitle = new QLabel;
     m_mediaControl = new MediaControl(this);
+    m_mediaControl->activateWindow();
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setMargin(0);
@@ -36,6 +35,8 @@ MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent)
     m_showControlAni->setStartValue(QPoint(m_mediaControl->x(), -m_mediaControl->height()));
     m_showControlAni->setEndValue(QPoint(m_mediaControl->x(), 0));
     m_showControlAni->setEasingCurve(QEasingCurve::InOutCubic);
+
+    initMpris();
 }
 
 void MediaControlWidget::initMpris()
@@ -62,6 +63,31 @@ void MediaControlWidget::initMpris()
 
     m_mediaInter = new DBusMediaPlayer2(service, "/org/mpris/MediaPlayer2", QDBusConnection::sessionBus(), this);
 
+    connect(m_mediaInter, &DBusMediaPlayer2::MetadataChanged, this, [=]{
+        const QString text = m_mediaInter->metadata().value("xesam:title").toString();
+        QFontMetrics qfm(m_mediaTitle->font());
+
+        if (qfm.width(text) > m_mediaTitle->width())
+            m_mediaTitle->setText(qfm.elidedText(text, Qt::ElideRight, m_mediaTitle->width()));
+        else
+            m_mediaTitle->setText(text);
+    });
+
+    connect(m_mediaInter, &DBusMediaPlayer2::PlaybackStatusChanged, this, [=]{
+        if (m_mediaInter->playbackStatus() == "Playing")
+            m_mediaControl->setPlayState(MediaControl::Play);
+        if (m_mediaInter->playbackStatus() == "Stopped")
+            m_mediaControl->setPlayState(MediaControl::Stop);
+        if (m_mediaInter->playbackStatus() == "Paused")
+            m_mediaControl->setPlayState(MediaControl::Pause);
+    });
+
+    connect(m_mediaControl, &MediaControl::requestLast, m_mediaInter, &DBusMediaPlayer2::Next);
+    connect(m_mediaControl, &MediaControl::requestPrevious, m_mediaInter, &DBusMediaPlayer2::Previous);
+    connect(m_mediaControl, &MediaControl::requestPause, m_mediaInter, &DBusMediaPlayer2::PlayPause);
+
+    m_mediaInter->MetadataChanged();
+    m_mediaInter->PlaybackStatusChanged();
 }
 
 void MediaControlWidget::enterEvent(QEvent *event)

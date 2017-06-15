@@ -36,8 +36,6 @@ MediaControl::MediaControl(QWidget *parent) : QFrame(parent)
     layout->addWidget(m_lastBtn, 0, Qt::AlignRight | Qt::AlignVCenter);
 
     setLayout(layout);
-
-    setPlayState(Stop);
 }
 
 void MediaControl::setPlayState(MediaControl::PlayState state)
