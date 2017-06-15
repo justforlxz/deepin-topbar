@@ -90,4 +90,5 @@ void IndicatorWidget::refreshActiveWindow()
     m_entry->setNormalIcon("");
     m_entry->setHoverIcon("");
     m_entry->setPressIcon("");
+    m_entry->setText("");
 }
