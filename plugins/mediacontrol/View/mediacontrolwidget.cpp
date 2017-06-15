@@ -12,20 +12,30 @@ MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent)
     initMpris();
 
     m_mediaTitle = new QLabel;
-    m_mediaControl = new MediaControl;
+    m_mediaControl = new MediaControl(this);
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
 
-    mainLayout->addWidget(m_mediaControl);
     mainLayout->addWidget(m_mediaTitle);
 
     setLayout(mainLayout);
-//    m_mediaControl->raise();
-//    m_mediaControl->activateWindow();
-//    m_mediaControl->move(0, 0);
 
+    m_mediaControl->move(0, -m_mediaControl->height());
+
+    //Animation
+    m_hoverControlAni = new QPropertyAnimation(m_mediaControl, "pos", this);
+    m_hoverControlAni->setDuration(300);
+    m_hoverControlAni->setStartValue(QPoint(m_mediaControl->x(), 0));
+    m_hoverControlAni->setEndValue(QPoint(m_mediaControl->x(), -m_mediaControl->height()));
+    m_hoverControlAni->setEasingCurve(QEasingCurve::InOutCubic);
+
+    m_showControlAni = new QPropertyAnimation(m_mediaControl, "pos", this);
+    m_showControlAni->setDuration(300);
+    m_showControlAni->setStartValue(QPoint(m_mediaControl->x(), -m_mediaControl->height()));
+    m_showControlAni->setEndValue(QPoint(m_mediaControl->x(), 0));
+    m_showControlAni->setEasingCurve(QEasingCurve::InOutCubic);
 }
 
 void MediaControlWidget::initMpris()
@@ -52,4 +62,18 @@ void MediaControlWidget::initMpris()
 
     m_mediaInter = new DBusMediaPlayer2(service, "/org/mpris/MediaPlayer2", QDBusConnection::sessionBus(), this);
 
+}
+
+void MediaControlWidget::enterEvent(QEvent *event)
+{
+    QFrame::enterEvent(event);
+
+    m_showControlAni->start();
+}
+
+void MediaControlWidget::leaveEvent(QEvent *event)
+{
+     QFrame::leaveEvent(event);
+
+     m_hoverControlAni->start();
 }
