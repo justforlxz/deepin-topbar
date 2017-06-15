@@ -9,19 +9,12 @@ MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent)
 
     setFixedWidth(100);
 
-    m_mediaTitle = new QLabel;
+    m_mediaTitle = new QLabel(this);
     m_mediaControl = new MediaControl(this);
-    m_mediaControl->activateWindow();
-
-    QHBoxLayout *mainLayout = new QHBoxLayout;
-    mainLayout->setMargin(0);
-    mainLayout->setSpacing(0);
-
-    mainLayout->addWidget(m_mediaTitle);
-
-    setLayout(mainLayout);
 
     m_mediaControl->move(0, -m_mediaControl->height());
+    m_mediaTitle->move(0, 0);
+
 
     //Animation
     m_hoverControlAni = new QPropertyAnimation(m_mediaControl, "pos", this);
@@ -35,6 +28,14 @@ MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent)
     m_showControlAni->setStartValue(QPoint(m_mediaControl->x(), -m_mediaControl->height()));
     m_showControlAni->setEndValue(QPoint(m_mediaControl->x(), 0));
     m_showControlAni->setEasingCurve(QEasingCurve::InOutCubic);
+
+    connect(m_hoverControlAni, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
+        m_mediaTitle->move(0, 30 + value.toPoint().y());
+    });
+
+    connect(m_showControlAni, &QPropertyAnimation::valueChanged ,this, [=](const QVariant &value) {
+        m_mediaTitle->move(0, 30 + value.toPoint().y());
+    });
 
     initMpris();
 }
