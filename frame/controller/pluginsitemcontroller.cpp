@@ -36,9 +36,21 @@ void PluginsItemController::pluginItemInserted(PluginsItem *item)
     // I need to think about whether I need the type
     // Anyway, I need a list that I can keep
 
-    m_itemList.append(item);
+    if (item->itemType() == PluginsItem::Indicator)
+        emit itemInserted(0, item);
 
-    emit itemInserted(1, item);
+    switch (item->itemType()) {
+    case PluginsItem::Indicator:
+         emit itemInserted(0, item);
+        break;
+    case PluginsItem::DateTime:
+        emit itemInserted(2, item);
+    default:
+        emit itemInserted(2, item);
+        break;
+    }
+
+    m_itemList.append(item);
 
 }
 
