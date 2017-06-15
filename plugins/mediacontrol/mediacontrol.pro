@@ -6,13 +6,14 @@
 
 include(../../interfaces/interfaces.pri)
 
-QT       += core gui widgets
-
+QT       += core gui widgets dbus x11extras
+PKGCONFIG += dtkwidget dtkbase dtkutil dframeworkdbus
 TEMPLATE = lib
 CONFIG    += c++11 link_pkgconfig
 TARGET     = $$qtLibraryTarget(mediacontrol)
 DESTDIR    = $$_PRO_FILE_PWD_/../
-DISTFILES += mediacontrol.json
+DISTFILES += mediacontrol.json \
+    DBus/org.mpris.MediaPlayer2.xml
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -28,12 +29,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         mediacontrolplugin.cpp \
-    View/mediacontrolwidget.cpp
+    View/mediacontrolwidget.cpp \
+    DBus/dbusmediaplayer2.cpp \
+    View/mediacontrol.cpp
 
 HEADERS += \
         mediacontrolplugin.h \
-    View/mediacontrolwidget.h
+    View/mediacontrolwidget.h \
+    DBus/dbusmediaplayer2.h \
+    View/mediacontrol.h
 
 target.path = $${PREFIX}/lib/dde-topbar/plugins/
 INSTALLS   += target
+
+RESOURCES += \
+    mediacontrol.qrc
 
