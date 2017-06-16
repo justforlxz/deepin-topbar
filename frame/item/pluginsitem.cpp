@@ -37,6 +37,11 @@ PluginsItem::ItemType PluginsItem::itemType() const
     return Plugin;
 }
 
+const QString PluginsItem::name() const
+{
+    return m_pluginInter->pluginName();
+}
+
 void PluginsItem::invokedMenuItem(const QString &itemId, const bool checked)
 {
     m_pluginInter->invokedMenuItem(m_itemKey, itemId, checked);

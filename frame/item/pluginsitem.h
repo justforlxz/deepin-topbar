@@ -14,6 +14,7 @@ public:
     ~PluginsItem();
 
     ItemType itemType() const;
+    const QString name() const;
 
 private:
     void invokedMenuItem(const QString &itemId, const bool checked);

@@ -48,13 +48,16 @@ void PluginsItemController::pluginItemInserted(Item *item)
         emit itemInserted(0, item);
         break;
     case Item::DateTime:
-        emit itemInserted(2, item);
+        emit itemInserted(-1, item);
         break;
     case Item::Stretch:
-        emit itemInserted(1, item);
+        emit itemInserted(0, item);
+        break;
+    case Item::Plugin:
+        emit itemInserted(m_itemList.count() - 1, item);
         break;
     default:
-        emit itemInserted(2, item);
+        emit itemInserted(m_itemList.count() - 1, item);
         break;
     }
 

@@ -16,26 +16,6 @@ void MainPanel::initUI()
     m_mainLayout->setMargin(0);
     m_mainLayout->setSpacing(0);
     setLayout(m_mainLayout);
-
-    const QList<Item *> itemList = m_itemController->itemList();
-    for (Item *item : itemList) {
-        switch (item->itemType()) {
-        case Item::Indicator:
-            m_mainLayout->insertWidget(0, item);
-            break;
-        case Item::DateTime:
-            m_mainLayout->insertWidget(2, item);
-            break;
-        case Item::Stretch:
-            m_mainLayout->insertWidget(1, item);
-            break;
-        case Item::Plugin:
-            m_mainLayout->insertWidget(2, item);
-            break;
-        default:
-            break;
-        }
-    }
 }
 
 void MainPanel::initConnect()
@@ -48,8 +28,6 @@ void MainPanel::itemInserted(const int index, Item *item)
 {
     item->setVisible(true);
     item->setParent(this);
-
-    qDebug() << index;
 
     // here can connect some func
     m_mainLayout->insertWidget(index, item);
