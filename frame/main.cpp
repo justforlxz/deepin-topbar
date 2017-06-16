@@ -8,6 +8,7 @@ int main(int argc, char *argv[])
 {
     DApplication::loadDXcbPlugin();
     DApplication a(argc, argv);
+    a.setTheme("light");
 
     if (a.setSingleInstance("dde-topbar")) {
         a.setApplicationName("dde-topbar");
