@@ -16,6 +16,7 @@ MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent)
 
     m_mediaTitle->resize(100, 25);
     m_mediaControl->resize(100, 25);
+    m_mediaControl->move(0, -m_mediaControl->height());
 
     m_mediaTitle->setAlignment(Qt::AlignVCenter);
     m_mediaTitle->setStyleSheet("font-size: 14px;"
