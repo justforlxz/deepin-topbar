@@ -9,12 +9,13 @@ MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent)
 
     setFixedWidth(100);
 
+    setVisible(false);
+
     m_mediaTitle = new QLabel(this);
     m_mediaControl = new MediaControl(this);
 
     m_mediaControl->move(0, -m_mediaControl->height());
     m_mediaTitle->move(0, 0);
-
 
     //Animation
     m_hoverControlAni = new QPropertyAnimation(m_mediaControl, "pos", this);
@@ -37,35 +38,53 @@ MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent)
         m_mediaTitle->move(0, 30 + value.toPoint().y());
     });
 
+    m_mprisInter = nullptr;
+
     initMpris();
 }
 
 void MediaControlWidget::initMpris()
 {
-    QDBusInterface *dbusInter = new QDBusInterface("org.freedesktop.DBus", "/", "org.freedesktop.DBus", QDBusConnection::sessionBus(), this);
-    if (!dbusInter)
+    m_dbusInter = new DBusInterface("org.freedesktop.DBus", "/org/freedesktop/DBus", QDBusConnection::sessionBus(), this);
+
+    connect(m_dbusInter, &DBusInterface::NameOwnerChanged, this, &MediaControlWidget::onNameOwnerChanged);
+
+    for (const auto &name : m_dbusInter->ListNames().value())
+        onNameOwnerChanged(name, QString(), name);
+}
+
+void MediaControlWidget::onNameOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner)
+{
+    Q_UNUSED(oldOwner);
+
+    if (!name.startsWith("org.mpris.MediaPlayer2."))
         return;
 
-    QDBusReply<QStringList> response = dbusInter->call("ListNames");
-    const QStringList &serviceList = response.value();
-    QString service = QString();
-    for (const QString &serv : serviceList)
-    {
-        if (!serv.startsWith("org.mpris.MediaPlayer2."))
-            continue;
-        service = serv;
-        break;
-    }
+    if (newOwner.isEmpty())
+        removeMPRISPath(name);
+    else
+        loadMPRISPath(name);
+}
 
-    if (service.isEmpty())
-        return;
+void MediaControlWidget::loadMPRISPath(const QString &path)
+{
+    m_lastPath = path;
 
-    qDebug() << "got service: " << service;
+    // save paths
+    if (!m_mprisPaths.contains(path))
+        m_mprisPaths.append(path);
 
-    m_mediaInter = new DBusMediaPlayer2(service, "/org/mpris/MediaPlayer2", QDBusConnection::sessionBus(), this);
+    if (m_mprisInter)
+        m_mprisInter->deleteLater();
 
-    connect(m_mediaInter, &DBusMediaPlayer2::MetadataChanged, this, [=]{
-        const QString text = m_mediaInter->metadata().value("xesam:title").toString();
+    m_mprisInter = new DBusMPRIS(path, "/org/mpris/MediaPlayer2", QDBusConnection::sessionBus(), this);
+
+    connect(m_mediaControl, &MediaControl::requestLast, m_mprisInter, &DBusMediaPlayer2::Next, Qt::UniqueConnection);
+    connect(m_mediaControl, &MediaControl::requestPrevious, m_mprisInter, &DBusMediaPlayer2::Previous, Qt::UniqueConnection);
+    connect(m_mediaControl, &MediaControl::requestPause, m_mprisInter, &DBusMediaPlayer2::PlayPause, Qt::UniqueConnection);
+
+    connect(m_mprisInter, &DBusMediaPlayer2::MetadataChanged, this, [=]{
+        const QString text = m_mprisInter->metadata().value("xesam:title").toString();
         QFontMetrics qfm(m_mediaTitle->font());
 
         if (qfm.width(text) > m_mediaTitle->width())
@@ -74,21 +93,42 @@ void MediaControlWidget::initMpris()
             m_mediaTitle->setText(text);
     });
 
-    connect(m_mediaInter, &DBusMediaPlayer2::PlaybackStatusChanged, this, [=]{
-        if (m_mediaInter->playbackStatus() == "Playing")
+    connect(m_mprisInter, &DBusMediaPlayer2::PlaybackStatusChanged, this, [=]{
+        if (m_mprisInter->playbackStatus() == "Playing") {
             m_mediaControl->setPlayState(MediaControl::Play);
-        if (m_mediaInter->playbackStatus() == "Stopped")
+            setVisible(true);
+        }
+        if (m_mprisInter->playbackStatus() == "Stopped") {
             m_mediaControl->setPlayState(MediaControl::Stop);
-        if (m_mediaInter->playbackStatus() == "Paused")
+            setVisible(false);
+        }
+        if (m_mprisInter->playbackStatus() == "Paused")
             m_mediaControl->setPlayState(MediaControl::Pause);
+
+        m_mprisInter->MetadataChanged();
     });
 
-    connect(m_mediaControl, &MediaControl::requestLast, m_mediaInter, &DBusMediaPlayer2::Next);
-    connect(m_mediaControl, &MediaControl::requestPrevious, m_mediaInter, &DBusMediaPlayer2::Previous);
-    connect(m_mediaControl, &MediaControl::requestPause, m_mediaInter, &DBusMediaPlayer2::PlayPause);
+    m_mprisInter->MetadataChanged();
+    m_mprisInter->PlaybackStatusChanged();
+}
 
-    m_mediaInter->MetadataChanged();
-    m_mediaInter->PlaybackStatusChanged();
+void MediaControlWidget::removeMPRISPath(const QString &path)
+{
+    m_mprisPaths.removeOne(path);
+
+    if (m_lastPath != path)
+        return;
+
+    if (!m_mprisInter)
+        return;
+
+    if (!m_mprisPaths.isEmpty())
+        return loadMPRISPath(m_mprisPaths.last());
+
+    m_mprisInter->deleteLater();
+    m_mprisInter = nullptr;
+
+    setVisible(false);
 }
 
 void MediaControlWidget::enterEvent(QEvent *event)
