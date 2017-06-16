@@ -3,6 +3,9 @@
 
 #include <QFrame>
 #include <QLabel>
+#include <dimagebutton.h>
+
+DWIDGET_USE_NAMESPACE
 
 class MediaControl : public QFrame
 {
@@ -26,13 +29,10 @@ signals:
 public slots:
     void setPlayState(PlayState state);
 
-protected:
-    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
-
 private:
-    QLabel *m_lastBtn;
-    QLabel *m_previousBtn;
-    QLabel *m_pauseBtn;
+    DImageButton *m_lastBtn;
+    DImageButton *m_previousBtn;
+    DImageButton *m_pauseBtn;
     PlayState m_playState;
 };
 

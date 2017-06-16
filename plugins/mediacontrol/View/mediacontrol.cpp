@@ -7,23 +7,15 @@
 MediaControl::MediaControl(QWidget *parent) : QFrame(parent)
 {
     setWindowFlags(Qt::FramelessWindowHint);
-    setAttribute(Qt::WA_TranslucentBackground);
 
-    setStyleSheet("QLabel {"
-                  "background: transparent;"
-                  "}");
+    m_lastBtn = new DImageButton(":/img/Icons/next_normal.png",
+                                 ":/img/Icons/next_hover.png",
+                                 ":/img/Icons/next_press.png");
 
-    m_lastBtn = new QLabel;
-    m_lastBtn->setPixmap(QPixmap(":/img/Icons/next_normal.png").scaled(23, 23, Qt::KeepAspectRatio));
-    m_lastBtn->installEventFilter(this);
-
-    m_previousBtn = new QLabel;
-    m_previousBtn->setPixmap(QPixmap(":/img/Icons/previous_normal.png").scaled(23, 23, Qt::KeepAspectRatio));
-    m_previousBtn->installEventFilter(this);
-
-    m_pauseBtn = new QLabel;
-    m_pauseBtn->setPixmap(QPixmap(":/img/Icons/pause_normal.png").scaled(23, 23, Qt::KeepAspectRatio));
-    m_pauseBtn->installEventFilter(this);
+    m_previousBtn = new DImageButton(":/img/Icons/previous_normal.png",
+                                     ":/img/Icons/previous_hover.png",
+                                     ":/img/Icons/previous_press.png");
+    m_pauseBtn = new DImageButton;
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
@@ -34,6 +26,10 @@ MediaControl::MediaControl(QWidget *parent) : QFrame(parent)
     layout->addWidget(m_lastBtn, 0, Qt::AlignRight | Qt::AlignVCenter);
 
     setLayout(layout);
+
+    connect(m_previousBtn, &DImageButton::clicked, this, &MediaControl::requestPrevious);
+    connect(m_pauseBtn, &DImageButton::clicked, this, &MediaControl::requestPause);
+    connect(m_lastBtn, &DImageButton::clicked, this, &MediaControl::requestLast);
 }
 
 void MediaControl::setPlayState(MediaControl::PlayState state)
@@ -41,14 +37,20 @@ void MediaControl::setPlayState(MediaControl::PlayState state)
     m_playState = state;
 
     switch (state) {
-    case Play:
-        m_pauseBtn->setPixmap(QPixmap(":/img/Icons/pause_normal.png").scaled(23, 23, Qt::KeepAspectRatio));
+    case Play: {
+        m_pauseBtn->setNormalPic(":/img/Icons/pause_normal.png");
+        m_pauseBtn->setHoverPic(":/img/Icons/pause_hover.png");
+        m_pauseBtn->setPressPic(":/img/Icons/pause_press.png");
         break;
+    }
     case Stop:
         break;
-    case Pause:
-        m_pauseBtn->setPixmap(QPixmap(":/img/Icons/start_normal.png").scaled(23, 23, Qt::KeepAspectRatio));
+    case Pause: {
+        m_pauseBtn->setNormalPic(":/img/Icons/start_normal.png");
+        m_pauseBtn->setHoverPic(":/img/Icons/start_hover.png");
+        m_pauseBtn->setPressPic(":/img/Icons/start_press.png");
         break;
+    }
     case Last:
         break;
     case Previous:
@@ -56,66 +58,4 @@ void MediaControl::setPlayState(MediaControl::PlayState state)
     default:
         break;
     }
-}
-
-bool MediaControl::eventFilter(QObject *watched, QEvent *event)
-{
-    if (m_playState == Stop) {
-        return false;
-    }
-
-    if (watched == m_lastBtn) {
-        if (event->type() == QEvent::Enter || event->type() == QEvent::MouseButtonRelease) {
-            m_lastBtn->setPixmap(QPixmap(":/img/Icons/next_hover.png").scaled(23, 23, Qt::KeepAspectRatio));
-        }
-        if (event->type() == QEvent::Leave) {
-            m_lastBtn->setPixmap(QPixmap(":/img/Icons/next_normal.png").scaled(23, 23, Qt::KeepAspectRatio));
-        }
-        if (event->type() == QEvent::MouseButtonPress) {
-            m_lastBtn->setPixmap(QPixmap(":/img/Icons/next_press.png").scaled(23, 23, Qt::KeepAspectRatio));
-            emit requestLast();
-        }
-    }
-
-    if (watched == m_previousBtn) {
-        if (event->type() == QEvent::Enter || event->type() == QEvent::MouseButtonRelease) {
-            m_previousBtn->setPixmap(QPixmap(":/img/Icons/previous_hover.png").scaled(23, 23, Qt::KeepAspectRatio));
-        }
-        if (event->type() == QEvent::Leave) {
-            m_previousBtn->setPixmap(QPixmap(":/img/Icons/previous_normal.png").scaled(23, 23, Qt::KeepAspectRatio));
-        }
-        if (event->type() == QEvent::MouseButtonPress) {
-            m_previousBtn->setPixmap(QPixmap(":/img/Icons/previous_press.png").scaled(23, 23, Qt::KeepAspectRatio));
-            emit requestPrevious();
-        }
-    }
-
-    if (watched == m_pauseBtn) {
-        if (m_playState == Pause) {
-            if (event->type() == QEvent::Enter || event->type() == QEvent::MouseButtonRelease) {
-                m_pauseBtn->setPixmap(QPixmap(":/img/Icons/start_hover.png").scaled(23, 23, Qt::KeepAspectRatio));
-            }
-            if (event->type() == QEvent::Leave) {
-                m_pauseBtn->setPixmap(QPixmap(":/img/Icons/start_normal.png").scaled(23, 23, Qt::KeepAspectRatio));
-            }
-            if (event->type() == QEvent::MouseButtonPress) {
-                m_pauseBtn->setPixmap(QPixmap(":/img/Icons/start_press.png").scaled(23, 23, Qt::KeepAspectRatio));
-                emit requestPause();
-            }
-        }
-        if (m_playState == Play) {
-            if (event->type() == QEvent::Enter || event->type() == QEvent::MouseButtonRelease) {
-                m_pauseBtn->setPixmap(QPixmap(":/img/Icons/pause_hover.png").scaled(23, 23, Qt::KeepAspectRatio));
-            }
-            if (event->type() == QEvent::Leave) {
-                m_pauseBtn->setPixmap(QPixmap(":/img/Icons/pause_normal.png").scaled(23, 23, Qt::KeepAspectRatio));
-            }
-            if (event->type() == QEvent::MouseButtonPress) {
-                m_pauseBtn->setPixmap(QPixmap(":/img/Icons/pause_press.png").scaled(23, 23, Qt::KeepAspectRatio));
-                emit requestPause();
-            }
-        }
-    }
-
-    return false;
 }
