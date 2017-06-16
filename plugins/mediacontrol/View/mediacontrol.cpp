@@ -8,17 +8,17 @@ MediaControl::MediaControl(QWidget *parent) : QFrame(parent)
 {
     setWindowFlags(Qt::FramelessWindowHint);
 
-    m_lastBtn = new DImageButton(":/img/Icons/next_normal.png",
-                                 ":/img/Icons/next_hover.png",
-                                 ":/img/Icons/next_press.png");
+    m_lastBtn = new DImageButton(":/img/Icons/play_next_normal.png",
+                                 ":/img/Icons/play_next_hover.png",
+                                 ":/img/Icons/play_next_press.png");
 
-    m_previousBtn = new DImageButton(":/img/Icons/previous_normal.png",
-                                     ":/img/Icons/previous_hover.png",
-                                     ":/img/Icons/previous_press.png");
+    m_previousBtn = new DImageButton(":/img/Icons/play_previous_normal.png",
+                                     ":/img/Icons/play_previous_hover.png",
+                                     ":/img/Icons/play_previous_press.png");
     m_pauseBtn = new DImageButton;
 
     QHBoxLayout *layout = new QHBoxLayout;
-    layout->setMargin(0);
+    layout->setMargin(2);
     layout->setSpacing(0);
 
     layout->addWidget(m_previousBtn, 0, Qt::AlignLeft | Qt::AlignVCenter);
@@ -38,17 +38,17 @@ void MediaControl::setPlayState(MediaControl::PlayState state)
 
     switch (state) {
     case Play: {
-        m_pauseBtn->setNormalPic(":/img/Icons/pause_normal.png");
-        m_pauseBtn->setHoverPic(":/img/Icons/pause_hover.png");
-        m_pauseBtn->setPressPic(":/img/Icons/pause_press.png");
+        m_pauseBtn->setNormalPic(":/img/Icons/play_pause_normal.png");
+        m_pauseBtn->setHoverPic(":/img/Icons/play_pause_hover.png");
+        m_pauseBtn->setPressPic(":/img/Icons/play_pause_press.png");
         break;
     }
     case Stop:
         break;
     case Pause: {
-        m_pauseBtn->setNormalPic(":/img/Icons/start_normal.png");
-        m_pauseBtn->setHoverPic(":/img/Icons/start_hover.png");
-        m_pauseBtn->setPressPic(":/img/Icons/start_press.png");
+        m_pauseBtn->setNormalPic(":/img/Icons/play_start_normal.png");
+        m_pauseBtn->setHoverPic(":/img/Icons/play_start_hover.png");
+        m_pauseBtn->setPressPic(":/img/Icons/play_start_press.png");
         break;
     }
     case Last:
