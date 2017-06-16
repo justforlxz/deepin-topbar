@@ -1,7 +1,6 @@
 #include "frame.h"
 #include <QDesktopWidget>
 #include <QApplication>
-#include <DPlatformWindowHandle>
 #include <QX11Info>
 #include <xcb/xcb.h>
 #include <xcb/xcb_ewmh.h>
@@ -13,11 +12,9 @@ Frame::Frame(QWidget *parent) : QFrame(parent)
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    DPlatformWindowHandle *handle = new DPlatformWindowHandle(this);
-    handle->setBorderWidth(0);
-    handle->setWindowRadius(0);
-    handle->setEnableSystemMove(true);
-    handle->setEnableSystemResize(true);
+    m_handle = new DPlatformWindowHandle(this);
+    m_handle->setBorderWidth(0);
+    m_handle->setWindowRadius(0);
 
     QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
     resize(screen.width(), 25);
@@ -28,6 +25,11 @@ Frame::Frame(QWidget *parent) : QFrame(parent)
         resize(screen.width(), 25);
         move(screen.x(), 0);
     });
+}
+
+DPlatformWindowHandle *Frame::handle()
+{
+    return m_handle;
 }
 
 void Frame::registerDesktop()

@@ -10,6 +10,7 @@
 #include <QRect>
 #include <DForeignWindow>
 #include <functional>
+#include <DPlatformWindowHandle>
 
 DWIDGET_USE_NAMESPACE
 
@@ -73,11 +74,17 @@ void MainFrame::registerDesktop()
         }
     }
     // if launcher hide
-    m_showWithLauncher->start();
+    if (m_mainPanel->pos() == QPoint(m_mainPanel->x(), -30))
+        m_showWithLauncher->start();
 
     /*
      Think zccrs, Perfect protection against launcher. It won't stop launcher at last.
-     * /
+     */
+}
+
+void MainFrame::setShadowWidget(Frame *frame)
+{
+    m_shadowWidget = frame;
 }
 
 void MainFrame::init()
