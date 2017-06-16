@@ -83,12 +83,10 @@ void IndicatorWidget::refreshActiveWindow()
             m_entry->setHoverIcon(icon);
             m_entry->setPressIcon(icon);
             m_entry->setText(entry->name());
+            m_entry->setVisible(true);
             return;
         }
     }
 
-    m_entry->setNormalIcon("");
-    m_entry->setHoverIcon("");
-    m_entry->setPressIcon("");
-    m_entry->setText("");
+    m_entry->setVisible(false);
 }
