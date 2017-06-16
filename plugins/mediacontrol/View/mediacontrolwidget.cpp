@@ -7,28 +7,37 @@ MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent)
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    setFixedWidth(100);
+    setFixedSize(100, 25);
 
     setVisible(false);
 
-    m_mediaTitle = new QLabel(this);
+    m_mediaTitle = new TextTicker(this);
     m_mediaControl = new MediaControl(this);
 
-    m_mediaControl->move(0, -m_mediaControl->height());
-    m_mediaTitle->move(0, 1);
-    m_mediaTitle->setStyleSheet("font-size: 14px;");
+    m_mediaTitle->resize(100, 25);
+    m_mediaControl->resize(100, 25);
+
+    QHBoxLayout *mainLayout = new QHBoxLayout;
+    mainLayout->setMargin(0);
+    mainLayout->setSpacing(0);
+    setLayout(mainLayout);
+
+    mainLayout->addWidget(m_mediaTitle, 0, Qt::AlignVCenter);
+    m_mediaTitle->setAlignment(Qt::AlignVCenter);
+    m_mediaTitle->setStyleSheet("font-size: 14px;"
+                                "color: black;");
 
     //Animation
     m_hoverControlAni = new QPropertyAnimation(m_mediaControl, "pos", this);
     m_hoverControlAni->setDuration(300);
-    m_hoverControlAni->setStartValue(QPoint(m_mediaControl->x(), 1));
+    m_hoverControlAni->setStartValue(QPoint(m_mediaControl->x(), 0));
     m_hoverControlAni->setEndValue(QPoint(m_mediaControl->x(), -m_mediaControl->height()));
     m_hoverControlAni->setEasingCurve(QEasingCurve::InOutCubic);
 
     m_showControlAni = new QPropertyAnimation(m_mediaControl, "pos", this);
     m_showControlAni->setDuration(300);
     m_showControlAni->setStartValue(QPoint(m_mediaControl->x(), -m_mediaControl->height()));
-    m_showControlAni->setEndValue(QPoint(m_mediaControl->x(), 1));
+    m_showControlAni->setEndValue(QPoint(m_mediaControl->x(), 0));
     m_showControlAni->setEasingCurve(QEasingCurve::InOutCubic);
 
     connect(m_hoverControlAni, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
@@ -85,13 +94,7 @@ void MediaControlWidget::loadMPRISPath(const QString &path)
     connect(m_mediaControl, &MediaControl::requestPause, m_mprisInter, &DBusMediaPlayer2::PlayPause, Qt::UniqueConnection);
 
     connect(m_mprisInter, &DBusMediaPlayer2::MetadataChanged, this, [=]{
-        const QString text = m_mprisInter->metadata().value("xesam:title").toString();
-        QFontMetrics qfm(m_mediaTitle->font());
-
-        if (qfm.width(text) > m_mediaTitle->width())
-            m_mediaTitle->setText(qfm.elidedText(text, Qt::ElideRight, m_mediaTitle->width()));
-        else
-            m_mediaTitle->setText(text);
+        m_mediaTitle->setText(m_mprisInter->metadata().value("xesam:title").toString());
     });
 
     connect(m_mprisInter, &DBusMediaPlayer2::PlaybackStatusChanged, this, [=]{
