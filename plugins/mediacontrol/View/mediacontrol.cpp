@@ -102,7 +102,7 @@ bool MediaControl::eventFilter(QObject *watched, QEvent *event)
             }
             if (event->type() == QEvent::MouseButtonPress) {
                 m_pauseBtn->setPixmap(QPixmap(":/img/Icons/start_press.png").scaled(23, 23, Qt::KeepAspectRatio));
-                emit requestLast();
+                emit requestPause();
             }
         }
         if (m_playState == Play) {
@@ -114,7 +114,7 @@ bool MediaControl::eventFilter(QObject *watched, QEvent *event)
             }
             if (event->type() == QEvent::MouseButtonPress) {
                 m_pauseBtn->setPixmap(QPixmap(":/img/Icons/pause_press.png").scaled(23, 23, Qt::KeepAspectRatio));
-                emit requestLast();
+                emit requestPause();
             }
         }
     }
