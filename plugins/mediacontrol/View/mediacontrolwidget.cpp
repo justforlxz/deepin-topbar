@@ -16,13 +16,8 @@ MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent)
 
     m_mediaTitle->resize(100, 25);
     m_mediaControl->resize(100, 25);
+    m_mediaControl->move(0, -m_mediaControl->height());
 
-    QHBoxLayout *mainLayout = new QHBoxLayout;
-    mainLayout->setMargin(0);
-    mainLayout->setSpacing(0);
-    setLayout(mainLayout);
-
-    mainLayout->addWidget(m_mediaTitle, 0, Qt::AlignVCenter);
     m_mediaTitle->setAlignment(Qt::AlignVCenter);
     m_mediaTitle->setStyleSheet("font-size: 14px;"
                                 "color: black;");
