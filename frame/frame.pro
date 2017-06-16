@@ -17,7 +17,9 @@ HEADERS  += \
     dbus/dbusmenu.h \
     controller/pluginsitemcontroller.h \
     mainpanel.h \
-    frame.h
+    frame.h \
+    item/item.h \
+    item/stretchitem.h
 
 SOURCES += \
     main.cpp\
@@ -29,7 +31,9 @@ SOURCES += \
     dbus/dbusmenu.cpp \
     controller/pluginsitemcontroller.cpp \
     mainpanel.cpp \
-    frame.cpp
+    frame.cpp \
+    item/item.cpp \
+    item/stretchitem.cpp
 
 target.path = $${PREFIX}/bin/
 INSTALL += target

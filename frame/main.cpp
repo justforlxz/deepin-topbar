@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
 
         MainFrame *mainFrame = new MainFrame;
         mainFrame->registerDesktop();
+        mainFrame->activateWindow();
         mainFrame->show();
 
         return a.exec();

@@ -19,7 +19,7 @@ DEFINE_CONST_CHAR(getWindows);
 
 MainFrame::MainFrame(QWidget *parent): QFrame(parent)
 {
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
+    setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
 
     setFixedHeight(TOPHEIGHT);

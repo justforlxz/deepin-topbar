@@ -7,7 +7,7 @@
 #include <QMouseEvent>
 
 PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString &itemKey, QWidget *parent) :
-    QWidget(parent),
+    Item(parent),
     m_pluginInter(pluginInter),
     m_centralWidget(pluginInter->itemWidget(itemKey)),
     m_itemKey(itemKey),

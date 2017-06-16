@@ -3,20 +3,15 @@
 
 #include "../interfaces/pluginsiteminterface.h"
 #include "dbus/dbusmenumanager.h"
+#include "item.h"
 #include <QWidget>
 
-class PluginsItem : public QWidget
+class PluginsItem : public Item
 {
     Q_OBJECT
 public:
     explicit PluginsItem(PluginsItemInterface* const pluginInter, const QString &itemKey, QWidget *parent = 0);
     ~PluginsItem();
-
-    enum ItemType {
-        Indicator,
-        Plugin,
-        DateTime
-    };
 
     ItemType itemType() const;
 
