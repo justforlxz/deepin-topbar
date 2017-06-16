@@ -2,7 +2,7 @@
 #define PLUGINSITEMCONTROLLER_H
 
 #include "pluginscontroller.h"
-#include "item/pluginsitem.h"
+#include "item/item.h"
 
 #include <QObject>
 
@@ -13,19 +13,19 @@ public:
     static PluginsItemController *instance(QObject *parent);
     ~PluginsItemController();
 
-    const QList<PluginsItem *> itemList() const;
+    const QList<Item *> itemList() const;
 
 signals:
-    void itemInserted(const int index, PluginsItem *item) const;
-    void itemRemoved(PluginsItem *item) const;
+    void itemInserted(const int index, Item *item) const;
+    void itemRemoved(Item *item) const;
 
 private:
     explicit PluginsItemController(QObject *parent = nullptr);
-    void pluginItemInserted(PluginsItem *item);
-    void pluginItemRemoved(PluginsItem *item);
+    void pluginItemInserted(Item *item);
+    void pluginItemRemoved(Item *item);
 
 private:
-    QList<PluginsItem *> m_itemList;
+    QList<Item *> m_itemList;
     PluginsController *m_pluginsInter;
 
     static PluginsItemController *INSTANCE;

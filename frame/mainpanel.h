@@ -3,6 +3,7 @@
 
 #include "controller/pluginsitemcontroller.h"
 #include "item/pluginsitem.h"
+#include "item/item.h"
 #include <QHBoxLayout>
 #include <QWidget>
 
@@ -15,8 +16,8 @@ public:
     void initConnect();
 
 private slots:
-    void itemInserted(const int index, PluginsItem *item);
-    void itemRemoved(PluginsItem *item);
+    void itemInserted(const int index, Item *item);
+    void itemRemoved(Item *item);
 
 private:
     QHBoxLayout *m_mainLayout;

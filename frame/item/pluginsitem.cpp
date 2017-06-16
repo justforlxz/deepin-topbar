@@ -7,7 +7,7 @@
 #include <QMouseEvent>
 
 PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString &itemKey, QWidget *parent) :
-    QWidget(parent),
+    Item(parent),
     m_pluginInter(pluginInter),
     m_centralWidget(pluginInter->itemWidget(itemKey)),
     m_itemKey(itemKey),
@@ -25,6 +25,21 @@ PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString
 PluginsItem::~PluginsItem()
 {
 
+}
+
+PluginsItem::ItemType PluginsItem::itemType() const
+{
+    if (m_pluginInter->pluginName() == "indicator")
+        return Indicator;
+    if (m_pluginInter->pluginName() == "datetime")
+        return DateTime;
+
+    return Plugin;
+}
+
+const QString PluginsItem::name() const
+{
+    return m_pluginInter->pluginName();
 }
 
 void PluginsItem::invokedMenuItem(const QString &itemId, const bool checked)
@@ -97,6 +112,8 @@ void PluginsItem::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::RightButton)
         return showContextMenu();
+
+    QWidget::mousePressEvent(event);
 }
 
 void PluginsItem::hidePopup()

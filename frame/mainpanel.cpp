@@ -15,13 +15,7 @@ void MainPanel::initUI()
 
     m_mainLayout->setMargin(0);
     m_mainLayout->setSpacing(0);
-    m_mainLayout->addStretch();
     setLayout(m_mainLayout);
-
-    const QList<PluginsItem *> itemList = m_itemController->itemList();
-    for (PluginsItem *item : itemList) {
-        m_mainLayout->addWidget(item);
-    }
 }
 
 void MainPanel::initConnect()
@@ -30,7 +24,7 @@ void MainPanel::initConnect()
     connect(m_itemController, &PluginsItemController::itemRemoved, this, &MainPanel::itemRemoved, Qt::DirectConnection);
 }
 
-void MainPanel::itemInserted(const int index, PluginsItem *item)
+void MainPanel::itemInserted(const int index, Item *item)
 {
     item->setVisible(true);
     item->setParent(this);
@@ -39,7 +33,7 @@ void MainPanel::itemInserted(const int index, PluginsItem *item)
     m_mainLayout->insertWidget(index, item);
 }
 
-void MainPanel::itemRemoved(PluginsItem *item)
+void MainPanel::itemRemoved(Item *item)
 {
     m_mainLayout->removeWidget(item);
 }

@@ -3,14 +3,18 @@
 
 #include "../interfaces/pluginsiteminterface.h"
 #include "dbus/dbusmenumanager.h"
+#include "item.h"
 #include <QWidget>
 
-class PluginsItem : public QWidget
+class PluginsItem : public Item
 {
     Q_OBJECT
 public:
     explicit PluginsItem(PluginsItemInterface* const pluginInter, const QString &itemKey, QWidget *parent = 0);
     ~PluginsItem();
+
+    ItemType itemType() const;
+    const QString name() const;
 
 private:
     void invokedMenuItem(const QString &itemId, const bool checked);
