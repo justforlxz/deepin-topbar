@@ -15,19 +15,20 @@ MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent)
     m_mediaControl = new MediaControl(this);
 
     m_mediaControl->move(0, -m_mediaControl->height());
-    m_mediaTitle->move(0, 0);
+    m_mediaTitle->move(0, 1);
+    m_mediaTitle->setStyleSheet("font-size: 14px;");
 
     //Animation
     m_hoverControlAni = new QPropertyAnimation(m_mediaControl, "pos", this);
     m_hoverControlAni->setDuration(300);
-    m_hoverControlAni->setStartValue(QPoint(m_mediaControl->x(), 0));
+    m_hoverControlAni->setStartValue(QPoint(m_mediaControl->x(), 1));
     m_hoverControlAni->setEndValue(QPoint(m_mediaControl->x(), -m_mediaControl->height()));
     m_hoverControlAni->setEasingCurve(QEasingCurve::InOutCubic);
 
     m_showControlAni = new QPropertyAnimation(m_mediaControl, "pos", this);
     m_showControlAni->setDuration(300);
     m_showControlAni->setStartValue(QPoint(m_mediaControl->x(), -m_mediaControl->height()));
-    m_showControlAni->setEndValue(QPoint(m_mediaControl->x(), 0));
+    m_showControlAni->setEndValue(QPoint(m_mediaControl->x(), 1));
     m_showControlAni->setEasingCurve(QEasingCurve::InOutCubic);
 
     connect(m_hoverControlAni, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
