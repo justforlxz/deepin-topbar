@@ -2,6 +2,7 @@
 #define MEDIACONTROLWIDGET_H
 
 #include "mediacontrol.h"
+#include "textticker.h"
 #include "DBus/dbusinterface.h"
 #include "DBus/dbusmediaplayer2.h"
 #include <QFrame>
@@ -29,7 +30,7 @@ protected:
 private:
     MediaControl *m_mediaControl;
     DBusMediaPlayer2 *m_mprisInter;
-    QLabel *m_mediaTitle;
+    TextTicker *m_mediaTitle;
     QPropertyAnimation *m_hoverControlAni;
     QPropertyAnimation *m_showControlAni;
     DBusInterface *m_dbusInter;

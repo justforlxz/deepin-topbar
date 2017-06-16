@@ -13,8 +13,6 @@ MediaControl::MediaControl(QWidget *parent) : QFrame(parent)
                   "background: transparent;"
                   "}");
 
-    setFixedWidth(100);
-
     m_lastBtn = new QLabel;
     m_lastBtn->setPixmap(QPixmap(":/img/Icons/next_normal.png").scaled(23, 23, Qt::KeepAspectRatio));
     m_lastBtn->installEventFilter(this);
