@@ -8,14 +8,27 @@
 #include <QScreen>
 #include <QApplication>
 #include <QRect>
-//#include <DForeignWindow>
+#include <DForeignWindow>
+#include <functional>
 
-//DWIDGET_USE_NAMESPACE
+DWIDGET_USE_NAMESPACE
 
-//#define DEFINE_CONST_CHAR(Name) const char _##Name[] = "_d_" #Name
+#define DEFINE_CONST_CHAR(Name) const char _##Name[] = "_d_" #Name
 
 // functions
-//DEFINE_CONST_CHAR(getWindows);
+DEFINE_CONST_CHAR(getWindows);
+DEFINE_CONST_CHAR(connectWindowListChanged);
+
+static bool connectWindowListChanged(QObject *object, std::function<void ()> slot)
+{
+    QFunctionPointer connectWindowListChanged = Q_NULLPTR;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    connectWindowListChanged = qApp->platformFunction(_connectWindowListChanged);
+#endif
+
+    return connectWindowListChanged && reinterpret_cast<bool(*)(QObject *object, std::function<void ()>)>(connectWindowListChanged)(object, slot);
+}
 
 MainFrame::MainFrame(QWidget *parent): QFrame(parent)
 {
@@ -28,6 +41,12 @@ MainFrame::MainFrame(QWidget *parent): QFrame(parent)
     initAnimation();
     screenChanged();
     initConnect();
+
+    registerDesktop();
+
+    connectWindowListChanged(this, [this] {
+        registerDesktop();
+    });
 }
 
 MainFrame::~MainFrame()
@@ -35,30 +54,31 @@ MainFrame::~MainFrame()
     m_desktopWidget->deleteLater();
 }
 
-//void MainFrame::registerDesktop()
-//{
-//    QFunctionPointer wmClientList = Q_NULLPTR;
-//    QList<DForeignWindow*> windowList;
+void MainFrame::registerDesktop()
+{
+    QFunctionPointer wmClientList = Q_NULLPTR;
 
-//#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-//    wmClientList = qApp->platformFunction(_getWindows);
-//#endif
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    wmClientList = qApp->platformFunction(_getWindows);
+#endif
 
-//    if (wmClientList) {
-//        for (WId wid : reinterpret_cast<QVector<quint32>(*)()>(wmClientList)()) {
-//            if (DForeignWindow *w = DForeignWindow::fromWinId(wid)) {
-//                windowList << w;
-//            }
-//        }
-//    }
+    if (wmClientList) {
+        for (WId wid : reinterpret_cast<QVector<quint32>(*)()>(wmClientList)()) {
+            if (DForeignWindow *w = DForeignWindow::fromWinId(wid)) {
+                if (w->wmClass() == "dde-launcher") {
+                    m_hideWithLauncher->start();
+                    return;
+                }
+            }
+        }
+    }
+    // if launcher hide
+    m_showWithLauncher->start();
 
-//    for (DForeignWindow *window : windowList) {
-//       if (window->wmClass() == "dde-desktop") {
-//           windowHandle()->setParent(window);
-//           break;
-//       }
-//    }
-//}
+    /*
+     Think zccrs, Perfect protection against launcher. It won't stop launcher at last.
+     * /
+}
 
 void MainFrame::init()
 {
@@ -69,56 +89,34 @@ void MainFrame::init()
     m_blurEffectWidget->setMaskColor(DBlurEffectWidget::LightColor);
 
     m_mainPanel = new MainPanel(this);
-
-    // I can't handle it properly. unable keep out launcher
-
-//    m_launcherInter = new LauncherInter("com.deepin.dde.Launcher",
-//                                        "/com/deepin/dde/Launcher",
-//                                        QDBusConnection::sessionBus(),
-//                                        this);
 }
 
 void MainFrame::initConnect()
 {
     connect(m_desktopWidget, &QDesktopWidget::resized, this, &MainFrame::screenChanged);
 
-//    connect(m_launcherInter, &LauncherInter::Shown, this, [=]{
-//        m_hideWithLauncher->start();
-//    });
+    connect(m_showWithLauncher, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
+        m_blurEffectWidget->move(value.toPoint());
+    });
 
-//    connect(m_launcherInter, &LauncherInter::Closed, this, [=]{
-//        m_showWithLauncher->start();
-//    });
-
-//    connect(m_showWithLauncher, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
-//        m_blurEffectWidget->move(value.toPoint());
-//    });
-
-//    connect(m_hideWithLauncher, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
-//        m_blurEffectWidget->move(value.toPoint());
-//    });
-
-//    connect(m_showWithLauncher, &QPropertyAnimation::finished, this, [=]{
-//    });
-
-//    connect(m_hideWithLauncher, &QPropertyAnimation::finished, this, [=]{
-
-//    });
+    connect(m_hideWithLauncher, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
+        m_blurEffectWidget->move(value.toPoint());
+    });
 }
 
 void MainFrame::initAnimation()
 {
-//    m_showWithLauncher =new QPropertyAnimation(m_mainPanel, "pos", m_mainPanel);
-//    m_showWithLauncher->setDuration(300);
-//    m_showWithLauncher->setStartValue(QPoint(m_mainPanel->x(), -m_mainPanel->height()));
-//    m_showWithLauncher->setEndValue(QPoint(m_mainPanel->x(), 0));
-//    m_showWithLauncher->setEasingCurve(QEasingCurve::InOutCubic);
+    m_showWithLauncher =new QPropertyAnimation(m_mainPanel, "pos", m_mainPanel);
+    m_showWithLauncher->setDuration(300);
+    m_showWithLauncher->setStartValue(QPoint(m_mainPanel->x(), -m_mainPanel->height()));
+    m_showWithLauncher->setEndValue(QPoint(m_mainPanel->x(), 0));
+    m_showWithLauncher->setEasingCurve(QEasingCurve::InOutCubic);
 
-//    m_hideWithLauncher =new QPropertyAnimation(m_mainPanel, "pos", m_mainPanel);
-//    m_hideWithLauncher->setDuration(300);
-//    m_hideWithLauncher->setStartValue(QPoint(m_mainPanel->x(), 0));
-//    m_hideWithLauncher->setEndValue(QPoint(m_mainPanel->x(), -m_mainPanel->height()));
-    //    m_hideWithLauncher->setEasingCurve(QEasingCurve::InOutCubic);
+    m_hideWithLauncher =new QPropertyAnimation(m_mainPanel, "pos", m_mainPanel);
+    m_hideWithLauncher->setDuration(300);
+    m_hideWithLauncher->setStartValue(QPoint(m_mainPanel->x(), 0));
+    m_hideWithLauncher->setEndValue(QPoint(m_mainPanel->x(), -m_mainPanel->height()));
+    m_hideWithLauncher->setEasingCurve(QEasingCurve::InOutCubic);
 }
 
 void MainFrame::screenChanged()
