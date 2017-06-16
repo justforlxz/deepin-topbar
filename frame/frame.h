@@ -1,12 +1,9 @@
 #ifndef FRAME_H
 #define FRAME_H
 
-#include <QWidget>
-#include <DBlurEffectWidget>
+#include <QFrame>
 
-DWIDGET_USE_NAMESPACE
-
-class Frame : public DBlurEffectWidget
+class Frame : public QFrame
 {
     Q_OBJECT
 public:

@@ -8,24 +8,26 @@
 
 DWIDGET_USE_NAMESPACE
 
-Frame::Frame(QWidget *parent) : DBlurEffectWidget(parent)
+Frame::Frame(QWidget *parent) : QFrame(parent)
 {
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
     setAttribute(Qt::WA_TranslucentBackground);
-
-    setBlendMode(DBlurEffectWidget::InWindowBlend);
-    setMaskColor(DBlurEffectWidget::LightColor);
 
     DPlatformWindowHandle *handle = new DPlatformWindowHandle(this);
     handle->setBorderWidth(0);
     handle->setWindowRadius(0);
     handle->setEnableSystemMove(true);
     handle->setEnableSystemResize(true);
-    handle->setEnableBlurWindow(true);
 
     QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
     resize(screen.width(), 25);
     move(screen.x(), 0);
+
+    connect(QApplication::desktop(), &QDesktopWidget::resized, this, [=]{
+        QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
+        resize(screen.width(), 25);
+        move(screen.x(), 0);
+    });
 }
 
 void Frame::registerDesktop()

@@ -8,14 +8,14 @@
 #include <QScreen>
 #include <QApplication>
 #include <QRect>
-#include <DForeignWindow>
+//#include <DForeignWindow>
 
-DWIDGET_USE_NAMESPACE
+//DWIDGET_USE_NAMESPACE
 
-#define DEFINE_CONST_CHAR(Name) const char _##Name[] = "_d_" #Name
+//#define DEFINE_CONST_CHAR(Name) const char _##Name[] = "_d_" #Name
 
 // functions
-DEFINE_CONST_CHAR(getWindows);
+//DEFINE_CONST_CHAR(getWindows);
 
 MainFrame::MainFrame(QWidget *parent): QFrame(parent)
 {
@@ -35,34 +35,38 @@ MainFrame::~MainFrame()
     m_desktopWidget->deleteLater();
 }
 
-void MainFrame::registerDesktop()
-{
-    QFunctionPointer wmClientList = Q_NULLPTR;
-    QList<DForeignWindow*> windowList;
+//void MainFrame::registerDesktop()
+//{
+//    QFunctionPointer wmClientList = Q_NULLPTR;
+//    QList<DForeignWindow*> windowList;
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-    wmClientList = qApp->platformFunction(_getWindows);
-#endif
+//#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+//    wmClientList = qApp->platformFunction(_getWindows);
+//#endif
 
-    if (wmClientList) {
-        for (WId wid : reinterpret_cast<QVector<quint32>(*)()>(wmClientList)()) {
-            if (DForeignWindow *w = DForeignWindow::fromWinId(wid)) {
-                windowList << w;
-            }
-        }
-    }
+//    if (wmClientList) {
+//        for (WId wid : reinterpret_cast<QVector<quint32>(*)()>(wmClientList)()) {
+//            if (DForeignWindow *w = DForeignWindow::fromWinId(wid)) {
+//                windowList << w;
+//            }
+//        }
+//    }
 
-    for (DForeignWindow *window : windowList) {
-       if (window->wmClass() == "dde-desktop") {
-           windowHandle()->setParent(window);
-           break;
-       }
-    }
-}
+//    for (DForeignWindow *window : windowList) {
+//       if (window->wmClass() == "dde-desktop") {
+//           windowHandle()->setParent(window);
+//           break;
+//       }
+//    }
+//}
 
 void MainFrame::init()
 {
     m_desktopWidget = QApplication::desktop();
+
+    m_blurEffectWidget = new DBlurEffectWidget(this);
+    m_blurEffectWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
+    m_blurEffectWidget->setMaskColor(DBlurEffectWidget::LightColor);
 
     m_mainPanel = new MainPanel(this);
 
@@ -122,14 +126,16 @@ void MainFrame::screenChanged()
     QRect screen = m_desktopWidget->screenGeometry(m_desktopWidget->primaryScreen());
     resize(screen.width(), TOPHEIGHT);
     m_mainPanel->resize(screen.width(), TOPHEIGHT);
+    m_blurEffectWidget->resize(screen.width(), TOPHEIGHT);
     move(screen.x(), 0);
     m_mainPanel->move(0, 0);
+    m_blurEffectWidget->move(0, 0);
 
     xcb_ewmh_connection_t m_ewmh_connection;
     xcb_intern_atom_cookie_t *cookie = xcb_ewmh_init_atoms(QX11Info::connection(), &m_ewmh_connection);
     xcb_ewmh_init_atoms_replies(&m_ewmh_connection, cookie, NULL);
 
     xcb_atom_t atoms[1];
-    atoms[0] = m_ewmh_connection._NET_WM_WINDOW_TYPE_DESKTOP;
+    atoms[0] = m_ewmh_connection._NET_WM_WINDOW_TYPE_DOCK;
     xcb_ewmh_set_wm_window_type(&m_ewmh_connection, winId(), 1, atoms);
 }

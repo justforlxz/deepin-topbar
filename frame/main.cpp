@@ -19,7 +19,6 @@ int main(int argc, char *argv[])
         frame->lower();
 
         MainFrame *mainFrame = new MainFrame;
-        mainFrame->registerDesktop();
         mainFrame->activateWindow();
         mainFrame->show();
 
