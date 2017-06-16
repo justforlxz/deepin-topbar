@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
         frame->lower();
 
         MainFrame *mainFrame = new MainFrame;
+        mainFrame->setShadowWidget(frame);
         mainFrame->activateWindow();
         mainFrame->show();
 
