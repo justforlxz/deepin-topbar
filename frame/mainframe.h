@@ -2,6 +2,7 @@
 #define MAINFRAME_H
 
 #include "frame.h"
+#include "frameshadow.h"
 #include <QFrame>
 #include <QDesktopWidget>
 #include <QHBoxLayout>
@@ -24,7 +25,8 @@ public:
     ~MainFrame();
 
     void registerDesktop();
-    void setShadowWidget(Frame *frame);
+    void registerDockType();
+    void setShadowWidget(FrameShadow *widget);
 
     void init();
     void initConnect();
@@ -34,7 +36,7 @@ private slots:
     void screenChanged();
 
 private:
-    Frame *m_shadowWidget;
+    FrameShadow *m_shadowWidget;
     QDesktopWidget *m_desktopWidget;
     MainPanel *m_mainPanel;
     DBlurEffectWidget *m_blurEffectWidget;

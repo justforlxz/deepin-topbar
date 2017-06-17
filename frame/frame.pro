@@ -19,7 +19,8 @@ HEADERS  += \
     mainpanel.h \
     frame.h \
     item/item.h \
-    item/stretchitem.h
+    item/stretchitem.h \
+    frameshadow.h
 
 SOURCES += \
     main.cpp\
@@ -33,7 +34,8 @@ SOURCES += \
     mainpanel.cpp \
     frame.cpp \
     item/item.cpp \
-    item/stretchitem.cpp
+    item/stretchitem.cpp \
+    frameshadow.cpp
 
 target.path = $${PREFIX}/bin/
 INSTALL += target

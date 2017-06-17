@@ -5,31 +5,26 @@
 #include <xcb/xcb.h>
 #include <xcb/xcb_ewmh.h>
 
-DWIDGET_USE_NAMESPACE
-
 Frame::Frame(QWidget *parent) : QFrame(parent)
 {
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    m_handle = new DPlatformWindowHandle(this);
-    m_handle->setBorderWidth(0);
-    m_handle->setWindowRadius(0);
-
     QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
     resize(screen.width(), 25);
     move(screen.x(), 0);
 
-    connect(QApplication::desktop(), &QDesktopWidget::resized, this, [=]{
+    connect(QApplication::desktop(), &QDesktopWidget::resized, this, [=] {
         QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
         resize(screen.width(), 25);
         move(screen.x(), 0);
     });
-}
 
-DPlatformWindowHandle *Frame::handle()
-{
-    return m_handle;
+    connect(QApplication::desktop(), &QDesktopWidget::primaryScreenChanged, this, [=] {
+        QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
+        resize(screen.width(), 25);
+        move(screen.x(), 0);
+    });
 }
 
 void Frame::registerDesktop()
@@ -38,14 +33,13 @@ void Frame::registerDesktop()
 
     xcb_ewmh_connection_t m_ewmh_connection;
     xcb_intern_atom_cookie_t * cookie = xcb_ewmh_init_atoms(QX11Info::connection(), &m_ewmh_connection);
-    xcb_ewmh_init_atoms_replies(&m_ewmh_connection, cookie, NULL);
 
     // clear strut partial
     xcb_ewmh_wm_strut_partial_t strutPartial;
     memset(&strutPartial, 0, sizeof(xcb_ewmh_wm_strut_partial_t));
     xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, winId(), strutPartial);
 
-    //s set desktop type
+    // set desktop type
     xcb_ewmh_init_atoms_replies(&m_ewmh_connection, cookie, NULL);
 
     xcb_atom_t atoms[1];

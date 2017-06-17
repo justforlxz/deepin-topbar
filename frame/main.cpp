@@ -1,5 +1,6 @@
 #include "mainframe.h"
 #include "frame.h"
+#include "frameshadow.h"
 #include <DApplication>
 
 DWIDGET_USE_NAMESPACE
@@ -19,8 +20,12 @@ int main(int argc, char *argv[])
         frame->show();
         frame->lower();
 
+        FrameShadow *shadowWidget = new FrameShadow;
+        shadowWidget->show();
+
         MainFrame *mainFrame = new MainFrame;
-        mainFrame->setShadowWidget(frame);
+        mainFrame->setShadowWidget(shadowWidget);
+        mainFrame->registerDockType();
         mainFrame->activateWindow();
         mainFrame->show();
 

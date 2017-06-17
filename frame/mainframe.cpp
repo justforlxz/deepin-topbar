@@ -83,9 +83,20 @@ void MainFrame::registerDesktop()
      */
 }
 
-void MainFrame::setShadowWidget(Frame *frame)
+void MainFrame::registerDockType()
 {
-    m_shadowWidget = frame;
+    xcb_ewmh_connection_t m_ewmh_connection;
+    xcb_intern_atom_cookie_t *cookie = xcb_ewmh_init_atoms(QX11Info::connection(), &m_ewmh_connection);
+    xcb_ewmh_init_atoms_replies(&m_ewmh_connection, cookie, NULL);
+
+    xcb_atom_t atoms[1];
+    atoms[0] = m_ewmh_connection._NET_WM_WINDOW_TYPE_DOCK;
+    xcb_ewmh_set_wm_window_type(&m_ewmh_connection, winId(), 1, atoms);
+}
+
+void MainFrame::setShadowWidget(FrameShadow *widget)
+{
+    m_shadowWidget = widget;
 }
 
 void MainFrame::init()
@@ -102,13 +113,16 @@ void MainFrame::init()
 void MainFrame::initConnect()
 {
     connect(m_desktopWidget, &QDesktopWidget::resized, this, &MainFrame::screenChanged);
+    connect(m_desktopWidget, &QDesktopWidget::primaryScreenChanged, this, &MainFrame::screenChanged);
 
     connect(m_showWithLauncher, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
         m_blurEffectWidget->move(value.toPoint());
+        m_shadowWidget->move(m_shadowWidget->x(), value.toPoint().y());
     });
 
     connect(m_hideWithLauncher, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
         m_blurEffectWidget->move(value.toPoint());
+        m_shadowWidget->move(m_shadowWidget->x(), value.toPoint().y());
     });
 }
 
@@ -136,12 +150,4 @@ void MainFrame::screenChanged()
     move(screen.x(), 0);
     m_mainPanel->move(0, 0);
     m_blurEffectWidget->move(0, 0);
-
-    xcb_ewmh_connection_t m_ewmh_connection;
-    xcb_intern_atom_cookie_t *cookie = xcb_ewmh_init_atoms(QX11Info::connection(), &m_ewmh_connection);
-    xcb_ewmh_init_atoms_replies(&m_ewmh_connection, cookie, NULL);
-
-    xcb_atom_t atoms[1];
-    atoms[0] = m_ewmh_connection._NET_WM_WINDOW_TYPE_DOCK;
-    xcb_ewmh_set_wm_window_type(&m_ewmh_connection, winId(), 1, atoms);
 }
