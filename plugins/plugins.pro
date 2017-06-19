@@ -2,4 +2,5 @@ TEMPLATE = subdirs
 SUBDIRS = \
     timewidget \
     mediacontrol \
-    indicator
+    indicator \
+    Power
