@@ -19,6 +19,7 @@ public:
     void itemUpdate(PluginsItemInterface * const itemInter, const QString &itemKey);
     void itemRemoved(PluginsItemInterface * const itemInter, const QString &itemKey);
     void requestContextMenu(PluginsItemInterface * const itemInter, const QString &itemKey);
+    void requestHide();
 
 signals:
     void pluginItemInserted(PluginsItem *pluginItem) const;

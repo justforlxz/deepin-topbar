@@ -39,6 +39,8 @@ public:
     /// request show context menu
     ///
     virtual void requestContextMenu(PluginsItemInterface * const itemInter, const QString &itemKey) = 0;
+
+    virtual void requestHide() = 0;
 };
 
 #endif // PLUGINPROXYINTERFACE_H

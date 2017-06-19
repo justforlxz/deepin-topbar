@@ -72,3 +72,8 @@ void Item::showPopupWindow(QWidget * const content)
     else
         popup->show(p);
 }
+
+void Item::hideTips()
+{
+    PopupWindow->setVisible(false);
+}

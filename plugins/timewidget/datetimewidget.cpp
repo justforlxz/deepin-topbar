@@ -40,7 +40,7 @@ DateTimeWidget::~DateTimeWidget()
     delete m_dateTime;
 }
 
-QWidget *DateTimeWidget::popupWidget()
+DateTimePopup *DateTimeWidget::popupWidget()
 {
     return popup;
 }

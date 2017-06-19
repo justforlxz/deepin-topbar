@@ -12,6 +12,7 @@ public:
 
 signals:
     void requestDateFormat(const bool state);
+    void requestHide();
 
 public slots:
     void onDateFormatChanged(const bool state);

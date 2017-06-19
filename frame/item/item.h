@@ -22,6 +22,7 @@ public:
     virtual const QPoint popupMarkPoint();
     virtual void showTips();
     virtual void showPopupWindow(QWidget * const content);
+    virtual void hideTips();
 
 protected:
     static std::unique_ptr<ItemPopupWindow> PopupWindow;

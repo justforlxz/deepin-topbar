@@ -1,9 +1,14 @@
 #include "datetimeplugin.h"
+#include "datetimepopup.h"
 
 DateTimePlugin::DateTimePlugin(QWidget *parent)
     : QObject(parent)
 {
     m_centralWidget = new DateTimeWidget;
+
+    connect(m_centralWidget->popupWidget(), &DateTimePopup::requestHide, this, [=] {
+        m_proxyInter->requestHide();
+    });
 }
 
 DateTimePlugin::~DateTimePlugin()

@@ -12,7 +12,7 @@ public:
     explicit DateTimeWidget(QWidget *parent = 0);
     ~DateTimeWidget();
 
-    QWidget *popupWidget();
+    DateTimePopup *popupWidget();
 
 public slots:
     void updateTime();

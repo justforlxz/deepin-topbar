@@ -57,6 +57,15 @@ void PluginsController::requestContextMenu(PluginsItemInterface * const itemInte
 
 }
 
+void PluginsController::requestHide()
+{
+    for (QMap<QString, PluginsItem *> &map : m_pluginList.values()) {
+        for (PluginsItem *item : map.values()) {
+            item->hideTips();
+        }
+    }
+}
+
 void PluginsController::startLoader()
 {
     PluginLoader *loader = new PluginLoader(this);
