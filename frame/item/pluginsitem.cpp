@@ -47,7 +47,6 @@ QWidget *PluginsItem::popupTips()
 
 void PluginsItem::mousePressEvent(QMouseEvent *event)
 {
-    Q_UNUSED(event);
-
-    showTips();
+    if (event->button() == Qt::LeftButton)
+        showTips();
 }
