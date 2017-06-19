@@ -2,7 +2,6 @@
 #define PLUGINSITEM_H
 
 #include "../interfaces/pluginsiteminterface.h"
-#include "dbus/dbusmenumanager.h"
 #include "item.h"
 #include <QWidget>
 
@@ -29,7 +28,6 @@ private:
     PluginsItemInterface * const m_pluginInter;
     QWidget *m_centralWidget;
     QString m_itemKey;
-    DBusMenuManager *m_menuManagerInter;
 };
 
 #endif // PLUGINSITEM_H

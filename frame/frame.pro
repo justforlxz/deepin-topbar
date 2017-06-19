@@ -13,8 +13,6 @@ HEADERS  += \
     controller/pluginloader.h \
     controller/pluginscontroller.h \
     item/pluginsitem.h \
-    dbus/dbusmenumanager.h \
-    dbus/dbusmenu.h \
     controller/pluginsitemcontroller.h \
     mainpanel.h \
     frame.h \
@@ -29,8 +27,6 @@ SOURCES += \
     controller/pluginloader.cpp \
     controller/pluginscontroller.cpp \
     item/pluginsitem.cpp \
-    dbus/dbusmenumanager.cpp \
-    dbus/dbusmenu.cpp \
     controller/pluginsitemcontroller.cpp \
     mainpanel.cpp \
     frame.cpp \

@@ -78,23 +78,6 @@ public:
     virtual const QString itemCommand(const QString &itemKey) {Q_UNUSED(itemKey); return QString();}
 
     ///
-    /// \brief itemContextMenu
-    /// context menu is shown when RequestPopupMenu called.
-    /// \param itemKey
-    /// \return
-    ///
-    virtual const QString itemContextMenu(const QString &itemKey) {Q_UNUSED(itemKey); return QString();}
-    ///
-    /// \brief invokedMenuItem
-    /// call if context menu item is clicked
-    /// \param itemKey
-    /// \param itemId
-    /// menu item id
-    /// \param checked
-    ///
-    virtual void invokedMenuItem(const QString &itemKey, const QString &menuId, const bool checked) {Q_UNUSED(itemKey); Q_UNUSED(menuId); Q_UNUSED(checked);}
-
-    ///
     /// \brief itemSortKey
     /// tell topbar where your item wants to put on.
     ///

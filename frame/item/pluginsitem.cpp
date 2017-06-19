@@ -1,5 +1,4 @@
 #include "pluginsitem.h"
-#include "dbus/dbusmenu.h"
 #include <QHBoxLayout>
 #include <QDBusPendingReply>
 #include <QDBusObjectPath>
@@ -10,8 +9,7 @@ PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString
     Item(parent),
     m_pluginInter(pluginInter),
     m_centralWidget(pluginInter->itemWidget(itemKey)),
-    m_itemKey(itemKey),
-    m_menuManagerInter(new DBusMenuManager(this))
+    m_itemKey(itemKey)
 {
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setMargin(0);

@@ -46,17 +46,3 @@ const QString IndicatorPlugin::itemCommand(const QString &itemKey)
 
     return QString("dde-indicator");
 }
-
-const QString IndicatorPlugin::itemContextMenu(const QString &itemKey)
-{
-    Q_UNUSED(itemKey);
-
-    return QString();
-}
-
-void IndicatorPlugin::invokedMenuItem(const QString &itemKey, const QString &menuId, const bool checked)
-{
-    Q_UNUSED(itemKey)
-    Q_UNUSED(checked)
-    Q_UNUSED(menuId)
-}
