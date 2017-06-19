@@ -18,12 +18,14 @@ Frame::Frame(QWidget *parent) : QFrame(parent)
         QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
         resize(screen.width(), 25);
         move(screen.x(), 0);
+        registerDesktop();
     });
 
     connect(QApplication::desktop(), &QDesktopWidget::primaryScreenChanged, this, [=] {
         QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
         resize(screen.width(), 25);
         move(screen.x(), 0);
+        registerDesktop();
     });
 }
 

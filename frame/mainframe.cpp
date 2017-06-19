@@ -150,4 +150,6 @@ void MainFrame::screenChanged()
     move(screen.x(), 0);
     m_mainPanel->move(0, 0);
     m_blurEffectWidget->move(0, 0);
+
+    registerDockType();
 }
