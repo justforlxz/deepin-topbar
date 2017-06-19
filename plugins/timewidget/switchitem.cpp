@@ -14,6 +14,7 @@ SwitchItem::SwitchItem(QWidget *parent) : QWidget(parent)
 
     layout->addWidget(m_text);
     layout->addStretch();
+    layout->addSpacing(10);
     layout->addWidget(m_switch);
 
     setLayout(layout);

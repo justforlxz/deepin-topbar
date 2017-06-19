@@ -10,7 +10,7 @@ DateTimeWidget::DateTimeWidget(QWidget *parent) : QLabel(parent)
     QSettings *settings = new QSettings("deepin", "dde-dock-datetime", this);
     m_24HourFormat = settings->value("24HourFormat").toBool();
 
-    popup->onSetDefaultDateFormat(m_24HourFormat ? 24 : 12);
+    popup->onDateFormatChanged(m_24HourFormat);
 
     m_dateTime = new QDateTime;
     QTimer *timer = new QTimer(this);

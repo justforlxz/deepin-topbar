@@ -3,7 +3,6 @@
 
 #include "switchitem.h"
 #include <QWidget>
-#include <QList>
 
 class DateTimePopup : public QWidget
 {
@@ -16,10 +15,9 @@ signals:
 
 public slots:
     void onDateFormatChanged(const bool state);
-    void onSetDefaultDateFormat(int format);
 
 private:
-    QList<SwitchItem*> m_buttonGrp;
+    SwitchItem *_DateBtn;
 };
 
 #endif // DATETIMEPOPUP_H
