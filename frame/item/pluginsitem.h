@@ -17,22 +17,13 @@ public:
     const QString name() const;
 
 private:
-    void invokedMenuItem(const QString &itemId, const bool checked);
-    const QString contextMenu() const;
     QWidget *popupTips();
 
 signals:
     void requestRefershWindowVisible() const;
 
-public slots:
-    void showContextMenu();
-    const QPoint popupMarkPoint();
-
 protected:
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-
-private:
-    void hidePopup();
 
 private:
     PluginsItemInterface * const m_pluginInter;

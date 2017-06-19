@@ -20,7 +20,8 @@ HEADERS  += \
     frame.h \
     item/item.h \
     item/stretchitem.h \
-    frameshadow.h
+    frameshadow.h \
+    utils/itempopupwindow.h
 
 SOURCES += \
     main.cpp\
@@ -35,7 +36,8 @@ SOURCES += \
     frame.cpp \
     item/item.cpp \
     item/stretchitem.cpp \
-    frameshadow.cpp
+    frameshadow.cpp \
+    utils/itempopupwindow.cpp
 
 target.path = $${PREFIX}/bin/
 INSTALL += target

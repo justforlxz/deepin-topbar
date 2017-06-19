@@ -1,7 +1,9 @@
 #ifndef ITEM_H
 #define ITEM_H
 
+#include "utils/itempopupwindow.h"
 #include <QWidget>
+#include <memory>
 
 class Item : public QWidget
 {
@@ -16,6 +18,13 @@ public:
     };
 
     inline virtual ItemType itemType() const {Q_UNREACHABLE(); return Plugin;}
+    virtual QWidget *popupTips();
+    virtual const QPoint popupMarkPoint();
+    virtual void showTips();
+    virtual void showPopupWindow(QWidget * const content);
+
+protected:
+    static std::unique_ptr<ItemPopupWindow> PopupWindow;
 };
 
 #endif // ITEM_H
