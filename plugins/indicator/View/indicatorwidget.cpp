@@ -25,12 +25,8 @@ void IndicatorWidget::initUI()
     setWindowFlags(Qt::WindowDoesNotAcceptFocus);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    setStyleSheet("QPushButton {"
-                  "background: transparent;"
-                  "}");
-
-    m_entry = new DPushButton;
-    m_entry->setIconSize(QSize(23, 23));
+    m_entry = new Entry;
+    m_entry->resize(QSize(23, 23));
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setMargin(0);
@@ -80,8 +76,6 @@ void IndicatorWidget::refreshActiveWindow()
         if (entry->active()) {
             const QIcon icon = QIcon::fromTheme(entry->icon(), QIcon::fromTheme("application-x-desktop"));
             m_entry->setNormalIcon(icon);
-            m_entry->setHoverIcon(icon);
-            m_entry->setPressIcon(icon);
             m_entry->setText(entry->name());
             m_entry->setVisible(true);
             return;

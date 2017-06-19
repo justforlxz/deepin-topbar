@@ -1,12 +1,10 @@
 #ifndef INDICATORWIDGET_H
 #define INDICATORWIDGET_H
 
+#include "entry.h"
 #include <QWidget>
 #include <DBus/dbusdock.h>
 #include <DBus/dbusdockentry.h>
-#include <dpushbutton.h>
-
-DWIDGET_USE_NAMESPACE
 
 class IndicatorWidget : public QWidget
 {
@@ -25,7 +23,7 @@ private slots:
 private:
     DBusDock *m_dockInter;
     QList<DBusDockEntry *> m_entryList;
-    DPushButton *m_entry;
+    Entry *m_entry;
     DBusDockEntry *m_activeWindow;
 };
 

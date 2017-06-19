@@ -31,13 +31,15 @@ SOURCES += \
         indicatorplugin.cpp \
     View/indicatorwidget.cpp \
     DBus/dbusdock.cpp \
-    DBus/dbusdockentry.cpp
+    DBus/dbusdockentry.cpp \
+    View/entry.cpp
 
 HEADERS += \
         indicatorplugin.h \
     View/indicatorwidget.h \
     DBus/dbusdock.h \
-    DBus/dbusdockentry.h
+    DBus/dbusdockentry.h \
+    View/entry.h
 
 target.path = $${PREFIX}/lib/dde-topbar/plugins/
 INSTALLS   += target
