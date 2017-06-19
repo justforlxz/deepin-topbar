@@ -1,0 +1,18 @@
+     <interface name="com.deepin.daemon.Power">
+          <!--method name="Reset"></method>
+          <property name="LinePowerScreenBlackDelay" type="i" access="readwrite"></property>
+          <property name="LinePowerSleepDelay" type="i" access="readwrite"></property>
+          <property name="BatteryScreenBlackDelay" type="i" access="readwrite"></property>
+          <property name="BatterySleepDelay" type="i" access="readwrite"></property>
+          <property name="ScreenBlackLock" type="b" access="readwrite"></property>
+          <property name="SleepLock" type="b" access="readwrite"></property>
+          <property name="PowerButtonAction" type="s" access="readwrite"></property>
+          <property name="LidClosedAction" type="s" access="readwrite"></property>
+          <property name="LidIsPresent" type="b" access="read"></property>
+          <property name="OnBattery" type="b" access="read"></property>
+          <property name="BatteryIsPresent" type="a{sb}" access="read"></property-->
+          <property name="BatteryPercentage" type="a{sd}" access="read">
+            <annotation name="org.qtproject.QtDBus.QtTypeName" value="BatteryPercentageMap"/>
+          </property>
+          <!--property name="BatteryState" type="a{su}" access="read"></property-->
+     </interface>

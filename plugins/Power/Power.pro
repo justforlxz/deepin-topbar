@@ -13,7 +13,8 @@ TEMPLATE = lib
 CONFIG    += c++11 link_pkgconfig
 TARGET     = $$qtLibraryTarget(power)
 DESTDIR    = $$_PRO_FILE_PWD_/../
-DISTFILES += power.json
+DISTFILES += power.json \
+    DBus/com.deepin.daemon.Power.xml
 DEFINES += POWER_LIBRARY
 
 
@@ -31,12 +32,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         powerplugin.cpp \
     powerwidget.cpp \
-    powerpopupwidget.cpp
+    powerpopupwidget.cpp \
+    DBus/dbusaccount.cpp \
+    DBus/dbuspower.cpp
 
 HEADERS += \
         powerplugin.h \
     powerwidget.h \
-    powerpopupwidget.h
+    powerpopupwidget.h \
+    DBus/dbusaccount.h \
+    DBus/dbuspower.h
 
 target.path = $${PREFIX}/lib/dde-topbar/plugins/
 INSTALLS   += target

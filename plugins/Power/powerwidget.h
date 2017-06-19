@@ -1,8 +1,10 @@
 #ifndef POWERWIDGET_H
 #define POWERWIDGET_H
 
+#include "DBus/dbuspower.h"
 #include "powerpopupwidget.h"
 #include <QWidget>
+#include <QLabel>
 
 namespace Plugins {
 namespace Power {
@@ -17,9 +19,12 @@ public:
 signals:
 
 public slots:
+    void updateBatteryIcon();
 
 private:
     PowerPopupWidget *m_popup;
+    QLabel *m_battery;
+    DBusPower* m_powerInter;
 };
 
 }
