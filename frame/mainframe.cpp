@@ -43,8 +43,6 @@ MainFrame::MainFrame(QWidget *parent): QFrame(parent)
     screenChanged();
     initConnect();
 
-    registerDesktop();
-
     connectWindowListChanged(this, [this] {
         registerDesktop();
     });

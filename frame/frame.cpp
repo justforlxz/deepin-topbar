@@ -10,27 +10,16 @@ Frame::Frame(QWidget *parent) : QFrame(parent)
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
-    resize(screen.width(), 25);
-    move(screen.x(), 0);
-
-    connect(QApplication::desktop(), &QDesktopWidget::resized, this, [=] {
-        QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
-        resize(screen.width(), 25);
-        move(screen.x(), 0);
-        registerDesktop();
-    });
-
-    connect(QApplication::desktop(), &QDesktopWidget::primaryScreenChanged, this, [=] {
-        QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
-        resize(screen.width(), 25);
-        move(screen.x(), 0);
-        registerDesktop();
-    });
+    connect(QApplication::desktop(), &QDesktopWidget::resized, this, &Frame::registerDesktop);
+    connect(QApplication::desktop(), &QDesktopWidget::primaryScreenChanged, this, &Frame::registerDesktop);
 }
 
 void Frame::registerDesktop()
 {
+    QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
+    resize(screen.width(), 25);
+    move(screen.x(), 0);
+
     //register type to Desktop
 
     xcb_ewmh_connection_t m_ewmh_connection;
@@ -52,7 +41,6 @@ void Frame::registerDesktop()
     xcb_ewmh_wm_strut_partial_t strut_partial;
     memset(&strut_partial, 0, sizeof(xcb_ewmh_wm_strut_partial_t));
 
-    QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
     const QPoint p(screen.x(), 0);
     const QRect r = QRect(p, size());
 

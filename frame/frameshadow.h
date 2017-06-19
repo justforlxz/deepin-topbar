@@ -14,7 +14,7 @@ class FrameShadow : public QWidget
 public:
     explicit FrameShadow(QWidget *parent = nullptr);
 
-private slots:
+public slots:
     void screenChanged();
 
 private:

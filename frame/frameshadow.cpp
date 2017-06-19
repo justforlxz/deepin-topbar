@@ -13,8 +13,6 @@ FrameShadow::FrameShadow(QWidget *parent) : QWidget(parent)
     m_handle->setBorderWidth(0);
     m_handle->setWindowRadius(0);
 
-    screenChanged();
-
     QDesktopWidget *widget = QApplication::desktop();
     connect(widget, &QDesktopWidget::resized, this, &FrameShadow::screenChanged);
     connect(widget, &QDesktopWidget::primaryScreenChanged, this, &FrameShadow::screenChanged);

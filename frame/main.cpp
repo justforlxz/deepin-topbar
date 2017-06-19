@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
         frame->lower();
 
         FrameShadow *shadowWidget = new FrameShadow;
+        shadowWidget->screenChanged();
         shadowWidget->show();
 
         MainFrame *mainFrame = new MainFrame;
