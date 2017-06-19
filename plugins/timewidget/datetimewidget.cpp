@@ -2,10 +2,20 @@
 #include <QTimer>
 #include <QDateTime>
 #include <QSettings>
-#include <QDebug>
+#include <QHBoxLayout>
 
-DateTimeWidget::DateTimeWidget(QWidget *parent) : QLabel(parent)
+DateTimeWidget::DateTimeWidget(QWidget *parent) : QWidget(parent)
 {
+
+    m_timeLbl = new QLabel;
+
+    QHBoxLayout *layout = new QHBoxLayout;
+    layout->setMargin(0);
+    layout->setSpacing(0);
+    layout->addWidget(m_timeLbl, 0, Qt::AlignVCenter);
+
+    setLayout(layout);
+
     popup = new DateTimePopup;
     QSettings *settings = new QSettings("deepin", "dde-dock-datetime", this);
     m_24HourFormat = settings->value("24HourFormat").toBool();
@@ -37,5 +47,5 @@ QWidget *DateTimeWidget::popupWidget()
 
 void DateTimeWidget::updateTime()
 {
-    setText(m_dateTime->currentDateTime().toString(m_24HourFormat ? "hh:mm" : "hh:mm A"));
+    m_timeLbl->setText(m_dateTime->currentDateTime().toString(m_24HourFormat ? "hh:mm" : "hh:mm A"));
 }

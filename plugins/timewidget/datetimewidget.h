@@ -2,9 +2,10 @@
 #define DATETIMEWIDGET_H
 
 #include "datetimepopup.h"
+#include <QWidget>
 #include <QLabel>
 
-class DateTimeWidget : public QLabel
+class DateTimeWidget : public QWidget
 {
     Q_OBJECT
 public:
@@ -17,6 +18,7 @@ public slots:
     void updateTime();
 
 private:
+    QLabel *m_timeLbl;
     QDateTime *m_dateTime;
     DateTimePopup *popup;
     bool m_24HourFormat;
