@@ -4,7 +4,6 @@
 IndicatorPlugin::IndicatorPlugin(QObject *parent) : QObject(parent)
 {
     m_centralWidget = new IndicatorWidget;
-    m_tip = new QLabel;
 }
 
 const QString IndicatorPlugin::pluginName() const
@@ -37,7 +36,7 @@ QWidget *IndicatorPlugin::itemTipsWidget(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return m_tip;
+    return nullptr;
 }
 
 const QString IndicatorPlugin::itemCommand(const QString &itemKey)

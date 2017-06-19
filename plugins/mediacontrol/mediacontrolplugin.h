@@ -29,7 +29,6 @@ public:
 private:
     PluginProxyInterface *m_proxyInter;
     MediaControlWidget *m_centralWidget;
-    QLabel *m_tip;
 };
 
 #endif // MEDIACONTROLPLUGIN_H

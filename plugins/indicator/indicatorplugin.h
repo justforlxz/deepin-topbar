@@ -28,7 +28,6 @@ public:
 private:
     PluginProxyInterface *m_proxyInter;
     IndicatorWidget *m_centralWidget;
-    QLabel *m_tip;
 };
 
 #endif // INDICATORPLUGIN_H

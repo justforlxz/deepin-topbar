@@ -3,7 +3,6 @@
 MediaControlPlugin::MediaControlPlugin(QObject *parent) : QObject(parent)
 {
     m_centralWidget = new MediaControlWidget;
-    m_tip = new QLabel;
 }
 
 MediaControlPlugin::~MediaControlPlugin()
@@ -41,7 +40,7 @@ QWidget *MediaControlPlugin::itemTipsWidget(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return m_tip;
+    return nullptr;
 }
 
 const QString MediaControlPlugin::itemCommand(const QString &itemKey)
