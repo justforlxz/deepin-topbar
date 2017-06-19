@@ -34,9 +34,8 @@ ItemPopupWindow::ItemPopupWindow(QWidget *parent)
     });
 
     connect(m_mouseArea, &__XMouseArea::ButtonPress, this, [this] (int, int x, int y, const QString &key) {
-        if (key == m_key && !containsPoint(QPoint(x, y))) {
+        if (key == m_key && !containsPoint(QPoint(x, y)))
             hide();
-        }
     });
 }
 
@@ -66,10 +65,7 @@ void ItemPopupWindow::show(const int x, const int y)
     resizeWithContent();
 
     move(x, y);
-    if (!isVisible())
-        QWidget::show();
-
-    update();
+    setVisible(!isVisible());
 }
 
 void ItemPopupWindow::compositeChanged()
@@ -82,5 +78,6 @@ void ItemPopupWindow::compositeChanged()
 
 bool ItemPopupWindow::containsPoint(const QPoint &point) const
 {
-    return geometry().contains(point);
+    QRect re(geometry().x(), 0, rect().width(), geometry().y() + rect().height());
+    return re.contains(point);
 }

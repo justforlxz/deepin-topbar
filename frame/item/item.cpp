@@ -41,8 +41,11 @@ const QPoint Item::popupMarkPoint()
 
 void Item::showTips()
 {
-    if (PopupWindow->isVisible())
+    if (PopupWindow->isVisible()) {
+        PopupWindow->setVisible(false);
         return;
+    }
+
 
     QWidget * const content = popupTips();
     if (!content)
