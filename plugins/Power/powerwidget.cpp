@@ -10,11 +10,13 @@ PowerWidget::PowerWidget(QWidget *parent) : QWidget(parent)
 {
     m_popup = new PowerPopupWidget;
 
+    m_batteryIcon = new QLabel;
     m_battery = new QLabel;
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
-    layout->setSpacing(0);
+    layout->setSpacing(5);
+    layout->addWidget(m_batteryIcon, 0, Qt::AlignVCenter);
     layout->addWidget(m_battery, 0, Qt::AlignVCenter);
 
     setLayout(layout);
@@ -64,8 +66,8 @@ void PowerWidget::updateBatteryIcon()
     } else {
         iconStr = QString("battery-%1-symbolic").arg(percentageStr);
     }
-
-    m_battery->setPixmap(QIcon::fromTheme(iconStr).pixmap(16, 16));
+    m_battery->setText(percentageStr + "%");
+    m_batteryIcon->setPixmap(QIcon::fromTheme(iconStr).pixmap(16, 16));
 }
 
 }

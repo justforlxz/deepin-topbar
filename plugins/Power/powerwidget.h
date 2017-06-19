@@ -23,6 +23,7 @@ public slots:
 
 private:
     PowerPopupWidget *m_popup;
+    QLabel *m_batteryIcon;
     QLabel *m_battery;
     DBusPower* m_powerInter;
 };
