@@ -35,6 +35,9 @@ public:
 private slots:
     void screenChanged();
 
+protected:
+    void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
+
 private:
     FrameShadow *m_shadowWidget;
     QDesktopWidget *m_desktopWidget;

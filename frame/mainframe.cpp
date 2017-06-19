@@ -151,3 +151,10 @@ void MainFrame::screenChanged()
 
     registerDockType();
 }
+
+void MainFrame::showEvent(QShowEvent *event)
+{
+    QFrame::showEvent(event);
+
+    m_showWithLauncher->start();
+}
