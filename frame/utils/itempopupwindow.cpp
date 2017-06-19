@@ -10,6 +10,7 @@ const int MOUSE_BUTTON(1 << 1);
 
 ItemPopupWindow::ItemPopupWindow(QWidget *parent)
     : DArrowRectangle(ArrowBottom, parent)
+    , m_mouseArea(new XMouseArea("com.deepin.api.XMouseArea", "/com/deepin/api/XMouseArea", QDBusConnection::sessionBus(), this))
 {
     m_wmHelper = DWindowManagerHelper::instance();
 
@@ -20,6 +21,23 @@ ItemPopupWindow::ItemPopupWindow(QWidget *parent)
     setAttribute(Qt::WA_InputMethodEnabled, false);
 
     connect(m_wmHelper, &DWindowManagerHelper::hasCompositeChanged, this, &ItemPopupWindow::compositeChanged);
+
+    QDBusPendingCall call = m_mouseArea->RegisterFullScreen();
+    QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
+    connect(watcher, &QDBusPendingCallWatcher::finished, this, [this, watcher] {
+        if (watcher->isError()) {
+            qWarning() << "error registering mouse area";
+        } else {
+            QDBusReply<QString> reply = watcher->reply();
+            m_key = reply.value();
+        }
+    });
+
+    connect(m_mouseArea, &__XMouseArea::ButtonPress, this, [this] (int, int x, int y, const QString &key) {
+        if (key == m_key && !containsPoint(QPoint(x, y))) {
+            hide();
+        }
+    });
 }
 
 ItemPopupWindow::~ItemPopupWindow()
@@ -60,4 +78,9 @@ void ItemPopupWindow::compositeChanged()
         setBorderColor(QColor(255, 255, 255, 255 * 0.05));
     else
         setBorderColor(QColor("#2C3238"));
+}
+
+bool ItemPopupWindow::containsPoint(const QPoint &point) const
+{
+    return geometry().contains(point);
 }
