@@ -4,7 +4,6 @@ DateTimePlugin::DateTimePlugin(QWidget *parent)
     : QObject(parent)
 {
     m_centralWidget = new DateTimeWidget;
-    m_tips = new QLabel;
 }
 
 DateTimePlugin::~DateTimePlugin()
@@ -42,7 +41,7 @@ QWidget *DateTimePlugin::itemTipsWidget(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return m_tips;
+    return m_centralWidget->popupWidget();
 }
 
 const QString DateTimePlugin::itemCommand(const QString &itemKey)

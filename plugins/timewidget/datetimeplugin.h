@@ -29,7 +29,6 @@ public:
 private:
     PluginProxyInterface *m_proxyInter;
     DateTimeWidget *m_centralWidget;
-    QLabel *m_tips;
 };
 
 #endif // TIMEWIDGET_H
