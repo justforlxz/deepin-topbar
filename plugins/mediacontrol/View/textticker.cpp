@@ -2,6 +2,7 @@
 #include <QTimer>
 #include <QHBoxLayout>
 #include <QPainter>
+#include <QPen>
 
 TextTicker::TextTicker(QWidget *parent) : QLabel(parent)
 {
@@ -33,7 +34,11 @@ void TextTicker::paintEvent(QPaintEvent *event)
 
     // if the character is completely moved out of the interface, from the right
 
-    painter.drawText(width() - m_moveSpeed * m_curIndex, 15, m_showText);
+    QPen pen(painter.pen());
+    pen.setWidth(14);
+    painter.setPen(pen);
+
+    painter.drawText(width() - m_moveSpeed * m_curIndex, 18.5, m_showText);
 
     if (m_curIndex * m_moveSpeed > fontMetrics().width(m_showText) + width())
         m_curIndex = 0;

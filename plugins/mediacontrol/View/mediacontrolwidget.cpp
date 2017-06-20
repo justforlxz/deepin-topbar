@@ -36,11 +36,11 @@ MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent)
     m_showControlAni->setEasingCurve(QEasingCurve::InOutCubic);
 
     connect(m_hoverControlAni, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
-        m_mediaTitle->move(0, 30 + value.toPoint().y());
+        m_mediaTitle->move(0, 25 + value.toPoint().y());
     });
 
     connect(m_showControlAni, &QPropertyAnimation::valueChanged ,this, [=](const QVariant &value) {
-        m_mediaTitle->move(0, 30 + value.toPoint().y());
+        m_mediaTitle->move(0, 25 + value.toPoint().y());
     });
 
     m_mprisInter = nullptr;
