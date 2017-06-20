@@ -115,11 +115,13 @@ void MainFrame::initConnect()
 
     connect(m_showWithLauncher, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
         m_blurEffectWidget->move(value.toPoint());
+        m_blurEffectWidget->update();
         m_shadowWidget->move(m_shadowWidget->x(), value.toPoint().y());
     });
 
     connect(m_hideWithLauncher, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
         m_blurEffectWidget->move(value.toPoint());
+        m_blurEffectWidget->update();
         m_shadowWidget->move(m_shadowWidget->x(), value.toPoint().y());
     });
 }
