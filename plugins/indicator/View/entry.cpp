@@ -14,8 +14,12 @@ Entry::Entry(QWidget *parent) : QWidget(parent)
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
 
-    mainLayout->addWidget(m_normalIcon);
-    mainLayout->addWidget(m_title);
+    mainLayout->addWidget(m_normalIcon, 0, Qt::AlignVCenter);
+    mainLayout->addWidget(m_title, 0, Qt::AlignVCenter);
+
+    setStyleSheet("QLabel {"
+                  "font: 14px;"
+                  "}");
 
     setLayout(mainLayout);
 }

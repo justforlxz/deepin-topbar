@@ -21,6 +21,10 @@ PowerWidget::PowerWidget(QWidget *parent) : QWidget(parent)
 
     setLayout(layout);
 
+    setStyleSheet("QLabel {"
+                  "font: 14px;"
+                  "}");
+
     m_powerInter = new DBusPower(this);
 
     updateBatteryIcon();

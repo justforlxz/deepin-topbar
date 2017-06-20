@@ -16,6 +16,10 @@ DateTimeWidget::DateTimeWidget(QWidget *parent) : QWidget(parent)
 
     setLayout(layout);
 
+    setStyleSheet("QLabel {"
+                  "font: 14px;"
+                  "}");
+
     popup = new DateTimePopup;
     QSettings *settings = new QSettings("deepin", "dde-dock-datetime", this);
     m_24HourFormat = settings->value("24HourFormat").toBool();
