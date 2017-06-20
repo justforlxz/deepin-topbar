@@ -27,10 +27,14 @@ private slots:
     void compositeChanged();
     bool containsPoint(const QPoint &point) const;
 
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
+
 private:
     DWindowManagerHelper *m_wmHelper;
     XMouseArea *m_mouseArea;
     QString m_key;
+    QWidget *m_content;
 };
 
 #endif // ITEMPOPUPWINDOW_H

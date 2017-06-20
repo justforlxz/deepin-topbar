@@ -50,6 +50,8 @@ void ItemPopupWindow::setContent(QWidget *content)
         lastWidget->removeEventFilter(this);
     content->installEventFilter(this);
 
+    m_content = lastWidget;
+
     setAccessibleName(content->objectName() + "-popup");
 
     DArrowRectangle::setContent(content);
@@ -80,4 +82,15 @@ bool ItemPopupWindow::containsPoint(const QPoint &point) const
 {
     QRect re(geometry().x(), 0, rect().width(), geometry().y() + rect().height());
     return re.contains(point);
+}
+
+bool ItemPopupWindow::eventFilter(QObject *watched, QEvent *event)
+{
+    Q_UNUSED(watched);
+
+    if (event->type() == QEvent::Resize) {
+        DArrowRectangle::resizeWithContent();
+    }
+
+    return false;
 }
