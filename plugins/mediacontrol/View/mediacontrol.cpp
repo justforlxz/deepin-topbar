@@ -4,6 +4,9 @@
 #include <QPixmap>
 #include <QDebug>
 
+namespace Plugin {
+namespace MediaControl {
+
 MediaControl::MediaControl(QWidget *parent) : QFrame(parent)
 {
     setWindowFlags(Qt::FramelessWindowHint);
@@ -58,4 +61,7 @@ void MediaControl::setPlayState(MediaControl::PlayState state)
     default:
         break;
     }
+}
+
+}
 }

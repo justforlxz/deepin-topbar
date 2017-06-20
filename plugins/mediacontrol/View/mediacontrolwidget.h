@@ -11,6 +11,8 @@
 
 using DBusMPRIS = DBusMediaPlayer2;
 
+namespace Plugin {
+namespace MediaControl {
 class MediaControlWidget : public QFrame
 {
     Q_OBJECT
@@ -37,5 +39,7 @@ private:
     QString m_lastPath;
     QStringList m_mprisPaths;
 };
+}
+}
 
 #endif // MEDIACONTROLWIDGET_H

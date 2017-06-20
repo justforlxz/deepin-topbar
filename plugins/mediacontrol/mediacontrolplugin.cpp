@@ -2,7 +2,7 @@
 
 MediaControlPlugin::MediaControlPlugin(QObject *parent) : QObject(parent)
 {
-    m_centralWidget = new MediaControlWidget;
+    m_centralWidget = new Plugin::MediaControl::MediaControlWidget;
 }
 
 MediaControlPlugin::~MediaControlPlugin()

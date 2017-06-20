@@ -4,6 +4,9 @@
 #include <QPainter>
 #include <QPen>
 
+namespace Plugin {
+namespace MediaControl {
+
 TextTicker::TextTicker(QWidget *parent) : QLabel(parent)
 {
     m_curIndex = 0;
@@ -48,4 +51,7 @@ void TextTicker::updateIndex()
 {
     update();
     m_curIndex++;
+}
+
+}
 }

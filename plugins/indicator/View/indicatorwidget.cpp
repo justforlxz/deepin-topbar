@@ -3,6 +3,9 @@
 #include <QIcon>
 #include <QMouseEvent>
 
+namespace Plugin {
+namespace Indicator {
+
 IndicatorWidget::IndicatorWidget(QWidget *parent) : QWidget(parent)
 {
     initUI();
@@ -83,4 +86,7 @@ void IndicatorWidget::refreshActiveWindow()
     }
 
     m_entry->setVisible(false);
+}
+
+}
 }

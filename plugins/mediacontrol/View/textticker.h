@@ -3,6 +3,9 @@
 
 #include <QLabel>
 
+namespace Plugin {
+namespace MediaControl {
+
 class TextTicker : public QLabel
 {
     Q_OBJECT
@@ -22,5 +25,7 @@ private:
     bool m_isFirstPlay;
     int m_moveSpeed;
 };
+}
+}
 
 #endif // TEXTTICKER_H

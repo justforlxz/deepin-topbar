@@ -6,6 +6,8 @@
 #include <DBus/dbusdock.h>
 #include <DBus/dbusdockentry.h>
 
+namespace Plugin {
+namespace Indicator {
 class IndicatorWidget : public QWidget
 {
     Q_OBJECT
@@ -26,5 +28,7 @@ private:
     Entry *m_entry;
     DBusDockEntry *m_activeWindow;
 };
+}
+}
 
 #endif // INDICATORWIDGET_H

@@ -4,6 +4,9 @@
 #include <QWidget>
 #include <QLabel>
 
+namespace Plugin {
+namespace Indicator {
+
 class Entry : public QWidget
 {
     Q_OBJECT
@@ -17,5 +20,6 @@ private:
     QLabel *m_normalIcon;
     QLabel *m_title;
 };
-
+}
+}
 #endif // ENTRY_H

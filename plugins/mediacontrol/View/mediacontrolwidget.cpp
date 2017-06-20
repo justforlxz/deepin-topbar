@@ -2,6 +2,8 @@
 #include <QHBoxLayout>
 #include <QDBusInterface>
 
+namespace Plugin {
+namespace MediaControl {
 MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent)
 {
     setWindowFlags(Qt::FramelessWindowHint);
@@ -142,4 +144,7 @@ void MediaControlWidget::leaveEvent(QEvent *event)
      QFrame::leaveEvent(event);
 
      m_hoverControlAni->start();
+}
+
+}
 }

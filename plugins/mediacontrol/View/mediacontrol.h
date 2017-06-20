@@ -7,6 +7,8 @@
 
 DWIDGET_USE_NAMESPACE
 
+namespace Plugin {
+namespace MediaControl {
 class MediaControl : public QFrame
 {
     Q_OBJECT
@@ -35,5 +37,10 @@ private:
     DImageButton *m_pauseBtn;
     PlayState m_playState;
 };
+}
+}
+
+
+
 
 #endif // MEDIACONTROL_H

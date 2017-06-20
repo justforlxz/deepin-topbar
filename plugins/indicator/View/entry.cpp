@@ -2,6 +2,9 @@
 #include <QHBoxLayout>
 #include <QIcon>
 
+namespace Plugin {
+namespace Indicator {
+
 Entry::Entry(QWidget *parent) : QWidget(parent)
 {
     setWindowFlags(Qt::WindowDoesNotAcceptFocus);
@@ -32,4 +35,7 @@ void Entry::setNormalIcon(const QIcon &normalIcon)
 void Entry::setText(const QString &text)
 {
     m_title->setText(text);
+}
+
+}
 }

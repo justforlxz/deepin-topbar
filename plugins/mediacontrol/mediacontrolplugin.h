@@ -28,7 +28,7 @@ public:
 
 private:
     PluginProxyInterface *m_proxyInter;
-    MediaControlWidget *m_centralWidget;
+    Plugin::MediaControl::MediaControlWidget *m_centralWidget;
 };
 
 #endif // MEDIACONTROLPLUGIN_H

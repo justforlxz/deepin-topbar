@@ -3,7 +3,7 @@
 
 IndicatorPlugin::IndicatorPlugin(QObject *parent) : QObject(parent)
 {
-    m_centralWidget = new IndicatorWidget;
+    m_centralWidget = new Plugin::Indicator::IndicatorWidget;
 }
 
 const QString IndicatorPlugin::pluginName() const

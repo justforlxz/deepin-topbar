@@ -27,7 +27,7 @@ public:
 
 private:
     PluginProxyInterface *m_proxyInter;
-    IndicatorWidget *m_centralWidget;
+    Plugin::Indicator::IndicatorWidget *m_centralWidget;
 };
 
 #endif // INDICATORPLUGIN_H
