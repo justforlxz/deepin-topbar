@@ -2,6 +2,7 @@
 #define POWERPOPUPWIDGET_H
 
 #include <QWidget>
+#include <QVBoxLayout>
 
 namespace Plugins {
     namespace Power {
@@ -14,6 +15,10 @@ namespace Plugins {
         signals:
 
         public slots:
+            void onAwakenDisplayChanged(const bool state);
+            void onAwakenComputerChanged(const bool state);
+        private:
+            QVBoxLayout *m_mainLayout;
         };
     }
 }
