@@ -4,6 +4,8 @@
 #include <QPushButton>
 #include <QPropertyAnimation>
 #include <QDebug>
+#include <QSize>
+#include <QScrollArea>
 
 using namespace topbar::widgets;
 
@@ -23,35 +25,54 @@ namespace Plugins {
             awakenComputer->setCheck(false);
             awakenComputer->setText("唤醒计算机时需要密码");
 
-            m_mainLayout->addWidget(awakenDisplay);
-            m_mainLayout->addWidget(awakenComputer);
-            m_mainLayout->addStretch();
-
-            QPushButton *button = new QPushButton;
-            m_mainLayout->addWidget(button);
-
             resize(300, 100);
+
+            QWidget *widget = new QWidget;
+            QVBoxLayout *vlayout = new QVBoxLayout;
+            widget->setLayout(vlayout);
+            vlayout->addWidget(awakenDisplay, 0, Qt::AlignTop);
+            vlayout->addWidget(awakenComputer, 0, Qt::AlignTop);
+            vlayout->addStretch();
+
+            QScrollArea *scrollarea = new QScrollArea;
+            scrollarea->setWidget(widget);
+            scrollarea->setObjectName("scrollarea");
+            scrollarea->setWidgetResizable(true);
+            scrollarea->setFocusPolicy(Qt::NoFocus);
+            scrollarea->setFrameStyle(QFrame::NoFrame);
+            scrollarea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+            scrollarea->setContentsMargins(0, 0, 0, 0);
+            scrollarea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+            scrollarea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+            scrollarea->setStyleSheet("background-color:transparent;");
+
+            m_mainLayout->addWidget(scrollarea, 0, Qt::AlignTop);
+
+            QPushButton *button = new QPushButton(this);
+            button->setText("高级设置");
+            m_mainLayout->addWidget(button, 0, Qt::AlignBottom);
 
             connect(awakenDisplay, &SwitchItem::clicked, this, &PowerPopupWidget::onAwakenDisplayChanged);
             connect(awakenComputer, &SwitchItem::clicked, this, &PowerPopupWidget::onAwakenComputerChanged);
 
             QPropertyAnimation *showAdvancedSetting =new QPropertyAnimation(this, "size", this);
             showAdvancedSetting->setDuration(300);
-            showAdvancedSetting->setStartValue(QSize(width(), height()));
-            showAdvancedSetting->setEndValue(QSize(width(), height() + 100));
+            showAdvancedSetting->setStartValue(QSize(width(), 100));
+            showAdvancedSetting->setEndValue(QSize(width(), 200));
             showAdvancedSetting->setEasingCurve(QEasingCurve::InOutCubic);
 
             QPropertyAnimation *hideAdvancedSetting =new QPropertyAnimation(this, "size", this);
             hideAdvancedSetting->setDuration(300);
-            hideAdvancedSetting->setStartValue(QSize(width(), height() + 100));
-            hideAdvancedSetting->setEndValue(QSize(width(), height() - 100));
+            hideAdvancedSetting->setStartValue(QSize(width(), 200));
+            hideAdvancedSetting->setEndValue(QSize(width(), 100));
             hideAdvancedSetting->setEasingCurve(QEasingCurve::InOutCubic);
 
             connect(button, &QPushButton::clicked, this, [=] {
-                if (height() != 100)
+                if (height() != 100) {
                     hideAdvancedSetting->start();
-                else
+                } else {
                     showAdvancedSetting->start();
+                }
             });
         }
 
