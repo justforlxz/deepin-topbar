@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 include(../../interfaces/interfaces.pri)
+include(../../widgets/widgets.pri)
 
 QT        += core gui widgets
 PKGCONFIG += dtkwidget dtkbase dtkutil
@@ -17,14 +18,12 @@ DISTFILES += datetime.json
 SOURCES   += \
     datetimewidget.cpp \
     datetimeplugin.cpp \
-    datetimepopup.cpp \
-    switchitem.cpp
+    datetimepopup.cpp
 
 HEADERS   += \
     datetimewidget.h \
     datetimeplugin.h \
-    datetimepopup.h \
-    switchitem.h
+    datetimepopup.h
 
 target.path = $${PREFIX}/lib/dde-topbar/plugins/
 INSTALLS   += target

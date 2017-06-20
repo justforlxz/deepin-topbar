@@ -4,20 +4,18 @@
 #include <QWidget>
 
 namespace Plugins {
-namespace Power {
+    namespace Power {
+        class PowerPopupWidget : public QWidget
+        {
+            Q_OBJECT
+        public:
+            explicit PowerPopupWidget(QWidget *parent = nullptr);
 
-class PowerPopupWidget : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit PowerPopupWidget(QWidget *parent = nullptr);
+        signals:
 
-signals:
-
-public slots:
-};
-
-}
+        public slots:
+        };
+    }
 }
 
 #endif // POWERPOPUPWIDGET_H

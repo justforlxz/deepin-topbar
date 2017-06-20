@@ -1,4 +1,5 @@
 include(../interfaces/interfaces.pri)
+include(../widgets/widgets.pri)
 
 QT       += core gui x11extras widgets dbus
 

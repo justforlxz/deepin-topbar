@@ -28,7 +28,7 @@ public:
 
 private:
     PluginProxyInterface *m_proxyInter;
-    DateTimeWidget *m_centralWidget;
+    Plugin::DateTime::DateTimeWidget *m_centralWidget;
 };
 
 #endif // TIMEWIDGET_H

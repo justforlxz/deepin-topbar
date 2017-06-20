@@ -1,24 +1,30 @@
 #ifndef DATETIMEPOPUP_H
 #define DATETIMEPOPUP_H
 
-#include "switchitem.h"
+#include "../widgets/switchitem.h"
 #include <QWidget>
 
-class DateTimePopup : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit DateTimePopup(QWidget *parent = 0);
+using namespace topbar::widgets;
 
-signals:
-    void requestDateFormat(const bool state);
-    void requestHide();
+namespace Plugin {
+    namespace DateTime {
+        class DateTimePopup : public QWidget
+        {
+            Q_OBJECT
+        public:
+            explicit DateTimePopup(QWidget *parent = 0);
 
-public slots:
-    void onDateFormatChanged(const bool state);
+        signals:
+            void requestDateFormat(const bool state);
+            void requestHide();
 
-private:
-    SwitchItem *_DateBtn;
-};
+        public slots:
+            void onDateFormatChanged(const bool state);
+
+        private:
+            SwitchItem *_DateBtn;
+        };
+    }
+}
 
 #endif // DATETIMEPOPUP_H

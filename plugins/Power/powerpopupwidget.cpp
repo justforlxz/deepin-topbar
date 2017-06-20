@@ -1,12 +1,9 @@
 #include "powerpopupwidget.h"
 
 namespace Plugins {
-namespace Power {
+    namespace Power {
+        PowerPopupWidget::PowerPopupWidget(QWidget *parent) : QWidget(parent) {
 
-PowerPopupWidget::PowerPopupWidget(QWidget *parent) : QWidget(parent)
-{
-
-}
-
-}
+        }
+    }
 }

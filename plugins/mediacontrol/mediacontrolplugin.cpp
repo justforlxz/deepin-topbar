@@ -1,50 +1,42 @@
 #include "mediacontrolplugin.h"
 
-MediaControlPlugin::MediaControlPlugin(QObject *parent) : QObject(parent)
-{
+MediaControlPlugin::MediaControlPlugin(QObject *parent) : QObject(parent) {
     m_centralWidget = new Plugin::MediaControl::MediaControlWidget;
 }
 
-MediaControlPlugin::~MediaControlPlugin()
-{
+MediaControlPlugin::~MediaControlPlugin() {
 
 }
 
-const QString MediaControlPlugin::pluginName() const
-{
+const QString MediaControlPlugin::pluginName() const {
     return QString("mediacontrol");
 }
 
-void MediaControlPlugin::init(PluginProxyInterface *proxyInter)
-{
+void MediaControlPlugin::init(PluginProxyInterface *proxyInter) {
     m_proxyInter = proxyInter;
 
     m_proxyInter->itemAdded(this, QString());
 }
 
-int MediaControlPlugin::itemSortKey(const QString &itemKey)
-{
+int MediaControlPlugin::itemSortKey(const QString &itemKey) {
     Q_UNUSED(itemKey);
 
     return 0;
 }
 
-QWidget *MediaControlPlugin::itemWidget(const QString &itemKey)
-{
+QWidget *MediaControlPlugin::itemWidget(const QString &itemKey) {
     Q_UNUSED(itemKey);
 
     return m_centralWidget;
 }
 
-QWidget *MediaControlPlugin::itemTipsWidget(const QString &itemKey)
-{
+QWidget *MediaControlPlugin::itemTipsWidget(const QString &itemKey) {
     Q_UNUSED(itemKey);
 
     return nullptr;
 }
 
-const QString MediaControlPlugin::itemCommand(const QString &itemKey)
-{
+const QString MediaControlPlugin::itemCommand(const QString &itemKey) {
     Q_UNUSED(itemKey);
 
     return QString("dde-mediacontrol");

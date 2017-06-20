@@ -5,23 +5,27 @@
 #include <QWidget>
 #include <QLabel>
 
-class DateTimeWidget : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit DateTimeWidget(QWidget *parent = 0);
-    ~DateTimeWidget();
+namespace Plugin {
+    namespace DateTime {
+        class DateTimeWidget : public QWidget
+        {
+            Q_OBJECT
+        public:
+            explicit DateTimeWidget(QWidget *parent = 0);
+            ~DateTimeWidget();
 
-    DateTimePopup *popupWidget();
+            DateTimePopup *popupWidget();
 
-public slots:
-    void updateTime();
+        public slots:
+            void updateTime();
 
-private:
-    QLabel *m_timeLbl;
-    QDateTime *m_dateTime;
-    DateTimePopup *popup;
-    bool m_24HourFormat;
-};
+        private:
+            QLabel *m_timeLbl;
+            QDateTime *m_dateTime;
+            DateTimePopup *popup;
+            bool m_24HourFormat;
+        };
+    }
+}
 
 #endif // DATETIMEWIDGET_H

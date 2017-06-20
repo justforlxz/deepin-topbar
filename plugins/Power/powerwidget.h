@@ -7,28 +7,27 @@
 #include <QLabel>
 
 namespace Plugins {
-namespace Power {
-class PowerWidget : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit PowerWidget(QWidget *parent = nullptr);
+    namespace Power {
+        class PowerWidget : public QWidget
+        {
+            Q_OBJECT
+        public:
+            explicit PowerWidget(QWidget *parent = nullptr);
 
-    QWidget *popup();
+            QWidget *popup();
 
-signals:
+        signals:
 
-public slots:
-    void updateBatteryIcon();
+        public slots:
+            void updateBatteryIcon();
 
-private:
-    PowerPopupWidget *m_popup;
-    QLabel *m_batteryIcon;
-    QLabel *m_battery;
-    DBusPower* m_powerInter;
-};
-
-}
+        private:
+            PowerPopupWidget *m_popup;
+            QLabel *m_batteryIcon;
+            QLabel *m_battery;
+            DBusPower* m_powerInter;
+        };
+    }
 }
 
 #endif // POWERWIDGET_H

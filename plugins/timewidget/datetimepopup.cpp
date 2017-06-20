@@ -3,31 +3,35 @@
 #include <QProcess>
 #include <QPushButton>
 
-DateTimePopup::DateTimePopup(QWidget *parent) : QWidget(parent)
-{
-    setWindowFlags(Qt::FramelessWindowHint);
+using namespace topbar::widgets;
 
-    _DateBtn = new SwitchItem;
-    _DateBtn->setText("时制切换");
+namespace Plugin {
+    namespace DateTime {
+        DateTimePopup::DateTimePopup(QWidget *parent) : QWidget(parent) {
+            setWindowFlags(Qt::FramelessWindowHint);
 
-    QPushButton *btn = new QPushButton("时间设置");
+            _DateBtn = new SwitchItem;
+            _DateBtn->setText("时制切换");
 
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->setMargin(5);
-    mainLayout->setSpacing(5);
+            QPushButton *btn = new QPushButton("时间设置");
 
-    mainLayout->addWidget(btn);
-    mainLayout->addWidget(_DateBtn);
+            QVBoxLayout *mainLayout = new QVBoxLayout;
+            mainLayout->setMargin(5);
+            mainLayout->setSpacing(5);
 
-    setLayout(mainLayout);
-    connect(_DateBtn, &SwitchItem::clicked, this, &DateTimePopup::requestDateFormat);
-    connect(btn, &QPushButton::clicked, this, [=]{
-        QProcess::startDetached("dbus-send --print-reply --dest=com.deepin.dde.ControlCenter /com/deepin/dde/ControlCenter com.deepin.dde.ControlCenter.ShowModule \"string:datetime\"");
-        emit requestHide();
-    });
-}
+            mainLayout->addWidget(btn);
+            mainLayout->addWidget(_DateBtn);
 
-void DateTimePopup::onDateFormatChanged(const bool state)
-{
-    _DateBtn->setCheck(state);
+            setLayout(mainLayout);
+            connect(_DateBtn, &SwitchItem::clicked, this, &DateTimePopup::requestDateFormat);
+            connect(btn, &QPushButton::clicked, this, [=]{
+                QProcess::startDetached("dbus-send --print-reply --dest=com.deepin.dde.ControlCenter /com/deepin/dde/ControlCenter com.deepin.dde.ControlCenter.ShowModule \"string:datetime\"");
+                emit requestHide();
+            });
+        }
+
+        void DateTimePopup::onDateFormatChanged(const bool state) {
+            _DateBtn->setCheck(state);
+        }
+    }
 }
