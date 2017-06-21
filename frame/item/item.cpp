@@ -1,4 +1,5 @@
 #include "item.h"
+#include <QDebug>
 
 std::unique_ptr<ItemPopupWindow> Item::PopupWindow(nullptr);
 
@@ -41,12 +42,6 @@ const QPoint Item::popupMarkPoint()
 
 void Item::showTips()
 {
-    if (PopupWindow->isVisible()) {
-        PopupWindow->setVisible(false);
-        return;
-    }
-
-
     QWidget * const content = popupTips();
     if (!content)
         return;

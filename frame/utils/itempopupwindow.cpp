@@ -1,5 +1,6 @@
 #include "itempopupwindow.h"
 
+#include <QRegion>
 #include <QScreen>
 #include <QApplication>
 #include <QDesktopWidget>
@@ -80,8 +81,13 @@ void ItemPopupWindow::compositeChanged()
 
 bool ItemPopupWindow::containsPoint(const QPoint &point) const
 {
-    QRect re(geometry().x(), 0, rect().width(), geometry().y() + rect().height());
-    return re.contains(point);
+    QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
+
+    QRegion r(screen.x(), 0, screen.width(), 25);
+    QRegion re(geometry().x(), geometry().y(), rect().width(), rect().height());
+
+    r += re;
+    return r.contains(point);
 }
 
 bool ItemPopupWindow::eventFilter(QObject *watched, QEvent *event)
@@ -93,4 +99,15 @@ bool ItemPopupWindow::eventFilter(QObject *watched, QEvent *event)
     }
 
     return false;
+}
+
+void ItemPopupWindow::showEvent(QShowEvent *event)
+{
+    DArrowRectangle::showEvent(event);
+
+    QTimer::singleShot(1, this, [&] {
+        raise();
+        activateWindow();
+        setFocus(Qt::ActiveWindowFocusReason);
+    });
 }

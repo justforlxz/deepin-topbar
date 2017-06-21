@@ -29,6 +29,7 @@ private slots:
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
+    void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
 
 private:
     DWindowManagerHelper *m_wmHelper;
