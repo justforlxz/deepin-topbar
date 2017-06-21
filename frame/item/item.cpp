@@ -62,10 +62,7 @@ void Item::showPopupWindow(QWidget * const content)
     popup->setHeight(content->sizeHint().height());
 
     const QPoint p = popupMarkPoint();
-    if (!popup->isVisible())
-        QMetaObject::invokeMethod(popup, "show", Qt::QueuedConnection, Q_ARG(QPoint, p));
-    else
-        popup->show(p);
+    QMetaObject::invokeMethod(popup, "show", Qt::QueuedConnection, Q_ARG(QPoint, p));
 }
 
 void Item::hideTips()
