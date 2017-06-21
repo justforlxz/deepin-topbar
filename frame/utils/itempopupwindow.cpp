@@ -68,7 +68,7 @@ void ItemPopupWindow::show(const int x, const int y)
     resizeWithContent();
 
     move(x, y);
-    setVisible(true);
+    setVisible(!isVisible());
 }
 
 void ItemPopupWindow::compositeChanged()
