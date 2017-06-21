@@ -19,6 +19,9 @@ public:
 
     void setContent(QWidget *content);
 
+    void showAnimation();
+    void hideAnimation();
+
 public slots:
     void show(const QPoint &pos);
     void show(const int x, const int y);
@@ -36,6 +39,11 @@ private:
     XMouseArea *m_mouseArea;
     QString m_key;
     QWidget *m_content;
+    QGraphicsOpacityEffect *m_effect;
+    QPropertyAnimation *showAni;
+    QPropertyAnimation *hideAni;
+    QPropertyAnimation *sizeChangeAni_w;
+    QPropertyAnimation *sizeChangeAni_h;
 };
 
 #endif // ITEMPOPUPWINDOW_H

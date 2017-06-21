@@ -4,6 +4,7 @@
 #include <QScreen>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QGraphicsOpacityEffect>
 
 DWIDGET_USE_NAMESPACE
 
@@ -35,9 +36,39 @@ ItemPopupWindow::ItemPopupWindow(QWidget *parent)
     });
 
     connect(m_mouseArea, &__XMouseArea::ButtonPress, this, [this] (int, int x, int y, const QString &key) {
-        if (key == m_key && !containsPoint(QPoint(x, y)))
-            hide();
+        if (key == m_key && !containsPoint(QPoint(x, y))) {
+//            hideAni->start();
+            sizeChangeAni_h->start();
+        }
     });
+
+    m_effect = new QGraphicsOpacityEffect;
+//    DArrowRectangle::setGraphicsEffect(m_effect);
+//    setGraphicsEffect(m_effect);
+
+    showAni = new QPropertyAnimation(m_effect, "opacity", this);
+    hideAni = new QPropertyAnimation(m_effect, "opacity", this);
+
+    showAni->setDuration(250);
+    showAni->setStartValue(0.0);
+    showAni->setEndValue(1.0);
+    showAni->setEasingCurve(QEasingCurve::InBack);
+
+    hideAni->setDuration(250);
+    hideAni->setStartValue(1.0);
+    hideAni->setEndValue(0.0);
+    hideAni->setEasingCurve(QEasingCurve::OutBack);
+
+    connect(hideAni, &QPropertyAnimation::finished, this, &ItemPopupWindow::hide);
+
+    sizeChangeAni_w = new QPropertyAnimation(this, "size", this);
+    sizeChangeAni_h = new QPropertyAnimation(this, "size", this);
+
+    connect(sizeChangeAni_w, &QPropertyAnimation::valueChanged, this, [=] {
+            resizeWithContent();
+    });
+
+    connect(sizeChangeAni_h, &QPropertyAnimation::finished, this, &ItemPopupWindow::hide);
 }
 
 ItemPopupWindow::~ItemPopupWindow()
@@ -52,10 +83,31 @@ void ItemPopupWindow::setContent(QWidget *content)
     content->installEventFilter(this);
 
     m_content = lastWidget;
+    content->setGraphicsEffect(m_effect);
+
+    sizeChangeAni_w->setDuration(300);
+    sizeChangeAni_w->setStartValue(QSize(content->width(), 10));
+    sizeChangeAni_w->setEndValue(content->size());
+    sizeChangeAni_w->setEasingCurve(QEasingCurve::InOutCubic);
+
+    sizeChangeAni_h->setDuration(250);
+    sizeChangeAni_h->setStartValue(content->size());
+    sizeChangeAni_h->setEndValue(QSize(content->width(), 10));
+    sizeChangeAni_h->setEasingCurve(QEasingCurve::InOutCubic);
 
     setAccessibleName(content->objectName() + "-popup");
 
     DArrowRectangle::setContent(content);
+}
+
+void ItemPopupWindow::showAnimation()
+{
+    showAni->start();
+}
+
+void ItemPopupWindow::hideAnimation()
+{
+    hideAni->start();
 }
 
 void ItemPopupWindow::show(const QPoint &pos)
@@ -68,7 +120,17 @@ void ItemPopupWindow::show(const int x, const int y)
     resizeWithContent();
 
     move(x, y);
+
     setVisible(!isVisible());
+
+    if (isVisible()) {
+        m_effect->setOpacity(1);
+        showAni->start();
+        sizeChangeAni_w->start();
+    } else {
+       hideAni->start();
+       sizeChangeAni_h->start();
+    }
 }
 
 void ItemPopupWindow::compositeChanged()

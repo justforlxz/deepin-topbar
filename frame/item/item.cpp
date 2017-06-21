@@ -58,8 +58,8 @@ void Item::showPopupWindow(QWidget * const content)
 
     popup->setArrowDirection(ItemPopupWindow::ArrowTop);
     popup->setContent(content);
-    popup->setWidth(content->sizeHint().width());
-    popup->setHeight(content->sizeHint().height());
+//    popup->setWidth(content->sizeHint().width());
+//    popup->setHeight(content->sizeHint().height());
 
     const QPoint p = popupMarkPoint();
     QMetaObject::invokeMethod(popup, "show", Qt::QueuedConnection, Q_ARG(QPoint, p));
