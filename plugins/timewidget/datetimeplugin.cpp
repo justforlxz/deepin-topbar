@@ -50,10 +50,9 @@ const QString DateTimePlugin::itemCommand(const QString &itemKey) {
 
 void DateTimePlugin::popupShow()
 {
-
 }
 
 void DateTimePlugin::popupHide()
 {
-
+    m_proxyInter->requestHidePopup();
 }
