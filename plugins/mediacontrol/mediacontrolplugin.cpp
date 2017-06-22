@@ -30,7 +30,7 @@ QWidget *MediaControlPlugin::itemWidget(const QString &itemKey) {
     return m_centralWidget;
 }
 
-QWidget *MediaControlPlugin::itemTipsWidget(const QString &itemKey) {
+QWidget *MediaControlPlugin::itemPopupApplet(const QString &itemKey) {
     Q_UNUSED(itemKey);
 
     return nullptr;

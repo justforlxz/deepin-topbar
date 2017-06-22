@@ -1,6 +1,8 @@
 #ifndef ITEMPOPUPWINDOW_H
 #define ITEMPOPUPWINDOW_H
 
+#include "../interfaces/pluginsiteminterface.h"
+
 #include <darrowrectangle.h>
 #include <DWindowManagerHelper>
 #include <com_deepin_api_xmousearea.h>
@@ -17,6 +19,7 @@ public:
     explicit ItemPopupWindow(QWidget *parent = 0);
     ~ItemPopupWindow();
 
+    void setItemInter(PluginsItemInterface* itemInter);
     void setContent(QWidget *content);
 
     void showAnimation();
@@ -35,6 +38,7 @@ protected:
     void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
 
 private:
+    PluginsItemInterface *m_itemInter;
     DWindowManagerHelper *m_wmHelper;
     XMouseArea *m_mouseArea;
     QString m_key;
@@ -44,6 +48,7 @@ private:
     QPropertyAnimation *hideAni;
     QPropertyAnimation *sizeChangeAni_w;
     QPropertyAnimation *sizeChangeAni_h;
+    QSize m_size;
 };
 
 #endif // ITEMPOPUPWINDOW_H

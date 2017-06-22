@@ -32,7 +32,7 @@ QWidget *IndicatorPlugin::itemWidget(const QString &itemKey)
     return m_centralWidget;
 }
 
-QWidget *IndicatorPlugin::itemTipsWidget(const QString &itemKey)
+QWidget *IndicatorPlugin::itemPopupApplet(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 

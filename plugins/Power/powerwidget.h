@@ -17,6 +17,7 @@ namespace Plugins {
             QWidget *popup();
 
         signals:
+            void requestHidePopup();
 
         public slots:
             void updateBatteryIcon();

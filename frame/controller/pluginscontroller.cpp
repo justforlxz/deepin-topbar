@@ -57,7 +57,7 @@ void PluginsController::requestContextMenu(PluginsItemInterface * const itemInte
 
 }
 
-void PluginsController::requestHide()
+void PluginsController::requestHidePopup()
 {
     for (QMap<QString, PluginsItem *> &map : m_pluginList.values()) {
         for (PluginsItem *item : map.values()) {

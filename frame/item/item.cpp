@@ -3,7 +3,8 @@
 
 std::unique_ptr<ItemPopupWindow> Item::PopupWindow(nullptr);
 
-Item::Item(QWidget *parent) : QWidget(parent)
+Item::Item(QWidget *parent)
+    : QWidget(parent)
 {
     if (!PopupWindow.get())
     {
@@ -57,9 +58,8 @@ void Item::showPopupWindow(QWidget * const content)
         lastContent->setVisible(false);
 
     popup->setArrowDirection(ItemPopupWindow::ArrowTop);
+    popup->setItemInter(itemInter());
     popup->setContent(content);
-//    popup->setWidth(content->sizeHint().width());
-//    popup->setHeight(content->sizeHint().height());
 
     const QPoint p = popupMarkPoint();
     QMetaObject::invokeMethod(popup, "show", Qt::QueuedConnection, Q_ARG(QPoint, p));
@@ -68,4 +68,9 @@ void Item::showPopupWindow(QWidget * const content)
 void Item::hideTips()
 {
     PopupWindow->setVisible(false);
+}
+
+PluginsItemInterface *Item::itemInter()
+{
+    return nullptr;
 }

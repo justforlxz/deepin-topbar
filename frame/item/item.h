@@ -23,6 +23,7 @@ public:
     virtual void showTips();
     virtual void showPopupWindow(QWidget * const content);
     virtual void hideTips();
+    virtual PluginsItemInterface *itemInter();
 
 protected:
     static std::unique_ptr<ItemPopupWindow> PopupWindow;

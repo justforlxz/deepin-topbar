@@ -42,7 +42,12 @@ const QString PluginsItem::name() const
 
 QWidget *PluginsItem::popupTips()
 {
-    return m_pluginInter->itemTipsWidget(m_itemKey);
+    return m_pluginInter->itemPopupApplet(m_itemKey);
+}
+
+PluginsItemInterface *PluginsItem::itemInter()
+{
+    return m_pluginInter;
 }
 
 void PluginsItem::mousePressEvent(QMouseEvent *event)

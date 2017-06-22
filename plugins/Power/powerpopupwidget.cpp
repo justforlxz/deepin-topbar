@@ -74,6 +74,45 @@ namespace Plugins {
                     showAdvancedSetting->start();
                 }
             });
+
+            m_showAni = new QPropertyAnimation(this, "size", this);
+            m_showAni->setDuration(300);
+            m_showAni->setStartValue(QSize(width(), 30));
+            m_showAni->setEndValue(size());
+            m_showAni->setEasingCurve(QEasingCurve::InOutCubic);
+
+            m_hideAni = new QPropertyAnimation(this, "size", this);
+            m_hideAni->setDuration(300);
+            m_hideAni->setStartValue(size());
+            m_hideAni->setEndValue(QSize(width(), 30));
+            m_hideAni->setEasingCurve(QEasingCurve::InOutCubic);
+
+            connect(m_hideAni, &QPropertyAnimation::finished, this, &PowerPopupWidget::requestHidePopup);
+
+//            m_effect = new QGraphicsOpacityEffect;
+
+//            showAni = new QPropertyAnimation(m_effect, "opacity", this);
+//            hideAni = new QPropertyAnimation(m_effect, "opacity", this);
+
+//            showAni->setDuration(250);
+//            showAni->setStartValue(0.0);
+//            showAni->setEndValue(1.0);
+//            showAni->setEasingCurve(QEasingCurve::InBack);
+
+//            hideAni->setDuration(250);
+//            hideAni->setStartValue(1.0);
+//            hideAni->setEndValue(0.0);
+//            hideAni->setEasingCurve(QEasingCurve::OutBack);
+        }
+
+        void PowerPopupWidget::showAni()
+        {
+            m_showAni->start();
+        }
+
+        void PowerPopupWidget::hideAni()
+        {
+            m_hideAni->start();
         }
 
         void PowerPopupWidget::onAwakenDisplayChanged(const bool state) {

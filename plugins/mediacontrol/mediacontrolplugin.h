@@ -22,7 +22,7 @@ public:
     int itemSortKey(const QString &itemKey) override;
 
     QWidget *itemWidget(const QString &itemKey) override;
-    QWidget *itemTipsWidget(const QString &itemKey) override;
+    QWidget *itemPopupApplet(const QString &itemKey) override;
 
     const QString itemCommand(const QString &itemKey) override;
 

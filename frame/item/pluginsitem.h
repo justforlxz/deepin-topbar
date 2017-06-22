@@ -17,6 +17,7 @@ public:
 
 private:
     QWidget *popupTips();
+    PluginsItemInterface *itemInter();
 
 signals:
     void requestRefershWindowVisible() const;
@@ -25,7 +26,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    PluginsItemInterface * const m_pluginInter;
+    PluginsItemInterface * m_pluginInter;
     QWidget *m_centralWidget;
     QString m_itemKey;
 };

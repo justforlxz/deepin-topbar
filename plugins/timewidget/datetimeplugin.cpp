@@ -6,7 +6,7 @@ DateTimePlugin::DateTimePlugin(QWidget *parent)
     m_centralWidget = new Plugin::DateTime::DateTimeWidget;
 
     connect(m_centralWidget->popupWidget(), &Plugin::DateTime::DateTimePopup::requestHide, this, [=] {
-        m_proxyInter->requestHide();
+        m_proxyInter->requestHidePopup();
     });
 }
 
@@ -36,7 +36,7 @@ QWidget *DateTimePlugin::itemWidget(const QString &itemKey) {
     return m_centralWidget;
 }
 
-QWidget *DateTimePlugin::itemTipsWidget(const QString &itemKey) {
+QWidget *DateTimePlugin::itemPopupApplet(const QString &itemKey) {
     Q_UNUSED(itemKey);
 
     return m_centralWidget->popupWidget();
@@ -46,4 +46,14 @@ const QString DateTimePlugin::itemCommand(const QString &itemKey) {
     Q_UNUSED(itemKey);
 
     return QString("dde-datetime");
+}
+
+void DateTimePlugin::popupShow()
+{
+
+}
+
+void DateTimePlugin::popupHide()
+{
+
 }

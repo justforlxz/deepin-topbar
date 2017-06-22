@@ -135,6 +135,9 @@ public:
     ///
     virtual void refershIcon(const QString &itemKey) { Q_UNUSED(itemKey); }
 
+    virtual void popupShow() {}
+    virtual void popupHide() {}
+
 
 protected:
     ///
