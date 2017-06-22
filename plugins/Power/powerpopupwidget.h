@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QPropertyAnimation>
+#include <QGraphicsOpacityEffect>
 
 namespace Plugins {
     namespace Power {
@@ -25,6 +26,9 @@ namespace Plugins {
             QVBoxLayout *m_mainLayout;
             QPropertyAnimation *m_showAni;
             QPropertyAnimation *m_hideAni;
+            QGraphicsOpacityEffect *m_effect;
+            QPropertyAnimation *m_effectShowAni;
+            QPropertyAnimation *m_effectHideAni;
         };
     }
 }
