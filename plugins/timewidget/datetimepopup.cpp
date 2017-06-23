@@ -11,9 +11,9 @@ namespace Plugin {
             setWindowFlags(Qt::FramelessWindowHint);
 
             _DateBtn = new SwitchItem;
-            _DateBtn->setText("时制切换");
+            _DateBtn->setText(tr("Format Change"));
 
-            QPushButton *btn = new QPushButton("时间设置");
+            QPushButton *btn = new QPushButton(tr("DateTime Settings"));
 
             QVBoxLayout *mainLayout = new QVBoxLayout;
             mainLayout->setMargin(5);

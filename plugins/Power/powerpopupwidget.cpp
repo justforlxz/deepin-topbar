@@ -19,11 +19,11 @@ namespace Plugins {
 
             SwitchItem *awakenDisplay = new SwitchItem;
             awakenDisplay->setCheck(false);
-            awakenDisplay->setText("唤醒显示器时需要密码");
+            awakenDisplay->setText(tr("Password required to wake up the monitor"));
 
             SwitchItem *awakenComputer = new SwitchItem;
             awakenComputer->setCheck(false);
-            awakenComputer->setText("唤醒计算机时需要密码");
+            awakenComputer->setText(tr("Password required to wake up the computer"));
 
             resize(300, 100);
 
@@ -49,7 +49,7 @@ namespace Plugins {
             m_mainLayout->addWidget(scrollarea, 0, Qt::AlignTop);
 
             QPushButton *button = new QPushButton(this);
-            button->setText("高级设置");
+            button->setText(tr("Advanced settings"));
             m_mainLayout->addWidget(button, 0, Qt::AlignBottom);
 
             connect(awakenDisplay, &SwitchItem::clicked, this, &PowerPopupWidget::onAwakenDisplayChanged);
