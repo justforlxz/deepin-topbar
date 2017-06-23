@@ -41,4 +41,4 @@ headers.files += ../interfaces/pluginsiteminterface.h \
 headers.path = /usr/include/dde-topbar
 
 target.path = $${PREFIX}/bin/
-INSTALL += target headers
+INSTALLS += target headers
