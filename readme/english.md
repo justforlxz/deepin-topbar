@@ -6,15 +6,15 @@ sudo apt install libdtkwidget-dev libdtkutil-dev libdtkbase-dev libxcb-ewmh-dev 
 build and install
 
 ```
-git clone https://github.com/kirigayakazushin/deepintopbar.git
+git clone https://github.com/kirigayakazushin/deepin-topbar.git
 ```
 
 ```
-cd deepintopbar
+cd deepin-topbar && mkdir build && cd build
 ```
 
 ```
-qmake
+qmake ../
 ```
 
 ```
