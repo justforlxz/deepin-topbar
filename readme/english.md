@@ -1,6 +1,6 @@
 Compile dependency:
 ```
-sudo apt install libdtkwidget-dev libdtkbase-dev libxcb-ewmh-dev libdframeworkdbus-dev qt5-default g++
+sudo apt install libdtkwidget-dev libdtkutil-dev libdtkbase-dev libxcb-ewmh-dev libdframeworkdbus-dev qt5-default g++
 ```
 
 build and install
