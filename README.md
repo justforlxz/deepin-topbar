@@ -15,3 +15,8 @@ WARNING： 使用本项目导致计算机数据丢失，损坏等一些问题，
 一不小心又开了新坑，这个项目比其他坑好一些的就是实用性比较大，视频桌面那个因为笔记本带不动，都懒得写了。
 
 结构方面是用的dde-dock，插件可以兼容高效模式下的插件(部分接口已移出，以后看情况会加回来)。
+
+编译依赖:
+```
+sudo apt install libdtkwidget-dev libdtkbase-dev libxcb-ewmh-dev libdframeworkdbus-dev qt5-default g++
+```
