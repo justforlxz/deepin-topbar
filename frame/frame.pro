@@ -36,5 +36,9 @@ SOURCES += \
     frameshadow.cpp \
     utils/itempopupwindow.cpp
 
+headers.files += ../interfaces/pluginsiteminterface.h \
+                 ../interfaces/pluginproxyinterface.h
+headers.path = /usr/include/dde-topbar
+
 target.path = $${PREFIX}/bin/
-INSTALL += target
+INSTALL += target headers
