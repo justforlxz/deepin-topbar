@@ -10,11 +10,11 @@ git clone https://github.com/kirigayakazushin/deepintopbar.git
 ```
 
 ```
-mkdir build && cd build
+cd deepintopbar
 ```
 
 ```
-qmake ../deepintopbar
+qmake
 ```
 
 ```
