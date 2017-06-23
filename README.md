@@ -20,3 +20,27 @@ WARNING： 使用本项目导致计算机数据丢失，损坏等一些问题，
 ```
 sudo apt install libdtkwidget-dev libdtkbase-dev libxcb-ewmh-dev libdframeworkdbus-dev qt5-default g++
 ```
+
+编译安装
+
+```
+git clone https://github.com/kirigayakazushin/deepintopbar.git
+```
+
+```
+mkdir build
+```
+
+```
+qmake ../deepintopbar
+```
+
+```
+make
+```
+
+```
+sudo make install
+```
+
+在launcher中找到topbar，并运行。
