@@ -12,4 +12,4 @@ service.files = com.deepin.dde.Topbar.service
 desktop.path = $${PREFIX}/share/applications/
 desktop.files = dde-topbar.desktop
 
-INSTALLS += binary desktop service
+INSTALLS += desktop service

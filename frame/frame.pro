@@ -38,7 +38,7 @@ SOURCES += \
 
 headers.files += ../interfaces/pluginsiteminterface.h \
                  ../interfaces/pluginproxyinterface.h
-headers.path = /usr/include/dde-topbar
+headers.path = $${PREFIX}/include/dde-topbar
 
 target.path = $${PREFIX}/bin/
 INSTALLS += target headers
