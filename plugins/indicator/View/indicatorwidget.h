@@ -23,6 +23,9 @@ private slots:
     void refreshActiveWindow();
 
 private:
+    const QString windowTitle(const WindowDict &infos);
+
+private:
     DBusDock *m_dockInter;
     QList<DBusDockEntry *> m_entryList;
     Entry *m_entry;

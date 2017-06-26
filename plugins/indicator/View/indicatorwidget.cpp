@@ -79,13 +79,23 @@ void IndicatorWidget::refreshActiveWindow()
         if (entry->active()) {
             const QIcon icon = QIcon::fromTheme(entry->icon(), QIcon::fromTheme("application-x-desktop"));
             m_entry->setNormalIcon(icon);
-            m_entry->setText(entry->name());
+            m_entry->setText(windowTitle(entry->titles()));
             m_entry->setVisible(true);
             return;
         }
     }
 
     m_entry->setVisible(false);
+}
+
+const QString IndicatorWidget::windowTitle(const WindowDict &infos)
+{
+    for (auto it(infos.cbegin()); it != infos.cend(); ++it)
+    {
+        return it.value();
+    }
+
+    return QString();
 }
 
 }

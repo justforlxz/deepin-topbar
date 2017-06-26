@@ -1,6 +1,7 @@
 #include "pluginloader.h"
 #include <QDir>
 #include <QLibrary>
+#include <QApplication>
 
 PluginLoader::PluginLoader(QObject *parent) :
     QThread(parent)
@@ -11,7 +12,7 @@ PluginLoader::PluginLoader(QObject *parent) :
 void PluginLoader::run()
 {
 #ifdef QT_DEBUG
-    const QDir pluginsDir("plugins");
+    const QDir pluginsDir(QApplication::applicationDirPath() + "/plugins");
 #else
     const QDir pluginsDir("/usr/lib/dde-topbar/plugins");
 #endif
