@@ -6,7 +6,7 @@
 
 include(../../interfaces/interfaces.pri)
 
-QT       += core gui widgets x11extras dbus
+QT       += core gui widgets x11extras dbus concurrent
 PKGCONFIG += dtkwidget dtkbase dtkutil
 TEMPLATE = lib
 CONFIG    += c++11 link_pkgconfig
@@ -32,14 +32,16 @@ SOURCES += \
     View/indicatorwidget.cpp \
     DBus/dbusdock.cpp \
     DBus/dbusdockentry.cpp \
-    View/entry.cpp
+    View/entry.cpp \
+    themeappicon.cpp
 
 HEADERS += \
         indicatorplugin.h \
     View/indicatorwidget.h \
     DBus/dbusdock.h \
     DBus/dbusdockentry.h \
-    View/entry.h
+    View/entry.h \
+    themeappicon.h
 
 target.path = $${PREFIX}/lib/dde-topbar/plugins/
 INSTALLS   += target

@@ -2,6 +2,10 @@
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QMouseEvent>
+#include <QFuture>
+#include <QFutureWatcher>
+#include <QtConcurrent>
+#include "themeappicon.h"
 
 namespace Plugin {
 namespace Indicator {
@@ -11,9 +15,12 @@ IndicatorWidget::IndicatorWidget(QWidget *parent) : QWidget(parent)
     initUI();
 
     m_dockInter = new DBusDock(this);
+    m_smallWatcher= new QFutureWatcher<QPixmap>(this);
 
     connect(m_dockInter, &DBusDock::EntryAdded, this, &IndicatorWidget::addEntry);
     connect(m_dockInter, &DBusDock::EntryRemoved, this, &IndicatorWidget::removeEntry);
+
+    connect(m_smallWatcher, &QFutureWatcher<QPixmap>::finished, this, &IndicatorWidget::refreshIcon);
 
     getAllEntry();
 }
@@ -77,8 +84,8 @@ void IndicatorWidget::refreshActiveWindow()
 {
     for (DBusDockEntry *entry : m_entryList) {
         if (entry->active()) {
-            const QIcon icon = QIcon::fromTheme(entry->icon(), QIcon::fromTheme("application-x-desktop"));
-            m_entry->setNormalIcon(icon);
+            m_smallWatcher->cancel();
+            m_smallWatcher->setFuture(QtConcurrent::run(ThemeAppIcon::getIcon, entry->icon()));
             m_entry->setText(windowTitle(entry->titles()));
             m_entry->setVisible(true);
             return;
@@ -86,6 +93,11 @@ void IndicatorWidget::refreshActiveWindow()
     }
 
     m_entry->setVisible(false);
+}
+
+void IndicatorWidget::refreshIcon()
+{
+    m_entry->setNormalIcon(QIcon(m_smallWatcher->result()));
 }
 
 const QString IndicatorWidget::windowTitle(const WindowDict &infos)
