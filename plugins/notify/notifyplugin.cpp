@@ -16,6 +16,10 @@ void NotifyPlugin::init(PluginProxyInterface *proxyInter)
     m_proxyInter = proxyInter;
 
     m_proxyInter->itemAdded(this, "notify");
+
+    connect(m_popupWidget, &NotifyPopupWidget::requestHidePopup, this, [=] {
+        m_proxyInter->requestHidePopup();
+    });
 }
 
 int NotifyPlugin::itemSortKey(const QString &itemKey)
@@ -44,4 +48,14 @@ const QString NotifyPlugin::itemCommand(const QString &itemKey)
     Q_UNUSED(itemKey);
 
     return "dde-notify";
+}
+
+void NotifyPlugin::popupShow()
+{
+    m_popupWidget->showAni();
+}
+
+void NotifyPlugin::popupHide()
+{
+    m_popupWidget->hideAni();
 }

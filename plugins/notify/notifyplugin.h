@@ -25,6 +25,9 @@ public:
 
     const QString itemCommand(const QString &itemKey) Q_DECL_OVERRIDE;
 
+    void popupShow() Q_DECL_OVERRIDE;
+    void popupHide() Q_DECL_OVERRIDE;
+
 private:
     PluginProxyInterface *m_proxyInter;
     NotifyPopupWidget *m_popupWidget;
