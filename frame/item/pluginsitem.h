@@ -12,12 +12,12 @@ public:
     explicit PluginsItem(PluginsItemInterface* const pluginInter, const QString &itemKey, QWidget *parent = 0);
     ~PluginsItem();
 
-    ItemType itemType() const;
+    ItemType itemType() const Q_DECL_OVERRIDE;
     const QString name() const;
 
 private:
-    QWidget *popupTips();
-    PluginsItemInterface *itemInter();
+    QWidget *popupTips() Q_DECL_OVERRIDE;
+    PluginsItemInterface *itemInter() Q_DECL_OVERRIDE;
 
 signals:
     void requestRefershWindowVisible() const;

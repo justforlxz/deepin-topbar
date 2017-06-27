@@ -27,7 +27,7 @@ public:
 
 public slots:
     void show(const QPoint &pos);
-    void show(const int x, const int y);
+    void show(const int x, const int y) Q_DECL_OVERRIDE;
 
 private slots:
     void compositeChanged();
@@ -43,12 +43,10 @@ private:
     XMouseArea *m_mouseArea;
     QString m_key;
     QWidget *m_content;
-    QGraphicsOpacityEffect *m_effect;
     QPropertyAnimation *showAni;
     QPropertyAnimation *hideAni;
-    QPropertyAnimation *sizeChangeAni_w;
-    QPropertyAnimation *sizeChangeAni_h;
     QSize m_size;
+    bool m_isVisiable = false;
 };
 
 #endif // ITEMPOPUPWINDOW_H

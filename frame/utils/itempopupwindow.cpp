@@ -8,8 +8,6 @@
 
 DWIDGET_USE_NAMESPACE
 
-const int MOUSE_BUTTON(1 << 1);
-
 ItemPopupWindow::ItemPopupWindow(QWidget *parent)
     : DArrowRectangle(ArrowBottom, parent)
     , m_mouseArea(new XMouseArea("com.deepin.api.XMouseArea", "/com/deepin/api/XMouseArea", QDBusConnection::sessionBus(), this))
@@ -88,9 +86,11 @@ void ItemPopupWindow::show(const int x, const int y)
 
     setVisible(true);
 
-    if (isVisible()) {
+    if (m_isVisiable) {
+        m_isVisiable = false;
         m_itemInter->popupShow();
     } else {
+        m_isVisiable = true;
        m_itemInter->popupHide();
     }
 }
