@@ -32,7 +32,7 @@ namespace Plugins {
             QLabel *m_batteryIcon;
             QLabel *m_battery;
             DBusPower* m_powerInter;
-            bool m_enter;
+            bool m_enter = false;
         };
     }
 }

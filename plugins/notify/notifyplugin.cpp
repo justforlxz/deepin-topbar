@@ -1,8 +1,9 @@
 #include "notifyplugin.h"
 
-
 NotifyPlugin::NotifyPlugin()
 {
+    m_notify = new NotifyWidget;
+    m_popupWidget = new NotifyPopupWidget;
 }
 
 const QString NotifyPlugin::pluginName() const
@@ -13,6 +14,8 @@ const QString NotifyPlugin::pluginName() const
 void NotifyPlugin::init(PluginProxyInterface *proxyInter)
 {
     m_proxyInter = proxyInter;
+
+    m_proxyInter->itemAdded(this, "notify");
 }
 
 int NotifyPlugin::itemSortKey(const QString &itemKey)
@@ -26,14 +29,14 @@ QWidget *NotifyPlugin::itemWidget(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return nullptr;
+    return m_notify;
 }
 
 QWidget *NotifyPlugin::itemPopupApplet(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return nullptr;
+    return m_popupWidget;
 }
 
 const QString NotifyPlugin::itemCommand(const QString &itemKey)

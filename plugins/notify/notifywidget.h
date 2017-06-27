@@ -1,17 +1,13 @@
 #ifndef NOTIFYWIDGET_H
 #define NOTIFYWIDGET_H
 
-#include <QWidget>
+#include <QLabel>
 
-class NotifyWidget : public QWidget
+class NotifyWidget : public QLabel
 {
     Q_OBJECT
 public:
     explicit NotifyWidget(QWidget *parent = 0);
-
-signals:
-
-public slots:
 };
 
 #endif // NOTIFYWIDGET_H

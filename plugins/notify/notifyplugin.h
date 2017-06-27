@@ -2,6 +2,8 @@
 #define NOTIFYPLUGIN_H
 
 #include "../interfaces/pluginsiteminterface.h"
+#include "notifypopupwidget.h"
+#include "notifywidget.h"
 #include <QObject>
 
 class NotifyPlugin : public QObject, PluginsItemInterface
@@ -25,6 +27,8 @@ public:
 
 private:
     PluginProxyInterface *m_proxyInter;
+    NotifyPopupWidget *m_popupWidget;
+    NotifyWidget *m_notify;
 };
 
 #endif // NOTIFYPLUGIN_H
