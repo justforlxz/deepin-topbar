@@ -2,6 +2,7 @@
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QPixmap>
+#include <QPainter>
 
 namespace Plugins {
     namespace Power {
@@ -70,6 +71,38 @@ namespace Plugins {
             }
             m_battery->setText(percentageStr + "%");
             m_batteryIcon->setPixmap(QIcon::fromTheme(iconStr).pixmap(16, 16));
+        }
+
+        void PowerWidget::enterEvent(QEvent *event)
+        {
+            QWidget::enterEvent(event);
+
+            m_enter = true;
+
+            update();
+        }
+
+        void PowerWidget::leaveEvent(QEvent *event)
+        {
+            QWidget::leaveEvent(event);
+
+            m_enter = false;
+
+            update();
+        }
+
+        void PowerWidget::paintEvent(QPaintEvent *event)
+        {
+            QWidget::paintEvent(event);
+
+            QPainter painter(this);
+
+            if (m_enter) {
+                painter.fillRect(rect(), QColor("#1E90FF"));
+                m_battery->setStyleSheet("color: white;");
+            } else {
+                m_battery->setStyleSheet("color: black;");
+            }
         }
     }
 }

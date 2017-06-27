@@ -22,11 +22,17 @@ namespace Plugins {
         public slots:
             void updateBatteryIcon();
 
+        protected:
+            void enterEvent(QEvent *event) Q_DECL_OVERRIDE;
+            void leaveEvent(QEvent *event) Q_DECL_OVERRIDE;
+            void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+
         private:
             PowerPopupWidget *m_popup;
             QLabel *m_batteryIcon;
             QLabel *m_battery;
             DBusPower* m_powerInter;
+            bool m_enter;
         };
     }
 }
