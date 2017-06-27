@@ -35,7 +35,5 @@ HEADERS += notifyplugin.h \
     notifywidget.h \
     notifypopupwidget.h
 
-unix {
-    target.path = /usr/lib
-    INSTALLS += target
-}
+target.path = $${PREFIX}/lib/dde-topbar/plugins/
+INSTALLS   += target
