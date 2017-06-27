@@ -27,3 +27,5 @@ build*/
 
 # binary file
 dde-topbar
+
+*.debug

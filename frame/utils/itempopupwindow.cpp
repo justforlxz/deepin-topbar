@@ -17,7 +17,7 @@ ItemPopupWindow::ItemPopupWindow(QWidget *parent)
     compositeChanged();
 
     setBackgroundColor(DBlurEffectWidget::LightColor);
-    setWindowFlags(Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::SplashScreen | Qt::WindowStaysOnTopHint);
     setAttribute(Qt::WA_InputMethodEnabled, false);
 
     connect(m_wmHelper, &DWindowManagerHelper::hasCompositeChanged, this, &ItemPopupWindow::compositeChanged);
