@@ -19,6 +19,9 @@ IndicatorWidget::IndicatorWidget(QWidget *parent) : QWidget(parent)
 
     connect(m_dockInter, &DBusDock::EntryAdded, this, &IndicatorWidget::addEntry);
     connect(m_dockInter, &DBusDock::EntryRemoved, this, &IndicatorWidget::removeEntry);
+    connect(m_dockInter, &DBusDock::EntriesChanged, this, [=] {
+                qDebug() << "ssssss";
+    });
 
     connect(m_smallWatcher, &QFutureWatcher<QPixmap>::finished, this, &IndicatorWidget::refreshIcon);
 
@@ -61,6 +64,9 @@ void IndicatorWidget::addEntry(const QDBusObjectPath &entryPath, const int index
     m_entryList.append(entry);
 
     connect(entry, &DBusDockEntry::ActiveChanged, this, &IndicatorWidget::refreshActiveWindow, Qt::UniqueConnection);
+    connect(entry, &DBusDockEntry::TitlesChanged, this, [=] {
+        m_entry->setText(windowTitle(entry->titles()));
+    });
 
     refreshActiveWindow();
 }
