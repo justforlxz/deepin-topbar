@@ -7,7 +7,7 @@
 
 namespace Plugin {
     namespace DateTime {
-        class DateTimeWidget : public QWidget
+        class DateTimeWidget : public QLabel
         {
             Q_OBJECT
         public:
@@ -20,7 +20,6 @@ namespace Plugin {
             void updateTime();
 
         private:
-            QLabel *m_timeLbl;
             QDateTime *m_dateTime;
             DateTimePopup *popup;
             bool m_24HourFormat;

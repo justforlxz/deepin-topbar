@@ -2,22 +2,19 @@
 #include <QTimer>
 #include <QDateTime>
 #include <QSettings>
-#include <QHBoxLayout>
 
 namespace Plugin {
     namespace DateTime {
-        DateTimeWidget::DateTimeWidget(QWidget *parent) : QWidget(parent) {
-            m_timeLbl = new QLabel;
-
-            QHBoxLayout *layout = new QHBoxLayout;
-            layout->setMargin(0);
-            layout->setSpacing(0);
-            layout->addWidget(m_timeLbl, 0, Qt::AlignVCenter);
-
-            setLayout(layout);
+        DateTimeWidget::DateTimeWidget(QWidget *parent) : QLabel(parent) {
 
             setStyleSheet("QLabel {"
                           "font: 14px;"
+                          "color: black;"
+                          "background: transparent;"
+                          "}"
+                          "QLabel:hover {"
+                          "color: white;"
+                          "background: #1E90FF;"
                           "}");
 
             popup = new DateTimePopup;
@@ -48,7 +45,7 @@ namespace Plugin {
         }
 
         void DateTimeWidget::updateTime() {
-            m_timeLbl->setText(m_dateTime->currentDateTime().toString(m_24HourFormat ? "hh:mm" : "hh:mm A"));
+            setText(m_dateTime->currentDateTime().toString(m_24HourFormat ? "hh:mm" : "hh:mm A"));
         }
     }
 }
