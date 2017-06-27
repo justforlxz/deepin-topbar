@@ -13,11 +13,14 @@ public:
     static PluginsItemController *instance(QObject *parent);
     ~PluginsItemController();
 
-    const QList<Item *> itemList() const;
+    const QMap<QString, Item *> itemList() const;
 
 signals:
     void itemInserted(const int index, Item *item) const;
     void itemRemoved(Item *item) const;
+
+private slots:
+    void itemSort();
 
 private:
     explicit PluginsItemController(QObject *parent = nullptr);
@@ -25,7 +28,7 @@ private:
     void pluginItemRemoved(Item *item);
 
 private:
-    QList<Item *> m_itemList;
+    QMap<QString, Item *> m_itemList;
     PluginsController *m_pluginsInter;
 
     static PluginsItemController *INSTANCE;

@@ -11,13 +11,12 @@ include(../../widgets/widgets.pri)
 QT       += core gui widgets dbus x11extras
 PKGCONFIG += dtkwidget dtkbase dtkutil dframeworkdbus
 TEMPLATE = lib
-CONFIG    += c++11 link_pkgconfig
+CONFIG    += plugin c++11 link_pkgconfig
 TARGET     = $$qtLibraryTarget(power)
 DESTDIR    = $$_PRO_FILE_PWD_/../
 DISTFILES += power.json \
     DBus/com.deepin.daemon.Power.xml
 DEFINES += POWER_LIBRARY
-
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings

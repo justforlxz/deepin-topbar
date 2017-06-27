@@ -13,7 +13,7 @@ public:
     ~PluginsItem();
 
     ItemType itemType() const Q_DECL_OVERRIDE;
-    const QString name() const;
+    const QString name() const Q_DECL_OVERRIDE;
 
 private:
     QWidget *popupTips() Q_DECL_OVERRIDE;

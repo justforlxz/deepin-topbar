@@ -17,9 +17,38 @@ PluginsItemController::~PluginsItemController()
 
 }
 
-const QList<Item *> PluginsItemController::itemList() const
+const QMap<QString, Item *> PluginsItemController::itemList() const
 {
     return m_itemList;
+}
+
+void PluginsItemController::itemSort()
+{
+    QMap<QString, Item *> list = m_itemList;
+
+    int i = 0;
+
+    emit itemInserted(i++, list.value("indicator"));
+    list.remove("indicator");
+
+    emit itemInserted(i++, list.value(""));
+    list.remove("");
+
+    emit itemInserted(i++, list.value("mediacontrol"));
+    list.remove("mediacontrol");
+
+    emit itemInserted(i++, list.value("power"));
+    list.remove("power");
+
+    emit itemInserted(i++, list.value("datetime"));
+    list.remove("datetime");
+
+    emit itemInserted(i++, list.value("notify"));
+    list.remove("notify");
+
+    for (Item* item : list.values()) {
+        emit itemInserted(2, item);
+    }
 }
 
 PluginsItemController::PluginsItemController(QObject *parent)
@@ -32,6 +61,7 @@ PluginsItemController::PluginsItemController(QObject *parent)
         pluginItemInserted(item);
     });
 
+    connect(m_pluginsInter, &PluginsController::pluginItemFinished, this, &PluginsItemController::itemSort, Qt::QueuedConnection);
     connect(m_pluginsInter, &PluginsController::pluginItemInserted, this, &PluginsItemController::pluginItemInserted, Qt::QueuedConnection);
     connect(m_pluginsInter, &PluginsController::pluginItemRemoved, this, &PluginsItemController::pluginItemRemoved, Qt::QueuedConnection);
     // update pluginsItemController::itemUpdated
@@ -39,34 +69,15 @@ PluginsItemController::PluginsItemController(QObject *parent)
 
 void PluginsItemController::pluginItemInserted(Item *item)
 {
-    // here need record item position
-    // I need to think about whether I need the type
-    // Anyway, I need a list that I can keep
+    if (m_itemList.keys().contains(item->name()))
+        return;
 
-    switch (item->itemType()) {
-    case Item::Indicator:
-        emit itemInserted(0, item);
-        break;
-    case Item::DateTime:
-        emit itemInserted(-1, item);
-        break;
-    case Item::Stretch:
-        emit itemInserted(0, item);
-        break;
-    case Item::Plugin:
-        emit itemInserted(m_itemList.count() - 1, item);
-        break;
-    default:
-        emit itemInserted(m_itemList.count() - 1, item);
-        break;
-    }
-
-    m_itemList.append(item);
+    m_itemList.insert(item->name(), item);
 }
 
 void PluginsItemController::pluginItemRemoved(Item *item)
 {
-    m_itemList.removeOne(item);
+    m_itemList.remove(item->name());
 
     emit itemRemoved(item);
 }

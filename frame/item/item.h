@@ -14,10 +14,12 @@ public:
         Indicator,
         Plugin,
         DateTime,
-        Stretch
+        Stretch,
+        Notify
     };
 
     inline virtual ItemType itemType() const {Q_UNREACHABLE(); return Plugin;}
+    virtual const QString name() const {return QString();}
     virtual QWidget *popupTips();
     virtual const QPoint popupMarkPoint();
     virtual void showTips();

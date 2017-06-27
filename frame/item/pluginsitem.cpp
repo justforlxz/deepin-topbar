@@ -31,6 +31,8 @@ PluginsItem::ItemType PluginsItem::itemType() const
         return Indicator;
     if (m_pluginInter->pluginName() == "datetime")
         return DateTime;
+    if (m_pluginInter->pluginName() == "notify")
+        return Notify;
 
     return Plugin;
 }

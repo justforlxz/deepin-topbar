@@ -9,7 +9,7 @@ include(../../interfaces/interfaces.pri)
 QT       += core gui widgets x11extras dbus concurrent
 PKGCONFIG += dtkwidget dtkbase dtkutil
 TEMPLATE = lib
-CONFIG    += c++11 link_pkgconfig
+CONFIG    += plugin c++11 link_pkgconfig
 TARGET     = $$qtLibraryTarget(indicator)
 DESTDIR    = $$_PRO_FILE_PWD_/../
 DISTFILES += indicator.json

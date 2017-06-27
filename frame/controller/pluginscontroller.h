@@ -25,6 +25,7 @@ signals:
     void pluginItemInserted(PluginsItem *pluginItem) const;
     void pluginItemRemoved(PluginsItem *pluginItem) const;
     void pluginItemUpdated(PluginsItem *pluginItem) const;
+    void pluginItemFinished() const;
 
 private slots:
     void startLoader();

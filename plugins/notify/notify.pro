@@ -9,11 +9,12 @@ include(../../interfaces/interfaces.pri)
 QT       += core gui widgets dbus x11extras
 PKGCONFIG += dtkwidget dtkbase dtkutil dframeworkdbus
 TEMPLATE = lib
-CONFIG    += c++11 link_pkgconfig
+CONFIG    += plugin c++11 link_pkgconfig
 TARGET     = $$qtLibraryTarget(notify)
 DESTDIR    = $$_PRO_FILE_PWD_/../
-DISTFILES += notify.json \
-    notify.json
+DISTFILES += notify.json
+
+DEFINES += NOTIFY_LIBARAY
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings

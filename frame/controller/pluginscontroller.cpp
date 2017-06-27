@@ -69,6 +69,7 @@ void PluginsController::requestHidePopup()
 void PluginsController::startLoader()
 {
     PluginLoader *loader = new PluginLoader(this);
+    connect(loader, &PluginLoader::finished, this, &PluginsController::pluginItemFinished, Qt::QueuedConnection);
     connect(loader, &PluginLoader::finished, loader, &PluginLoader::deleteLater, Qt::QueuedConnection);
     connect(loader, &PluginLoader::pluginFounded, this, &PluginsController::loadPlugin, Qt::QueuedConnection);
 
