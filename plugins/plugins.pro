@@ -3,4 +3,5 @@ SUBDIRS = \
     timewidget \
     mediacontrol \
     indicator \
-    Power
+    Power \
+    notify
