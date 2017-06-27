@@ -44,8 +44,10 @@ void ItemPopupWindow::setItemInter(PluginsItemInterface *itemInter)
 
     connect(m_mouseArea, &__XMouseArea::ButtonPress, this, [this] (int, int x, int y, const QString &key) {
         if (key == m_key && !containsPoint(QPoint(x, y))) {
-            if (isVisible())
+            if (isVisible()) {
                 m_itemInter->popupHide();
+                m_isVisiable = false;
+            }
         }
     });
 }
