@@ -44,7 +44,8 @@ void ItemPopupWindow::setItemInter(PluginsItemInterface *itemInter)
 
     connect(m_mouseArea, &__XMouseArea::ButtonPress, this, [this] (int, int x, int y, const QString &key) {
         if (key == m_key && !containsPoint(QPoint(x, y))) {
-            m_itemInter->popupHide();
+            if (isVisible())
+                m_itemInter->popupHide();
         }
     });
 }
@@ -63,16 +64,6 @@ void ItemPopupWindow::setContent(QWidget *content)
     DArrowRectangle::setContent(content);
 }
 
-void ItemPopupWindow::showAnimation()
-{
-    showAni->start();
-}
-
-void ItemPopupWindow::hideAnimation()
-{
-    hideAni->start();
-}
-
 void ItemPopupWindow::show(const QPoint &pos)
 {
     show(pos.x(), pos.y());
@@ -88,10 +79,10 @@ void ItemPopupWindow::show(const int x, const int y)
 
     if (m_isVisiable) {
         m_isVisiable = false;
-        m_itemInter->popupShow();
+        m_itemInter->popupHide();
     } else {
         m_isVisiable = true;
-       m_itemInter->popupHide();
+        m_itemInter->popupShow();
     }
 }
 

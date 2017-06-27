@@ -22,9 +22,6 @@ public:
     void setItemInter(PluginsItemInterface* itemInter);
     void setContent(QWidget *content);
 
-    void showAnimation();
-    void hideAnimation();
-
 public slots:
     void show(const QPoint &pos);
     void show(const int x, const int y) Q_DECL_OVERRIDE;
@@ -43,8 +40,6 @@ private:
     XMouseArea *m_mouseArea;
     QString m_key;
     QWidget *m_content;
-    QPropertyAnimation *showAni;
-    QPropertyAnimation *hideAni;
     QSize m_size;
     bool m_isVisiable = false;
 };

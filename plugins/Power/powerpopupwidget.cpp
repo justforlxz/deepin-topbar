@@ -108,6 +108,7 @@ namespace Plugins {
 
         void PowerPopupWidget::showAni()
         {
+            show();
             m_showAni->start();
             m_effectShowAni->start();
         }
