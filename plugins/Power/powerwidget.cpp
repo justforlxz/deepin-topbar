@@ -22,6 +22,10 @@ namespace Plugins {
 
             setStyleSheet("QLabel {"
                           "font: 14px;"
+                          "}"
+                          ":hover {"
+                          "QLabel {"
+                          "color: red;"
                           "}");
 
             m_powerInter = new DBusPower(this);
@@ -79,6 +83,8 @@ namespace Plugins {
 
             m_enter = true;
 
+            m_battery->setStyleSheet("color: white;");
+
             update();
         }
 
@@ -87,6 +93,8 @@ namespace Plugins {
             QWidget::leaveEvent(event);
 
             m_enter = false;
+
+            m_battery->setStyleSheet("color: black;");
 
             update();
         }
@@ -99,9 +107,6 @@ namespace Plugins {
 
             if (m_enter) {
                 painter.fillRect(rect(), QColor("#1E90FF"));
-                m_battery->setStyleSheet("color: white;");
-            } else {
-                m_battery->setStyleSheet("color: black;");
             }
         }
     }
