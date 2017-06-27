@@ -18,6 +18,7 @@ namespace Plugins {
 
         signals:
             void requestHidePopup();
+            void requestPowerPrecent(const bool state);
 
         public slots:
             void onAwakenDisplayChanged(const bool state);

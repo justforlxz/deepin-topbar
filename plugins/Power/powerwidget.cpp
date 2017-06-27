@@ -31,7 +31,7 @@ namespace Plugins {
             connect(m_powerInter, &DBusPower::BatteryPercentageChanged, this, &PowerWidget::updateBatteryIcon);
             connect(m_powerInter, &DBusPower::BatteryStateChanged, this, &PowerWidget::updateBatteryIcon);
             connect(m_powerInter, &DBusPower::OnBatteryChanged, this, &PowerWidget::updateBatteryIcon);
-
+            connect(m_popup, &PowerPopupWidget::requestPowerPrecent, m_battery, &QLabel::setVisible);
             connect(m_popup, &PowerPopupWidget::requestHidePopup, this, &PowerWidget::requestHidePopup);
         }
 
@@ -70,7 +70,7 @@ namespace Plugins {
                 iconStr = QString("battery-%1-symbolic").arg(percentageStr);
             }
             m_battery->setText(percentageStr + "%");
-            m_batteryIcon->setPixmap(QIcon::fromTheme(iconStr).pixmap(16, 16));
+            m_batteryIcon->setPixmap(QIcon::fromTheme(iconStr).pixmap(20, 20));
         }
 
         void PowerWidget::enterEvent(QEvent *event)

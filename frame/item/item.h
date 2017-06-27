@@ -22,7 +22,7 @@ public:
     virtual const QPoint popupMarkPoint();
     virtual void showTips();
     virtual void showPopupWindow(QWidget * const content);
-    virtual void hideTips();
+    virtual void hidePopup();
     virtual PluginsItemInterface *itemInter();
 
 protected:

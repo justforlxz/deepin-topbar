@@ -25,26 +25,34 @@ namespace Plugins {
             awakenComputer->setCheck(false);
             awakenComputer->setText(tr("Password required to wake up the computer"));
 
+            SwitchItem *powerPercent = new SwitchItem;
+            powerPercent->setText(tr("Enable Percent"));
+
             resize(300, 100);
 
             QWidget *widget = new QWidget;
+            widget->setFixedWidth(280);
+
             QVBoxLayout *vlayout = new QVBoxLayout;
             widget->setLayout(vlayout);
+            vlayout->setContentsMargins(0, 5, 0, 5);
             vlayout->addWidget(awakenDisplay, 0, Qt::AlignTop);
             vlayout->addWidget(awakenComputer, 0, Qt::AlignTop);
+            vlayout->addWidget(powerPercent, 0, Qt::AlignTop);
             vlayout->addStretch();
 
             QScrollArea *scrollarea = new QScrollArea;
             scrollarea->setWidget(widget);
+            scrollarea->setFixedWidth(300);
             scrollarea->setObjectName("scrollarea");
             scrollarea->setWidgetResizable(true);
             scrollarea->setFocusPolicy(Qt::NoFocus);
             scrollarea->setFrameStyle(QFrame::NoFrame);
-            scrollarea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+            scrollarea->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
             scrollarea->setContentsMargins(0, 0, 0, 0);
             scrollarea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
             scrollarea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-            scrollarea->setStyleSheet("background-color:transparent;");
+            scrollarea->setStyleSheet("background-color: transparent;");
 
             m_mainLayout->addWidget(scrollarea, 0, Qt::AlignTop);
 
@@ -54,6 +62,7 @@ namespace Plugins {
 
             connect(awakenDisplay, &SwitchItem::clicked, this, &PowerPopupWidget::onAwakenDisplayChanged);
             connect(awakenComputer, &SwitchItem::clicked, this, &PowerPopupWidget::onAwakenComputerChanged);
+            connect(powerPercent, &SwitchItem::clicked, this, &PowerPopupWidget::requestPowerPrecent);
 
             QPropertyAnimation *showAdvancedSetting =new QPropertyAnimation(this, "size", this);
             showAdvancedSetting->setDuration(300);

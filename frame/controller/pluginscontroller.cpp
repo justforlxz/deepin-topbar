@@ -61,7 +61,7 @@ void PluginsController::requestHidePopup()
 {
     for (QMap<QString, PluginsItem *> &map : m_pluginList.values()) {
         for (PluginsItem *item : map.values()) {
-            item->hideTips();
+            item->hidePopup();
         }
     }
 }

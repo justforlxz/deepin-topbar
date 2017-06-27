@@ -60,12 +60,14 @@ void Item::showPopupWindow(QWidget * const content)
     popup->setArrowDirection(ItemPopupWindow::ArrowTop);
     popup->setItemInter(itemInter());
     popup->setContent(content);
+    popup->setWidth(content->sizeHint().width());
+    popup->setHeight(content->sizeHint().height());
 
     const QPoint p = popupMarkPoint();
     QMetaObject::invokeMethod(popup, "show", Qt::QueuedConnection, Q_ARG(QPoint, p));
 }
 
-void Item::hideTips()
+void Item::hidePopup()
 {
     PopupWindow->setVisible(false);
 }
