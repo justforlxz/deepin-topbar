@@ -22,6 +22,9 @@ namespace Plugins {
             QVBoxLayout *baseLayout = new QVBoxLayout;
             QWidget *base = new QWidget;
             base->setLayout(baseLayout);
+            base->setFixedHeight(120);
+
+            resize(300, base->height() + 30);
 
             QFile file("/usr/bin/cpufreq-info");
             if (file.exists())
@@ -40,8 +43,6 @@ namespace Plugins {
             SwitchItem *powerPercent = new SwitchItem;
             powerPercent->setText(tr("Enable Percent"));
 
-            resize(300, 100);
-
             QWidget *widget = new QWidget;
             widget->setFixedWidth(300);
 
@@ -51,11 +52,11 @@ namespace Plugins {
             vlayout->addWidget(awakenDisplay, 0, Qt::AlignTop);
             vlayout->addWidget(awakenComputer, 0, Qt::AlignTop);
             vlayout->addWidget(powerPercent, 0, Qt::AlignTop);
-            vlayout->addStretch();
 
             QScrollArea *scrollarea = new QScrollArea;
             scrollarea->setWidget(widget);
             scrollarea->setFixedWidth(300);
+            scrollarea->setFixedHeight(widget->height());
             scrollarea->setObjectName("scrollarea");
             scrollarea->setWidgetResizable(true);
             scrollarea->setFocusPolicy(Qt::NoFocus);
@@ -78,18 +79,27 @@ namespace Plugins {
 
             QPropertyAnimation *showAdvancedSetting =new QPropertyAnimation(this, "size", this);
             showAdvancedSetting->setDuration(300);
-            showAdvancedSetting->setStartValue(QSize(width(), 100));
-            showAdvancedSetting->setEndValue(QSize(width(), 200));
+            showAdvancedSetting->setStartValue(QSize(width(), base->height() + 30));
+            showAdvancedSetting->setEndValue(QSize(width(), base->height() + 30 + widget->height()));
             showAdvancedSetting->setEasingCurve(QEasingCurve::InOutCubic);
+
+            connect(showAdvancedSetting, &QPropertyAnimation::valueChanged, this, [=] (const QVariant &value) {
+                    scrollarea->resize(300, value.toRect().height() - base->height() + 30);
+            });
 
             QPropertyAnimation *hideAdvancedSetting =new QPropertyAnimation(this, "size", this);
             hideAdvancedSetting->setDuration(300);
-            hideAdvancedSetting->setStartValue(QSize(width(), 200));
-            hideAdvancedSetting->setEndValue(QSize(width(), 100));
+            hideAdvancedSetting->setStartValue(QSize(width(), base->height() + 30 + widget->height()));
+            hideAdvancedSetting->setEndValue(QSize(width(), base->height() + 30));
             hideAdvancedSetting->setEasingCurve(QEasingCurve::InOutCubic);
 
+            connect(hideAdvancedSetting, &QPropertyAnimation::valueChanged, this, [=] (const QVariant &value) {
+                scrollarea->resize(300, value.toRect().height() - base->height() + 30);
+            });
+
             connect(button, &QPushButton::clicked, this, [=] {
-                if (height() != 100) {
+                if (height() != base->height() + 30) {
+//                    scrollarea->hide();
                     hideAdvancedSetting->start();
                 } else {
                     showAdvancedSetting->start();
