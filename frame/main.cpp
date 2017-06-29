@@ -17,7 +17,6 @@ int main(int argc, char *argv[])
         a.setApplicationVersion("1.0");
 
         QFont font = a.font();
-        font.setPointSize(16);
         font.setFamily("Noto Sans CJK SC");
         a.setFont(font);
 
