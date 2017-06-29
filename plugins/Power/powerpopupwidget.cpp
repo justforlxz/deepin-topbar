@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QSize>
 #include <QScrollArea>
+#include <QRadioButton>
 
 using namespace topbar::widgets;
 
@@ -16,6 +17,8 @@ namespace Plugins {
             m_mainLayout->setMargin(0);
             m_mainLayout->setSpacing(7);
             setLayout(m_mainLayout);
+
+            m_mainLayout->addWidget(createPowerStateGrp());
 
             SwitchItem *awakenDisplay = new SwitchItem;
             awakenDisplay->setCheck(false);
@@ -134,6 +137,26 @@ namespace Plugins {
 
         void PowerPopupWidget::onAwakenComputerChanged(const bool state) {
 
+        }
+
+        QGroupBox *PowerPopupWidget::createPowerStateGrp()
+        {
+            QGroupBox * groupBox = new QGroupBox(tr("Switching system power"));
+
+            QRadioButton *radio1 = new QRadioButton(tr("High performance"));
+            QRadioButton *radio2 = new QRadioButton(tr("Balance"));
+            QRadioButton *radio3 = new QRadioButton(tr("Power saving"));
+
+            radio2->setChecked(true);
+
+            QVBoxLayout *layout = new QVBoxLayout;
+            layout->addWidget(radio2);
+            layout->addWidget(radio3);
+            layout->addWidget(radio1);
+
+            groupBox->setLayout(layout);
+
+            return groupBox;
         }
     }
 }

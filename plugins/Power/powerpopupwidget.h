@@ -5,6 +5,7 @@
 #include <QVBoxLayout>
 #include <QPropertyAnimation>
 #include <QGraphicsOpacityEffect>
+#include <QGroupBox>
 
 namespace Plugins {
     namespace Power {
@@ -30,6 +31,7 @@ namespace Plugins {
             QGraphicsOpacityEffect *m_effect;
             QPropertyAnimation *m_effectShowAni;
             QPropertyAnimation *m_effectHideAni;
+            QGroupBox *createPowerStateGrp();
         };
     }
 }
