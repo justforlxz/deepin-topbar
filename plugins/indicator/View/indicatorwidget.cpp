@@ -19,9 +19,6 @@ IndicatorWidget::IndicatorWidget(QWidget *parent) : QWidget(parent)
 
     connect(m_dockInter, &DBusDock::EntryAdded, this, &IndicatorWidget::addEntry);
     connect(m_dockInter, &DBusDock::EntryRemoved, this, &IndicatorWidget::removeEntry);
-    connect(m_dockInter, &DBusDock::EntriesChanged, this, [=] {
-                qDebug() << "ssssss";
-    });
 
     connect(m_smallWatcher, &QFutureWatcher<QPixmap>::finished, this, &IndicatorWidget::refreshIcon);
 

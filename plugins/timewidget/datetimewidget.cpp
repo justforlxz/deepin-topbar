@@ -8,7 +8,7 @@ namespace Plugin {
         DateTimeWidget::DateTimeWidget(QWidget *parent) : QLabel(parent) {
 
             setStyleSheet("QLabel {"
-                          "font: 14px;"
+                          "font: 16px;"
                           "color: black;"
                           "background: transparent;"
                           "}"

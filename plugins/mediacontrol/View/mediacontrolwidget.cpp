@@ -20,7 +20,7 @@ namespace Plugin {
             m_mediaControl->move(0, -m_mediaControl->height());
 
             m_mediaTitle->setAlignment(Qt::AlignVCenter);
-            m_mediaTitle->setStyleSheet("font-size: 14px;"
+            m_mediaTitle->setStyleSheet("font-size: 16px;"
                                         "color: black;");
 
             //Animation

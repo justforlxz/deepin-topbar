@@ -9,8 +9,12 @@ namespace Plugins {
         PowerWidget::PowerWidget(QWidget *parent) : QWidget(parent) {
             m_popup = new PowerPopupWidget;
 
+            setFixedHeight(25);
+
             m_batteryIcon = new QLabel;
             m_battery = new QLabel;
+
+            m_battery->setAlignment(Qt::AlignVCenter);
 
             QHBoxLayout *layout = new QHBoxLayout;
             layout->setMargin(0);
@@ -20,13 +24,10 @@ namespace Plugins {
 
             setLayout(layout);
 
-            setStyleSheet("QLabel {"
-                          "font: 14px;"
-                          "}"
-                          ":hover {"
-                          "QLabel {"
-                          "color: red;"
-                          "}");
+            m_battery->setStyleSheet("QLabel {"
+                                     "font: 16px;"
+                                     "color: black;"
+                                     "}");
 
             m_powerInter = new DBusPower(this);
 
@@ -83,7 +84,10 @@ namespace Plugins {
 
             m_enter = true;
 
-            m_battery->setStyleSheet("color: white;");
+            m_battery->setStyleSheet("QLabel {"
+                                     "font: 16px;"
+                                     "color: white;"
+                                     "}");
 
             update();
         }
@@ -94,7 +98,10 @@ namespace Plugins {
 
             m_enter = false;
 
-            m_battery->setStyleSheet("color: black;");
+            m_battery->setStyleSheet("QLabel {"
+                                     "font: 16px;"
+                                     "color: black;"
+                                     "}");
 
             update();
         }
