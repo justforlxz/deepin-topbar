@@ -1,3 +1,9 @@
+plugin dependency:
+
+```
+power: cpufrequtils
+```
+
 Compile dependency:
 ```
 sudo apt install libdtkwidget-dev libdtkutil-dev libdtkbase-dev libxcb-ewmh-dev libdframeworkdbus-dev qt5-default g++

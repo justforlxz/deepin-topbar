@@ -7,6 +7,7 @@
 #include <QSize>
 #include <QScrollArea>
 #include <QRadioButton>
+#include <QFile>
 
 using namespace topbar::widgets;
 
@@ -18,7 +19,15 @@ namespace Plugins {
             m_mainLayout->setSpacing(7);
             setLayout(m_mainLayout);
 
-            m_mainLayout->addWidget(createPowerStateGrp());
+            QVBoxLayout *baseLayout = new QVBoxLayout;
+            QWidget *base = new QWidget;
+            base->setLayout(baseLayout);
+
+            QFile file("/usr/bin/cpufreq-info");
+            if (file.exists())
+                baseLayout->addWidget(createPowerStateGrp());
+
+            m_mainLayout->addWidget(base);
 
             SwitchItem *awakenDisplay = new SwitchItem;
             awakenDisplay->setCheck(false);
