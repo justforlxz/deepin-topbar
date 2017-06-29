@@ -2,6 +2,7 @@
 #include "frame.h"
 #include "frameshadow.h"
 #include <DApplication>
+#include <QDebug>
 
 DWIDGET_USE_NAMESPACE
 
@@ -14,6 +15,10 @@ int main(int argc, char *argv[])
     if (a.setSingleInstance("dde-topbar")) {
         a.setApplicationName("dde-topbar");
         a.setApplicationVersion("1.0");
+
+        QFont font = a.font();
+        font.setFamily("Noto Sans CJK SC");
+        a.setFont(font);
 
         Frame *frame = new Frame;
         frame->registerDesktop();
