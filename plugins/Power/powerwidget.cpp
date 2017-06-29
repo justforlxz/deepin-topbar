@@ -15,6 +15,7 @@ namespace Plugins {
             m_battery = new QLabel;
 
             m_battery->setAlignment(Qt::AlignVCenter);
+            m_batteryIcon->setAlignment(Qt::AlignVCenter);
 
             QHBoxLayout *layout = new QHBoxLayout;
             layout->setMargin(0);
@@ -28,6 +29,7 @@ namespace Plugins {
                                      "font: 16px;"
                                      "color: black;"
                                      "}");
+
 
             m_powerInter = new DBusPower(this);
 
@@ -46,6 +48,13 @@ namespace Plugins {
 
         void PowerWidget::updateBatteryIcon() {
             const BatteryPercentageMap data = m_powerInter->batteryPercentage();
+
+            if (data.isEmpty()) {
+                m_battery->setText(tr("UPS"));
+                m_batteryIcon->setPixmap(QPixmap(":/Icons/battery-100.png"));
+                return;
+            }
+
             const uint value = qMin(100.0, qMax(0.0, data.value("Display")));
             const int percentage = std::round(value);
             const bool plugged = !m_powerInter->onBattery();
@@ -70,12 +79,12 @@ namespace Plugins {
             QString iconStr;
 
             if (plugged) {
-                iconStr = "battery-charged-symbolic";
+                iconStr = QString("battery-%1-charging.png").arg(percentageStr);
             } else {
-                iconStr = QString("battery-%1-symbolic").arg(percentageStr);
+                iconStr = QString("battery-%1.png").arg(percentageStr);
             }
             m_battery->setText(percentageStr + "%");
-            m_batteryIcon->setPixmap(QIcon::fromTheme(iconStr).pixmap(20, 20));
+            m_batteryIcon->setPixmap(QPixmap(":/Icons/" + iconStr));
         }
 
         void PowerWidget::enterEvent(QEvent *event)

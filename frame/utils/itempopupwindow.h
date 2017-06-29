@@ -42,6 +42,8 @@ private:
     QWidget *m_content;
     QSize m_size;
     bool m_isVisiable = false;
+    QPoint m_point;
+    QVariantAnimation *m_moveAni;
 };
 
 #endif // ITEMPOPUPWINDOW_H

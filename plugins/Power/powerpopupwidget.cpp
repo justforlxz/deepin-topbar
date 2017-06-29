@@ -13,7 +13,7 @@ namespace Plugins {
     namespace Power {
         PowerPopupWidget::PowerPopupWidget(QWidget *parent) : QWidget(parent) {
             m_mainLayout = new QVBoxLayout;
-            m_mainLayout->setMargin(7);
+            m_mainLayout->setMargin(0);
             m_mainLayout->setSpacing(7);
             setLayout(m_mainLayout);
 
@@ -31,7 +31,7 @@ namespace Plugins {
             resize(300, 100);
 
             QWidget *widget = new QWidget;
-            widget->setFixedWidth(280);
+            widget->setFixedWidth(300);
 
             QVBoxLayout *vlayout = new QVBoxLayout;
             widget->setLayout(vlayout);

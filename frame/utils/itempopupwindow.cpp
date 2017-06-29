@@ -32,6 +32,9 @@ ItemPopupWindow::ItemPopupWindow(QWidget *parent)
             m_key = reply.value();
         }
     });
+
+    m_moveAni = new QVariantAnimation(this);
+    m_moveAni->setDuration(300);
 }
 
 ItemPopupWindow::~ItemPopupWindow()
@@ -68,6 +71,8 @@ void ItemPopupWindow::setContent(QWidget *content)
 
 void ItemPopupWindow::show(const QPoint &pos)
 {
+    m_point = pos;
+
     show(pos.x(), pos.y());
 }
 

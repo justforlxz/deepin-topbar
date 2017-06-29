@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Icons/battery-000-charging.png</file>
+        <file>Icons/battery-000.png</file>
+        <file>Icons/battery-020-charging.png</file>
+        <file>Icons/battery-020.png</file>
+        <file>Icons/battery-040-charging.png</file>
+        <file>Icons/battery-040.png</file>
+        <file>Icons/battery-060-charging.png</file>
+        <file>Icons/battery-060.png</file>
+        <file>Icons/battery-080-charging.png</file>
+        <file>Icons/battery-080.png</file>
+        <file>Icons/battery-100-charging.png</file>
+        <file>Icons/battery-100.png</file>
+    </qresource>
+</RCC>

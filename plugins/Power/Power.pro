@@ -45,3 +45,6 @@ HEADERS += \
 
 target.path = $${PREFIX}/lib/dde-topbar/plugins/
 INSTALLS   += target
+
+RESOURCES += \
+    power.qrc
