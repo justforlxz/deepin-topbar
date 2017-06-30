@@ -24,6 +24,7 @@ namespace Plugins {
         public slots:
             void onAwakenDisplayChanged(const bool state);
             void onAwakenComputerChanged(const bool state);
+
         private:
             QVBoxLayout *m_mainLayout;
             QPropertyAnimation *m_showAni;

@@ -8,6 +8,7 @@
 #include <QScrollArea>
 #include <QRadioButton>
 #include <QFile>
+#include <QProcess>
 
 using namespace topbar::widgets;
 
@@ -26,7 +27,7 @@ namespace Plugins {
 
             resize(300, base->height() + 30);
 
-            QFile file("/usr/bin/cpufreq-info");
+            QFile file("/usr/bin/cpupower");
             if (file.exists())
                 baseLayout->addWidget(createPowerStateGrp());
 
@@ -67,6 +68,8 @@ namespace Plugins {
             scrollarea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
             scrollarea->setStyleSheet("background-color: transparent;");
 
+            widget->hide();
+
             m_mainLayout->addWidget(scrollarea, 0, Qt::AlignTop);
 
             QPushButton *button = new QPushButton(this);
@@ -84,7 +87,12 @@ namespace Plugins {
             showAdvancedSetting->setEasingCurve(QEasingCurve::InOutCubic);
 
             connect(showAdvancedSetting, &QPropertyAnimation::valueChanged, this, [=] (const QVariant &value) {
-                    scrollarea->resize(300, value.toRect().height() - base->height() + 30);
+                scrollarea->resize(300, value.toRect().height() - base->height() + 30);
+            });
+
+            connect(showAdvancedSetting, &QPropertyAnimation::finished, this, [=] {
+                widget->show();
+                scrollarea->show();
             });
 
             QPropertyAnimation *hideAdvancedSetting =new QPropertyAnimation(this, "size", this);
@@ -99,7 +107,7 @@ namespace Plugins {
 
             connect(button, &QPushButton::clicked, this, [=] {
                 if (height() != base->height() + 30) {
-//                    scrollarea->hide();
+                    scrollarea->hide();
                     hideAdvancedSetting->start();
                 } else {
                     showAdvancedSetting->start();
@@ -165,6 +173,20 @@ namespace Plugins {
             QRadioButton *radio1 = new QRadioButton(tr("High performance"));
             QRadioButton *radio2 = new QRadioButton(tr("Balance"));
             QRadioButton *radio3 = new QRadioButton(tr("Power saving"));
+
+            QProcess *process = new QProcess(this);
+
+            connect(radio1, &QRadioButton::clicked, this, [=]{
+                process->start("pkexec cpupower frequency-set -g performance");
+            });
+
+            connect(radio2, &QRadioButton::clicked, this, [=]{
+                process->start("pkexec cpupower frequency-set -g ondemand");
+            });
+
+            connect(radio3, &QRadioButton::clicked, this, [=]{
+                process->start("pkexec cpupower frequency-set -g powersave");
+            });
 
             radio2->setChecked(true);
 
