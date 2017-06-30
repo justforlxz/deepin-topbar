@@ -1,9 +1,12 @@
-Package: deepin-topbar
-Version: 0.1-1
+Source: deepin-topbar
 Section: base
 Priority: optional
-Architecture: amd64
-Depends: libdtkwidget (>= 0.2.9-1+b1), libdtkutil (>= 0.2.9-1+b1), libdtkbase (>= 0.2.9-1+b1), libxcb-ewmh2 (>= 0.4.1-1), libdframeworkdbus (>= 0.1.0-1), qt5-default (>= 5.6.1+dfsg-3+b1)
 Maintainer: kirigaya <kirigaya@mkacg.com>
-Description: topbar for deepin.
+Build-Depends: debhelper (>= 9),pkg-config, dpkg-dev, qt5-qmake, qt5-default, libdtkbase-dev, libdtkwidget-dev, libxcb-ewmh-dev, libdframeworkdbus-dev
+Standards-Version: 0.1-1
 Homepage: http://blog.mkacg.com
+
+Package: deepin-topbar
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: topbar for deepin.
