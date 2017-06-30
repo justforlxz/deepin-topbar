@@ -1,7 +1,7 @@
 plugin dependency:
 
 ```
-power: cpufrequtils
+power: linux-power
 ```
 
 Compile dependency:
