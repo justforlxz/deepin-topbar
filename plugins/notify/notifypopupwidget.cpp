@@ -22,6 +22,9 @@ NotifyPopupWidget::NotifyPopupWidget(QWidget *parent) : QWidget(parent)
     m_hideAni->setEasingCurve(QEasingCurve::InOutCubic);
 
     connect(m_hideAni, &QPropertyAnimation::finished, this, &NotifyPopupWidget::requestHidePopup);
+
+
+    //load notify
 }
 
 void NotifyPopupWidget::showAni()

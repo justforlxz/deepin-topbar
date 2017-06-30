@@ -29,11 +29,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += notifyplugin.cpp \
     notifywidget.cpp \
-    notifypopupwidget.cpp
+    notifypopupwidget.cpp \
+    NotifyItem.cpp
 
 HEADERS += notifyplugin.h \
     notifywidget.h \
-    notifypopupwidget.h
+    notifypopupwidget.h \
+    NotifyItem.h
 
 target.path = $${PREFIX}/lib/dde-topbar/plugins/
 INSTALLS   += target
