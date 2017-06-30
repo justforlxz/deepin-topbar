@@ -30,7 +30,7 @@ namespace Plugin {
             timer->start();
 
             connect(popup, &DateTimePopup::requestDateFormat, this, [=] (const bool state) {
-                settings->setValue("24HourFormat", state ? 24 : 12);
+                settings->setValue("24HourFormat", state);
                 m_24HourFormat = state;
                 updateTime();
             });
