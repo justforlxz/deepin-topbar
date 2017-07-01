@@ -4,4 +4,5 @@ SUBDIRS = \
     mediacontrol \
     indicator \
     Power \
-    notify
+    notify \
+    wallpaper
