@@ -1,7 +1,7 @@
 plugin dependency:
 
 ```
-power: linux-power
+power: linux-cpupower
 ```
 
 Compile dependency:
