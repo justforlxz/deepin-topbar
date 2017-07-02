@@ -5,6 +5,7 @@
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QtConcurrent>
+#include <QDBusConnection>
 #include "themeappicon.h"
 
 namespace Plugin {
@@ -13,6 +14,9 @@ namespace Indicator {
 IndicatorWidget::IndicatorWidget(QWidget *parent) : QWidget(parent)
 {
     initUI();
+
+    m_systeminfo = new systeminfo("com.deepin.daemon.SystemInfo", "/com/deepin/daemon/SystemInfo",
+                                  QDBusConnection::sessionBus(), this);
 
     m_dockInter = new DBusDock(this);
     m_smallWatcher= new QFutureWatcher<QPixmap>(this);
@@ -95,7 +99,8 @@ void IndicatorWidget::refreshActiveWindow()
         }
     }
 
-    m_entry->setVisible(false);
+    m_entry->setText(m_systeminfo->version());
+    m_entry->setNormalIcon(QIcon::fromTheme("dde"));
 }
 
 void IndicatorWidget::refreshIcon()
