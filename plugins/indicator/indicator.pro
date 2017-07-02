@@ -7,7 +7,7 @@
 include(../../interfaces/interfaces.pri)
 
 QT       += core gui widgets x11extras dbus concurrent
-PKGCONFIG += dtkwidget dtkbase dtkutil
+PKGCONFIG += dtkwidget dtkbase dtkutil dframeworkdbus
 TEMPLATE = lib
 CONFIG    += plugin c++11 link_pkgconfig
 TARGET     = $$qtLibraryTarget(indicator)
@@ -45,3 +45,5 @@ HEADERS += \
 
 target.path = $${PREFIX}/lib/dde-topbar/plugins/
 INSTALLS   += target
+
+RESOURCES +=

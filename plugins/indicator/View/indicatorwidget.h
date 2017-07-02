@@ -5,6 +5,9 @@
 #include <QWidget>
 #include <DBus/dbusdock.h>
 #include <DBus/dbusdockentry.h>
+#include <com_deepin_daemon_systeminfo.h>
+
+using systeminfo = com::deepin::daemon::SystemInfo;
 
 namespace Plugin {
 namespace Indicator {
@@ -32,6 +35,7 @@ private:
     Entry *m_entry;
     DBusDockEntry *m_activeWindow;
     QFutureWatcher<QPixmap> *m_smallWatcher;
+    systeminfo *m_systeminfo;
 };
 }
 }
