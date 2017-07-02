@@ -15,7 +15,7 @@ Entry::Entry(QWidget *parent) : QWidget(parent)
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setMargin(0);
-    mainLayout->setSpacing(0);
+    mainLayout->setSpacing(5);
 
     mainLayout->addWidget(m_normalIcon, 0, Qt::AlignVCenter);
     mainLayout->addWidget(m_title, 0, Qt::AlignVCenter);
