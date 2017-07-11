@@ -33,16 +33,14 @@ SOURCES += \
     View/mediacontrolwidget.cpp \
     DBus/dbusmediaplayer2.cpp \
     View/mediacontrol.cpp \
-    DBus/dbusinterface.cpp \
-    View/textticker.cpp
+    DBus/dbusinterface.cpp
 
 HEADERS += \
         mediacontrolplugin.h \
     View/mediacontrolwidget.h \
     DBus/dbusmediaplayer2.h \
     View/mediacontrol.h \
-    DBus/dbusinterface.h \
-    View/textticker.h
+    DBus/dbusinterface.h
 
 target.path = $${PREFIX}/lib/dde-topbar/plugins/
 INSTALLS   += target
