@@ -12,10 +12,19 @@ namespace Plugin {
 
             setVisible(false);
 
-            m_mediaTitle = new TextTicker(this);
-            m_mediaControl = new MediaControl(this);
+            m_mediaTitle = new QLabel(this);
+
+            m_dtEffect = new DTickWidget(m_mediaTitle, this);
+            m_dtEffect->setDirection(DTickWidget::RightToLeft);
+            m_dtEffect->play();
 
             m_mediaTitle->resize(100, 25);
+            m_mediaTitle->setStyleSheet("background: transparent;"
+                                        "font-size: 14px;"
+                                        "color: black;");
+
+            m_mediaControl = new MediaControl(this);
+
             m_mediaControl->resize(100, 25);
             m_mediaControl->move(0, -m_mediaControl->height());
 
@@ -88,6 +97,8 @@ namespace Plugin {
 
             connect(m_mprisInter, &DBusMediaPlayer2::MetadataChanged, this, [=]{
                 m_mediaTitle->setText(m_mprisInter->metadata().value("xesam:title").toString());
+                m_dtEffect->stop();
+                m_dtEffect->play();
             });
 
             connect(m_mprisInter, &DBusMediaPlayer2::PlaybackStatusChanged, this, [=]{

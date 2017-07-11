@@ -2,12 +2,14 @@
 #define MEDIACONTROLWIDGET_H
 
 #include "mediacontrol.h"
-#include "textticker.h"
 #include "DBus/dbusinterface.h"
 #include "DBus/dbusmediaplayer2.h"
 #include <QFrame>
 #include <QLabel>
 #include <QPropertyAnimation>
+#include <dtickwidget.h>
+
+DWIDGET_USE_NAMESPACE
 
 using DBusMPRIS = DBusMediaPlayer2;
 
@@ -32,12 +34,13 @@ protected:
 private:
     MediaControl *m_mediaControl;
     DBusMediaPlayer2 *m_mprisInter;
-    TextTicker *m_mediaTitle;
+    QLabel *m_mediaTitle;
     QPropertyAnimation *m_hoverControlAni;
     QPropertyAnimation *m_showControlAni;
     DBusInterface *m_dbusInter;
     QString m_lastPath;
     QStringList m_mprisPaths;
+    DTickWidget *m_dtEffect;
 };
 }
 }
