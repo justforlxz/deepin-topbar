@@ -10,3 +10,4 @@ StartupNotify=false
 Terminal=false
 Type=Application
 X-MultipleArgs=false
+X-GNOME-Autostart-Delay=5
