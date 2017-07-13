@@ -12,4 +12,7 @@ service.files = com.deepin.dde.Topbar.service
 desktop.path = $${PREFIX}/share/applications/
 desktop.files = dde-topbar.desktop
 
-INSTALLS += desktop service
+autostart.path = /etc/xdg/autostart/
+autostart.files = dde-topbar-autostart.desktop
+
+INSTALLS += desktop service autostart
