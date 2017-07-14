@@ -5,4 +5,5 @@ SUBDIRS = \
     indicator \
     Power \
     notify \
-    wallpaper
+    wallpaper \
+    systeminfo
