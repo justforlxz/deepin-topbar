@@ -36,6 +36,7 @@ private:
     DBusDockEntry *m_activeWindow;
     QFutureWatcher<QPixmap> *m_smallWatcher;
     systeminfo *m_systeminfo;
+    QString m_systemVersion;
 };
 }
 }
