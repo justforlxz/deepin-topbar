@@ -64,16 +64,16 @@ SysteminfoThread::SysteminfoThread(QObject *parent) : QThread(parent)
 
 void SysteminfoThread::run()
 {
-    int old_tx;
-    int old_rx;
+    quint64 old_tx;
+    quint64 old_rx;
 
     for (;;) {
         if (m_device && m_rx && m_tx) {
             m_tx->open(QIODevice::ReadOnly | QIODevice::Text);
             m_rx->open(QIODevice::ReadOnly | QIODevice::Text);
 
-            old_tx = QString(m_tx->readAll()).remove("\n").toInt();
-            old_rx = QString(m_rx->readAll()).remove("\n").toInt();
+            old_tx = QString(m_tx->readAll()).remove("\n").toULongLong();
+            old_rx = QString(m_rx->readAll()).remove("\n").toULongLong();
 
             m_tx->close();
             m_rx->close();
@@ -83,8 +83,8 @@ void SysteminfoThread::run()
             m_tx->open(QIODevice::ReadOnly | QIODevice::Text);
             m_rx->open(QIODevice::ReadOnly | QIODevice::Text);
 
-            emit networkSpeedChanged(QString(m_tx->readAll()).remove("\n").toInt() - old_tx,
-                                     QString(m_rx->readAll()).remove("\n").toInt() - old_rx);
+            emit networkSpeedChanged(QString(m_tx->readAll()).remove("\n").toULongLong() - old_tx,
+                                     QString(m_rx->readAll()).remove("\n").toULongLong() - old_rx);
 
 
             m_tx->close();
