@@ -40,8 +40,8 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent) : QWidget(parent)
     SysteminfoThread *systeminfoThread = new SysteminfoThread;
 
     connect(systeminfoThread, &SysteminfoThread::networkSpeedChanged, this, [=] (const quint64 tx, const quint64 rx) {
-            m_tx->setText(QString::number(tx / 1024) + "KB/s");
-            m_rx->setText(QString::number(rx / 1024) + "KB/s");
+        m_tx->setText(converSpeed(tx));
+        m_rx->setText(converSpeed(rx));
     });
 
     systeminfoThread->start();
@@ -81,5 +81,31 @@ void SystemInfoWidget::leaveEvent(QEvent *event)
 //    setStyleSheet("background: transparent;"
 //                  "QLabel {"
 //                  "color: black;"
-//                  "}");
+    //                  "}");
+}
+
+const QString SystemInfoWidget::converSpeed(const int value)
+{
+    QString speed;
+
+    for (;;) {
+        if (value < 1024) {
+            speed = QString::number(value) + "Bits/s";
+            break;
+        }
+        if (value / 1024 < 1024) {
+            speed = QString::number(value / 1024) + "KB/s";
+            break;
+        }
+        if (value / 1024 / 1024 < 1024) {
+            speed = QString::number(value / 1024 / 1024) + "MB/s";
+            break;
+        }
+        if (value / 1024 / 1024 / 1024 < 1024) {
+            speed = QString::number(value / 1024 / 1024 / 1024) + "GB/s";
+            break;
+        }
+    }
+
+    return speed;
 }
