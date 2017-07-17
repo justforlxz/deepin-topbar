@@ -15,6 +15,9 @@ protected:
     void leaveEvent(QEvent *event) Q_DECL_OVERRIDE;
 
 private:
+    const QString converSpeed(const int value);
+
+private:
     QLabel *m_rx;
     QLabel *m_tx;
 };
