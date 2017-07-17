@@ -37,6 +37,9 @@ void PluginsItemController::itemSort()
     emit itemInserted(i++, list.value("mediacontrol"));
     list.remove("mediacontrol");
 
+    emit itemInserted(i++, list.value("systeminfo"));
+    list.remove("systeminfo");
+
     emit itemInserted(i++, list.value("power"));
     list.remove("power");
 
