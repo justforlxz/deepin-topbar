@@ -8,6 +8,8 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent) : QWidget(parent)
     setObjectName("SystemInfoWidget");
     setFixedSize(70, 25);
 
+    m_enter = false;
+
     QLabel *up   = new QLabel("↑  ");
     QLabel *down = new QLabel("↓  ");
 
