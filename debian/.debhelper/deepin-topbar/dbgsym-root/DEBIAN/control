@@ -1,0 +1,13 @@
+Package: deepin-topbar-dbgsym
+Source: deepin-topbar
+Version: 0.2-1
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: kirigaya <kirigaya@mkacg.com>
+Installed-Size: 8737
+Depends: deepin-topbar (= 0.2-1)
+Section: debug
+Priority: extra
+Homepage: http://blog.mkacg.com
+Description: Debug symbols for deepin-topbar
+Build-Ids: 0ca7d56bf3ee0ba9f780dcabf0a77089a90d423f 0d45ab8080a12861d70d730236a2a86d535f64cd 88dd74a950d206ec0e0ec889edf4d86007ee61c9 91f7199e34eaede36e47ebc416a5332058815700 94316fc1541a235afe30d14db6134f6ac6c34b91 b95c94f1e096a1104891a59300bea1bdb1f7cc3b

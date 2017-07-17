@@ -1,0 +1,3 @@
+  <interface name="org.freedesktop.NetworkManager.Device">
+    <property type="s" name="Interface" access="read"/>
+  </interface>

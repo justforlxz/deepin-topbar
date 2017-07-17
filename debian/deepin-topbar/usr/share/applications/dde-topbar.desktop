@@ -1,0 +1,12 @@
+[Desktop Entry]
+Categories=Application;System;Settings
+Comment=Deepin Desktop Environment Topbar
+Encoding=UTF-8
+Exec=/usr/bin/dde-topbar
+Icon=preferences-system
+Name=Topbar
+OnlyShowIn=Deepin
+StartupNotify=false
+Terminal=false
+Type=Application
+X-MultipleArgs=false
