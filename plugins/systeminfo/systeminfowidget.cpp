@@ -1,4 +1,5 @@
 #include "systeminfowidget.h"
+#include "systeminfothread.h"
 #include <QHBoxLayout>
 
 SystemInfoWidget::SystemInfoWidget(QWidget *parent) : QWidget(parent)
@@ -8,23 +9,23 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent) : QWidget(parent)
     QLabel *up   = new QLabel("↑  ");
     QLabel *down = new QLabel("↓  ");
 
-    m_rxPackets = new QLabel("100KB/s");
-    m_rxPackets->setFixedHeight(10);
+    m_rx = new QLabel("100KB/s");
+    m_rx->setFixedHeight(10);
 
-    m_txPackets = new QLabel("49KB/s");
-    m_txPackets->setFixedHeight(10);
+    m_tx = new QLabel("49KB/s");
+    m_tx->setFixedHeight(10);
 
     QHBoxLayout *upLayout = new QHBoxLayout;
     upLayout->setMargin(0);
     upLayout->setSpacing(0);
     upLayout->addWidget(up, 0, Qt::AlignLeft);
-    upLayout->addWidget(m_txPackets, 0, Qt::AlignRight);
+    upLayout->addWidget(m_tx, 0, Qt::AlignRight);
 
     QHBoxLayout *downLayout = new QHBoxLayout;
     downLayout->setMargin(0);
     downLayout->setSpacing(0);
     downLayout->addWidget(down, 0, Qt::AlignHCenter | Qt::AlignLeft);
-    downLayout->addWidget(m_rxPackets, 0, Qt::AlignHCenter | Qt::AlignRight);
+    downLayout->addWidget(m_rx, 0, Qt::AlignHCenter | Qt::AlignRight);
 
     QVBoxLayout *layout = new QVBoxLayout;
 
@@ -36,6 +37,14 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent) : QWidget(parent)
 
     setLayout(layout);
 
+    SysteminfoThread *systeminfoThread = new SysteminfoThread;
+
+    connect(systeminfoThread, &SysteminfoThread::networkSpeedChanged, this, [=] (const quint64 tx, const quint64 rx) {
+            m_tx->setText(QString::number(tx / 1024) + "KB/s");
+            m_rx->setText(QString::number(rx / 1024) + "KB/s");
+    });
+
+    systeminfoThread->start();
 //    setStyleSheet("QLabel {"
 //                  "color: black;"
 //                  "background: transparent;"

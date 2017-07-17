@@ -29,11 +29,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += systeminfoplugin.cpp \
     systeminfowidget.cpp \
-    systeminfopopupwidget.cpp
+    systeminfopopupwidget.cpp \
+    DBus/org_freedesktop_networkmanager.cpp \
+    DBus/org_freedesktop_networkmanager_activeconnection.cpp \
+    DBus/org_freedesktop_networkmanager_device.cpp \
+    systeminfothread.cpp
 
 HEADERS += systeminfoplugin.h \
     systeminfowidget.h \
-    systeminfopopupwidget.h
+    systeminfopopupwidget.h \
+    DBus/org_freedesktop_networkmanager.h \
+    DBus/org_freedesktop_networkmanager_activeconnection.h \
+    DBus/org_freedesktop_networkmanager_device.h \
+    systeminfothread.h
 
 target.path = $${PREFIX}/lib/dde-topbar/plugins/
 INSTALLS   += target
