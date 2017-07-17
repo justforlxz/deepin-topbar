@@ -31,4 +31,4 @@ make
 sudo make install
 ```
 
-find topbar for launcher,and run it.
+find topbar on launcher, and run it.
