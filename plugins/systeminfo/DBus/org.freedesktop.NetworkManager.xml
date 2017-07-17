@@ -1,0 +1,5 @@
+ <interface name="org.freedesktop.NetworkManager">
+    <property type="ao" name="ActiveConnections" access="read"/>
+    <property type="o" name="PrimaryConnection" access="read"/>
+    <property type="s" name="PrimaryConnectionType" access="read"/>
+  </interface>
