@@ -18,7 +18,7 @@ public:
     explicit SysteminfoThread(QObject *parent = 0);
 
 signals:
-    void networkSpeedChanged(const int tx, const int rx);
+    void networkSpeedChanged(const quint64 tx, const quint64 rx);
 
 protected:
     void run() Q_DECL_OVERRIDE;
