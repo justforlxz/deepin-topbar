@@ -15,8 +15,8 @@ protected:
     void leaveEvent(QEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    QLabel *m_rxPackets;
-    QLabel *m_txPackets;
+    QLabel *m_rx;
+    QLabel *m_tx;
 };
 
 #endif // SYSTEMINFOWIDGET_H

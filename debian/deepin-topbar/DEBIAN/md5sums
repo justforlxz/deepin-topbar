@@ -1,0 +1,11 @@
+66982b8baf655e92c835f3dbf8640a9a  usr/bin/dde-topbar
+884a75abc6cd9287921514e17d6d34b1  usr/include/dde-topbar/pluginproxyinterface.h
+3bd1c8b87e547b453dfb2f4258336fca  usr/include/dde-topbar/pluginsiteminterface.h
+3f564f76372f978837970e918cd3613e  usr/lib/dde-topbar/plugins/libdatetime.so
+c1840ca6750218602e2cd13ed85f420d  usr/lib/dde-topbar/plugins/libindicator.so
+1b59f20bc8dd65e83d94f5cf5dc948ee  usr/lib/dde-topbar/plugins/libmediacontrol.so
+502b120c7266e5030f98473d896e46c5  usr/lib/dde-topbar/plugins/libnotify.so
+b7379af7c535229c5dc7880363d0f63d  usr/lib/dde-topbar/plugins/libpower.so
+64fef66976b85785a303fcae0fc2244b  usr/share/applications/dde-topbar.desktop
+8229d332eb2cdd4e5295096ffbcb73f8  usr/share/dbus-1/services/com.deepin.dde.Topbar.service
+8019a80231500a77e54e32680f4e341f  usr/share/doc/deepin-topbar/changelog.Debian.gz
