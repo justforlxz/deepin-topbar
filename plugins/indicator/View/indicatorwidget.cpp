@@ -18,6 +18,14 @@ IndicatorWidget::IndicatorWidget(QWidget *parent) : QWidget(parent)
     m_systeminfo = new systeminfo("com.deepin.daemon.SystemInfo", "/com/deepin/daemon/SystemInfo",
                                   QDBusConnection::sessionBus(), this);
 
+    m_systemVersion = m_systeminfo->version();
+
+    m_systeminfo->setSync(false);
+
+    connect(m_systeminfo, &systeminfo::VersionChanged, this, [=] (const QString &version){
+            m_systemVersion = version;
+    });
+
     m_dockInter = new DBusDock(this);
     m_smallWatcher= new QFutureWatcher<QPixmap>(this);
 
@@ -99,7 +107,7 @@ void IndicatorWidget::refreshActiveWindow()
         }
     }
 
-    m_entry->setText(m_systeminfo->version());
+    m_entry->setText(m_systemVersion);
     m_entry->setNormalIcon(QIcon::fromTheme("dde"));
 }
 
