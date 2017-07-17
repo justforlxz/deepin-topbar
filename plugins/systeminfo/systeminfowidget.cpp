@@ -1,9 +1,11 @@
 #include "systeminfowidget.h"
 #include "systeminfothread.h"
 #include <QHBoxLayout>
+#include <QPainter>
 
 SystemInfoWidget::SystemInfoWidget(QWidget *parent) : QWidget(parent)
 {
+    setObjectName("SystemInfoWidget");
     setFixedSize(70, 25);
 
     QLabel *up   = new QLabel("↑  ");
@@ -45,43 +47,43 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent) : QWidget(parent)
     });
 
     systeminfoThread->start();
-//    setStyleSheet("QLabel {"
-//                  "color: black;"
-//                  "background: transparent;"
-//                  "}"
-//                  "QLabel:hover {"
-//                  "color: white;"
-//                  "background: #1E90FF;"
-//                  "}");
-
-    setStyleSheet(":hover {"
-                  "background: #1E90FF;"
-                  "}"
-                  "{"
-                  ""
-                  "}");
 }
 
 void SystemInfoWidget::enterEvent(QEvent *event)
 {
     QWidget::enterEvent(event);
 
-//    setStyleSheet("background: #1E90FF;"
-//                  "QLabel {"
-//                  "color: white;"
-//                  "}");
+    m_enter = true;
 
+    setStyleSheet("QLabel {"
+                  "color: white;"
+                  "}");
 
+    update();
 }
 
 void SystemInfoWidget::leaveEvent(QEvent *event)
 {
     QWidget::leaveEvent(event);
 
-//    setStyleSheet("background: transparent;"
-//                  "QLabel {"
-//                  "color: black;"
-    //                  "}");
+    m_enter = false;
+
+    setStyleSheet("QLabel {"
+                  "color: black;"
+                  "}");
+
+    update();
+}
+
+void SystemInfoWidget::paintEvent(QPaintEvent *event)
+{
+    QWidget::paintEvent(event);
+
+    QPainter painter(this);
+
+    if (m_enter) {
+        painter.fillRect(rect(), QColor("#1E90FF"));
+    }
 }
 
 const QString SystemInfoWidget::converSpeed(const int value)
