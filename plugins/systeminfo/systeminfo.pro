@@ -6,9 +6,10 @@
 
 include(../../interfaces/interfaces.pri)
 include(../../widgets/widgets.pri)
+include(../../dbus/dbus.pri)
 
 QT       += core gui widgets dbus x11extras network
-PKGCONFIG += dtkwidget dtkbase dtkutil dframeworkdbus
+PKGCONFIG += dtkcore dtkwidget dframeworkdbus
 TEMPLATE = lib
 CONFIG    += plugin c++11 link_pkgconfig
 TARGET     = $$qtLibraryTarget(systeminfo)
