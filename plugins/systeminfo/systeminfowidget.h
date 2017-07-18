@@ -1,6 +1,8 @@
 #ifndef SYSTEMINFOWIDGET_H
 #define SYSTEMINFOWIDGET_H
 
+#include "fontlabel.h"
+
 #include <QWidget>
 #include <QLabel>
 
@@ -21,6 +23,7 @@ private:
 private:
     QLabel *m_rx;
     QLabel *m_tx;
+    FontLabel *m_speedSort;
     bool m_enter;
 };
 
