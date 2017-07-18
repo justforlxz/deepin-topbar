@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>segoe-mdl2-assets.ttf</file>
+    </qresource>
+</RCC>
