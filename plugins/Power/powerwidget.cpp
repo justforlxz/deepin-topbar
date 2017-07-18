@@ -61,36 +61,54 @@ namespace Plugins {
             const int percentage = std::round(value);
             const bool plugged = !m_powerInter->onBattery();
 
-            QString percentageStr;
+            QChar percentageStr;
 
             if (plugged) {
                 if (percentage < 10 && percentage >= 0)
-                    percentageStr = "0xE85A";
-                else if (percentage > 10)
-                    percentageStr = "0xE85B";
-                else if (percentage > 20)
-                    percentageStr = "0xE85C";
-                else if (percentage > 30)
-                    percentageStr = "0xE85D";
-                else if (percentage > 40)
-                    percentageStr = "0xE85E";
-                else if (percentage > 50)
-                    percentageStr = "0xE85F";
-                else if (percentage > 60)
-                    percentageStr = "0xE860";
-                else if (percentage > 70)
-                    percentageStr = "0xE861";
-                else if (percentage > 80)
-                    percentageStr = "0xE862";
-                else if (percentage > 90)
-                    percentageStr = "0xE83E";
+                    percentageStr = 0xE85A;
+                else if (percentage < 20)
+                    percentageStr = 0xE85B;
+                else if (percentage < 30)
+                    percentageStr = 0xE85C;
+                else if (percentage < 40)
+                    percentageStr = 0xE85D;
+                else if (percentage < 50)
+                    percentageStr = 0xE85E;
+                else if (percentage < 60)
+                    percentageStr = 0xE85F;
+                else if (percentage < 70)
+                    percentageStr = 0xE860;
+                else if (percentage < 80)
+                    percentageStr = 0xE861;
+                else if (percentage < 90)
+                    percentageStr = 0xE862;
+                else if (percentage < 100)
+                    percentageStr = 0xE83E;
             } else {
-                int p = (percentage - 10) / 10;
-                percentageStr = "0xE85" + p;
+                if (percentage < 10 && percentage >= 0)
+                    percentageStr = 0xE850;
+                else if (percentage < 20)
+                    percentageStr = 0xE851;
+                else if (percentage < 30)
+                    percentageStr = 0xE852;
+                else if (percentage < 40)
+                    percentageStr = 0xE853;
+                else if (percentage < 50)
+                    percentageStr = 0xE854;
+                else if (percentage < 60)
+                    percentageStr = 0xE855;
+                else if (percentage < 70)
+                    percentageStr = 0xE856;
+                else if (percentage < 80)
+                    percentageStr = 0xE857;
+                else if (percentage < 90)
+                    percentageStr = 0xE858;
+                else if (percentage < 100)
+                    percentageStr = 0xE859;
             }
 
-            m_battery->setText(percentage + "%");
-            m_batteryIcon->setIcon(percentageStr.toStdString().c_str()[0], 18);
+            m_battery->setText(QString::number(percentage) + "%");
+            m_batteryIcon->setIcon(percentageStr, 18);
         }
 
         void PowerWidget::enterEvent(QEvent *event)

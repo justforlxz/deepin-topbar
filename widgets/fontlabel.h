@@ -8,7 +8,7 @@ class FontLabel : public QLabel
     Q_OBJECT
 public:
     explicit FontLabel(QWidget *parent = 0);
-    void setIcon(QChar c, int size);
+    void setIcon(const QChar c, int size);
 
 private:
     QFont m_iconFont;
