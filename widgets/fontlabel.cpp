@@ -12,7 +12,7 @@ FontLabel::FontLabel(QWidget *parent) : QLabel(parent)
     m_iconFont = QFont(fontName);
 }
 
-void FontLabel::setIcon(QChar c, int size)
+void FontLabel::setIcon(const QChar c, int size)
 {
     m_iconFont.setPointSize(size);
     setFont(m_iconFont);
