@@ -7,7 +7,7 @@
 #include <QFrame>
 #include <QLabel>
 #include <QPropertyAnimation>
-#include <dtickwidget.h>
+#include <dtickeffect.h>
 
 DWIDGET_USE_NAMESPACE
 
@@ -40,7 +40,7 @@ private:
     DBusInterface *m_dbusInter;
     QString m_lastPath;
     QStringList m_mprisPaths;
-    DTickWidget *m_dtEffect;
+    DTickEffect *m_dtEffect;
 };
 }
 }
