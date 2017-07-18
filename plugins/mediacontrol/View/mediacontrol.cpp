@@ -9,11 +9,11 @@ MediaControl::MediaControl(QWidget *parent) : QFrame(parent) {
     setWindowFlags(Qt::FramelessWindowHint);
 
     m_lastBtn = new FontLabel;
-    m_lastBtn->setIcon(QChar(0xE76C), 18);
+    m_lastBtn->setIcon(QChar(0xE893), 18);
     m_lastBtn->installEventFilter(this);
 
     m_previousBtn = new FontLabel;
-    m_previousBtn->setIcon(QChar(0xE76B), 18);
+    m_previousBtn->setIcon(QChar(0xE892), 18);
     m_previousBtn->installEventFilter(this);
 
     m_pauseBtn = new FontLabel;

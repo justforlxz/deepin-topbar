@@ -6,29 +6,31 @@
 SystemInfoWidget::SystemInfoWidget(QWidget *parent) : QWidget(parent)
 {
     setObjectName("SystemInfoWidget");
-    setFixedSize(70, 25);
+    setFixedSize(80, 25);
 
     m_enter = false;
 
-    QLabel *up   = new QLabel("↑  ");
-    QLabel *down = new QLabel("↓  ");
+    m_speedSort = new FontLabel;
+    m_speedSort->setIcon(QChar(0xE8CB), 16);
 
-    m_rx = new QLabel("100KB/s");
-    m_rx->setFixedHeight(10);
+    m_tx = new QLabel;
+    m_tx->setFixedHeight(11);
 
-    m_tx = new QLabel("49KB/s");
-    m_tx->setFixedHeight(10);
+    QFont font;
+    font.setPixelSize(11);
+    m_tx->setFont(font);
+
+    m_rx = new QLabel;
+    m_rx->setFixedHeight(12);
 
     QHBoxLayout *upLayout = new QHBoxLayout;
     upLayout->setMargin(0);
     upLayout->setSpacing(0);
-    upLayout->addWidget(up, 0, Qt::AlignLeft);
-    upLayout->addWidget(m_tx, 0, Qt::AlignRight);
+    upLayout->addWidget(m_tx, 0, Qt::AlignHCenter | Qt::AlignRight);
 
     QHBoxLayout *downLayout = new QHBoxLayout;
     downLayout->setMargin(0);
     downLayout->setSpacing(0);
-    downLayout->addWidget(down, 0, Qt::AlignHCenter | Qt::AlignLeft);
     downLayout->addWidget(m_rx, 0, Qt::AlignHCenter | Qt::AlignRight);
 
     QVBoxLayout *layout = new QVBoxLayout;
@@ -36,10 +38,18 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent) : QWidget(parent)
     layout->setMargin(0);
     layout->setSpacing(1);
 
-    layout->addLayout(downLayout);
     layout->addLayout(upLayout);
+    layout->addLayout(downLayout);
 
-    setLayout(layout);
+    QHBoxLayout *mainlayout = new QHBoxLayout;
+    mainlayout->setMargin(0);
+    mainlayout->setSpacing(0);
+
+    mainlayout->addWidget(m_speedSort, 0, Qt::AlignHCenter | Qt::AlignLeft);
+    mainlayout->addLayout(layout);
+
+
+    setLayout(mainlayout);
 
     SysteminfoThread *systeminfoThread = new SysteminfoThread;
 
