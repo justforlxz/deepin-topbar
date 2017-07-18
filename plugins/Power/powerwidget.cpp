@@ -11,7 +11,7 @@ namespace Plugins {
 
             setFixedHeight(25);
 
-            m_batteryIcon = new QLabel;
+            m_batteryIcon = new FontLabel;
             m_battery = new QLabel;
 
             m_battery->setAlignment(Qt::AlignVCenter);
@@ -50,41 +50,47 @@ namespace Plugins {
             const BatteryPercentageMap data = m_powerInter->batteryPercentage();
 
             if (data.isEmpty()) {
-                m_battery->setText(tr("UPS"));
-                m_batteryIcon->setPixmap(QPixmap(":/Icons/battery-100.png"));
+                m_battery->hide();
+                m_batteryIcon->setIcon(QChar(0xE836), 18);
                 return;
             }
+
+            m_battery->show();
 
             const uint value = qMin(100.0, qMax(0.0, data.value("Display")));
             const int percentage = std::round(value);
             const bool plugged = !m_powerInter->onBattery();
 
             QString percentageStr;
-            if (percentage < 10 && percentage >= 0) {
-                percentageStr = "000";
-            } else if (percentage < 30) {
-                percentageStr = "020";
-            } else if (percentage < 50) {
-                percentageStr = "040";
-            } else if (percentage < 70) {
-                percentageStr = "060";
-            } else if (percentage < 90) {
-                percentageStr = "080";
-            } else if (percentage <= 100){
-                percentageStr = "100";
-            } else {
-                percentageStr = "000";
-            }
-
-            QString iconStr;
 
             if (plugged) {
-                iconStr = QString("battery-%1-charging.png").arg(percentageStr);
+                if (percentage < 10 && percentage >= 0)
+                    percentageStr = "0xE85A";
+                else if (percentage > 10)
+                    percentageStr = "0xE85B";
+                else if (percentage > 20)
+                    percentageStr = "0xE85C";
+                else if (percentage > 30)
+                    percentageStr = "0xE85D";
+                else if (percentage > 40)
+                    percentageStr = "0xE85E";
+                else if (percentage > 50)
+                    percentageStr = "0xE85F";
+                else if (percentage > 60)
+                    percentageStr = "0xE860";
+                else if (percentage > 70)
+                    percentageStr = "0xE861";
+                else if (percentage > 80)
+                    percentageStr = "0xE862";
+                else if (percentage > 90)
+                    percentageStr = "0xE83E";
             } else {
-                iconStr = QString("battery-%1.png").arg(percentageStr);
+                int p = (percentage - 10) / 10;
+                percentageStr = "0xE85" + p;
             }
-            m_battery->setText(percentageStr + "%");
-            m_batteryIcon->setPixmap(QPixmap(":/Icons/" + iconStr));
+
+            m_battery->setText(percentage + "%");
+            m_batteryIcon->setIcon(percentageStr.toStdString().c_str()[0], 18);
         }
 
         void PowerWidget::enterEvent(QEvent *event)
@@ -97,6 +103,10 @@ namespace Plugins {
                                      "font: 16px;"
                                      "color: white;"
                                      "}");
+
+            m_batteryIcon->setStyleSheet("QLabel {"
+                                         "color: white;"
+                                         "}");
 
             update();
         }
@@ -111,6 +121,10 @@ namespace Plugins {
                                      "font: 16px;"
                                      "color: black;"
                                      "}");
+
+            m_batteryIcon->setStyleSheet("QLabel {"
+                                         "color: black;"
+                                         "}");
 
             update();
         }

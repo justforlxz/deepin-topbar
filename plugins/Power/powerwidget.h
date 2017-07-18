@@ -3,6 +3,7 @@
 
 #include "DBus/dbuspower.h"
 #include "powerpopupwidget.h"
+#include "fontlabel.h"
 #include <QWidget>
 #include <QLabel>
 
@@ -29,7 +30,7 @@ namespace Plugins {
 
         private:
             PowerPopupWidget *m_popup;
-            QLabel *m_batteryIcon;
+            FontLabel *m_batteryIcon;
             QLabel *m_battery;
             DBusPower* m_powerInter;
             bool m_enter = false;
