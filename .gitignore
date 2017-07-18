@@ -29,3 +29,6 @@ build*/
 dde-topbar
 
 *.debug
+
+moc_*
+qrc_*
