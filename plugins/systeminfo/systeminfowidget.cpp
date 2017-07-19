@@ -6,12 +6,12 @@
 SystemInfoWidget::SystemInfoWidget(QWidget *parent) : QWidget(parent)
 {
     setObjectName("SystemInfoWidget");
-    setFixedSize(80, 25);
+    setFixedSize(80, 26);
 
     m_enter = false;
 
     m_speedSort = new FontLabel;
-    m_speedSort->setIcon(QChar(0xE8CB), 16);
+    m_speedSort->setIcon(QChar(0xE8CB), 14);
 
     m_tx = new QLabel;
     m_tx->setFixedHeight(11);
@@ -21,33 +21,22 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent) : QWidget(parent)
     m_tx->setFont(font);
 
     m_rx = new QLabel;
-    m_rx->setFixedHeight(12);
+    m_rx->setFixedHeight(15);
 
-    QHBoxLayout *upLayout = new QHBoxLayout;
-    upLayout->setMargin(0);
-    upLayout->setSpacing(0);
-    upLayout->addWidget(m_tx, 0, Qt::AlignHCenter | Qt::AlignRight);
+    QVBoxLayout *speedlayout = new QVBoxLayout;
+    speedlayout->setMargin(0);
+    speedlayout->setSpacing(0);
 
-    QHBoxLayout *downLayout = new QHBoxLayout;
-    downLayout->setMargin(0);
-    downLayout->setSpacing(0);
-    downLayout->addWidget(m_rx, 0, Qt::AlignHCenter | Qt::AlignRight);
-
-    QVBoxLayout *layout = new QVBoxLayout;
-
-    layout->setMargin(0);
-    layout->setSpacing(1);
-
-    layout->addLayout(upLayout);
-    layout->addLayout(downLayout);
+    speedlayout->addWidget(m_tx, 0, Qt::AlignBottom | Qt::AlignRight);
+    speedlayout->addWidget(m_rx, 0, Qt::AlignTop | Qt::AlignRight);
 
     QHBoxLayout *mainlayout = new QHBoxLayout;
     mainlayout->setMargin(0);
     mainlayout->setSpacing(0);
+    mainlayout->setContentsMargins(3, 0, 3, 0);
 
-    mainlayout->addWidget(m_speedSort, 0, Qt::AlignHCenter | Qt::AlignLeft);
-    mainlayout->addLayout(layout);
-
+    mainlayout->addWidget(m_speedSort, 0, Qt::AlignVCenter | Qt::AlignLeft);
+    mainlayout->addLayout(speedlayout);
 
     setLayout(mainlayout);
 

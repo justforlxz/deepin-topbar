@@ -19,6 +19,9 @@ private slots:
     void itemInserted(const int index, Item *item);
     void itemRemoved(Item *item);
 
+protected:
+    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+
 private:
     QHBoxLayout *m_mainLayout;
     PluginsItemController *m_itemController;

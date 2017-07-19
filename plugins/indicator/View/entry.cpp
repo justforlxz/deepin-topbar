@@ -17,11 +17,11 @@ Entry::Entry(QWidget *parent) : QWidget(parent)
     mainLayout->setMargin(0);
     mainLayout->setSpacing(5);
 
-    mainLayout->addWidget(m_normalIcon, 0, Qt::AlignVCenter);
-    mainLayout->addWidget(m_title, 0, Qt::AlignVCenter);
+    mainLayout->addWidget(m_normalIcon, 0, Qt::AlignVCenter | Qt::AlignLeft);
+    mainLayout->addWidget(m_title, 0, Qt::AlignVCenter | Qt::AlignLeft);
 
     setStyleSheet("QLabel {"
-                  "font: 16px;"
+                  "font: 14px;"
                   "}");
 
     setLayout(mainLayout);
@@ -29,7 +29,7 @@ Entry::Entry(QWidget *parent) : QWidget(parent)
 
 void Entry::setNormalIcon(const QIcon &normalIcon)
 {
-    m_normalIcon->setPixmap(normalIcon.pixmap(size()));
+    m_normalIcon->setPixmap(normalIcon.pixmap(QSize(20, 20)));
 }
 
 void Entry::setText(const QString &text)

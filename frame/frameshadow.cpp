@@ -3,6 +3,8 @@
 #include <xcb/xcb.h>
 #include <xcb/xcb_ewmh.h>
 #include <QApplication>
+#include <QPainter>
+#include <QPen>
 
 FrameShadow::FrameShadow(QWidget *parent) : QWidget(parent)
 {
@@ -21,7 +23,7 @@ FrameShadow::FrameShadow(QWidget *parent) : QWidget(parent)
 void FrameShadow::screenChanged()
 {
     QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
-    resize(screen.width(), 25);
+    resize(screen.width(), 27);
     move(screen.x(), 0);
 
     xcb_ewmh_connection_t m_ewmh_connection;
@@ -31,4 +33,16 @@ void FrameShadow::screenChanged()
     xcb_atom_t atoms[1];
     atoms[0] = m_ewmh_connection._NET_WM_WINDOW_TYPE_DESKTOP;
     xcb_ewmh_set_wm_window_type(&m_ewmh_connection, winId(), 1, atoms);
+}
+
+void FrameShadow::paintEvent(QPaintEvent *event)
+{
+    QWidget::paintEvent(event);
+
+    QPainter painter(this);
+    QPen pen(painter.pen());
+    pen.setBrush(QColor(0, 0, 0, .4 * 255));
+    pen.setWidth(2);
+    painter.setPen(pen);
+    painter.drawLine(QPoint(0, 27), QPoint(width(), 27));
 }

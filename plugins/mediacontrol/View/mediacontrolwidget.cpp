@@ -9,13 +9,13 @@ MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent) {
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    setFixedSize(100, 25);
+    setFixedSize(100, 26);
 
     setVisible(false);
 
     m_mediaTitle = new QLabel(this);
     m_mediaTitle->setAlignment(Qt::AlignVCenter);
-    m_mediaTitle->setFixedSize(100, 25);
+    m_mediaTitle->setFixedSize(100, 26);
 
     m_mediaTitle->setStyleSheet("QLabel {"
                                 "background: transparent;"
@@ -32,7 +32,7 @@ MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent) {
 
     m_mediaControl = new MediaControl(this);
 
-    m_mediaControl->resize(100, 25);
+    m_mediaControl->resize(100, 26);
     m_mediaControl->move(0, -m_mediaControl->height());
 
     //Animation
@@ -49,11 +49,11 @@ MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent) {
     m_showControlAni->setEasingCurve(QEasingCurve::InOutCubic);
 
     connect(m_hoverControlAni, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
-        m_mediaTitle->move(0, 25 + value.toPoint().y());
+        m_mediaTitle->move(0, 26 + value.toPoint().y());
     });
 
     connect(m_showControlAni, &QPropertyAnimation::valueChanged ,this, [=](const QVariant &value) {
-        m_mediaTitle->move(0, 25 + value.toPoint().y());
+        m_mediaTitle->move(0, 26 + value.toPoint().y());
     });
 
     m_mprisInter = nullptr;

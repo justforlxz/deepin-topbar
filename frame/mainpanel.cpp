@@ -38,3 +38,8 @@ void MainPanel::itemRemoved(Item *item)
 {
     m_mainLayout->removeWidget(item);
 }
+
+void MainPanel::paintEvent(QPaintEvent *event)
+{
+    QWidget::paintEvent(event);
+}

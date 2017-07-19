@@ -12,7 +12,7 @@
 
 DWIDGET_USE_NAMESPACE
 
-#define TOPHEIGHT 25
+#define TOPHEIGHT 26
 
 class MainPanel;
 
