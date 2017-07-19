@@ -156,7 +156,7 @@ void MainFrame::screenChanged()
 
 void MainFrame::showEvent(QShowEvent *event)
 {
-    QFrame::showEvent(event);
-
     m_showWithLauncher->start();
+
+    QFrame::showEvent(event);
 }

@@ -21,11 +21,11 @@ IndicatorWidget::IndicatorWidget(QWidget *parent) : QWidget(parent)
     m_systemVersion = m_systeminfo->version();
 
     m_systeminfo->setSync(false);
-
+    
     connect(m_systeminfo, &systeminfo::VersionChanged, this, [=] (const QString &version){
-            m_systemVersion = version;
+        m_systemVersion = version;
     });
-
+    
     m_dockInter = new DBusDock(this);
     m_smallWatcher= new QFutureWatcher<QPixmap>(this);
 
@@ -47,14 +47,15 @@ void IndicatorWidget::initUI()
     setWindowFlags(Qt::WindowDoesNotAcceptFocus);
     setAttribute(Qt::WA_TranslucentBackground);
 
+    setFixedSize(QSize(200, 26));
+
     m_entry = new Entry;
-    m_entry->resize(QSize(23, 23));
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
 
-    mainLayout->addWidget(m_entry, 0, Qt::AlignLeft);
+    mainLayout->addWidget(m_entry, 0, Qt::AlignLeft | Qt::AlignVCenter);
 
     setLayout(mainLayout);
 }

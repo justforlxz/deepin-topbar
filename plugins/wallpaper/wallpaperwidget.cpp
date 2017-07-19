@@ -5,7 +5,7 @@
 
 WallpaperWidget::WallpaperWidget(QWidget *parent) : QLabel(parent)
 {
-      setFixedSize(25, 25);
+      setFixedSize(26, 26);
 
       setStyleSheet("QLabel {"
                     "color: black;"
@@ -21,9 +21,10 @@ WallpaperWidget::WallpaperWidget(QWidget *parent) : QLabel(parent)
       label->setPixmap(QIcon::fromTheme("view-list-details").pixmap(22, 22));
 
       QHBoxLayout *layout = new QHBoxLayout;
-
       layout->setMargin(0);
       layout->setSpacing(0);
+      layout->setContentsMargins(3, 0, 3, 0);
+
       layout->addWidget(label, 0, Qt::AlignCenter);
 
       setLayout(layout);
