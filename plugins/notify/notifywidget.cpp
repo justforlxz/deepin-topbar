@@ -19,7 +19,6 @@ NotifyWidget::NotifyWidget(QWidget *parent) : QLabel(parent)
       m_NotifyIcon = new FontLabel;
       m_NotifyIcon->setFixedSize(22, 22);
       m_NotifyIcon->setIcon(QChar(0xE7E7), 16);
-      m_NotifyIcon->installEventFilter(this);
 
       QHBoxLayout *layout = new QHBoxLayout;
 
@@ -29,6 +28,7 @@ NotifyWidget::NotifyWidget(QWidget *parent) : QLabel(parent)
 
       setLayout(layout);
 
+      installEventFilter(this);
 }
 
 bool NotifyWidget::eventFilter(QObject *watched, QEvent *event)
