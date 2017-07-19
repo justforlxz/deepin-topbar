@@ -20,6 +20,10 @@ NotifyWidget::NotifyWidget(QWidget *parent) : QLabel(parent)
       m_NotifyIcon->setFixedSize(30, 22);
       m_NotifyIcon->setIcon(QChar(0xEA41), 16);
 
+      m_NotifyIcon->setStyleSheet("QLabel {"
+                                  "color: rgb(67, 67, 62);"
+                                  "}");
+
       QHBoxLayout *layout = new QHBoxLayout;
 
       layout->setMargin(2);
@@ -42,7 +46,7 @@ bool NotifyWidget::eventFilter(QObject *watched, QEvent *event)
 
     if (event->type() == QMouseEvent::Leave) {
         m_NotifyIcon->setStyleSheet("background: transparent;"
-                                    "color: black;");
+                                    "color: rgb(67, 67, 62);");
     }
 
     return false;

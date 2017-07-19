@@ -9,7 +9,7 @@ DateTimeWidget::DateTimeWidget(QWidget *parent) : QLabel(parent) {
 
     setStyleSheet("QLabel {"
                   "font: 14px;"
-                  "color: black;"
+                  "color: rgb(67, 67, 62);"
                   "font-weight: 500;"
                   "background: transparent;"
                   "}"

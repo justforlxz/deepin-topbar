@@ -20,7 +20,7 @@ MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent) {
     m_mediaTitle->setStyleSheet("QLabel {"
                                 "background: transparent;"
                                 "font-size: 14px;"
-                                "color: black;"
+                                "color: rgb(67, 67, 62);"
                                 "font-weight: 500;"
                                 "}");
 

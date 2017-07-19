@@ -7,15 +7,6 @@ WallpaperWidget::WallpaperWidget(QWidget *parent) : QLabel(parent)
 {
       setFixedSize(26, 26);
 
-      setStyleSheet("QLabel {"
-                    "color: black;"
-                    "background: transparent;"
-                    "}"
-                    "QLabel:hover {"
-                    "color: white;"
-                    "background: #1E90FF;"
-                    "}");
-
       QLabel *label = new QLabel;
       label->setFixedSize(22, 22);
       label->setPixmap(QIcon::fromTheme("view-list-details").pixmap(22, 22));
@@ -28,4 +19,13 @@ WallpaperWidget::WallpaperWidget(QWidget *parent) : QLabel(parent)
       layout->addWidget(label, 0, Qt::AlignCenter);
 
       setLayout(layout);
+
+      setStyleSheet("QLabel {"
+                    "color: rgb(67, 67, 62);"
+                    "background: transparent;"
+                    "}"
+                    "QLabel:hover {"
+                    "color: white;"
+                    "background: #1E90FF;"
+                    "}");
 }
