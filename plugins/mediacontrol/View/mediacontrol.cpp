@@ -28,6 +28,10 @@ MediaControl::MediaControl(QWidget *parent) : QFrame(parent) {
     layout->addWidget(m_lastBtn, 0, Qt::AlignRight | Qt::AlignVCenter);
 
     setLayout(layout);
+
+    setStyleSheet("QLabel {"
+                  "color: rgb(67, 67, 62);"
+                  "}");
 }
 
 void MediaControl::setPlayState(MediaControl::PlayState state) {
@@ -57,33 +61,33 @@ bool MediaControl::eventFilter(QObject *watched, QEvent *event)
 {
     if (watched == m_lastBtn) {
         if (event->type() == QMouseEvent::Enter)
-            m_lastBtn->setStyleSheet("color: #00BFFF");
+            m_lastBtn->setStyleSheet("color: #00BFFF;");
         if (event->type() == QMouseEvent::Leave)
-            m_lastBtn->setStyleSheet("color: black");
+            m_lastBtn->setStyleSheet("color: rgb(67, 67, 62);");
         if (event->type() == QMouseEvent::MouseButtonPress)
-            m_lastBtn->setStyleSheet("color: #1E90FF");
+            m_lastBtn->setStyleSheet("color: #1E90FF;");
         if (event->type() == QMouseEvent::MouseButtonRelease)
             emit requestLast();
     }
 
     if (watched == m_previousBtn) {
         if (event->type() == QMouseEvent::Enter)
-            m_previousBtn->setStyleSheet("color: #00BFFF");
+            m_previousBtn->setStyleSheet("color: #00BFFF;");
         if (event->type() == QMouseEvent::Leave)
-            m_previousBtn->setStyleSheet("color: black");
+            m_previousBtn->setStyleSheet("color: rgb(67, 67, 62);");
         if (event->type() == QMouseEvent::MouseButtonPress)
-            m_previousBtn->setStyleSheet("color: #1E90FF");
+            m_previousBtn->setStyleSheet("color: #1E90FF;");
         if (event->type() == QMouseEvent::MouseButtonRelease)
             emit requestPrevious();
     }
 
     if (watched == m_pauseBtn) {
         if (event->type() == QMouseEvent::Enter)
-            m_pauseBtn->setStyleSheet("color: #00BFFF");
+            m_pauseBtn->setStyleSheet("color: #00BFFF;");
         if (event->type() == QMouseEvent::Leave)
-            m_pauseBtn->setStyleSheet("color: black");
+            m_pauseBtn->setStyleSheet("color: rgb(67, 67, 62);");
         if (event->type() == QMouseEvent::MouseButtonPress)
-            m_pauseBtn->setStyleSheet("color: #1E90FF");
+            m_pauseBtn->setStyleSheet("color: #1E90FF;");
         if (event->type() == QMouseEvent::MouseButtonRelease)
             emit requestPause();
     }

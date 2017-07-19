@@ -14,9 +14,6 @@ PowerWidget::PowerWidget(QWidget *parent) : QWidget(parent) {
     m_batteryIcon = new FontLabel;
     m_battery = new QLabel;
 
-//    m_battery->setAlignment(Qt::AlignVCenter);
-//    m_batteryIcon->setAlignment(Qt::AlignVCenter);
-
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(3);
@@ -28,9 +25,13 @@ PowerWidget::PowerWidget(QWidget *parent) : QWidget(parent) {
 
     m_battery->setStyleSheet("QLabel {"
                              "font: 14px;"
-                             "color: black;"
+                             "color: rgb(67, 67, 62);"
                              "font-weight: 500;"
                              "}");
+
+    m_batteryIcon->setStyleSheet("QLabel {"
+                                 "color: rgb(67, 67, 62);"
+                                 "}");
 
     m_powerInter = new DBusPower(this);
 
@@ -65,47 +66,51 @@ void PowerWidget::updateBatteryIcon() {
     QChar percentageStr;
 
     if (plugged) {
-        if (percentage <= 10 && percentage >= 0)
+        if (percentage <= 5 && percentage >= 0)
             percentageStr = 0xE85A;
-        else if (percentage <= 20)
+        else if (percentage <= 10)
             percentageStr = 0xE85B;
-        else if (percentage <= 30)
-            percentageStr = 0xE85C;
-        else if (percentage <= 40)
-            percentageStr = 0xE85D;
-        else if (percentage <= 50)
-            percentageStr = 0xE85E;
-        else if (percentage <= 60)
-            percentageStr = 0xE85F;
-        else if (percentage <= 70)
-            percentageStr = 0xE860;
-        else if (percentage <= 80)
-            percentageStr = 0xE861;
-        else if (percentage <= 90)
-            percentageStr = 0xE862;
-        else if (percentage <= 100)
-            percentageStr = 0xE83E;
-    } else {
-        if (percentage <= 10 && percentage >= 0)
-            percentageStr = 0xE850;
         else if (percentage <= 20)
-            percentageStr = 0xE851;
+            percentageStr = 0xE85C;
         else if (percentage <= 30)
-            percentageStr = 0xE852;
+            percentageStr = 0xE85D;
         else if (percentage <= 40)
-            percentageStr = 0xE853;
+            percentageStr = 0xE85E;
         else if (percentage <= 50)
-            percentageStr = 0xE854;
+            percentageStr = 0xE85F;
         else if (percentage <= 60)
-            percentageStr = 0xE855;
+            percentageStr = 0xE860;
         else if (percentage <= 70)
-            percentageStr = 0xE856;
+            percentageStr = 0xE861;
         else if (percentage <= 80)
-            percentageStr = 0xE857;
+            percentageStr = 0xE862;
         else if (percentage <= 90)
-            percentageStr = 0xE858;
+            percentageStr = 0xE863;
         else if (percentage <= 100)
+            percentageStr = 0xEA93;
+    } else {
+        if (percentage <= 5 && percentage >= 0)
+            percentageStr = 0xE850;
+        else if (percentage <= 10)
+            percentageStr = 0xE851;
+        else if (percentage <= 20)
+            percentageStr = 0xE852;
+        else if (percentage <= 30)
+            percentageStr = 0xE853;
+        else if (percentage <= 40)
+            percentageStr = 0xE854;
+        else if (percentage <= 50)
+            percentageStr = 0xE855;
+        else if (percentage <= 60)
+            percentageStr = 0xE856;
+        else if (percentage <= 70)
+            percentageStr = 0xE857;
+        else if (percentage <= 80)
+            percentageStr = 0xE858;
+        else if (percentage <= 90)
             percentageStr = 0xE859;
+        else if (percentage <= 100)
+            percentageStr = 0xE83F;
     }
 
     m_battery->setText(QString::number(percentage) + "%");
@@ -139,12 +144,12 @@ void PowerWidget::leaveEvent(QEvent *event)
 
     m_battery->setStyleSheet("QLabel {"
                              "font: 14px;"
-                             "color: black;"
+                             "color: rgb(67, 67, 62);"
                              "font-weight: 500;"
                              "}");
 
     m_batteryIcon->setStyleSheet("QLabel {"
-                                 "color: black;"
+                                 "color: rgb(67, 67, 62);"
                                  "}");
 
     update();
