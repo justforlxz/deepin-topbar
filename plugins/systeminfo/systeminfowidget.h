@@ -23,7 +23,6 @@ private:
 private:
     QLabel *m_rx;
     QLabel *m_tx;
-    FontLabel *m_speedSort;
     bool m_enter;
 };
 

@@ -14,8 +14,8 @@ PowerWidget::PowerWidget(QWidget *parent) : QWidget(parent) {
     m_batteryIcon = new FontLabel;
     m_battery = new QLabel;
 
-    m_battery->setAlignment(Qt::AlignVCenter);
-    m_batteryIcon->setAlignment(Qt::AlignVCenter);
+//    m_battery->setAlignment(Qt::AlignVCenter);
+//    m_batteryIcon->setAlignment(Qt::AlignVCenter);
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
@@ -29,6 +29,7 @@ PowerWidget::PowerWidget(QWidget *parent) : QWidget(parent) {
     m_battery->setStyleSheet("QLabel {"
                              "font: 14px;"
                              "color: black;"
+                             "font-weight: 500;"
                              "}");
 
     m_powerInter = new DBusPower(this);
@@ -108,7 +109,7 @@ void PowerWidget::updateBatteryIcon() {
     }
 
     m_battery->setText(QString::number(percentage) + "%");
-    m_batteryIcon->setIcon(percentageStr, 16);
+    m_batteryIcon->setIcon(percentageStr, 17);
 }
 
 void PowerWidget::enterEvent(QEvent *event)
@@ -120,6 +121,7 @@ void PowerWidget::enterEvent(QEvent *event)
     m_battery->setStyleSheet("QLabel {"
                              "font: 14px;"
                              "color: white;"
+                             "font-weight: 500;"
                              "}");
 
     m_batteryIcon->setStyleSheet("QLabel {"
@@ -138,6 +140,7 @@ void PowerWidget::leaveEvent(QEvent *event)
     m_battery->setStyleSheet("QLabel {"
                              "font: 14px;"
                              "color: black;"
+                             "font-weight: 500;"
                              "}");
 
     m_batteryIcon->setStyleSheet("QLabel {"

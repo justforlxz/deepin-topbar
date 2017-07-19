@@ -22,6 +22,7 @@ Entry::Entry(QWidget *parent) : QWidget(parent)
 
     setStyleSheet("QLabel {"
                   "font: 14px;"
+                  "font-weight: 500;"
                   "}");
 
     setLayout(mainLayout);

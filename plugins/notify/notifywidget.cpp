@@ -7,7 +7,7 @@
 
 NotifyWidget::NotifyWidget(QWidget *parent) : QLabel(parent)
 {
-      setFixedSize(26, 26);
+      setFixedSize(30, 26);
 
       setStyleSheet("QLabel {"
                     "background: transparent;"
@@ -17,8 +17,8 @@ NotifyWidget::NotifyWidget(QWidget *parent) : QLabel(parent)
                     "}");
 
       m_NotifyIcon = new FontLabel;
-      m_NotifyIcon->setFixedSize(22, 22);
-      m_NotifyIcon->setIcon(QChar(0xE7E7), 16);
+      m_NotifyIcon->setFixedSize(30, 22);
+      m_NotifyIcon->setIcon(QChar(0xEA41), 16);
 
       QHBoxLayout *layout = new QHBoxLayout;
 

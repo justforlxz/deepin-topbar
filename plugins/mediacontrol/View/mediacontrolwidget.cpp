@@ -21,6 +21,7 @@ MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent) {
                                 "background: transparent;"
                                 "font-size: 14px;"
                                 "color: black;"
+                                "font-weight: 500;"
                                 "}");
 
     setStyleSheet("background: transparent;");
