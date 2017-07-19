@@ -10,6 +10,7 @@ DateTimeWidget::DateTimeWidget(QWidget *parent) : QLabel(parent) {
     setStyleSheet("QLabel {"
                   "font: 14px;"
                   "color: black;"
+                  "font-weight: 500;"
                   "background: transparent;"
                   "}"
                   "QLabel:hover {"

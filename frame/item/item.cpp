@@ -35,7 +35,7 @@ const QPoint Item::popupMarkPoint()
     } while (w);
 
     const QRect r = rect();
-    const int offset = 4;
+    const int offset = 5;
     p += QPoint(r.width() / 2, r.height() + offset);
 
     return p;
