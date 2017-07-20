@@ -10,6 +10,7 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent) : QWidget(parent)
 
     setStyleSheet("QLabel {"
                   "color: rgb(67, 67, 62);"
+                  "font-size: 11px;"
                   "font-weight: 500;"
                   "}");
 
@@ -66,6 +67,7 @@ void SystemInfoWidget::enterEvent(QEvent *event)
 
     setStyleSheet("QLabel {"
                   "color: white;"
+                  "font-size: 11px;"
                   "font-weight: 500;"
                   "}");
 
@@ -80,6 +82,7 @@ void SystemInfoWidget::leaveEvent(QEvent *event)
 
     setStyleSheet("QLabel {"
                   "color: rgb(67, 67, 62);"
+                  "font-size: 11px;"
                   "font-weight: 500;"
                   "}");
 
