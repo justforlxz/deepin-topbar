@@ -47,7 +47,7 @@ const QString NotifyPlugin::itemCommand(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return "dde-notify";
+    return "deepin-notify";
 }
 
 void NotifyPlugin::popupShow()

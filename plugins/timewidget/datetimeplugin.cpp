@@ -45,7 +45,7 @@ QWidget *DateTimePlugin::itemPopupApplet(const QString &itemKey) {
 const QString DateTimePlugin::itemCommand(const QString &itemKey) {
     Q_UNUSED(itemKey);
 
-    return QString("dde-datetime");
+    return QString("deepin-datetime");
 }
 
 void DateTimePlugin::popupShow()

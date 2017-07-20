@@ -47,7 +47,7 @@ const QString WallpaperPlugin::itemCommand(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return "dde-wallpaper";
+    return "deepin-wallpaper";
 }
 
 void WallpaperPlugin::popupShow()

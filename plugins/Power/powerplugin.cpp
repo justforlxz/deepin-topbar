@@ -44,7 +44,7 @@ QWidget *PowerPlugin::itemPopupApplet(const QString &itemKey) {
 const QString PowerPlugin::itemCommand(const QString &itemKey) {
     Q_UNUSED(itemKey);
 
-    return QString("dde-power");
+    return QString("deepin-power");
 }
 
 void PowerPlugin::popupShow()

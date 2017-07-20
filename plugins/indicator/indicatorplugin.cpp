@@ -43,5 +43,5 @@ const QString IndicatorPlugin::itemCommand(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return QString("dde-indicator");
+    return QString("deepin-indicator");
 }
