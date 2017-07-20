@@ -74,9 +74,7 @@ void IndicatorWidget::addEntry(const QDBusObjectPath &entryPath, const int index
     m_entryList.append(entry);
 
     connect(entry, &DBusDockEntry::ActiveChanged, this, &IndicatorWidget::refreshActiveWindow, Qt::UniqueConnection);
-    connect(entry, &DBusDockEntry::TitlesChanged, this, [=] {
-        m_entry->setText(windowTitle(entry->titles()));
-    });
+    connect(entry, &DBusDockEntry::TitlesChanged, this, &IndicatorWidget::refreshActiveWindow, Qt::UniqueConnection);
 
     refreshActiveWindow();
 }
