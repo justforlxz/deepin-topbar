@@ -39,5 +39,5 @@ QWidget *MediaControlPlugin::itemPopupApplet(const QString &itemKey) {
 const QString MediaControlPlugin::itemCommand(const QString &itemKey) {
     Q_UNUSED(itemKey);
 
-    return QString("dde-mediacontrol");
+    return QString("deepin-mediacontrol");
 }

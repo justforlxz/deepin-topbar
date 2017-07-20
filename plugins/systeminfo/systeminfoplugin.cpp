@@ -47,7 +47,7 @@ const QString SystemInfoPlugin::itemCommand(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return "dde-systeminfo";
+    return "deepin-systeminfo";
 }
 
 void SystemInfoPlugin::popupShow()
