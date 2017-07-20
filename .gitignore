@@ -26,7 +26,7 @@ build*/
 *.swp
 
 # binary file
-dde-topbar
+deepin-topbar
 
 *.debug
 
