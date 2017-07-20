@@ -12,9 +12,9 @@ int main(int argc, char *argv[])
     DApplication a(argc, argv);
     a.setTheme("light");
 
-    if (a.setSingleInstance("dde-topbar")) {
-        a.setApplicationName("dde-topbar");
-        a.setApplicationVersion("1.0");
+    if (a.setSingleInstance("deepin-topbar")) {
+        a.setApplicationName("deepin-topbar");
+        a.setApplicationVersion("0.2");
 
         QFont font = a.font();
         font.setFamily("Noto Sans CJK SC");

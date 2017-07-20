@@ -44,5 +44,5 @@ HEADERS += systeminfoplugin.h \
     DBus/org_freedesktop_networkmanager_device.h \
     systeminfothread.h
 
-target.path = $${PREFIX}/lib/dde-topbar/plugins/
+target.path = $${PREFIX}/lib/deepin-topbar/plugins/
 INSTALLS   += target
