@@ -1,3 +1,3 @@
 [D-BUS Service]
-Name=com.deepin.dde.Topbar
-Exec=/usr/bin/dde-topbar
+Name=com.deepin.deepin.Topbar
+Exec=/usr/bin/deepin-topbar
