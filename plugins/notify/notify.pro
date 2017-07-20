@@ -38,5 +38,5 @@ HEADERS += notifyplugin.h \
     notifypopupwidget.h \
     NotifyItem.h
 
-target.path = $${PREFIX}/lib/dde-topbar/plugins/
+target.path = $${PREFIX}/lib/deepin-topbar/plugins/
 INSTALLS   += target

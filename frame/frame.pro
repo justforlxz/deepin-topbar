@@ -3,7 +3,7 @@ include(../widgets/widgets.pri)
 
 QT       += core gui x11extras widgets dbus
 
-TARGET = dde-topbar
+TARGET = deepin-topbar
 TEMPLATE = app
 CONFIG         += c++11 link_pkgconfig
 DESTDIR         = $$_PRO_FILE_PWD_/../
@@ -38,7 +38,7 @@ SOURCES += \
 
 headers.files += ../interfaces/pluginsiteminterface.h \
                  ../interfaces/pluginproxyinterface.h
-headers.path = $${PREFIX}/include/dde-topbar
+headers.path = $${PREFIX}/include/deepin-topbar
 
 target.path = $${PREFIX}/bin/
 INSTALLS += target headers

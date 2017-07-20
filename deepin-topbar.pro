@@ -7,12 +7,12 @@ isEmpty(PREFIX) {
 }
 
 service.path = $${PREFIX}/share/dbus-1/services
-service.files = com.deepin.dde.Topbar.service
+service.files = com.deepin.deepin.Topbar.service
 
 desktop.path = $${PREFIX}/share/applications/
-desktop.files = dde-topbar.desktop
+desktop.files = deepin-topbar.desktop
 
 autostart.path = /etc/xdg/autostart/
-autostart.files = dde-topbar-autostart.desktop
+autostart.files = deepin-topbar-autostart.desktop
 
 INSTALLS += desktop service autostart
