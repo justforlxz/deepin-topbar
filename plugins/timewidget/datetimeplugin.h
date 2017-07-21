@@ -29,6 +29,8 @@ public:
     void popupShow() override;
     void popupHide() override;
 
+    void finished() Q_DECL_OVERRIDE;
+
 private:
     PluginProxyInterface *m_proxyInter;
     Plugin::DateTime::DateTimeWidget *m_centralWidget;

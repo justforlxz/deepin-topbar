@@ -25,6 +25,7 @@ public:
     virtual void showTips();
     virtual void showPopupWindow(QWidget * const content);
     virtual void hidePopup();
+    virtual void finished() {}
     virtual PluginsItemInterface *itemInter();
 
 protected:

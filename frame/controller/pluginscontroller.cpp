@@ -66,6 +66,17 @@ void PluginsController::requestHidePopup()
     }
 }
 
+void PluginsController::move(const QString &itemKey, const float x, const float y)
+{
+    for (QMap<QString, PluginsItem *> &map : m_pluginList.values()) {
+        for (PluginsItem *item : map.values()) {
+            if (item->name() == itemKey) {
+                emit itemMoved(item, QPoint(x, y));
+            }
+        }
+    }
+}
+
 void PluginsController::startLoader()
 {
     PluginLoader *loader = new PluginLoader(this);

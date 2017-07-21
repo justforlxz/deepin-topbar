@@ -52,6 +52,9 @@ void PluginsItemController::itemSort()
     for (Item* item : list.values()) {
         emit itemInserted(2, item);
     }
+
+    for (Item *item : m_itemList.values())
+        item->finished();
 }
 
 PluginsItemController::PluginsItemController(QObject *parent)
@@ -67,6 +70,7 @@ PluginsItemController::PluginsItemController(QObject *parent)
     connect(m_pluginsInter, &PluginsController::pluginItemFinished, this, &PluginsItemController::itemSort, Qt::QueuedConnection);
     connect(m_pluginsInter, &PluginsController::pluginItemInserted, this, &PluginsItemController::pluginItemInserted, Qt::QueuedConnection);
     connect(m_pluginsInter, &PluginsController::pluginItemRemoved, this, &PluginsItemController::pluginItemRemoved, Qt::QueuedConnection);
+    connect(m_pluginsInter, &PluginsController::itemMoved, this, &PluginsItemController::itemMoved, Qt::QueuedConnection);
     // update pluginsItemController::itemUpdated
 }
 

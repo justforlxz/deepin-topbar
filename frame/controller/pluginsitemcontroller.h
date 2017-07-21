@@ -18,6 +18,7 @@ public:
 signals:
     void itemInserted(const int index, Item *item) const;
     void itemRemoved(Item *item) const;
+    void itemMoved(Item *item, const QPoint &point) const;
 
 private slots:
     void itemSort();
