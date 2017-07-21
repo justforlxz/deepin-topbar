@@ -7,7 +7,7 @@
 include(../../interfaces/interfaces.pri)
 include(../../widgets/widgets.pri)
 
-QT       += core gui widgets dbus x11extras
+QT       += core gui widgets dbus x11extras network
 PKGCONFIG += dtkwidget dtkbase dtkutil dframeworkdbus
 TEMPLATE = lib
 CONFIG    += plugin c++11 link_pkgconfig
@@ -31,17 +31,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += systeminfoplugin.cpp \
     systeminfowidget.cpp \
     systeminfopopupwidget.cpp \
-    DBus/org_freedesktop_networkmanager.cpp \
-    DBus/org_freedesktop_networkmanager_activeconnection.cpp \
-    DBus/org_freedesktop_networkmanager_device.cpp \
     systeminfothread.cpp
 
 HEADERS += systeminfoplugin.h \
     systeminfowidget.h \
     systeminfopopupwidget.h \
-    DBus/org_freedesktop_networkmanager.h \
-    DBus/org_freedesktop_networkmanager_activeconnection.h \
-    DBus/org_freedesktop_networkmanager_device.h \
     systeminfothread.h
 
 target.path = $${PREFIX}/lib/deepin-topbar/plugins/

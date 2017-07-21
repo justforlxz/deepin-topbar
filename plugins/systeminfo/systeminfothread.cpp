@@ -1,65 +1,11 @@
 #include "systeminfothread.h"
-#include <QDBusConnection>
-#include <QDBusObjectPath>
 #include <QFile>
+#include <QNetworkInterface>
 
 SysteminfoThread::SysteminfoThread(QObject *parent) : QThread(parent)
 {
-    m_networkmanager = nullptr;
-    m_activeConnect = nullptr;
-    m_device = nullptr;
     m_rx = nullptr;
     m_tx = nullptr;
-
-    m_networkmanager = new NetworkManager("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager", QDBusConnection::systemBus(), this);
-    m_networkmanager->setSync(false);
-    connect(m_networkmanager, &NetworkManager::PrimaryConnectionChanged, this, [=] (const QDBusObjectPath & connectPath) {
-        if (m_activeConnect) {
-            m_activeConnect->deleteLater();
-            m_activeConnect = nullptr;
-        }
-
-        m_activeConnect = new ActiveConnect("org.freedesktop.NetworkManager",
-                                            connectPath.path(),
-                                            QDBusConnection::systemBus(), this);
-
-        m_activeConnect->setSync(false);
-
-        connect(m_activeConnect, &ActiveConnect::DevicesChanged, this, [=] (const QList<QDBusObjectPath> & devicePath) {
-            if (m_device) {
-                m_device->deleteLater();
-                m_device = nullptr;
-            }
-
-            m_device = new Device("org.freedesktop.NetworkManager",
-                                  devicePath.first().path(),
-                                  QDBusConnection::systemBus(), this);
-
-            m_device->setSync(false);
-
-            connect(m_device, &Device::InterfaceChanged, this, [=] (const QString &value) {
-                if (m_rx) {
-                    m_rx->deleteLater();
-                    m_rx = nullptr;
-                }
-
-                if (m_tx) {
-                    m_tx->deleteLater();
-                    m_tx = nullptr;
-                }
-
-                m_rx = new QFile("/sys/class/net/" + value + "/statistics/rx_bytes");
-                m_tx = new QFile("/sys/class/net/" + value + "/statistics/tx_bytes");
-
-            });
-
-            m_device->interface();
-        });
-
-        m_activeConnect->devices();
-    });
-
-    m_networkmanager->primaryConnection();
 }
 
 void SysteminfoThread::run()
@@ -68,7 +14,29 @@ void SysteminfoThread::run()
     quint64 old_rx;
 
     for (;;) {
-        if (m_device && m_rx && m_tx) {
+        foreach (const QNetworkInterface &interface, QNetworkInterface::allInterfaces()) {
+            if (interface.flags().testFlag(QNetworkInterface::IsUp) && !interface.flags().testFlag(QNetworkInterface::IsLoopBack)) {
+                //                foreach (QNetworkAddressEntry entry, interface.addressEntries()) {
+                //                    if ( interface.hardwareAddress() != "00:00:00:00:00:00" && entry.ip().toString().contains(".")) {
+                //                        // qDebug() << interface.name() + " "+ entry.ip().toString() +" " + interface.hardwareAddress();
+                //                        m_deviceName = interface.name();
+                //                    }
+                //                }
+                if (m_rx) {
+                    m_rx->deleteLater();
+                    m_rx = nullptr;
+                }
+                if (m_tx) {
+                    m_tx->deleteLater();
+                    m_tx = nullptr;
+                }
+                m_rx = new QFile("/sys/class/net/" + interface.name() + "/statistics/rx_bytes");
+                m_tx = new QFile("/sys/class/net/" + interface.name() + "/statistics/tx_bytes");
+                break;
+            }
+        }
+
+        if (m_rx && m_tx) {
             m_tx->open(QIODevice::ReadOnly | QIODevice::Text);
             m_rx->open(QIODevice::ReadOnly | QIODevice::Text);
 
@@ -85,7 +53,6 @@ void SysteminfoThread::run()
 
             emit networkSpeedChanged(QString(m_tx->readAll()).remove("\n").toULongLong() - old_tx,
                                      QString(m_rx->readAll()).remove("\n").toULongLong() - old_rx);
-
 
             m_tx->close();
             m_rx->close();
