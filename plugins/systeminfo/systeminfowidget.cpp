@@ -1,5 +1,6 @@
 #include "systeminfowidget.h"
 #include "systeminfothread.h"
+#include "systeminfomodel.h"
 #include <QHBoxLayout>
 #include <QPainter>
 
@@ -51,7 +52,9 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent) : QWidget(parent)
 
     setLayout(mainlayout);
 
-    SysteminfoThread *systeminfoThread = new SysteminfoThread;
+    SystemInfoModel *systeminfoModel = new SystemInfoModel;
+
+    SysteminfoThread *systeminfoThread = new SysteminfoThread(systeminfoModel);
 
     connect(systeminfoThread, &SysteminfoThread::networkSpeedChanged, this, [=] (const quint64 tx, const quint64 rx) {
         m_tx->setText(converSpeed(tx));

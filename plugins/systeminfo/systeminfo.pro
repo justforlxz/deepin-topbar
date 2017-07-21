@@ -31,12 +31,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += systeminfoplugin.cpp \
     systeminfowidget.cpp \
     systeminfopopupwidget.cpp \
-    systeminfothread.cpp
+    systeminfothread.cpp \
+    systeminfomodel.cpp \
+    networkdevicemodel.cpp
 
 HEADERS += systeminfoplugin.h \
     systeminfowidget.h \
     systeminfopopupwidget.h \
-    systeminfothread.h
+    systeminfothread.h \
+    systeminfomodel.h \
+    networkdevicemodel.h
 
 target.path = $${PREFIX}/lib/deepin-topbar/plugins/
 INSTALLS   += target
