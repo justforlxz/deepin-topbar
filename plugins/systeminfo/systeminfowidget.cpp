@@ -18,9 +18,11 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent) : QWidget(parent)
 
     m_tx = new QLabel;
     m_tx->setFixedHeight(12);
+    m_tx->setText(converSpeed(0));
 
     m_rx = new QLabel;
     m_rx->setFixedHeight(12);
+    m_rx->setText(converSpeed(0));
 
     FontLabel *up = new FontLabel;
     up->setIcon(QChar(0xE935), 12);
@@ -102,6 +104,9 @@ void SystemInfoWidget::paintEvent(QPaintEvent *event)
 
 const QString SystemInfoWidget::converSpeed(const int value)
 {
+    if (!value)
+        return "--/--";
+
     QString speed;
 
     for (;;) {
