@@ -23,6 +23,7 @@ void MainPanel::initConnect()
 {
     connect(m_itemController, &PluginsItemController::itemInserted, this, &MainPanel::itemInserted, Qt::DirectConnection);
     connect(m_itemController, &PluginsItemController::itemRemoved, this, &MainPanel::itemRemoved, Qt::DirectConnection);
+    connect(m_itemController, &PluginsItemController::itemMoved, this, &MainPanel::itemMoved, Qt::DirectConnection);
 }
 
 void MainPanel::itemInserted(const int index, Item *item)
@@ -37,6 +38,14 @@ void MainPanel::itemInserted(const int index, Item *item)
 void MainPanel::itemRemoved(Item *item)
 {
     m_mainLayout->removeWidget(item);
+}
+
+void MainPanel::itemMoved(Item *item, const QPoint &point)
+{
+    item->setVisible(true);
+    item->setParent(this);
+
+    item->move(point);
 }
 
 void MainPanel::paintEvent(QPaintEvent *event)

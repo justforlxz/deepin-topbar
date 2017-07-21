@@ -41,6 +41,8 @@ public:
     virtual void requestContextMenu(PluginsItemInterface * const itemInter, const QString &itemKey) = 0;
 
     virtual void requestHidePopup() = 0;
+
+    virtual void move(const QString &itemKey, const float x, const float y) = 0;
 };
 
 #endif // PLUGINPROXYINTERFACE_H

@@ -20,12 +20,14 @@ public:
     void itemRemoved(PluginsItemInterface * const itemInter, const QString &itemKey);
     void requestContextMenu(PluginsItemInterface * const itemInter, const QString &itemKey);
     void requestHidePopup();
+    void move(const QString &itemKey, const float x, const float y);
 
 signals:
     void pluginItemInserted(PluginsItem *pluginItem) const;
     void pluginItemRemoved(PluginsItem *pluginItem) const;
     void pluginItemUpdated(PluginsItem *pluginItem) const;
     void pluginItemFinished() const;
+    void itemMoved(Item *item, const QPoint &point) const;
 
 private slots:
     void startLoader();

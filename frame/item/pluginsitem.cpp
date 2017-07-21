@@ -42,6 +42,11 @@ const QString PluginsItem::name() const
     return m_pluginInter->pluginName();
 }
 
+void PluginsItem::finished()
+{
+    m_pluginInter->finished();
+}
+
 QWidget *PluginsItem::popupTips()
 {
     return m_pluginInter->itemPopupApplet(m_itemKey);

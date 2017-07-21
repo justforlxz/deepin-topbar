@@ -138,6 +138,7 @@ public:
     virtual void popupShow() {}
     virtual void popupHide() {}
 
+    virtual void finished() {}
 
 protected:
     ///

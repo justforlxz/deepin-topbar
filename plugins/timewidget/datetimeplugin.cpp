@@ -1,6 +1,9 @@
 #include "datetimeplugin.h"
 #include "datetimepopup.h"
 
+#include <QApplication>
+#include <QDesktopWidget>
+
 DateTimePlugin::DateTimePlugin(QWidget *parent)
     : QObject(parent) {
     m_centralWidget = new Plugin::DateTime::DateTimeWidget;
@@ -55,4 +58,12 @@ void DateTimePlugin::popupShow()
 void DateTimePlugin::popupHide()
 {
     m_proxyInter->requestHidePopup();
+}
+
+void DateTimePlugin::finished()
+{
+    qDebug() << "ssssssss";
+
+    QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
+    m_proxyInter->move(pluginName(), (screen.width() - m_centralWidget->width()) / 2, 0);
 }
