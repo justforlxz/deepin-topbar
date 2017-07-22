@@ -14,9 +14,6 @@ DateTimePlugin::DateTimePlugin(QWidget *parent)
     });
 
     connect(m_popup, &Plugin::DateTime::DateTimePopup::requestDateFormat,
-            m_centralWidget, &Plugin::DateTime::DateTimeWidget::set24HourFormat);
-
-    connect(m_popup, &Plugin::DateTime::DateTimePopup::requestDateFormat,
             this, &DateTimePlugin::saveConfig);
 
     connect(m_popup, &Plugin::DateTime::DateTimePopup::requestIsCenterChanged,
@@ -25,6 +22,9 @@ DateTimePlugin::DateTimePlugin(QWidget *parent)
     connect(m_popup, &Plugin::DateTime::DateTimePopup::requestIsCenterChanged, this, [=] {
         m_proxyInter->requestHidePopup();
     });
+
+    connect(m_popup, &Plugin::DateTime::DateTimePopup::requestFormatChanged,
+            this, &DateTimePlugin::saveConfig);
 }
 
 DateTimePlugin::~DateTimePlugin() {
@@ -81,26 +81,31 @@ void DateTimePlugin::finished()
     if (config.isEmpty())
         return;
 
+    m_popup->setIsCenter(config["Center"].toBool());
+
+    m_centralWidget->set24HourFormat(config["Is24"].toBool());
+    m_popup->setIs24Format(config["Is24"].toBool());
+
+    m_centralWidget->setFormat(config["Format"].toString());
+    m_popup->setFormat(config["Format"].toString());
+
+    m_centralWidget->adjustSize();
+
     if (config["Center"].toBool()) {
         QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
         m_proxyInter->move(pluginName(), (screen.width() - m_centralWidget->width()) / 2, 0);
     } else {
         m_proxyInter->move("");
     }
-
-    m_popup->setIsCenter(config["Center"].toBool());
-
-    m_centralWidget->set24HourFormat(config["Format"].toBool());
-    m_popup->setIs24Format(config["Format"].toBool());
 }
 
 void DateTimePlugin::saveConfig()
 {
     QJsonObject object;
 
-    object.insert("Format", m_popup->is24Format());
+    object.insert("Is24", m_popup->is24Format());
     object.insert("Center", m_popup->isCenter());
-
+    object.insert("Format", m_popup->format());
     m_proxyInter->saveConfig(pluginName(), object);
 
     finished();

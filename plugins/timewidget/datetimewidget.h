@@ -16,6 +16,7 @@ public:
 
 public slots:
     void set24HourFormat(bool is24HourFormat);
+    void setFormat(const QString &value);
 
 private slots:
     void updateTime();
@@ -23,6 +24,7 @@ private slots:
 private:
     QDateTime *m_dateTime;
     bool m_24HourFormat;
+    QString m_format;
 };
 }
 }
