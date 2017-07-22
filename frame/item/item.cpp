@@ -64,7 +64,9 @@ void Item::showPopupWindow(QWidget * const content)
     popup->setHeight(content->sizeHint().height());
 
     const QPoint p = popupMarkPoint();
-    QMetaObject::invokeMethod(popup, "show", Qt::QueuedConnection, Q_ARG(QPoint, p));
+    popup->show(p.x(), p.y());
+
+    PopupWindow->setVisible(true);
 }
 
 void Item::hidePopup()

@@ -21,6 +21,10 @@ DateTimePlugin::DateTimePlugin(QWidget *parent)
 
     connect(m_popup, &Plugin::DateTime::DateTimePopup::requestIsCenterChanged,
             this, &DateTimePlugin::saveConfig);
+
+    connect(m_popup, &Plugin::DateTime::DateTimePopup::requestIsCenterChanged, this, [=] {
+        m_proxyInter->requestHidePopup();
+    });
 }
 
 DateTimePlugin::~DateTimePlugin() {
@@ -83,6 +87,8 @@ void DateTimePlugin::finished()
     } else {
         m_proxyInter->move("");
     }
+
+    m_popup->setIsCenter(config["Center"].toBool());
 
     m_centralWidget->set24HourFormat(config["Format"].toBool());
     m_popup->setIs24Format(config["Format"].toBool());
