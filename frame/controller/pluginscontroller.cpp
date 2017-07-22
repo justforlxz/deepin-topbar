@@ -77,6 +77,47 @@ void PluginsController::move(const QString &itemKey, const float x, const float 
     }
 }
 
+bool PluginsController::saveConfig(const QString &itemKey, const QJsonObject &json)
+{
+    const QString &configFile = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + "/deepin-topbar/" + itemKey + "/config.json";
+
+    QFileInfo info(configFile);
+
+    QDir dir(info.path());
+    if (!dir.exists())
+        dir.mkpath(info.path());
+
+    QFile file(configFile);
+    if (file.exists() && file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        file.write(QJsonDocument(json).toJson());
+        file.close();
+        return true;
+    }
+
+    file.setFileName(configFile);
+    if (file.open(QIODevice::ReadWrite | QIODevice::Text)) {
+        QTextStream out(&file);
+        out << QJsonDocument(json).toJson();
+        out.flush();
+        file.close();
+        return true;
+    }
+
+    return false;
+}
+
+const QJsonObject PluginsController::loadConfig(const QString &itemKey)
+{
+    const QString &configFile = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + "/deepin-topbar/" + itemKey +"/config.json";
+
+    QFile file(configFile);
+
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return QJsonDocument::fromJson(file.readAll()).object();
+    else
+        return QJsonObject();
+}
+
 void PluginsController::startLoader()
 {
     PluginLoader *loader = new PluginLoader(this);
