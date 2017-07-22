@@ -100,7 +100,7 @@ void IndicatorWidget::refreshActiveWindow()
         if (entry->active()) {
             m_smallWatcher->cancel();
             m_smallWatcher->setFuture(QtConcurrent::run(ThemeAppIcon::getIcon, entry->icon()));
-            m_entry->setText(windowTitle(entry->titles()));
+            m_entry->setText(entry->name());
             m_entry->setVisible(true);
             return;
         }
@@ -113,16 +113,6 @@ void IndicatorWidget::refreshActiveWindow()
 void IndicatorWidget::refreshIcon()
 {
     m_entry->setNormalIcon(QIcon(m_smallWatcher->result()));
-}
-
-const QString IndicatorWidget::windowTitle(const WindowDict &infos)
-{
-    for (auto it(infos.cbegin()); it != infos.cend(); ++it)
-    {
-        return it.value();
-    }
-
-    return QString();
 }
 
 }

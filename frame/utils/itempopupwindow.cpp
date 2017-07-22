@@ -34,7 +34,7 @@ ItemPopupWindow::ItemPopupWindow(QWidget *parent)
     });
 
     m_moveAni = new QVariantAnimation(this);
-    m_moveAni->setDuration(300);
+    m_moveAni->setDuration(250);
 }
 
 ItemPopupWindow::~ItemPopupWindow()
@@ -71,18 +71,16 @@ void ItemPopupWindow::setContent(QWidget *content)
 
 void ItemPopupWindow::show(const int x, const int y)
 {
-    QVariantAnimation *animation = new QVariantAnimation;
-    animation->setCurrentTime(250);
-    animation->setStartValue(m_point.isNull() ? QPoint(x - 10, y) : m_point);
-    animation->setEndValue(QPoint(x, y));
+    m_moveAni->setStartValue(m_point.isNull() ? QPoint(x - 10, y) : m_point);
+    m_moveAni->setEndValue(QPoint(x, y));
     m_point = QPoint(x, y);
 
-    connect(animation, &QVariantAnimation::valueChanged, this,  [=] (const QVariant &value) {
+    connect(m_moveAni, &QVariantAnimation::valueChanged, this,  [=] (const QVariant &value) {
         move(value.toPoint().x(), value.toPoint().y());
         resizeWithContent();
     });
 
-    animation->start(QPropertyAnimation::DeleteWhenStopped);
+    m_moveAni->start();
 
     m_itemInter->popupShow();
 }

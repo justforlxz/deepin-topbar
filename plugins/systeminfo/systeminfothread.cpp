@@ -4,6 +4,7 @@
 #include <QNetworkInterface>
 
 SysteminfoThread::SysteminfoThread(SystemInfoModel *model, QObject *parent) :
+    QThread(parent),
     m_model(model)
 {
     m_rx = nullptr;
