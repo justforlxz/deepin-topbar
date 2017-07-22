@@ -16,7 +16,6 @@ void IndicatorPlugin::init(PluginProxyInterface *proxyInter)
     m_proxyInter = proxyInter;
 
     m_proxyInter->itemAdded(this, QString());
-    qDebug() << m_proxyInter->saveConfig(pluginName(), QJsonObject());
 }
 
 int IndicatorPlugin::itemSortKey(const QString &itemKey)

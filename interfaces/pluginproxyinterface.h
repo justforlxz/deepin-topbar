@@ -43,7 +43,7 @@ public:
 
     virtual void requestHidePopup() = 0;
 
-    virtual void move(const QString &itemKey, const float x, const float y) = 0;
+    virtual void move(const QString &itemKey, const float x = 0, const float y = 0) = 0;
 
     virtual bool saveConfig(const QString &itemKey, const QJsonObject &json) { Q_UNUSED(itemKey); Q_UNUSED(json); return false;}
 

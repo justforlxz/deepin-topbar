@@ -42,10 +42,15 @@ void MainPanel::itemRemoved(Item *item)
 
 void MainPanel::itemMoved(Item *item, const QPoint &point)
 {
+    m_mainLayout->removeWidget(item);
     item->setVisible(true);
     item->setParent(this);
-
     item->move(point);
+}
+
+void MainPanel::itemSort()
+{
+
 }
 
 void MainPanel::paintEvent(QPaintEvent *event)

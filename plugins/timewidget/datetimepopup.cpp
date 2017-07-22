@@ -6,32 +6,68 @@
 using namespace topbar::widgets;
 
 namespace Plugin {
-    namespace DateTime {
-        DateTimePopup::DateTimePopup(QWidget *parent) : QWidget(parent) {
-            setWindowFlags(Qt::FramelessWindowHint);
+namespace DateTime {
+DateTimePopup::DateTimePopup(QWidget *parent) : QWidget(parent) {
+    setWindowFlags(Qt::FramelessWindowHint);
 
-            _DateBtn = new SwitchItem;
-            _DateBtn->setText(tr("Format Change"));
+    m_dateBtn = new SwitchItem;
+    m_dateBtn->setText(tr("Format Change"));
 
-            QPushButton *btn = new QPushButton(tr("DateTime Settings"));
+    m_posBtn = new SwitchItem;
+    m_posBtn->setText(tr("Change Position"));
 
-            QVBoxLayout *mainLayout = new QVBoxLayout;
-            mainLayout->setMargin(5);
-            mainLayout->setSpacing(5);
+    QPushButton *btn = new QPushButton(tr("DateTime Settings"));
 
-            mainLayout->addWidget(btn);
-            mainLayout->addWidget(_DateBtn);
+    QVBoxLayout *mainLayout = new QVBoxLayout;
+    mainLayout->setMargin(5);
+    mainLayout->setSpacing(5);
 
-            setLayout(mainLayout);
-            connect(_DateBtn, &SwitchItem::clicked, this, &DateTimePopup::requestDateFormat);
-            connect(btn, &QPushButton::clicked, this, [=]{
-                QProcess::startDetached("dbus-send --print-reply --dest=com.deepin.dde.ControlCenter /com/deepin/dde/ControlCenter com.deepin.dde.ControlCenter.ShowModule \"string:datetime\"");
-                emit requestHide();
-            });
-        }
+    mainLayout->addWidget(m_posBtn);
+    mainLayout->addWidget(m_dateBtn);
+    mainLayout->addWidget(btn);
 
-        void DateTimePopup::onDateFormatChanged(const bool state) {
-            _DateBtn->setCheck(state);
-        }
-    }
+    setLayout(mainLayout);
+    connect(m_dateBtn, &SwitchItem::clicked, this, &DateTimePopup::requestDateFormat);
+    connect(btn, &QPushButton::clicked, this, [=]{
+        QProcess::startDetached("dbus-send --print-reply --dest=com.deepin.dde.ControlCenter /com/deepin/dde/ControlCenter com.deepin.dde.ControlCenter.ShowModule \"string:datetime\"");
+        emit requestHide();
+    });
+
+    connect(m_posBtn, &SwitchItem::clicked, this, &DateTimePopup::requestIsCenterChanged);
+}
+
+void DateTimePopup::onDateFormatChanged(const bool state) {
+    m_dateBtn->setCheck(state);
+}
+
+bool DateTimePopup::is24Format() const
+{
+    return m_dateBtn->checked();
+}
+
+void DateTimePopup::setIs24Format(bool is24Format)
+{
+    if (m_is24Format == is24Format)
+        return;
+
+    m_is24Format = is24Format;
+
+    m_dateBtn->setCheck(is24Format);
+}
+
+bool DateTimePopup::isCenter() const
+{
+    return m_posBtn->checked();
+}
+
+void DateTimePopup::setIsCenter(bool isCenter)
+{
+    if (m_isCenter == isCenter)
+        return;
+
+    m_isCenter = isCenter;
+
+    m_posBtn->setCheck(isCenter);
+}
+}
 }
