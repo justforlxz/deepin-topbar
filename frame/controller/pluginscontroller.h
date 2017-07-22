@@ -23,7 +23,7 @@ public:
     void itemRemoved(PluginsItemInterface * const itemInter, const QString &itemKey);
     void requestContextMenu(PluginsItemInterface * const itemInter, const QString &itemKey);
     void requestHidePopup();
-    void move(const QString &itemKey, const float x, const float y);
+    void move(const QString &itemKey, const float x = 0, const float y = 0);
     bool saveConfig(const QString &itemKey, const QJsonObject &json);
     const QJsonObject loadConfig(const QString &itemKey);
 
@@ -32,7 +32,8 @@ signals:
     void pluginItemRemoved(PluginsItem *pluginItem) const;
     void pluginItemUpdated(PluginsItem *pluginItem) const;
     void pluginItemFinished() const;
-    void itemMoved(Item *item, const QPoint &point) const;
+    void pluginItemMoved(Item *item, const QPoint &point) const;
+    void pluginItemAdjust() const;
 
 private slots:
     void startLoader();

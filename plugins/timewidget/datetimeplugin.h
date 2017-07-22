@@ -3,7 +3,7 @@
 
 #include "../interfaces/pluginsiteminterface.h"
 #include "datetimewidget.h"
-
+#include "datetimepopup.h"
 #include <QLabel>
 
 class DateTimePlugin : public QObject, PluginsItemInterface
@@ -31,9 +31,13 @@ public:
 
     void finished() Q_DECL_OVERRIDE;
 
+private slots:
+    void saveConfig();
+
 private:
     PluginProxyInterface *m_proxyInter;
     Plugin::DateTime::DateTimeWidget *m_centralWidget;
+    Plugin::DateTime::DateTimePopup *m_popup;
 };
 
 #endif // TIMEWIDGET_H

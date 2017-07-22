@@ -68,10 +68,15 @@ void PluginsController::requestHidePopup()
 
 void PluginsController::move(const QString &itemKey, const float x, const float y)
 {
+    if (itemKey.isEmpty()) {
+        emit pluginItemAdjust();
+        return;
+    }
+
     for (QMap<QString, PluginsItem *> &map : m_pluginList.values()) {
         for (PluginsItem *item : map.values()) {
             if (item->name() == itemKey) {
-                emit itemMoved(item, QPoint(x, y));
+                emit pluginItemMoved(item, QPoint(x, y));
             }
         }
     }

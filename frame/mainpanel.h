@@ -19,6 +19,7 @@ private slots:
     void itemInserted(const int index, Item *item);
     void itemRemoved(Item *item);
     void itemMoved(Item *item, const QPoint &point);
+    void itemSort();
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
