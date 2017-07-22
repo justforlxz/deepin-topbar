@@ -4,6 +4,7 @@
 #include "datetimepopup.h"
 #include <QWidget>
 #include <QLabel>
+#include <QSettings>
 
 namespace Plugin {
 namespace DateTime {
@@ -15,6 +16,8 @@ public:
     ~DateTimeWidget();
 
     DateTimePopup *popupWidget();
+
+    bool isCenter();
 
 public slots:
     void updateTime();

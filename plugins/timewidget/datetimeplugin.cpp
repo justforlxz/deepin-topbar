@@ -62,8 +62,6 @@ void DateTimePlugin::popupHide()
 
 void DateTimePlugin::finished()
 {
-    qDebug() << "ssssssss";
-
     QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
     m_proxyInter->move(pluginName(), (screen.width() - m_centralWidget->width()) / 2, 0);
 }

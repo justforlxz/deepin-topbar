@@ -47,6 +47,11 @@ DateTimePopup *DateTimeWidget::popupWidget() {
     return popup;
 }
 
+bool DateTimeWidget::isCenter()
+{
+
+}
+
 void DateTimeWidget::updateTime() {
     setText(m_dateTime->currentDateTime().toString(m_24HourFormat ? "hh:mm" : "hh:mm A"));
 }

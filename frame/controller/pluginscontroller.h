@@ -5,6 +5,9 @@
 #include "item/pluginsitem.h"
 
 #include <QObject>
+#include <QDir>
+#include <QStandardPaths>
+#include <QFile>
 
 class PluginsItemController;
 
@@ -21,6 +24,8 @@ public:
     void requestContextMenu(PluginsItemInterface * const itemInter, const QString &itemKey);
     void requestHidePopup();
     void move(const QString &itemKey, const float x, const float y);
+    bool saveConfig(const QString &itemKey, const QJsonObject &json);
+    const QJsonObject loadConfig(const QString &itemKey);
 
 signals:
     void pluginItemInserted(PluginsItem *pluginItem) const;
