@@ -11,10 +11,13 @@ DateTimePopup::DateTimePopup(QWidget *parent) : QWidget(parent) {
     setWindowFlags(Qt::FramelessWindowHint);
 
     m_dateBtn = new SwitchItem;
-    m_dateBtn->setText(tr("Format Change"));
+    m_dateBtn->setText(tr("Is 24 datetime"));
 
     m_posBtn = new SwitchItem;
     m_posBtn->setText(tr("Change Position"));
+
+    m_formatBtn = new SwitchItem;
+    m_formatBtn->setText(tr("Is Full date"));
 
     QPushButton *btn = new QPushButton(tr("DateTime Settings"));
 
@@ -24,6 +27,7 @@ DateTimePopup::DateTimePopup(QWidget *parent) : QWidget(parent) {
 
     mainLayout->addWidget(m_posBtn);
     mainLayout->addWidget(m_dateBtn);
+    mainLayout->addWidget(m_formatBtn);
     mainLayout->addWidget(btn);
 
     setLayout(mainLayout);
@@ -34,10 +38,34 @@ DateTimePopup::DateTimePopup(QWidget *parent) : QWidget(parent) {
     });
 
     connect(m_posBtn, &SwitchItem::clicked, this, &DateTimePopup::requestIsCenterChanged);
+
+    connect(m_formatBtn, &SwitchItem::clicked, this, [=] (const bool state) {
+            if (state)
+                m_format = "yyyy-MM-dd ddd hh:mm";
+            else
+                m_format = "hh:mm";
+
+            emit requestFormatChanged(m_format);
+    });
 }
 
 void DateTimePopup::onDateFormatChanged(const bool state) {
     m_dateBtn->setCheck(state);
+}
+
+QString DateTimePopup::format() const
+{
+    return m_format;
+}
+
+void DateTimePopup::setFormat(const QString &format)
+{
+    if (m_format == format)
+        return;
+
+    m_format = format;
+
+    m_formatBtn->setCheck(format == "yyyy-MM-dd ddd hh:mm");
 }
 
 bool DateTimePopup::is24Format() const

@@ -20,10 +20,14 @@ public:
     bool is24Format() const;
     void setIs24Format(bool is24Format);
 
+    QString format() const;
+    void setFormat(const QString &format);
+
 signals:
     void requestDateFormat(const bool state);
     void requestHide();
     void requestIsCenterChanged(const bool state);
+    void requestFormatChanged(const QString &format);
 
 public slots:
     void onDateFormatChanged(const bool state);
@@ -31,8 +35,10 @@ public slots:
 private:
     SwitchItem *m_dateBtn;
     SwitchItem *m_posBtn;
+    SwitchItem *m_formatBtn;
     bool m_isCenter;
     bool m_is24Format;
+    QString m_format;
 };
 }
 }

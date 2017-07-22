@@ -23,7 +23,13 @@ DateTimeWidget::DateTimeWidget(QWidget *parent) : QLabel(parent) {
     connect(timer, &QTimer::timeout, this, &DateTimeWidget::updateTime);
     timer->start();
 
+    setAlignment(Qt::AlignVCenter);
+
+    setFixedHeight(26);
+
     setContentsMargins(3, 0, 3, 0);
+
+    m_format = "hh:mm A";
 }
 
 DateTimeWidget::~DateTimeWidget() {
@@ -31,7 +37,7 @@ DateTimeWidget::~DateTimeWidget() {
 }
 
 void DateTimeWidget::updateTime() {
-    setText(m_dateTime->currentDateTime().toString(m_24HourFormat ? "hh:mm" : "hh:mm A"));
+    setText(m_dateTime->currentDateTime().toString(m_format + (m_24HourFormat ? "" : " A")));
 }
 
 void DateTimeWidget::set24HourFormat(bool is24HourFormat)
@@ -40,6 +46,13 @@ void DateTimeWidget::set24HourFormat(bool is24HourFormat)
         return;
 
     m_24HourFormat = is24HourFormat;
+
+    updateTime();
+}
+
+void DateTimeWidget::setFormat(const QString &value)
+{
+    m_format = value;
 
     updateTime();
 }
