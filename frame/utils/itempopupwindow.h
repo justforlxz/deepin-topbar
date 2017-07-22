@@ -23,7 +23,6 @@ public:
     void setContent(QWidget *content);
 
 public slots:
-    void show(const QPoint &pos);
     void show(const int x, const int y) Q_DECL_OVERRIDE;
 
 private slots:

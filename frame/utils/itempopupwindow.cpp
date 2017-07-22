@@ -17,7 +17,7 @@ ItemPopupWindow::ItemPopupWindow(QWidget *parent)
     compositeChanged();
 
     setBackgroundColor(DBlurEffectWidget::LightColor);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::SplashScreen | Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::X11BypassWindowManagerHint  | Qt::WindowStaysOnTopHint);
     setAttribute(Qt::WA_InputMethodEnabled, false);
 
     connect(m_wmHelper, &DWindowManagerHelper::hasCompositeChanged, this, &ItemPopupWindow::compositeChanged);
@@ -69,28 +69,22 @@ void ItemPopupWindow::setContent(QWidget *content)
     DArrowRectangle::setContent(content);
 }
 
-void ItemPopupWindow::show(const QPoint &pos)
-{
-    m_point = pos;
-
-    show(pos.x(), pos.y());
-}
-
 void ItemPopupWindow::show(const int x, const int y)
 {
-    resizeWithContent();
+    QVariantAnimation *animation = new QVariantAnimation;
+    animation->setCurrentTime(250);
+    animation->setStartValue(m_point.isNull() ? QPoint(x - 10, y) : m_point);
+    animation->setEndValue(QPoint(x, y));
+    m_point = QPoint(x, y);
 
-    move(x, y);
+    connect(animation, &QVariantAnimation::valueChanged, this,  [=] (const QVariant &value) {
+        move(value.toPoint().x(), value.toPoint().y());
+        resizeWithContent();
+    });
 
-    setVisible(true);
+    animation->start(QPropertyAnimation::DeleteWhenStopped);
 
-    if (m_isVisiable) {
-        m_isVisiable = false;
-        m_itemInter->popupHide();
-    } else {
-        m_isVisiable = true;
-        m_itemInter->popupShow();
-    }
+    m_itemInter->popupShow();
 }
 
 void ItemPopupWindow::compositeChanged()
