@@ -1,0 +1,24 @@
+     <interface name="com.deepin.daemon.Audio.SinkInput">
+          <method name="SetBalance">
+               <arg type="d" direction="in"></arg>
+               <arg type="b" direction="in"></arg>
+          </method>
+          <method name="SetFade">
+               <arg type="d" direction="in"></arg>
+          </method>
+          <method name="SetMute">
+               <arg type="b" direction="in"></arg>
+          </method>
+          <method name="SetVolume">
+               <arg type="d" direction="in"></arg>
+               <arg type="b" direction="in"></arg>
+          </method>
+          <property name="Name" type="s" access="read"></property>
+          <property name="Icon" type="s" access="read"></property>
+          <property name="Mute" type="b" access="read"></property>
+          <property name="Volume" type="d" access="read"></property>
+          <property name="Balance" type="d" access="read"></property>
+          <property name="SupportBalance" type="b" access="read"></property>
+          <property name="Fade" type="d" access="read"></property>
+          <property name="SupportFade" type="b" access="read"></property>
+     </interface>

@@ -7,7 +7,7 @@
 include(../../interfaces/interfaces.pri)
 
 QT       += core gui widgets dbus x11extras
-PKGCONFIG += dtkwidget dtkbase dtkutil dframeworkdbus
+PKGCONFIG += dtkwidget dtkbase dtkutil dframeworkdbus gsettings-qt
 TEMPLATE = lib
 CONFIG    += plugin c++11 link_pkgconfig
 TARGET     = $$qtLibraryTarget(sound)
@@ -29,11 +29,30 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += soundplugin.cpp \
     soundwidget.cpp \
-    soundpopupwidget.cpp
+    soundpopupwidget.cpp \
+    componments/horizontalseparator.cpp \
+    componments/volumeslider.cpp \
+    dbus/dbusaudio.cpp \
+    dbus/dbussink.cpp \
+    dbus/dbussinkinput.cpp \
+    sinkinputwidget.cpp \
+    soundapplet.cpp \
+    sounditem.cpp
 
 HEADERS += soundplugin.h \
     soundwidget.h \
-    soundpopupwidget.h
+    soundpopupwidget.h \
+    componments/horizontalseparator.h \
+    componments/volumeslider.h \
+    dbus/dbusaudio.h \
+    dbus/dbussink.h \
+    dbus/dbussinkinput.h \
+    sinkinputwidget.h \
+    soundapplet.h \
+    sounditem.h
 
 target.path = $${PREFIX}/lib/deepin-topbar/plugins/
 INSTALLS   += target
+
+RESOURCES += \
+    resources/resources.qrc

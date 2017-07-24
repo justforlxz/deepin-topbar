@@ -4,6 +4,8 @@ SoundPlugin::SoundPlugin()
 {
     m_Sound = new SoundWidget;
     m_popupWidget = new SoundPopupWidget;
+
+    m_soundItem = new SoundItem;
 }
 
 const QString SoundPlugin::pluginName() const
@@ -40,7 +42,7 @@ QWidget *SoundPlugin::itemPopupApplet(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return m_popupWidget;
+    return m_soundItem->popupApplet();
 }
 
 const QString SoundPlugin::itemCommand(const QString &itemKey)
