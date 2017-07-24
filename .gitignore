@@ -2,6 +2,7 @@
 *.slo
 *.lo
 *.o
+Makefile
 
 # Compiled Dynamic libraries
 *.so
