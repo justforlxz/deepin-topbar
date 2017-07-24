@@ -28,6 +28,7 @@ public:
 signals:
     void volumeChanged(const int value) const;
     void defaultSinkChanged(DBusSink *sink) const;
+    void requestHidePopup() const;
 
 private slots:
     void defaultSinkChanged();
