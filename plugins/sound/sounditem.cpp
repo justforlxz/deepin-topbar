@@ -16,6 +16,7 @@ SoundItem::SoundItem(QWidget *parent)
       m_applet(new SoundApplet(this)),
       m_sinkInter(nullptr)
 {
+    setObjectName("SoundItem");
     m_applet->setVisible(false);
 
     setFixedSize(26, 26);
@@ -24,13 +25,15 @@ SoundItem::SoundItem(QWidget *parent)
     layout->setMargin(0);
     layout->setSpacing(0);
     layout->setContentsMargins(3, 0, 3, 0);
-    layout->addWidget(m_fontLabel);
+    layout->addWidget(m_fontLabel, 0, Qt::AlignHCenter);
 
     setLayout(layout);
 
     connect(m_applet, static_cast<void (SoundApplet::*)(DBusSink*) const>(&SoundApplet::defaultSinkChanged), this, &SoundItem::sinkChanged);
 
     refershIcon();
+
+    m_fontLabel->setStyleSheet("color: rgb(67, 67, 62);");
 }
 
 QWidget *SoundItem::popupApplet()
@@ -45,6 +48,38 @@ void SoundItem::wheelEvent(QWheelEvent *e)
 
     refershIcon();
     e->accept();
+}
+
+void SoundItem::enterEvent(QEvent *event)
+{
+    QWidget::enterEvent(event);
+
+    m_isEnter = true;
+
+    m_fontLabel->setStyleSheet("color: white;");
+
+    update();
+}
+
+void SoundItem::leaveEvent(QEvent *event)
+{
+    QWidget::leaveEvent(event);
+
+    m_isEnter = false;
+
+    m_fontLabel->setStyleSheet("color: rgb(67, 67, 62);");
+
+    update();
+}
+
+void SoundItem::paintEvent(QPaintEvent *event)
+{
+    QWidget::paintEvent(event);
+
+    if (m_isEnter) {
+        QPainter painter(this);
+        painter.fillRect(rect(), QColor("#1E90FF"));
+    }
 }
 
 void SoundItem::refershIcon()

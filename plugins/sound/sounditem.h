@@ -16,7 +16,10 @@ public:
     QWidget *popupApplet();
 
 protected:
-    void wheelEvent(QWheelEvent *e);
+    void wheelEvent(QWheelEvent *e) Q_DECL_OVERRIDE;
+    void enterEvent(QEvent *event) Q_DECL_OVERRIDE;
+    void leaveEvent(QEvent *event) Q_DECL_OVERRIDE;
+    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
     void refershIcon();
@@ -26,6 +29,7 @@ private:
     FontLabel *m_fontLabel;
     SoundApplet *m_applet;
     DBusSink *m_sinkInter;
+    bool m_isEnter = false;
 };
 
 #endif // SOUNDITEM_H
