@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>wireless-background-48px</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="3.4900079%" x2="50%" y2="97.1779337%" id="linearGradient-1">
+            <stop stop-color="#15C4FF" offset="0%"></stop>
+            <stop stop-color="#218AFF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="wireless-background-48px">
+            <image id="Bitmap" x="0" y="4" width="48" height="43" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAArCAYAAAA+EwvfAAAABGdBTUEAA1teXP8meAAAA1xJREFUaAXV2Idy20AMBNA4vddxkv//xXTHJXi0VnOSaFGUGJnCDHSFV3YBHO7ssweHy9liiZSabb3d4aZppJ6y+bR79a6NhlbIPOXD0rSBabVdx5hWfTP2elGmrdxZsvEuEzJWGdAAXJUq9xFrPSpV7kUmoLZtnjHZzFigWW5KYRRkSIwyaJiAu522+et7C/yy2oOLbi4zqsd+jxczBomE8foOLXBjLESPJfFuiNgXpg3p62zBm/B3Y9ZxO54stuv1xroHAh5zVhAy9y1wwAXTRvi2BAxykDAGPG6s6r0L4BS2FRIhEPBYCpk5gS84nfSSQOAUwC84dNaPJzojIzDXsAno9RKBnIlr4KPHTJProMa2ndEOtx9xP4dsM5YEgz8OgVOyfogyekcACTF1atIlH+DJs9vipH47zAgIn5cnBf0W7CvYEcgB/nBCJGCVTi/bm/j1ovNi5kTeFD7W/156EQLYkHelCMQr+uYkLwoM638r/VN6FQJVX75/3lf9V9P2bQ7ytECcl7I8fIx80xLghTxdsfxhQOkcxGX7pfTnQpcR0hIAFAHqcAunOZCA5Wvp71IEvJYZtjPuOoHq7z4g4e3tYCNxX+KyAh5oOFbAV3v5XwD1VuIJcefgYH4f8nmxaZdxqg7XSlj3eSBADTQBAUQcnGPKx9pM7N8JHphdCCAi74pFqesY4vx5HSzTZdVXLB8Q2wgYEy8oXSA8Ig7/pzh3b0tZ3sH11OkFX/1bPeA7aUmwDALLNGbAhCJchc5Krt+2/pAH2rmsT5DobsGuNd3P+kW11fLZdgyBeEJqm/q2lrLXL6o7wybglWMIGM8LNCSmuOhgAL73oqr+rTKWgMVCYorbOresByRjKFl+J+vXuNEeMIcknORpGWOf2zq3rFh3aDdu2eoblH08kEXjCYdP6gNijAgbhjCP5a23s+VrbCeHELBASPj71MWzqyfOa6zwOQh8zd87hMyNhMTz6qBD76ZPNUbWAT7peLTla24nh3rAIjkPiLiIaN+7ScwDz1vAD96yNWZQpiBgk5YEL7jsiANqD2dEzCMxGfhaa9J/aAEHLAvzAiL5f74Mw+L04LCpNZZi0ynFeg6n9ErVCU94Pyn3yjY1r1emJmCTrKlMXYjloKY09mD5B7MS9TLNDdZiAAAAAElFTkSuQmCC"></image>
+            <path d="M45.2189855,14.6551503 C39.9322125,8.71714181 32.3718058,5 23.9765638,5 C15.6145685,5 8.08080934,8.68775903 2.79705865,14.5847082 C2.46158664,14.959113 -1.10742981,19.0463299 2.85247564,23.0250696 C7.75054308,28.6708126 15.509578,37.2861027 20.1174886,42.1386521 C23.9765645,46.1356805 27.564689,42.5076988 27.9154661,42.138652 C32.5306456,37.283097 40.1987456,28.6772032 45.20822,22.9155737 C49.0605581,19.0463299 45.5527819,15.0300645 45.2189855,14.6551503 Z" id="Combined-Shape" fill="url(#linearGradient-1)"></path>
+        </g>
+    </g>
+</svg>
