@@ -31,5 +31,9 @@ deepin-topbar
 
 *.debug
 
+frame/moc_*
+plugins/moc_*
+plugins/*/moc*
+
 moc_*
 qrc_*
