@@ -108,6 +108,16 @@ VolumeSlider *SoundApplet::mainSlider()
     return m_volumeSlider;
 }
 
+void SoundApplet::showAni()
+{
+
+}
+
+void SoundApplet::hideAni()
+{
+
+}
+
 void SoundApplet::defaultSinkChanged()
 {
     delete m_defSinkInter;
