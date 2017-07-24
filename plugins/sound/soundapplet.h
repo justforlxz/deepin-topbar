@@ -22,6 +22,9 @@ public:
     int volumeValue() const;
     VolumeSlider *mainSlider();
 
+    void showAni();
+    void hideAni();
+
 signals:
     void volumeChanged(const int value) const;
     void defaultSinkChanged(DBusSink *sink) const;

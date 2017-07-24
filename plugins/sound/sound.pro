@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 include(../../interfaces/interfaces.pri)
+include(../../widgets/widgets.pri)
 
 QT       += core gui widgets dbus x11extras
 PKGCONFIG += dtkwidget dtkbase dtkutil dframeworkdbus gsettings-qt
@@ -28,7 +29,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += soundplugin.cpp \
-    soundwidget.cpp \
     soundpopupwidget.cpp \
     componments/horizontalseparator.cpp \
     componments/volumeslider.cpp \
@@ -40,7 +40,6 @@ SOURCES += soundplugin.cpp \
     sounditem.cpp
 
 HEADERS += soundplugin.h \
-    soundwidget.h \
     soundpopupwidget.h \
     componments/horizontalseparator.h \
     componments/volumeslider.h \

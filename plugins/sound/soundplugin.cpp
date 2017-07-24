@@ -2,9 +2,6 @@
 
 SoundPlugin::SoundPlugin()
 {
-    m_Sound = new SoundWidget;
-    m_popupWidget = new SoundPopupWidget;
-
     m_soundItem = new SoundItem;
 }
 
@@ -18,10 +15,6 @@ void SoundPlugin::init(PluginProxyInterface *proxyInter)
     m_proxyInter = proxyInter;
 
     m_proxyInter->itemAdded(this, "sound");
-
-    connect(m_popupWidget, &SoundPopupWidget::requestHidePopup, this, [=] {
-        m_proxyInter->requestHidePopup();
-    });
 }
 
 int SoundPlugin::itemSortKey(const QString &itemKey)
@@ -35,7 +28,7 @@ QWidget *SoundPlugin::itemWidget(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return m_Sound;
+    return m_soundItem;
 }
 
 QWidget *SoundPlugin::itemPopupApplet(const QString &itemKey)
@@ -54,10 +47,12 @@ const QString SoundPlugin::itemCommand(const QString &itemKey)
 
 void SoundPlugin::popupShow()
 {
-    m_popupWidget->showAni();
+    SoundApplet * applet = qobject_cast<SoundApplet *>(m_soundItem->popupApplet());
+    applet->showAni();
 }
 
 void SoundPlugin::popupHide()
 {
-    m_popupWidget->hideAni();
+    SoundApplet * applet = qobject_cast<SoundApplet *>(m_soundItem->popupApplet());
+    applet->hideAni();
 }

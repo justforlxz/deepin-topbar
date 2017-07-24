@@ -2,9 +2,8 @@
 #define SoundPLUGIN_H
 
 #include "../interfaces/pluginsiteminterface.h"
-#include "soundpopupwidget.h"
-#include "soundwidget.h"
 #include "sounditem.h"
+#include "soundapplet.h"
 #include <QObject>
 
 class SoundPlugin : public QObject, PluginsItemInterface
@@ -31,8 +30,6 @@ public:
 
 private:
     PluginProxyInterface *m_proxyInter;
-    SoundPopupWidget *m_popupWidget;
-    SoundWidget *m_Sound;
     SoundItem *m_soundItem;
 };
 
