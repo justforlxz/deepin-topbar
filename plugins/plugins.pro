@@ -3,7 +3,9 @@ SUBDIRS = \
     timewidget \
     mediacontrol \
     indicator \
-    Power \
+    power \
     notify \
     wallpaper \
-    systeminfo
+    systeminfo \
+    network \
+    sound
