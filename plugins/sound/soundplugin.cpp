@@ -15,6 +15,12 @@ void SoundPlugin::init(PluginProxyInterface *proxyInter)
     m_proxyInter = proxyInter;
 
     m_proxyInter->itemAdded(this, "sound");
+
+    SoundApplet * applet = qobject_cast<SoundApplet *>(m_soundItem->popupApplet());
+
+    connect(applet, &SoundApplet::requestHidePopup, this, [=] {
+        m_proxyInter->requestHidePopup();
+    });
 }
 
 int SoundPlugin::itemSortKey(const QString &itemKey)

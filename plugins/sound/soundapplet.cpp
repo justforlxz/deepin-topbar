@@ -115,7 +115,7 @@ void SoundApplet::showAni()
 
 void SoundApplet::hideAni()
 {
-
+    emit requestHidePopup();
 }
 
 void SoundApplet::defaultSinkChanged()
