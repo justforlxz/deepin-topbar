@@ -1,0 +1,26 @@
+     <interface name="com.deepin.daemon.Audio">
+          <method name="GetDefaultSink">
+               <arg type="o" direction="out"></arg>
+          </method>
+          <method name="GetDefaultSource">
+               <arg type="o" direction="out"></arg>
+          </method>
+          <method name="Reset"></method>
+          <method name="SetDefaultSink">
+               <arg type="s" direction="in"></arg>
+          </method>
+          <method name="SetDefaultSource">
+               <arg type="s" direction="in"></arg>
+          </method>
+          <method name="SetProfile">
+               <arg type="u" direction="in"></arg>
+               <arg type="s" direction="in"></arg>
+          </method>
+          <property name="Sinks" type="ao" access="read"></property>
+          <property name="Sources" type="ao" access="read"></property>
+          <property name="SinkInputs" type="ao" access="read"></property>
+          <property name="Cards" type="s" access="read"></property>
+          <property name="DefaultSink" type="s" access="read"></property>
+          <property name="DefaultSource" type="s" access="read"></property>
+          <property name="MaxUIVolume" type="d" access="read"></property>
+     </interface>

@@ -57,6 +57,7 @@ void ItemPopupWindow::setItemInter(PluginsItemInterface *itemInter)
 
 void ItemPopupWindow::setContent(QWidget *content)
 {
+
     QWidget *lastWidget = getContent();
     if (lastWidget)
         lastWidget->removeEventFilter(this);
@@ -124,4 +125,5 @@ void ItemPopupWindow::showEvent(QShowEvent *event)
         activateWindow();
         setFocus(Qt::ActiveWindowFocusReason);
     });
+
 }

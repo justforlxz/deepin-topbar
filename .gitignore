@@ -2,6 +2,7 @@
 *.slo
 *.lo
 *.o
+Makefile
 
 # Compiled Dynamic libraries
 *.so
@@ -29,6 +30,10 @@ build*/
 deepin-topbar
 
 *.debug
+
+frame/moc_*
+plugins/moc_*
+plugins/*/moc*
 
 moc_*
 qrc_*
