@@ -64,6 +64,9 @@ void MainFrame::registerDesktop()
     if (wmClientList) {
         for (WId wid : reinterpret_cast<QVector<quint32>(*)()>(wmClientList)()) {
             if (DForeignWindow *w = DForeignWindow::fromWinId(wid)) {
+                if (w->wmClass() == "dde-desktop") {
+                    m_shadowWidget->windowHandle()->setParent(w);
+                }
                 if (w->wmClass() == "dde-launcher") {
                     if (m_mainPanel->pos() != QPoint(m_mainPanel->x(), -30))
                         m_hideWithLauncher->start();

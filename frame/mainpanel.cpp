@@ -16,6 +16,7 @@ void MainPanel::initUI()
     m_mainLayout->setMargin(0);
     m_mainLayout->setSpacing(3);
     m_mainLayout->setContentsMargins(5, 0, 5, 0);
+
     setLayout(m_mainLayout);
 }
 
@@ -56,4 +57,11 @@ void MainPanel::itemSort()
 void MainPanel::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);
+
+    QPainter painter(this);
+    QPen pen(painter.pen());
+    pen.setBrush(QColor(0, 0, 0, .6 * 255));
+    pen.setWidth(2);
+    painter.setPen(pen);
+    painter.drawLine(QPoint(0, 27), QPoint(width(), 27));
 }

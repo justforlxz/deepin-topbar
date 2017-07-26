@@ -17,7 +17,7 @@ Frame::Frame(QWidget *parent) : QFrame(parent)
 void Frame::registerDesktop()
 {
     QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
-    resize(screen.width(), 28);
+    resize(screen.width(), 27);
     move(screen.x(), 0);
 
     //register type to Desktop
