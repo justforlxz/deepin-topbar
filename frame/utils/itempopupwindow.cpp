@@ -100,6 +100,11 @@ bool ItemPopupWindow::containsPoint(const QPoint &point) const
     QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
     QRect r(screen.x(), screen.y(), screen.width(), 27);
 
+    // if click self;
+    QRect self(m_itemInter->itemWidget("")->mapToGlobal(m_itemInter->itemWidget("")->pos()), m_itemInter->itemWidget("")->size());
+    if (isVisible() && self.contains(point))
+        return false;
+
     if (r.contains(point) || geometry().contains(point))
         return true;
     return false;
