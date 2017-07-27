@@ -25,7 +25,6 @@ public:
     ~MainFrame();
 
     void registerDesktop();
-    void registerDockType();
     void setShadowWidget(FrameShadow *widget);
 
     void init();

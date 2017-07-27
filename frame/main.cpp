@@ -4,6 +4,8 @@
 #include <DApplication>
 #include <QDebug>
 
+#include <QtPlatformHeaders/QXcbWindowFunctions>
+
 DWIDGET_USE_NAMESPACE
 
 int main(int argc, char *argv[])
@@ -29,11 +31,15 @@ int main(int argc, char *argv[])
         shadowWidget->screenChanged();
         shadowWidget->show();
 
+        // Serious warning: I don't know why the dock type was set,
+        // but the purpose was achieved, and the implementation is unclear.
+        QXcbWindowFunctions::setWmWindowType(shadowWidget->windowHandle(), QXcbWindowFunctions::Dock);
+
         MainFrame *mainFrame = new MainFrame;
         mainFrame->setShadowWidget(shadowWidget);
-        mainFrame->registerDockType();
-        mainFrame->activateWindow();
         mainFrame->show();
+
+        QXcbWindowFunctions::setWmWindowType(mainFrame->windowHandle(), QXcbWindowFunctions::Dock);
 
         return a.exec();
     }

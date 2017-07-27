@@ -64,9 +64,6 @@ void MainFrame::registerDesktop()
     if (wmClientList) {
         for (WId wid : reinterpret_cast<QVector<quint32>(*)()>(wmClientList)()) {
             if (DForeignWindow *w = DForeignWindow::fromWinId(wid)) {
-                if (w->wmClass() == "dde-desktop") {
-                    m_shadowWidget->windowHandle()->setParent(w);
-                }
                 if (w->wmClass() == "dde-launcher") {
                     if (m_mainPanel->pos() != QPoint(m_mainPanel->x(), -30))
                         m_hideWithLauncher->start();
@@ -82,17 +79,6 @@ void MainFrame::registerDesktop()
     /*
      Think zccrs, Perfect protection against launcher. It won't stop launcher at last.
      */
-}
-
-void MainFrame::registerDockType()
-{
-    xcb_ewmh_connection_t m_ewmh_connection;
-    xcb_intern_atom_cookie_t *cookie = xcb_ewmh_init_atoms(QX11Info::connection(), &m_ewmh_connection);
-    xcb_ewmh_init_atoms_replies(&m_ewmh_connection, cookie, NULL);
-
-    xcb_atom_t atoms[1];
-    atoms[0] = m_ewmh_connection._NET_WM_WINDOW_TYPE_DOCK;
-    xcb_ewmh_set_wm_window_type(&m_ewmh_connection, winId(), 1, atoms);
 }
 
 void MainFrame::setShadowWidget(FrameShadow *widget)
@@ -153,8 +139,6 @@ void MainFrame::screenChanged()
     move(screen.x(), 0);
     m_mainPanel->move(0, 0);
     m_blurEffectWidget->move(0, 0);
-
-    registerDockType();
 }
 
 void MainFrame::showEvent(QShowEvent *event)

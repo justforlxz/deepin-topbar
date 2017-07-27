@@ -18,7 +18,7 @@ public slots:
     void screenChanged();
 
 protected:
-    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+//    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
 private:
     DPlatformWindowHandle *m_handle;
