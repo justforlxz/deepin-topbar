@@ -9,7 +9,7 @@ ItemPopupWindow::ItemPopupWindow(QWidget *parent)
     setBlendMode(DBlurEffectWidget::InWindowBlend);
     setMaskColor(DBlurEffectWidget::LightColor);
 
-    setWindowFlags(Qt::X11BypassWindowManagerHint  | Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::BypassWindowManagerHint);
     setAttribute(Qt::WA_InputMethodEnabled, false);
 
     m_moveAni = new QVariantAnimation(this);
@@ -45,7 +45,8 @@ void ItemPopupWindow::setContent(QWidget *content)
        m_layout->removeWidget(children.at(0));
     } while (true);
 
-    m_layout->addWidget(content);
+    content->show();
+    m_layout->addWidget(content, 0, Qt::AlignCenter);
     m_lastWidget = content;
 
     resize(content->size());
