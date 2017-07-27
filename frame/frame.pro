@@ -7,7 +7,7 @@ TARGET = deepin-topbar
 TEMPLATE = app
 CONFIG         += c++11 link_pkgconfig
 DESTDIR         = $$_PRO_FILE_PWD_/../
-PKGCONFIG += xcb-ewmh dtkwidget dtkbase dtkutil dframeworkdbus x11
+PKGCONFIG += xcb-ewmh dtkcore dtkwidget dframeworkdbus x11
 
 HEADERS  += \
     mainframe.h \

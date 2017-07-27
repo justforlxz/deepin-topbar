@@ -8,7 +8,7 @@ include(../../interfaces/interfaces.pri)
 include(../../widgets/widgets.pri)
 
 QT        += core gui widgets
-PKGCONFIG += dtkwidget dtkbase dtkutil
+PKGCONFIG += dtkcore dtkwidget
 TEMPLATE   = lib
 CONFIG    += plugin c++11 link_pkgconfig
 TARGET     = $$qtLibraryTarget(datetime)

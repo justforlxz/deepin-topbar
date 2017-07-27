@@ -7,7 +7,6 @@
 #include <QGuiApplication>
 
 #include <dinputdialog.h>
-#include <dcheckbox.h>
 
 DWIDGET_USE_NAMESPACE
 
@@ -23,7 +22,7 @@ WirelessList::WirelessList(const QSet<NetworkDevice>::const_iterator &deviceIter
 
       m_updateAPTimer(new QTimer(this)),
       m_pwdDialog(new DInputDialog(nullptr)),
-      m_autoConnBox(new DCheckBox),
+      m_autoConnBox(new QCheckBox),
 
       m_centralLayout(new QVBoxLayout),
       m_centralWidget(new QWidget),

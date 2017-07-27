@@ -8,7 +8,7 @@ include(../../interfaces/interfaces.pri)
 include(../../widgets/widgets.pri)
 
 QT       += core gui widgets dbus x11extras
-PKGCONFIG += dtkwidget dtkbase dtkutil dframeworkdbus gsettings-qt
+PKGCONFIG += dtkcore dtkwidget dframeworkdbus gsettings-qt
 TEMPLATE = lib
 CONFIG    += plugin c++11 link_pkgconfig
 TARGET     = $$qtLibraryTarget(sound)
