@@ -52,10 +52,11 @@ const QString SystemInfoPlugin::itemCommand(const QString &itemKey)
 
 void SystemInfoPlugin::popupShow()
 {
-    m_popupWidget->showAni();
+//    m_popupWidget->showAni();
 }
 
 void SystemInfoPlugin::popupHide()
 {
-    m_popupWidget->hideAni();
+    m_proxyInter->requestHidePopup();
+//    m_popupWidget->hideAni();
 }

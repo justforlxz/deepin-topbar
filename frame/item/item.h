@@ -21,10 +21,10 @@ public:
     inline virtual ItemType itemType() const {Q_UNREACHABLE(); return Plugin;}
     virtual const QString name() const {return QString();}
     virtual QWidget *popupTips();
-    virtual const QPoint popupMarkPoint();
-    virtual void showTips();
-    virtual void showPopupWindow(QWidget * const content);
-    virtual void hidePopup();
+    virtual const QRect popupMarkGeometry();
+    virtual void showTips() {}
+    virtual void showPopupWindow(QWidget * const content) { Q_UNUSED(content);}
+    virtual void hidePopup() {}
     virtual void finished() {}
     virtual PluginsItemInterface *itemInter();
 

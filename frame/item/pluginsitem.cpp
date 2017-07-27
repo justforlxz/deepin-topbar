@@ -47,6 +47,11 @@ void PluginsItem::finished()
     m_pluginInter->finished();
 }
 
+const QRect PluginsItem::popupMarkGeometry() const
+{
+    return QRect(mapToGlobal(pos()), size());
+}
+
 QWidget *PluginsItem::popupTips()
 {
     return m_pluginInter->itemPopupApplet(m_itemKey);
@@ -61,4 +66,31 @@ void PluginsItem::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
         showTips();
+}
+
+void PluginsItem::showTips()
+{
+    QWidget * const content = popupTips();
+    if (!content)
+        return;
+
+    showPopupWindow(content);
+}
+
+void PluginsItem::showPopupWindow(QWidget * const content)
+{
+    ItemPopupWindow *popup = PopupWindow.get();
+    popup->setItemInter(itemInter());
+    popup->setContent(content);
+
+    PopupWindow->setVisible(true);
+
+    popup->setRect(popupMarkGeometry());
+}
+
+void PluginsItem::hidePopup()
+{
+    ItemPopupWindow *popup = PopupWindow.get();
+    PopupWindow->setVisible(false);
+    popup->setVisible(false);
 }

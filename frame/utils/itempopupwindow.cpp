@@ -1,26 +1,16 @@
 #include "itempopupwindow.h"
-
-#include <QRegion>
-#include <QScreen>
 #include <QApplication>
 #include <QDesktopWidget>
-#include <QGraphicsOpacityEffect>
-
-DWIDGET_USE_NAMESPACE
 
 ItemPopupWindow::ItemPopupWindow(QWidget *parent)
-    : DArrowRectangle(ArrowBottom, parent)
+    : DBlurEffectWidget(parent)
     , m_mouseArea(new XMouseArea("com.deepin.api.XMouseArea", "/com/deepin/api/XMouseArea", QDBusConnection::sessionBus(), this))
 {
-    m_wmHelper = DWindowManagerHelper::instance();
+    setBlendMode(DBlurEffectWidget::InWindowBlend);
+    setMaskColor(DBlurEffectWidget::LightColor);
 
-    compositeChanged();
-
-    setBackgroundColor(DBlurEffectWidget::LightColor);
     setWindowFlags(Qt::X11BypassWindowManagerHint  | Qt::WindowStaysOnTopHint);
     setAttribute(Qt::WA_InputMethodEnabled, false);
-
-    connect(m_wmHelper, &DWindowManagerHelper::hasCompositeChanged, this, &ItemPopupWindow::compositeChanged);
 
     m_mouseArea->setSync(false);
 
@@ -37,6 +27,11 @@ ItemPopupWindow::ItemPopupWindow(QWidget *parent)
 
     m_moveAni = new QVariantAnimation(this);
     m_moveAni->setDuration(250);
+
+    m_layout = new QHBoxLayout;
+    m_layout->setMargin(0);
+    m_layout->setSpacing(0);
+    setLayout(m_layout);
 }
 
 ItemPopupWindow::~ItemPopupWindow()
@@ -59,40 +54,41 @@ void ItemPopupWindow::setItemInter(PluginsItemInterface *itemInter)
 
 void ItemPopupWindow::setContent(QWidget *content)
 {
-    QWidget *lastWidget = getContent();
+    QWidget *lastWidget = (m_lastWidget == nullptr) ? content : m_lastWidget;
     if (lastWidget)
         lastWidget->removeEventFilter(this);
     content->installEventFilter(this);
 
-    m_content = content;
+    setVisible(true);
 
-    setAccessibleName(content->objectName() + "-popup");
+    QList< QWidget* > children;
+    do {
+       children = m_layout->findChildren< QWidget* >();
+       if (children.count() == 0)
+           break;
+       m_layout->removeWidget(children.at(0));
+    } while (true);
 
-    DArrowRectangle::setContent(content);
+    m_layout->addWidget(content);
+    m_lastWidget = content;
+
+    resize(content->size());
 }
 
-void ItemPopupWindow::show(const int x, const int y)
+void ItemPopupWindow::setRect(const QRect &rect)
 {
-    m_moveAni->setStartValue(m_point.isNull() ? QPoint(x - 10, y) : m_point);
-    m_moveAni->setEndValue(QPoint(x, y));
-    m_point = QPoint(x, y);
+    m_moveAni->setStartValue(m_point.isNull() ? QPoint(rect.x() - 10, rect.y()) : m_point);
+    m_moveAni->setEndValue(QPoint(rect.x(), rect.y()));
+    m_point = QPoint(rect.x(), rect.y());
 
     connect(m_moveAni, &QVariantAnimation::valueChanged, this,  [=] (const QVariant &value) {
         move(value.toPoint().x(), value.toPoint().y());
-        resizeWithContent();
     });
 
     m_moveAni->start();
 
     m_itemInter->popupShow();
-}
-
-void ItemPopupWindow::compositeChanged()
-{
-    if (m_wmHelper->hasComposite())
-        setBorderColor(QColor(255, 255, 255, 255 * 0.05));
-    else
-        setBorderColor(QColor("#2C3238"));
+    show();
 }
 
 bool ItemPopupWindow::containsPoint(const QPoint &point) const
@@ -115,7 +111,7 @@ bool ItemPopupWindow::eventFilter(QObject *watched, QEvent *event)
     Q_UNUSED(watched);
 
     if (event->type() == QEvent::Resize) {
-        DArrowRectangle::resizeWithContent();
+        adjustSize();
     }
 
     return false;

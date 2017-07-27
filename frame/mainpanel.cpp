@@ -1,4 +1,6 @@
 #include "mainpanel.h"
+#include <QPainter>
+#include <QPen>
 
 MainPanel::MainPanel(QWidget *parent) : QWidget(parent)
 {

@@ -3,15 +3,15 @@
 
 #include "../interfaces/pluginsiteminterface.h"
 
-#include <darrowrectangle.h>
-#include <DWindowManagerHelper>
+#include <DBlurEffectWidget>
 #include <com_deepin_api_xmousearea.h>
+#include <QHBoxLayout>
 
 using namespace com::deepin::api;
 
 DWIDGET_USE_NAMESPACE
 
-class ItemPopupWindow : public Dtk::Widget::DArrowRectangle
+class ItemPopupWindow : public Dtk::Widget::DBlurEffectWidget
 {
     Q_OBJECT
 
@@ -23,10 +23,9 @@ public:
     void setContent(QWidget *content);
 
 public slots:
-    void show(const int x, const int y) Q_DECL_OVERRIDE;
+    void setRect(const QRect &rect);
 
 private slots:
-    void compositeChanged();
     bool containsPoint(const QPoint &point) const;
 
 protected:
@@ -34,14 +33,14 @@ protected:
 
 private:
     PluginsItemInterface *m_itemInter;
-    DWindowManagerHelper *m_wmHelper;
     XMouseArea *m_mouseArea;
     QString m_key;
-    QWidget *m_content;
+    QWidget *m_lastWidget;
     QSize m_size;
     bool m_isVisiable = false;
     QPoint m_point;
     QVariantAnimation *m_moveAni;
+    QHBoxLayout *m_layout;
 };
 
 #endif // ITEMPOPUPWINDOW_H
