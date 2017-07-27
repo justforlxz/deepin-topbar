@@ -7,7 +7,7 @@ TARGET = deepin-topbar
 TEMPLATE = app
 CONFIG         += c++11 link_pkgconfig
 DESTDIR         = $$_PRO_FILE_PWD_/../
-PKGCONFIG += xcb-ewmh dtkcore dtkwidget dframeworkdbus x11
+PKGCONFIG += xcb-ewmh dtkcore dtkwidget dframeworkdbus x11 xcb-util xtst xext
 
 HEADERS  += \
     mainframe.h \
@@ -20,7 +20,8 @@ HEADERS  += \
     item/item.h \
     item/stretchitem.h \
     frameshadow.h \
-    utils/itempopupwindow.h
+    utils/itempopupwindow.h \
+    utils/event_monitor.h
 
 SOURCES += \
     main.cpp\
@@ -34,7 +35,8 @@ SOURCES += \
     item/item.cpp \
     item/stretchitem.cpp \
     frameshadow.cpp \
-    utils/itempopupwindow.cpp
+    utils/itempopupwindow.cpp \
+    utils/event_monitor.cpp
 
 headers.files += ../interfaces/pluginsiteminterface.h \
                  ../interfaces/pluginproxyinterface.h

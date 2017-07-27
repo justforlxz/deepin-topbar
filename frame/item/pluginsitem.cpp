@@ -4,13 +4,19 @@
 #include <QDBusObjectPath>
 #include <QPoint>
 #include <QMouseEvent>
+#include <QScreen>
+#include <QApplication>
+#include <QDesktopWidget>
 
 PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString &itemKey, QWidget *parent) :
     Item(parent),
     m_pluginInter(pluginInter),
     m_centralWidget(pluginInter->itemWidget(itemKey)),
-    m_itemKey(itemKey)
+    m_itemKey(itemKey),
+    m_eventMonitor(new EventMonitor(this))
 {
+    m_eventMonitor->start();
+
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
@@ -18,6 +24,14 @@ PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString
     mainLayout->addWidget(m_centralWidget);
 
     setLayout(mainLayout);
+
+    connect(m_eventMonitor, &EventMonitor::buttonPress, this, [=] (int x, int y) {
+        if (!containsPoint(QPoint(x, y))) {
+            ItemPopupWindow *popup = PopupWindow.get();
+            if (popup->isVisible())
+                m_pluginInter->popupHide();
+        }
+    });
 }
 
 PluginsItem::~PluginsItem()
@@ -80,9 +94,8 @@ void PluginsItem::showTips()
 void PluginsItem::showPopupWindow(QWidget * const content)
 {
     ItemPopupWindow *popup = PopupWindow.get();
-    popup->setItemInter(itemInter());
     popup->setContent(content);
-
+    m_pluginInter->popupShow();
     PopupWindow->setVisible(true);
 
     popup->setRect(popupMarkGeometry());
@@ -93,4 +106,19 @@ void PluginsItem::hidePopup()
     ItemPopupWindow *popup = PopupWindow.get();
     PopupWindow->setVisible(false);
     popup->setVisible(false);
+}
+
+bool PluginsItem::containsPoint(const QPoint &point) const
+{
+    QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
+    QRect r(screen.x(), screen.y(), screen.width(), 27);
+
+    // if click self;
+    QRect self(m_pluginInter->itemWidget("")->mapToGlobal(m_pluginInter->itemWidget("")->pos()), m_pluginInter->itemWidget("")->size());
+    if (isVisible() && self.contains(point))
+        return false;
+
+    if (r.contains(point) || geometry().contains(point))
+        return true;
+    return false;
 }

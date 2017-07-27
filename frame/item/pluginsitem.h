@@ -3,6 +3,7 @@
 
 #include "../interfaces/pluginsiteminterface.h"
 #include "item.h"
+#include "utils/event_monitor.h"
 #include <QWidget>
 
 class PluginsItem : public Item
@@ -23,6 +24,7 @@ public:
 private:
     QWidget *popupTips() Q_DECL_OVERRIDE;
     PluginsItemInterface *itemInter() Q_DECL_OVERRIDE;
+    bool containsPoint(const QPoint &point) const;
 
 signals:
     void requestRefershWindowVisible() const;
@@ -34,6 +36,7 @@ private:
     PluginsItemInterface * m_pluginInter;
     QWidget *m_centralWidget;
     QString m_itemKey;
+    EventMonitor *m_eventMonitor;
 };
 
 #endif // PLUGINSITEM_H

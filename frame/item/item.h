@@ -1,6 +1,7 @@
 #ifndef ITEM_H
 #define ITEM_H
 
+#include "../interfaces/pluginsiteminterface.h"
 #include "utils/itempopupwindow.h"
 #include <QWidget>
 #include <memory>
