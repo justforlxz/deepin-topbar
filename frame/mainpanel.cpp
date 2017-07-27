@@ -8,6 +8,7 @@ MainPanel::MainPanel(QWidget *parent) : QWidget(parent)
 
 void MainPanel::initUI()
 {
+    setWindowFlags(Qt::WindowDoesNotAcceptFocus);
     setAttribute(Qt::WA_TranslucentBackground);
 
     m_mainLayout = new QHBoxLayout;

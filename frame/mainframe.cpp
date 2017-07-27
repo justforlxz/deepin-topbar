@@ -33,7 +33,7 @@ static bool connectWindowListChanged(QObject *object, std::function<void ()> slo
 
 MainFrame::MainFrame(QWidget *parent): QFrame(parent)
 {
-    setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
     setAttribute(Qt::WA_TranslucentBackground);
 
     setFixedHeight(TOPHEIGHT);
@@ -93,6 +93,7 @@ void MainFrame::init()
     m_blurEffectWidget = new DBlurEffectWidget(this);
     m_blurEffectWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
     m_blurEffectWidget->setMaskColor(DBlurEffectWidget::LightColor);
+    m_blurEffectWidget->setWindowFlags(Qt::WindowDoesNotAcceptFocus);
 
     m_mainPanel = new MainPanel(this);
 }
