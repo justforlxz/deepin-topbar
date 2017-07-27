@@ -4,6 +4,7 @@
 
 ItemPopupWindow::ItemPopupWindow(QWidget *parent)
     : DBlurEffectWidget(parent)
+    , m_lastWidget(nullptr)
 {
     setBlendMode(DBlurEffectWidget::InWindowBlend);
     setMaskColor(DBlurEffectWidget::LightColor);
@@ -30,6 +31,9 @@ void ItemPopupWindow::setContent(QWidget *content)
     if (lastWidget)
         lastWidget->removeEventFilter(this);
     content->installEventFilter(this);
+
+    if (m_lastWidget)
+        m_lastWidget->hide();
 
     setVisible(true);
 

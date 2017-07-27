@@ -63,7 +63,7 @@ void PluginsItem::finished()
 
 const QRect PluginsItem::popupMarkGeometry() const
 {
-    return QRect(mapToGlobal(pos()), size());
+    return QRect(pos(), size());
 }
 
 QWidget *PluginsItem::popupTips()
