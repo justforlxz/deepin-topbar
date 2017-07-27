@@ -22,6 +22,8 @@ ItemPopupWindow::ItemPopupWindow(QWidget *parent)
 
     connect(m_wmHelper, &DWindowManagerHelper::hasCompositeChanged, this, &ItemPopupWindow::compositeChanged);
 
+    m_mouseArea->setSync(false);
+
     QDBusPendingCall call = m_mouseArea->RegisterFullScreen();
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(call, this);
     connect(watcher, &QDBusPendingCallWatcher::finished, this, [this, watcher] {
@@ -57,13 +59,12 @@ void ItemPopupWindow::setItemInter(PluginsItemInterface *itemInter)
 
 void ItemPopupWindow::setContent(QWidget *content)
 {
-
     QWidget *lastWidget = getContent();
     if (lastWidget)
         lastWidget->removeEventFilter(this);
     content->installEventFilter(this);
 
-    m_content = lastWidget;
+    m_content = content;
 
     setAccessibleName(content->objectName() + "-popup");
 
@@ -96,9 +97,7 @@ void ItemPopupWindow::compositeChanged()
 
 bool ItemPopupWindow::containsPoint(const QPoint &point) const
 {
-    QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
-
-    QRegion r(screen.x(), 0, screen.width(), 25);
+    QRegion r(QRect(QWidget::mapToGlobal(m_content->pos()), m_content->size()));
     QRegion re(geometry().x(), geometry().y(), rect().width(), rect().height());
 
     r += re;
@@ -114,16 +113,4 @@ bool ItemPopupWindow::eventFilter(QObject *watched, QEvent *event)
     }
 
     return false;
-}
-
-void ItemPopupWindow::showEvent(QShowEvent *event)
-{
-    DArrowRectangle::showEvent(event);
-
-    QTimer::singleShot(1, this, [&] {
-        raise();
-        activateWindow();
-        setFocus(Qt::ActiveWindowFocusReason);
-    });
-
 }
