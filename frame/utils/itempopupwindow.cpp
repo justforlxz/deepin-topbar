@@ -97,11 +97,12 @@ void ItemPopupWindow::compositeChanged()
 
 bool ItemPopupWindow::containsPoint(const QPoint &point) const
 {
-    QRegion r(QRect(QWidget::mapToGlobal(m_content->pos()), m_content->size()));
-    QRegion re(geometry().x(), geometry().y(), rect().width(), rect().height());
+    QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
+    QRect r(screen.x(), screen.y(), screen.width(), 27);
 
-    r += re;
-    return r.contains(point);
+    if (r.contains(point) || geometry().contains(point))
+        return true;
+    return false;
 }
 
 bool ItemPopupWindow::eventFilter(QObject *watched, QEvent *event)
