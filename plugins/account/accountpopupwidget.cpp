@@ -1,7 +1,7 @@
-#include "notifypopupwidget.h"
+#include "accountpopupwidget.h"
 #include <QVBoxLayout>
 
-NotifyPopupWidget::NotifyPopupWidget(QWidget *parent) : QWidget(parent)
+AccountPopupWidget::AccountPopupWidget(QWidget *parent) : QWidget(parent)
 {
     setFixedSize(300, 100);
 
@@ -21,18 +21,18 @@ NotifyPopupWidget::NotifyPopupWidget(QWidget *parent) : QWidget(parent)
     m_hideAni->setEndValue(QSize(width(), 30));
     m_hideAni->setEasingCurve(QEasingCurve::InOutCubic);
 
-    connect(m_hideAni, &QPropertyAnimation::finished, this, &NotifyPopupWidget::requestHidePopup);
+    connect(m_hideAni, &QPropertyAnimation::finished, this, &AccountPopupWidget::requestHidePopup);
 
 
-    //load notify
+    //load Account
 }
 
-void NotifyPopupWidget::showAni()
+void AccountPopupWidget::showAni()
 {
     m_showAni->start();
 }
 
-void NotifyPopupWidget::hideAni()
+void AccountPopupWidget::hideAni()
 {
     m_hideAni->start();
 }

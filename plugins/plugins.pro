@@ -8,4 +8,5 @@ SUBDIRS = \
     wallpaper \
     systeminfo \
     network \
-    sound
+    sound \
+    account
