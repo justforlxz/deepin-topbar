@@ -18,3 +18,10 @@ void FontLabel::setIcon(const QChar c, int size)
     setFont(m_iconFont);
     setText(c);
 }
+
+void FontLabel::mouseReleaseEvent(QMouseEvent *event)
+{
+    QLabel::mouseReleaseEvent(event);
+
+    emit clicked();
+}
