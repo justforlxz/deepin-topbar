@@ -6,10 +6,11 @@ ItemPopupWindow::ItemPopupWindow(QWidget *parent)
     : DBlurEffectWidget(parent)
     , m_lastWidget(nullptr)
 {
+    setWindowFlags(Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint);
     setBlendMode(DBlurEffectWidget::InWindowBlend);
     setMaskColor(DBlurEffectWidget::LightColor);
 
-    setWindowFlags(Qt::BypassWindowManagerHint);
+    setAttribute(Qt::WA_TranslucentBackground, true);
     setAttribute(Qt::WA_InputMethodEnabled, false);
 
     m_moveAni = new QVariantAnimation(this);
