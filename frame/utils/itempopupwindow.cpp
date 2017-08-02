@@ -6,7 +6,7 @@ ItemPopupWindow::ItemPopupWindow(QWidget *parent)
     : DBlurEffectWidget(parent)
     , m_lastWidget(nullptr)
 {
-    setWindowFlags(Qt::X11BypassWindowManagerHint | Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::BypassWindowManagerHint | Qt::WindowStaysOnTopHint);
     setBlendMode(DBlurEffectWidget::InWindowBlend);
     setMaskColor(DBlurEffectWidget::LightColor);
 

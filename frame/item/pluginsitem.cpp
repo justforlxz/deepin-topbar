@@ -26,10 +26,9 @@ PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString
     setLayout(mainLayout);
 
     connect(m_eventMonitor, &EventMonitor::buttonPress, this, [=] (int x, int y) {
-        if (!containsPoint(QPoint(x, y))) {
-            ItemPopupWindow *popup = PopupWindow.get();
-            if (popup->isVisible())
-                m_pluginInter->popupHide();
+        ItemPopupWindow *popup = PopupWindow.get();
+        if (!containsPoint(QPoint(x, y)) && popup->isVisible()) {
+            m_pluginInter->popupHide();
         }
     });
 }
@@ -118,15 +117,16 @@ void PluginsItem::hidePopup()
 
 bool PluginsItem::containsPoint(const QPoint &point) const
 {
-    QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
-    QRect r(screen.x(), screen.y(), screen.width(), 27);
-
     // if click self;
     QRect self(m_pluginInter->itemWidget("")->mapToGlobal(m_pluginInter->itemWidget("")->pos()), m_pluginInter->itemWidget("")->size());
     if (isVisible() && self.contains(point))
         return false;
 
-    if (r.contains(point) || geometry().contains(point))
+    QRect s = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
+    QRegion screen(s.x(), s.y(), s.width(), 27);
+    ItemPopupWindow *popup = PopupWindow.get();
+    if (screen.contains(point) || popup->geometry().contains(point))
         return true;
+
     return false;
 }
