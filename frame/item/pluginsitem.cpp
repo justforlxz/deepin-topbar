@@ -63,7 +63,15 @@ void PluginsItem::finished()
 
 const QRect PluginsItem::popupMarkGeometry() const
 {
-    return QRect(pos(), size());
+    QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
+    ItemPopupWindow *popup = PopupWindow.get();
+
+    // check popup is last right
+    if (popup->width() + pos().x() >= screen.width()) {
+        return QRect(QPoint(pos().x() - popup->width() + width(), height()), size());
+    } else {
+        return QRect(QPoint(pos().x(), height()), size());
+    }
 }
 
 QWidget *PluginsItem::popupTips()
