@@ -4,6 +4,7 @@
 #include <QVariantAnimation>
 #include <DBlurEffectWidget>
 #include <QHBoxLayout>
+#include <DPlatformWindowHandle>
 
 DWIDGET_USE_NAMESPACE
 
@@ -22,6 +23,7 @@ public slots:
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
+    void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
 
 private:
     QWidget *m_lastWidget;
@@ -30,6 +32,7 @@ private:
     QPoint m_point;
     QVariantAnimation *m_moveAni;
     QHBoxLayout *m_layout;
+    DPlatformWindowHandle *m_handle;
 };
 
 #endif // ITEMPOPUPWINDOW_H

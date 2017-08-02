@@ -15,26 +15,24 @@ VolumeSlider::VolumeSlider(QWidget *parent)
     setPageStep(50);
     setTickPosition(QSlider::NoTicks);
     setFixedHeight(22);
-    setStyleSheet("QSlider::groove {"
-                  "margin-left:11px;"
-                  "margin-right:11px;"
-                  "border:none;"
-                  "height:2px;"
-//                  "border-width:0 0px 0 0px;"
-//                  "background:url(:/image/image/slider_bg.png) 0 2 0 2 stretch;"
+    setStyleSheet("QSlider::groove:horizontal,QSlider::add-page:horizontal{"
+                  "height: 3px;"
+                  "border-radius: 3px;"
+                  "background: #18181a;"
                   "}"
-                  "QSlider::handle{"
-                  "background:url(:/image/image/slider_round.png) no-repeat;"
-                  "width:22px;"
-                  "height:22px;"
-                  "margin:-9px -14px -11px -14px;"
+                  "QSlider::sub-page:horizontal{"
+                  "height: 8px;"
+                  "border-radius: 3px;"
+                  "background: #008aff;"
                   "}"
-                  "QSlider::add-page {"
-                  "background-color:rgba(255, 255, 255, .1);"
-                  "}"
-                  "QSlider::sub-page {"
-                  "background-color:rgba(255, 255, 255, .8);"
+                  "QSlider::handle:horizontal{"
+                  "width: 12px;"
+                  "margin-top: -5px;"
+                  "margin-bottom: -4px;"
+                  "border-radius: 6px;"
+                  "background: qradialgradient(spread:pad,cx:0.5,cy:0.5,radius:0.5,fx:0.5,fy:0.5,stop:0.6 #565656,stop:0.8 #565656);"
                   "}");
+
 
     m_timer->setInterval(100);
 

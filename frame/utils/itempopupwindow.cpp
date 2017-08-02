@@ -13,6 +13,12 @@ ItemPopupWindow::ItemPopupWindow(QWidget *parent)
     setAttribute(Qt::WA_TranslucentBackground, true);
     setAttribute(Qt::WA_InputMethodEnabled, false);
 
+    m_handle = new DPlatformWindowHandle(this);
+    m_handle->setBorderWidth(0);
+    m_handle->setWindowRadius(0);
+    m_handle->setEnableSystemMove(true);
+    m_handle->setEnableSystemResize(true);
+
     m_moveAni = new QVariantAnimation(this);
     m_moveAni->setDuration(250);
 
@@ -76,4 +82,23 @@ bool ItemPopupWindow::eventFilter(QObject *watched, QEvent *event)
     }
 
     return false;
+}
+
+void ItemPopupWindow::resizeEvent(QResizeEvent *event)
+{
+    DBlurEffectWidget::resizeEvent(event);
+
+    const qreal radius = 5;
+    QPainterPath path;
+    path.moveTo(rect().topRight() - QPointF(radius, 0));
+    path.lineTo(rect().topLeft() + QPointF(radius, 0));
+    path.quadTo(rect().topLeft(), rect().topLeft() + QPointF(0, radius));
+    path.lineTo(rect().bottomLeft() + QPointF(0, -radius));
+    path.quadTo(rect().bottomLeft(), rect().bottomLeft() + QPointF(radius, 0));
+    path.lineTo(rect().bottomRight() - QPointF(radius, 0));
+    path.quadTo(rect().bottomRight(), rect().bottomRight() + QPointF(0, -radius));
+    path.lineTo(rect().topRight() + QPointF(0, radius));
+    path.quadTo(rect().topRight(), rect().topRight() + QPointF(-radius, -0));
+
+    m_handle->setClipPath(path);
 }

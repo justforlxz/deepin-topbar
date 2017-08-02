@@ -4,6 +4,7 @@
 #include "componments/volumeslider.h"
 #include "dbus/dbusaudio.h"
 #include "dbus/dbussink.h"
+#include "fontlabel.h"
 
 #include <QScrollArea>
 #include <QVBoxLayout>
@@ -39,10 +40,13 @@ private slots:
     void delayLoad();
     void onPlaySoundEffect();
 
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
+
 private:
     QWidget *m_centralWidget;
     QWidget *m_applicationTitle;
-    Dtk::Widget::DImageButton *m_volumeBtn;
+    FontLabel *m_volumeBtn;
     VolumeSlider *m_volumeSlider;
     QVBoxLayout *m_centralLayout;
 

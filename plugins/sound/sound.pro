@@ -29,7 +29,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += soundplugin.cpp \
-    soundpopupwidget.cpp \
     componments/horizontalseparator.cpp \
     componments/volumeslider.cpp \
     dbus/dbusaudio.cpp \
@@ -40,7 +39,6 @@ SOURCES += soundplugin.cpp \
     sounditem.cpp
 
 HEADERS += soundplugin.h \
-    soundpopupwidget.h \
     componments/horizontalseparator.h \
     componments/volumeslider.h \
     dbus/dbusaudio.h \

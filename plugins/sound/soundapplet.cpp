@@ -2,6 +2,7 @@
 #include "sinkinputwidget.h"
 #include "componments/horizontalseparator.h"
 
+#include <QMouseEvent>
 #include <QLabel>
 #include <QIcon>
 
@@ -16,13 +17,13 @@ SoundApplet::SoundApplet(QWidget *parent)
 
       m_centralWidget(new QWidget),
       m_applicationTitle(new QWidget),
-      m_volumeBtn(new DImageButton),
+      m_volumeBtn(new FontLabel),
       m_volumeSlider(new VolumeSlider),
 
       m_audioInter(new DBusAudio(this)),
       m_defSinkInter(nullptr)
 {
-//    QIcon::setThemeName("deepin");
+    m_volumeBtn->installEventFilter(this);
 
     m_gsetting = new QGSettings("com.deepin.dde.audio", "", this);
 
@@ -31,7 +32,8 @@ SoundApplet::SoundApplet(QWidget *parent)
 
     QLabel *deviceLabel = new QLabel;
     deviceLabel->setText(tr("Device"));
-    deviceLabel->setStyleSheet("color:white;");
+    deviceLabel->setStyleSheet("color: rgb(67, 67, 62);"
+                               "background: transparent;");
 
     QHBoxLayout *deviceLineLayout = new QHBoxLayout;
     deviceLineLayout->addWidget(deviceLabel);
@@ -50,7 +52,8 @@ SoundApplet::SoundApplet(QWidget *parent)
 
     QLabel *appLabel = new QLabel;
     appLabel->setText(tr("Application"));
-    appLabel->setStyleSheet("color:white;");
+    appLabel->setStyleSheet("color: rgb(67, 67, 62);"
+                            "background: transparent;");
 
     QHBoxLayout *appLineHLayout = new QHBoxLayout;
     appLineHLayout->addWidget(appLabel);
@@ -88,7 +91,6 @@ SoundApplet::SoundApplet(QWidget *parent)
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setStyleSheet("background-color:transparent;");
 
-    connect(m_volumeBtn, &DImageButton::clicked, this, &SoundApplet::toggleMute);
     connect(m_volumeSlider, &VolumeSlider::valueChanged, this, &SoundApplet::volumeSliderValueChanged);
     connect(m_volumeSlider, &VolumeSlider::requestPlaySoundEffect, this, &SoundApplet::onPlaySoundEffect);
     connect(m_audioInter, &DBusAudio::SinkInputsChanged, this, &SoundApplet::sinkInputsChanged);
@@ -133,27 +135,29 @@ void SoundApplet::defaultSinkChanged()
 
 void SoundApplet::onVolumeChanged()
 {
-    const float volmue = m_defSinkInter->volume();
+    const float volume = m_defSinkInter->volume();
     const bool mute = m_defSinkInter->mute();
 
     //Keep the same units. slider is 1000.0f, maxVolue need multiplication 10.
     float m_maxVolume = std::min(1000, m_gsetting->get("output-volume-max").toInt() * 10);
 
-    m_volumeSlider->setValue(std::min(1000.0f, volmue * 1000.0f / (m_maxVolume / 1000.0f)));
+    m_volumeSlider->setValue(std::min(1000.0f, volume * 1000.0f / (m_maxVolume / 1000.0f)));
 
     emit volumeChanged(m_volumeSlider->value());
 
-    QString volumeString;
-    if (mute)
-        volumeString = "muted";
-    else if (volmue >= double(2)/3)
-        volumeString = "high";
-    else if (volmue >= double(1)/3)
-        volumeString = "medium";
-    else
-        volumeString = "low";
+    if (mute) {
+        m_volumeBtn->setIcon(QChar(0xE198), 14);
+        return;
+    }
 
-    m_volumeBtn->setPixmap(QString(":/icons/image/audio-volume-%1-symbolic.svg").arg(volumeString));
+    if (volume >= 1)
+        m_volumeBtn->setIcon(QChar(0xE995), 14);
+    else if (volume >= 0.4f)
+        m_volumeBtn->setIcon(QChar(0xE994), 14);
+    else if (volume >= 0.2f)
+        m_volumeBtn->setIcon(QChar(0xE993), 14);
+    else
+        m_volumeBtn->setIcon(QChar(0xE992), 14);
 }
 
 void SoundApplet::volumeSliderValueChanged()
@@ -214,4 +218,12 @@ void SoundApplet::onPlaySoundEffect()
 {
     // set the mute property to false to play sound effects.
     m_defSinkInter->SetMute(false);
+}
+
+bool SoundApplet::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == m_volumeBtn && event->type() == QMouseEvent::MouseButtonRelease)
+            toggleMute();
+
+    return false;
 }
