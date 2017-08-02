@@ -1,9 +1,12 @@
 #ifndef AccountWIDGET_H
 #define AccountWIDGET_H
 
+#include <com_deepin_daemon_logined.h>
+#include <com_deepin_daemon_accounts_user.h>
 #include <QLabel>
 
-class FontLabel;
+using DBusLogined = com::deepin::daemon::Logined;
+using DBusUser = com::deepin::daemon::accounts::User;
 
 class AccountWidget : public QLabel
 {
@@ -14,8 +17,13 @@ public:
 protected:
     bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
+private slots:
+    void iconUpdate(const QString &file);
+
 private:
-    FontLabel *m_AccountIcon;
+    QLabel *m_accountIcon;
+    DBusLogined *m_dbusLogined;
+    DBusUser *m_dbusUser;
 };
 
 #endif // AccountWIDGET_H
