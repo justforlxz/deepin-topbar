@@ -16,6 +16,12 @@ public:
     DateTimePlugin(QWidget *parent = 0);
     ~DateTimePlugin();
 
+    struct MenuModel {
+        bool is24;
+        bool isCenter;
+        QString format;
+    };
+
     const QString pluginName() const override;
     void init(PluginProxyInterface *proxyInter) override;
 
@@ -31,6 +37,9 @@ public:
 
     void finished() Q_DECL_OVERRIDE;
 
+    QString itemContextMenu(const QString &itemKey) Q_DECL_OVERRIDE;
+    void invokedMenuItem(const QString &itemKey, const QString &menuId, const bool checked) Q_DECL_OVERRIDE;
+
 private slots:
     void saveConfig();
 
@@ -38,6 +47,7 @@ private:
     PluginProxyInterface *m_proxyInter;
     Plugin::DateTime::DateTimeWidget *m_centralWidget;
     Plugin::DateTime::DateTimePopup *m_popup;
+    MenuModel m_settings;
 };
 
 #endif // TIMEWIDGET_H

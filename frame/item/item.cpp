@@ -27,3 +27,8 @@ PluginsItemInterface *Item::itemInter()
 {
     return nullptr;
 }
+
+const QString Item::contextMenu() const
+{
+    return QString();
+}

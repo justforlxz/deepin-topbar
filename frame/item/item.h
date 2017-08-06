@@ -28,6 +28,8 @@ public:
     virtual void hidePopup() {}
     virtual void finished() {}
     virtual PluginsItemInterface *itemInter();
+    virtual void invokedMenuItem(const QString &itemId, const bool checked) { Q_UNUSED(itemId); Q_UNUSED(checked);}
+    virtual const QString contextMenu() const;
 
 protected:
     static std::unique_ptr<ItemPopupWindow> PopupWindow;

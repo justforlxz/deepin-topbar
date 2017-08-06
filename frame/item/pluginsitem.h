@@ -4,6 +4,7 @@
 #include "../interfaces/pluginsiteminterface.h"
 #include "item.h"
 #include "utils/event_monitor.h"
+#include "dbus/dbusmenumanager.h"
 #include <QWidget>
 
 class PluginsItem : public Item
@@ -20,6 +21,8 @@ public:
     void showTips() Q_DECL_OVERRIDE;
     void showPopupWindow(QWidget * const content) Q_DECL_OVERRIDE;
     void hidePopup() Q_DECL_OVERRIDE;
+    void invokedMenuItem(const QString &itemId, const bool checked) Q_DECL_OVERRIDE;
+    const QString contextMenu() const Q_DECL_OVERRIDE;
 
 private:
     QWidget *popupTips() Q_DECL_OVERRIDE;
@@ -32,11 +35,15 @@ signals:
 protected:
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
+protected slots:
+    void showContextMenu();
+
 private:
     PluginsItemInterface * m_pluginInter;
     QWidget *m_centralWidget;
     QString m_itemKey;
     EventMonitor *m_eventMonitor;
+    DBusMenuManager *m_menuManagerInter;
 };
 
 #endif // PLUGINSITEM_H

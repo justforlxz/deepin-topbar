@@ -1,4 +1,5 @@
 #include "pluginsitem.h"
+#include "dbus/dbusmenu.h"
 #include <QHBoxLayout>
 #include <QDBusPendingReply>
 #include <QDBusObjectPath>
@@ -13,7 +14,8 @@ PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString
     m_pluginInter(pluginInter),
     m_centralWidget(pluginInter->itemWidget(itemKey)),
     m_itemKey(itemKey),
-    m_eventMonitor(new EventMonitor(this))
+    m_eventMonitor(new EventMonitor(this)),
+    m_menuManagerInter(new DBusMenuManager(this))
 {
     m_eventMonitor->start();
 
@@ -85,8 +87,10 @@ PluginsItemInterface *PluginsItem::itemInter()
 
 void PluginsItem::mousePressEvent(QMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton)
+    if (event->button() == Qt::LeftButton) {
         showTips();
+        showContextMenu();
+    }
 }
 
 void PluginsItem::showTips()
@@ -115,6 +119,16 @@ void PluginsItem::hidePopup()
     popup->setVisible(false);
 }
 
+void PluginsItem::invokedMenuItem(const QString &itemId, const bool checked)
+{
+    m_pluginInter->invokedMenuItem(m_itemKey, itemId, checked);
+}
+
+const QString PluginsItem::contextMenu() const
+{
+    return m_pluginInter->itemContextMenu(m_itemKey);
+}
+
 bool PluginsItem::containsPoint(const QPoint &point) const
 {
     // if click self;
@@ -130,3 +144,40 @@ bool PluginsItem::containsPoint(const QPoint &point) const
 
     return false;
 }
+
+void PluginsItem::showContextMenu()
+{
+    const QString menuJson = contextMenu();
+    if (menuJson.isEmpty())
+        return;
+
+    QDBusPendingReply<QDBusObjectPath> result = m_menuManagerInter->RegisterMenu();
+
+    result.waitForFinished();
+    if (result.isError())
+    {
+        qWarning() << result.error();
+        return;
+    }
+
+    const QRect r = popupMarkGeometry();
+    const QPoint p = QPoint(r.x(), r.y());
+
+    QJsonObject menuObject;
+    menuObject.insert("x", QJsonValue(p.x()));
+    menuObject.insert("y", QJsonValue(p.y()));
+    menuObject.insert("isDockMenu", QJsonValue(false));
+    menuObject.insert("menuJsonContent", QJsonValue(menuJson));
+
+    menuObject.insert("direction", "top");;
+
+    const QDBusObjectPath path = result.argumentAt(0).value<QDBusObjectPath>();
+    DBusMenu *menuInter = new DBusMenu(path.path(), this);
+
+    connect(menuInter, &DBusMenu::ItemInvoked, this, &Item::invokedMenuItem);
+    connect(menuInter, &DBusMenu::MenuUnregistered, menuInter, &DBusMenu::deleteLater, Qt::QueuedConnection);
+
+    menuInter->ShowMenu(QString(QJsonDocument(menuObject).toJson()));
+    hidePopup();
+}
+

@@ -21,7 +21,9 @@ HEADERS  += \
     item/stretchitem.h \
     frameshadow.h \
     utils/itempopupwindow.h \
-    utils/event_monitor.h
+    utils/event_monitor.h \
+    dbus/dbusmenu.h \
+    dbus/dbusmenumanager.h
 
 SOURCES += \
     main.cpp\
@@ -36,7 +38,9 @@ SOURCES += \
     item/stretchitem.cpp \
     frameshadow.cpp \
     utils/itempopupwindow.cpp \
-    utils/event_monitor.cpp
+    utils/event_monitor.cpp \
+    dbus/dbusmenu.cpp \
+    dbus/dbusmenumanager.cpp
 
 headers.files += ../interfaces/pluginsiteminterface.h \
                  ../interfaces/pluginproxyinterface.h
