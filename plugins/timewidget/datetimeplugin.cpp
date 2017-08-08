@@ -99,9 +99,9 @@ QString DateTimePlugin::itemContextMenu(const QString &itemKey)
     QMap<QString, QVariant> settings;
     settings["itemId"] = "settings";
     if (m_settings.is24)
-        settings["itemText"] = tr("24 Hour Time");
-    else
         settings["itemText"] = tr("12 Hour Time");
+    else
+        settings["itemText"] = tr("24 Hour Time");
     settings["isActive"] = true;
     items.push_back(settings);
 
@@ -150,8 +150,6 @@ void DateTimePlugin::saveConfig()
     object.insert("Center", m_settings.isCenter);
     object.insert("Format", m_settings.format);
     m_proxyInter->saveConfig(pluginName(), object);
-
-    qDebug() << object;
 
     finished();
 }
