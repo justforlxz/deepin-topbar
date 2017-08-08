@@ -5,8 +5,8 @@ SUBDIRS = \
     indicator \
     power \
     notify \
-    wallpaper \
+#    wallpaper \
     systeminfo \
-    network \
+#    network \
     sound \
     account
