@@ -6,6 +6,7 @@
 
 include(../../interfaces/interfaces.pri)
 include(../../widgets/widgets.pri)
+include(../../dbus/dbus.pri)
 
 QT       += core gui widgets dbus x11extras
 PKGCONFIG += dtkcore dtkwidget dframeworkdbus

@@ -2,8 +2,8 @@
 #define SOUNDAPPLET_H
 
 #include "componments/volumeslider.h"
-#include "dbus/dbusaudio.h"
-#include "dbus/dbussink.h"
+#include "dbusaudio.h"
+#include "dbussink.h"
 #include "fontlabel.h"
 
 #include <QScrollArea>

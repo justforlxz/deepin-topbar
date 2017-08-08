@@ -1,7 +1,7 @@
 #ifndef SINKINPUTWIDGET_H
 #define SINKINPUTWIDGET_H
 
-#include "dbus/dbussinkinput.h"
+#include "dbussinkinput.h"
 #include "componments/volumeslider.h"
 
 #include <QFrame>

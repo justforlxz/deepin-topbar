@@ -7,6 +7,7 @@
 
 include(../../interfaces/interfaces.pri)
 include(../../widgets/widgets.pri)
+include(../../dbus/dbus.pri)
 
 QT       += core gui widgets dbus x11extras
 PKGCONFIG += dtkcore dtkwidget dframeworkdbus
@@ -32,16 +33,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         powerplugin.cpp \
     powerwidget.cpp \
-    powerpopupwidget.cpp \
-    DBus/dbusaccount.cpp \
-    DBus/dbuspower.cpp
+    powerpopupwidget.cpp
 
 HEADERS += \
         powerplugin.h \
     powerwidget.h \
-    powerpopupwidget.h \
-    DBus/dbusaccount.h \
-    DBus/dbuspower.h
+    powerpopupwidget.h
 
 target.path = $${PREFIX}/lib/deepin-topbar/plugins/
 INSTALLS   += target

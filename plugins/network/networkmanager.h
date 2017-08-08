@@ -1,7 +1,7 @@
 #ifndef NETWORKMANAGER_H
 #define NETWORKMANAGER_H
 
-#include "dbus/dbusnetwork.h"
+#include "dbusnetwork.h"
 #include "networkdevice.h"
 
 #include <QJsonObject>

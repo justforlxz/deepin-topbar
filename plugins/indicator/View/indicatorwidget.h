@@ -3,8 +3,8 @@
 
 #include "entry.h"
 #include <QWidget>
-#include <DBus/dbusdock.h>
-#include <DBus/dbusdockentry.h>
+#include <dbusdock.h>
+#include <dbusdockentry.h>
 #include <com_deepin_daemon_systeminfo.h>
 
 using systeminfo = com::deepin::daemon::SystemInfo;

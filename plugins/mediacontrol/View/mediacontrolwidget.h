@@ -2,8 +2,8 @@
 #define MEDIACONTROLWIDGET_H
 
 #include "mediacontrol.h"
-#include "DBus/dbusinterface.h"
-#include "DBus/dbusmediaplayer2.h"
+#include "dbusinterface.h"
+#include "dbusmediaplayer2.h"
 #include <QFrame>
 #include <QLabel>
 #include <QPropertyAnimation>

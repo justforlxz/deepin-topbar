@@ -1,7 +1,7 @@
 #ifndef POWERWIDGET_H
 #define POWERWIDGET_H
 
-#include "DBus/dbuspower.h"
+#include "dbuspower.h"
 #include "powerpopupwidget.h"
 #include "fontlabel.h"
 #include <QWidget>

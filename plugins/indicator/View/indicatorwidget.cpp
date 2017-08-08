@@ -26,7 +26,7 @@ IndicatorWidget::IndicatorWidget(QWidget *parent) : QWidget(parent)
         m_systemVersion = version;
     });
     
-    m_dockInter = new DBusDock(this);
+    m_dockInter = new DBusDock("com.deepin.dde.daemon.Dock","/com/deepin/dde/daemon/Dock" , QDBusConnection::sessionBus(),this);
     m_smallWatcher= new QFutureWatcher<QPixmap>(this);
 
     connect(m_dockInter, &DBusDock::EntryAdded, this, &IndicatorWidget::addEntry);

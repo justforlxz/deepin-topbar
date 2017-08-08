@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 include(../../interfaces/interfaces.pri)
+include(../../dbus/dbus.pri)
 
 QT       += core gui widgets x11extras dbus concurrent
 PKGCONFIG += dtkcore dtkwidget dframeworkdbus
@@ -30,16 +31,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         indicatorplugin.cpp \
     View/indicatorwidget.cpp \
-    DBus/dbusdock.cpp \
-    DBus/dbusdockentry.cpp \
     View/entry.cpp \
     themeappicon.cpp
 
 HEADERS += \
         indicatorplugin.h \
     View/indicatorwidget.h \
-    DBus/dbusdock.h \
-    DBus/dbusdockentry.h \
     View/entry.h \
     themeappicon.h
 

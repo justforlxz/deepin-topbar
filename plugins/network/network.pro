@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 include(../../interfaces/interfaces.pri)
+include(../../dbus/dbus.pri)
 
 QT       += core gui widgets dbus x11extras
 PKGCONFIG += dtkcore dtkwidget dframeworkdbus
@@ -30,7 +31,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += networkplugin.cpp \
     networkwidget.cpp \
     networkpopupwidget.cpp \
-    dbus/dbusnetwork.cpp \
     item/applet/accesspoint.cpp \
     item/applet/accesspointwidget.cpp \
     item/applet/devicecontrolwidget.cpp \
@@ -45,7 +45,6 @@ SOURCES += networkplugin.cpp \
 HEADERS += networkplugin.h \
     networkwidget.h \
     networkpopupwidget.h \
-    dbus/dbusnetwork.h \
     item/applet/accesspoint.h \
     item/applet/accesspointwidget.h \
     item/applet/devicecontrolwidget.h \

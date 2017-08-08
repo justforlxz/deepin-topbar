@@ -6,6 +6,7 @@
 
 include(../../interfaces/interfaces.pri)
 include(../../widgets/widgets.pri)
+include(../../dbus/dbus.pri)
 
 QT       += core gui widgets dbus x11extras
 PKGCONFIG += dtkcore dtkwidget dframeworkdbus gsettings-qt
@@ -31,9 +32,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += soundplugin.cpp \
     componments/horizontalseparator.cpp \
     componments/volumeslider.cpp \
-    dbus/dbusaudio.cpp \
-    dbus/dbussink.cpp \
-    dbus/dbussinkinput.cpp \
     sinkinputwidget.cpp \
     soundapplet.cpp \
     sounditem.cpp
@@ -41,9 +39,6 @@ SOURCES += soundplugin.cpp \
 HEADERS += soundplugin.h \
     componments/horizontalseparator.h \
     componments/volumeslider.h \
-    dbus/dbusaudio.h \
-    dbus/dbussink.h \
-    dbus/dbussinkinput.h \
     sinkinputwidget.h \
     soundapplet.h \
     sounditem.h

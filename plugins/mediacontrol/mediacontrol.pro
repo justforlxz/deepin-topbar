@@ -6,6 +6,7 @@
 
 include(../../interfaces/interfaces.pri)
 include(../../widgets/widgets.pri)
+include(../../dbus/dbus.pri)
 
 QT       += core gui widgets dbus x11extras
 PKGCONFIG += dtkcore dtkwidget dframeworkdbus
@@ -32,16 +33,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         mediacontrolplugin.cpp \
     View/mediacontrolwidget.cpp \
-    DBus/dbusmediaplayer2.cpp \
-    View/mediacontrol.cpp \
-    DBus/dbusinterface.cpp
+    View/mediacontrol.cpp
 
 HEADERS += \
         mediacontrolplugin.h \
     View/mediacontrolwidget.h \
-    DBus/dbusmediaplayer2.h \
-    View/mediacontrol.h \
-    DBus/dbusinterface.h
+    View/mediacontrol.h
 
 target.path = $${PREFIX}/lib/deepin-topbar/plugins/
 INSTALLS   += target

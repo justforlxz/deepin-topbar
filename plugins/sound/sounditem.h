@@ -2,7 +2,7 @@
 #define SOUNDITEM_H
 
 #include "soundapplet.h"
-#include "dbus/dbussink.h"
+#include "dbussink.h"
 #include "fontlabel.h"
 #include <QWidget>
 
