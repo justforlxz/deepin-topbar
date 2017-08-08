@@ -49,6 +49,12 @@ void PluginsItemController::itemSort()
     emit itemInserted(i++, list.value("datetime"));
     list.remove("datetime");
 
+    emit itemInserted(i++, list.value("sound"));
+    list.remove("sound");
+
+    emit itemInserted(i++, list.value("account"));
+    list.remove("account");
+
     emit itemInserted(i++, list.value("notify"));
     list.remove("notify");
 
