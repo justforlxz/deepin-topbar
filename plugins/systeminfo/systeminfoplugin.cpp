@@ -40,7 +40,7 @@ QWidget *SystemInfoPlugin::itemPopupApplet(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return m_popupWidget;
+    return nullptr;
 }
 
 const QString SystemInfoPlugin::itemCommand(const QString &itemKey)

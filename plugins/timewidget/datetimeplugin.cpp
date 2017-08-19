@@ -1,6 +1,6 @@
 #include "datetimeplugin.h"
 #include "datetimepopup.h"
-
+#include <QActionGroup>
 #include <QApplication>
 #include <QDesktopWidget>
 
@@ -89,55 +89,86 @@ void DateTimePlugin::finished()
     }
 }
 
-QString DateTimePlugin::itemContextMenu(const QString &itemKey)
+QMenu *DateTimePlugin::itemContextMenu(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    QList<QVariant> items;
-    items.reserve(1);
+    QMenu *menu = new QMenu;
 
-    QMap<QString, QVariant> settings;
-    settings["itemId"] = "settings";
+    QAction *is24 = new QAction;
+    is24->setText(tr("24 Hour Time"));
+    is24->setData("is24");
+
+    QAction *is12 = new QAction;
+    is12->setText(tr("12 Hour Time"));
+    is12->setData("is12");
+
+    QActionGroup *formatGrp = new QActionGroup(this);
+    formatGrp->addAction(is12);
+    formatGrp->addAction(is24);
+    formatGrp->setExclusive(true);
+
+    is12->setCheckable(true);
+    is24->setCheckable(true);
+
     if (m_settings.is24)
-        settings["itemText"] = tr("12 Hour Time");
+        is24->setChecked(true);
     else
-        settings["itemText"] = tr("24 Hour Time");
-    settings["isActive"] = true;
-    items.push_back(settings);
+        is12->setChecked(true);
 
-    QMap<QString, QVariant> center;
-    center["itemId"] = "isCenter";
-    center["itemText"] = tr("Change position");
-    center["isActive"] = true;
-    items.push_back(center);
+    QMenu *timeMenu = new QMenu(tr("Time Format"));
+    timeMenu->addAction(is12);
+    timeMenu->addAction(is24);
+    menu->addMenu(timeMenu);
 
-    QMap<QString, QVariant> open;
-    open["itemId"] = "open";
-    open["itemText"] = tr("Time Settings");
-    open["isActive"] = true;
-    items.push_back(open);
+    QAction *centerPos = new QAction(tr("at Center"));
+    QAction *defaultPos = new QAction(tr("at Default"));
 
-    QMap<QString, QVariant> menu;
-    menu["items"] = items;
-    menu["checkableMenu"] = false;
-    menu["singleCheck"] = false;
+    centerPos->setData("centerPos");
+    defaultPos->setData("defaultPos");
 
-    return QJsonDocument::fromVariant(menu).toJson();
+    centerPos->setCheckable(true);
+    defaultPos->setCheckable(true);
+
+    QActionGroup *posGrp = new QActionGroup(this);
+    posGrp->setExclusive(true);
+    posGrp->addAction(centerPos);
+    posGrp->addAction(defaultPos);
+
+    if (m_settings.isCenter)
+        centerPos->setChecked(true);
+    else
+        defaultPos->setChecked(true);
+
+    QMenu *posMenu = new QMenu(tr("Position"));
+    posMenu->addAction(centerPos);
+    posMenu->addAction(defaultPos);
+    menu->addMenu(posMenu);
+
+    QAction *timeSetting = new QAction(tr("Time Settings"));
+    timeSetting->setData("timeSetting");
+    menu->addAction(timeSetting );
+
+    connect(menu, &QMenu::aboutToHide, menu, &QMenu::deleteLater);
+    connect(menu, &QMenu::triggered, this, &DateTimePlugin::invokedMenuItem);
+
+    return menu;
 }
 
-void DateTimePlugin::invokedMenuItem(const QString &itemKey, const QString &menuId, const bool checked)
+void DateTimePlugin::invokedMenuItem(QAction *action)
 {
-    Q_UNUSED(itemKey);
-    Q_UNUSED(checked);
+    const QString &value = action->data().toString();
 
-    if (menuId == "settings")
-        m_settings.is24 = !m_settings.is24;
+    if (value == "is24" || value == "is12")
+        m_settings.is24 = value == "is24";
 
-    if (menuId == "isCenter")
-        m_settings.isCenter = !m_settings.isCenter;
+    if (value == "centerPos" || value == "defaultPos")
+        m_settings.isCenter = value == "centerPos";
 
-    if (menuId == "open")
+    if (value == "timeSetting")
         QProcess::startDetached("dbus-send --print-reply --dest=com.deepin.dde.ControlCenter /com/deepin/dde/ControlCenter com.deepin.dde.ControlCenter.ShowModule \"string:datetime\"");
+
+    action->deleteLater();
 
     saveConfig();
 }

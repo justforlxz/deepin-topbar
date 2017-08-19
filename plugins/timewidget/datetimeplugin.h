@@ -37,11 +37,11 @@ public:
 
     void finished() Q_DECL_OVERRIDE;
 
-    QString itemContextMenu(const QString &itemKey) Q_DECL_OVERRIDE;
-    void invokedMenuItem(const QString &itemKey, const QString &menuId, const bool checked) Q_DECL_OVERRIDE;
+    QMenu* itemContextMenu(const QString &itemKey) Q_DECL_OVERRIDE;
 
 private slots:
     void saveConfig();
+    void invokedMenuItem(QAction *);
 
 private:
     PluginProxyInterface *m_proxyInter;

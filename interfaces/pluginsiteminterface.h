@@ -5,6 +5,7 @@
 
 #include <QIcon>
 #include <QtCore>
+#include <QMenu>
 
 ///
 /// \brief The PluginsItemInterface class
@@ -140,8 +141,7 @@ public:
 
     virtual void finished() {}
 
-    virtual QString itemContextMenu(const QString &itemKey) { Q_UNUSED(itemKey); return QString();}
-    virtual void invokedMenuItem(const QString &itemKey, const QString &menuId, const bool checked) {Q_UNUSED(itemKey); Q_UNUSED(menuId); Q_UNUSED(checked);}
+    virtual QMenu* itemContextMenu(const QString &itemKey) { Q_UNUSED(itemKey); return new QMenu();}
 
 protected:
     ///

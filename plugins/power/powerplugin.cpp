@@ -38,7 +38,7 @@ QWidget *PowerPlugin::itemWidget(const QString &itemKey) {
 
 QWidget *PowerPlugin::itemPopupApplet(const QString &itemKey) {
     Q_UNUSED(itemKey);
-    return m_centralWidget->popup();
+    return nullptr;
 }
 
 const QString PowerPlugin::itemCommand(const QString &itemKey) {
@@ -49,12 +49,24 @@ const QString PowerPlugin::itemCommand(const QString &itemKey) {
 
 void PowerPlugin::popupShow()
 {
-    Plugins::Power::PowerPopupWidget *w = qobject_cast<Plugins::Power::PowerPopupWidget *>(m_centralWidget->popup());
-    w->showAni();
+//    Plugins::Power::PowerPopupWidget *w = qobject_cast<Plugins::Power::PowerPopupWidget *>(m_centralWidget->popup());
+//    w->showAni();
 }
 
 void PowerPlugin::popupHide()
 {
-    Plugins::Power::PowerPopupWidget *w = qobject_cast<Plugins::Power::PowerPopupWidget *>(m_centralWidget->popup());
-    w->hideAni();
+//    Plugins::Power::PowerPopupWidget *w = qobject_cast<Plugins::Power::PowerPopupWidget *>(m_centralWidget->popup());
+    //    w->hideAni();
+}
+
+QMenu *PowerPlugin::itemContextMenu(const QString &itemKey)
+{
+    Q_UNUSED(itemKey);
+
+    return new QMenu();
+}
+
+void PowerPlugin::invokedMenuItem(QAction *action)
+{
+
 }

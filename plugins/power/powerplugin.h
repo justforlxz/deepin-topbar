@@ -28,6 +28,9 @@ public:
     void popupShow() override;
     void popupHide() override;
 
+    QMenu* itemContextMenu(const QString &itemKey);
+    void invokedMenuItem(QAction *action);
+
 private:
     PluginProxyInterface *m_proxyInter;
     Plugins::Power::PowerWidget *m_centralWidget;

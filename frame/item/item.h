@@ -23,13 +23,12 @@ public:
     virtual const QString name() const {return QString();}
     virtual QWidget *popupTips();
     virtual const QRect popupMarkGeometry();
-    virtual void showTips() {}
+    virtual void showPopup() {}
     virtual void showPopupWindow(QWidget * const content) { Q_UNUSED(content);}
     virtual void hidePopup() {}
     virtual void finished() {}
     virtual PluginsItemInterface *itemInter();
-    virtual void invokedMenuItem(const QString &itemId, const bool checked) { Q_UNUSED(itemId); Q_UNUSED(checked);}
-    virtual const QString contextMenu() const;
+    virtual QMenu* contextMenu() const;
 
 protected:
     static std::unique_ptr<ItemPopupWindow> PopupWindow;
