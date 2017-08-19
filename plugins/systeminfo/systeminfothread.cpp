@@ -3,12 +3,22 @@
 #include <QFile>
 #include <QNetworkInterface>
 
+std::unique_ptr<QFile> SysteminfoThread::m_rx(nullptr);
+std::unique_ptr<QFile> SysteminfoThread::m_tx(nullptr);
+
 SysteminfoThread::SysteminfoThread(SystemInfoModel *model, QObject *parent) :
     QThread(parent),
     m_model(model)
 {
-    m_rx = nullptr;
-    m_tx = nullptr;
+    if (!m_rx.get()) {
+        QFile *file = new QFile;
+        m_rx.reset(file);
+    }
+
+    if (!m_tx.get()) {
+        QFile *file = new QFile;
+        m_tx.reset(file);
+    }
 }
 
 void SysteminfoThread::run()
@@ -42,42 +52,44 @@ void SysteminfoThread::run()
                         }
 
                         device = interface.name();
-                        if (m_rx) {
-                            m_rx->deleteLater();
-                            m_rx = nullptr;
-                        }
-                        if (m_tx) {
-                            m_tx->deleteLater();
-                            m_tx = nullptr;
-                        }
-                        m_rx = new QFile("/sys/class/net/" + interface.name() + "/statistics/rx_bytes");
-                        m_tx = new QFile("/sys/class/net/" + interface.name() + "/statistics/tx_bytes");
+
+                        QFile *rx = m_rx.get();
+                        if (rx)
+                            rx->setFileName("/sys/class/net/" + interface.name() + "/statistics/rx_bytes");
+
+                        QFile *tx = m_tx.get();
+                        if (tx)
+                            tx->setFileName("/sys/class/net/" + interface.name() + "/statistics/tx_bytes");
+
                         break;
                     }
                 }
             }
         }
 
-        if (m_rx && m_tx) {
-            m_tx->open(QIODevice::ReadOnly | QIODevice::Text);
-            m_rx->open(QIODevice::ReadOnly | QIODevice::Text);
+        QFile *rx = m_rx.get();
+        QFile *tx = m_tx.get();
 
-            old_tx = QString(m_tx->readAll()).remove("\n").toULongLong();
+        if (rx && tx) {
+            tx->open(QIODevice::ReadOnly | QIODevice::Text);
+            rx->open(QIODevice::ReadOnly | QIODevice::Text);
+
+            old_tx = QString(tx->readAll()).remove("\n").toULongLong();
             old_rx = QString(m_rx->readAll()).remove("\n").toULongLong();
 
-            m_tx->close();
-            m_rx->close();
+            tx->close();
+            rx->close();
 
             msleep(1000);
 
-            m_tx->open(QIODevice::ReadOnly | QIODevice::Text);
-            m_rx->open(QIODevice::ReadOnly | QIODevice::Text);
+            tx->open(QIODevice::ReadOnly | QIODevice::Text);
+            rx->open(QIODevice::ReadOnly | QIODevice::Text);
 
             emit networkSpeedChanged(QString(m_tx->readAll()).remove("\n").toULongLong() - old_tx,
                                      QString(m_rx->readAll()).remove("\n").toULongLong() - old_rx);
 
-            m_tx->close();
-            m_rx->close();
+            tx->close();
+            rx->close();
 
             continue;
         }

@@ -2,9 +2,11 @@
 #define SYSTEMINFOTHREAD_H
 
 #include "systeminfomodel.h"
-
+#include <memory>
 #include <QThread>
 #include <QFile>
+
+using namespace std;
 
 class SysteminfoThread : public QThread
 {
@@ -19,9 +21,9 @@ protected:
     void run() Q_DECL_OVERRIDE;
 
 private:
-    QFile *m_rx;
-    QFile *m_tx;
     SystemInfoModel *m_model;
+    static unique_ptr<QFile> m_rx;
+    static unique_ptr<QFile> m_tx;
 };
 
 #endif // SYSTEMINFOTHREAD_H
