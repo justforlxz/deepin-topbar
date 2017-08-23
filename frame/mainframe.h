@@ -12,7 +12,7 @@
 
 DWIDGET_USE_NAMESPACE
 
-#define TOPHEIGHT 27
+#define TOPHEIGHT 28
 
 class MainPanel;
 
@@ -24,26 +24,18 @@ public:
     explicit MainFrame(QWidget *parent = 0);
     ~MainFrame();
 
-    void registerDesktop();
-    void setShadowWidget(FrameShadow *widget);
+private slots:
+    void screenChanged();
 
+private:
     void init();
     void initConnect();
     void initAnimation();
 
-private slots:
-    void screenChanged();
-
-protected:
-    void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
-
 private:
-    FrameShadow *m_shadowWidget;
     QDesktopWidget *m_desktopWidget;
     MainPanel *m_mainPanel;
     DBlurEffectWidget *m_blurEffectWidget;
-    QPropertyAnimation *m_hideWithLauncher;
-    QPropertyAnimation *m_showWithLauncher;
 };
 
 #endif // MAINFRAME_H

@@ -63,7 +63,7 @@ void MainPanel::paintEvent(QPaintEvent *event)
 
     QPainter painter(this);
     QPen pen(painter.pen());
-    pen.setBrush(QColor(0, 0, 0, .6 * 255));
+    pen.setBrush(QColor(0, 0, 0, .3 * 255));
     pen.setWidth(2);
     painter.setPen(pen);
     painter.drawLine(QPoint(0, 27), QPoint(width(), 27));

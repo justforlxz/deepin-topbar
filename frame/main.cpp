@@ -4,9 +4,24 @@
 #include <DApplication>
 #include <QDebug>
 
+#include <xcb/xcb.h>
+#include <xcb/xcb_ewmh.h>
+#include <QtX11Extras/QX11Info>
 #include <QtPlatformHeaders/QXcbWindowFunctions>
 
 DWIDGET_USE_NAMESPACE
+
+void register_wm_state(WId winid) {
+    xcb_ewmh_connection_t m_ewmh_connection;
+    xcb_intern_atom_cookie_t *cookie = xcb_ewmh_init_atoms(QX11Info::connection(), &m_ewmh_connection);
+    xcb_ewmh_init_atoms_replies(&m_ewmh_connection, cookie, NULL);
+
+    xcb_atom_t atoms[2];
+    atoms[0] = m_ewmh_connection._NET_WM_WINDOW_TYPE_DESKTOP;
+    atoms[1] = m_ewmh_connection._NET_WM_STATE_BELOW;
+    xcb_ewmh_set_wm_window_type(&m_ewmh_connection, winid, 1, atoms);
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -28,18 +43,20 @@ int main(int argc, char *argv[])
         frame->lower();
 
         FrameShadow *shadowWidget = new FrameShadow;
+        register_wm_state(shadowWidget->winId());
         shadowWidget->screenChanged();
         shadowWidget->show();
 
         // Serious warning: I don't know why the dock type was set,
         // but the purpose was achieved, and the implementation is unclear.
-        QXcbWindowFunctions::setWmWindowType(shadowWidget->windowHandle(), QXcbWindowFunctions::Dock);
+        // oh, I see. Qt will set _NET_WM_STATE_BELOW
+//        QXcbWindowFunctions::setWmWindowType(shadowWidget->windowHandle(), QXcbWindowFunctions::Dock);
 
         MainFrame *mainFrame = new MainFrame;
-        mainFrame->setShadowWidget(shadowWidget);
+        register_wm_state(mainFrame->winId());
         mainFrame->show();
 
-        QXcbWindowFunctions::setWmWindowType(mainFrame->windowHandle(), QXcbWindowFunctions::Dock);
+//        QXcbWindowFunctions::setWmWindowType(mainFrame->windowHandle(), QXcbWindowFunctions::Dock);
 
         return a.exec();
     }

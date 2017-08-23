@@ -5,8 +5,7 @@ FrameShadow::FrameShadow(QWidget *parent) : QWidget(parent)
 {
     setWindowFlags(
                 Qt::FramelessWindowHint |
-                Qt::WindowDoesNotAcceptFocus |
-                Qt::WindowStaysOnBottomHint
+                Qt::WindowDoesNotAcceptFocus
                 );
 
     setAttribute(Qt::WA_TranslucentBackground);
@@ -26,6 +25,6 @@ FrameShadow::FrameShadow(QWidget *parent) : QWidget(parent)
 void FrameShadow::screenChanged()
 {
     QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
-    setFixedSize(screen.width(), 27);
-    move(0, 0);
+    setFixedSize(screen.width(), 28);
+    move(screen.x(), screen.y());
 }
