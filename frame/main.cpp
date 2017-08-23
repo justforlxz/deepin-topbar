@@ -17,7 +17,7 @@ void register_wm_state(WId winid) {
     xcb_ewmh_init_atoms_replies(&m_ewmh_connection, cookie, NULL);
 
     xcb_atom_t atoms[2];
-    atoms[0] = m_ewmh_connection._NET_WM_WINDOW_TYPE_DESKTOP;
+    atoms[0] = m_ewmh_connection._NET_WM_WINDOW_TYPE_DOCK;
     atoms[1] = m_ewmh_connection._NET_WM_STATE_BELOW;
     xcb_ewmh_set_wm_window_type(&m_ewmh_connection, winid, 1, atoms);
 }

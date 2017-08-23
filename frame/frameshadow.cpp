@@ -5,7 +5,8 @@ FrameShadow::FrameShadow(QWidget *parent) : QWidget(parent)
 {
     setWindowFlags(
                 Qt::FramelessWindowHint |
-                Qt::WindowDoesNotAcceptFocus
+                Qt::WindowDoesNotAcceptFocus |
+                Qt::WindowStaysOnBottomHint
                 );
 
     setAttribute(Qt::WA_TranslucentBackground);
