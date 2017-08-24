@@ -18,7 +18,7 @@ void MainPanel::initUI()
 
     m_mainLayout->setMargin(0);
     m_mainLayout->setSpacing(3);
-    m_mainLayout->setContentsMargins(5, 0, 5, 0);
+    m_mainLayout->setContentsMargins(5, 0, 5, 1);
 
     setLayout(m_mainLayout);
 }

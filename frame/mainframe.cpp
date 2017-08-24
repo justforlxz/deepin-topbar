@@ -11,8 +11,6 @@ MainFrame::MainFrame(QWidget *parent): QFrame(parent)
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus | Qt::WindowStaysOnBottomHint);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    setFixedHeight(TOPHEIGHT);
-
     init();
     initAnimation();
     screenChanged();

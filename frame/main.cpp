@@ -33,6 +33,9 @@ int main(int argc, char *argv[])
         a.setApplicationName("deepin-topbar");
         a.setApplicationVersion("0.2");
 
+        // disable scale
+        qputenv("QT_SCALE_FACTOR", "1.0");
+
         QFont font = a.font();
         font.setFamily("Noto Sans CJK SC");
         a.setFont(font);
