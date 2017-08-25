@@ -20,6 +20,16 @@ AccountPopupWidget::AccountPopupWidget(QWidget *parent) : QWidget(parent)
     FontLabel *m_suspend = new FontLabel;
     FontLabel *m_shutdown = new FontLabel;
 
+    setStyleSheet("FontLabel {"
+                  "color: black;"
+                  "}"
+                  "FontLabel:hover {"
+                  "color: #66CCFF;"
+                  "}"
+                  "FontLabel:press {"
+                  "color: #0033FF;"
+                  "}");
+
     m_lock->setIcon(QChar(0xE1F6), 16);
     m_logout->setIcon(QChar(0xE248), 16);
     m_reboot->setIcon(QChar(0xE1CD), 16);
