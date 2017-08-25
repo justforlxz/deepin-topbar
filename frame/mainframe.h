@@ -2,13 +2,13 @@
 #define MAINFRAME_H
 
 #include "frame.h"
-#include "frameshadow.h"
 #include <QFrame>
 #include <QDesktopWidget>
 #include <QHBoxLayout>
 #include <QDesktopWidget>
 #include <DBlurEffectWidget>
 #include <QPropertyAnimation>
+#include <DPlatformWindowHandle>
 
 DWIDGET_USE_NAMESPACE
 
@@ -36,6 +36,7 @@ private:
     QDesktopWidget *m_desktopWidget;
     MainPanel *m_mainPanel;
     DBlurEffectWidget *m_blurEffectWidget;
+    DPlatformWindowHandle *m_handle;
 };
 
 #endif // MAINFRAME_H

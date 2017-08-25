@@ -18,7 +18,7 @@ void Frame::registerDesktop()
 {
     QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
     resize(screen.width(), 28);
-    move(screen.x(), 0);
+    move(screen.x(), screen.y());
 
     //register type to Desktop
 
@@ -41,7 +41,7 @@ void Frame::registerDesktop()
     xcb_ewmh_wm_strut_partial_t strut_partial;
     memset(&strut_partial, 0, sizeof(xcb_ewmh_wm_strut_partial_t));
 
-    const QPoint p(screen.x(), 0);
+    const QPoint p(screen.x(), screen.y());
     const QRect r = QRect(p, size());
 
     strut_partial.top = r.bottom();

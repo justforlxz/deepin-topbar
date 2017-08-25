@@ -35,6 +35,12 @@ void MainFrame::init()
     m_blurEffectWidget->setMaskColor(DBlurEffectWidget::LightColor);
     m_blurEffectWidget->setWindowFlags(Qt::WindowDoesNotAcceptFocus);
 
+    m_handle = new DPlatformWindowHandle(this);
+    m_handle->setBorderWidth(0);
+    m_handle->setWindowRadius(0);
+    m_handle->setEnableSystemMove(true);
+    m_handle->setEnableSystemResize(true);
+
     m_mainPanel = new MainPanel(this);
 }
 
