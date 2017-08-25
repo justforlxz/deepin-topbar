@@ -1,7 +1,6 @@
 #ifndef MAINFRAME_H
 #define MAINFRAME_H
 
-#include "frame.h"
 #include <QFrame>
 #include <QDesktopWidget>
 #include <QHBoxLayout>

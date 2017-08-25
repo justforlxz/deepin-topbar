@@ -39,7 +39,7 @@ void MainFrame::init()
     m_handle->setBorderWidth(0);
     m_handle->setWindowRadius(0);
     m_handle->setEnableSystemMove(true);
-    m_handle->setEnableSystemResize(true);
+    m_handle->setEnableSystemResize(false);
 
     m_mainPanel = new MainPanel(this);
 }

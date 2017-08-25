@@ -95,11 +95,11 @@ QMenu *DateTimePlugin::itemContextMenu(const QString &itemKey)
 
     QMenu *menu = new QMenu;
 
-    QAction *is24 = new QAction;
+    QAction *is24 = new QAction(this);
     is24->setText(tr("24 Hour Time"));
     is24->setData("is24");
 
-    QAction *is12 = new QAction;
+    QAction *is12 = new QAction(this);
     is12->setText(tr("12 Hour Time"));
     is12->setData("is12");
 
@@ -121,8 +121,8 @@ QMenu *DateTimePlugin::itemContextMenu(const QString &itemKey)
     timeMenu->addAction(is24);
     menu->addMenu(timeMenu);
 
-    QAction *centerPos = new QAction(tr("at Center"));
-    QAction *defaultPos = new QAction(tr("at Default"));
+    QAction *centerPos = new QAction(tr("at Center"), this);
+    QAction *defaultPos = new QAction(tr("at Default"), this);
 
     centerPos->setData("centerPos");
     defaultPos->setData("defaultPos");
@@ -145,7 +145,7 @@ QMenu *DateTimePlugin::itemContextMenu(const QString &itemKey)
     posMenu->addAction(defaultPos);
     menu->addMenu(posMenu);
 
-    QAction *timeSetting = new QAction(tr("Time Settings"));
+    QAction *timeSetting = new QAction(tr("Time Settings"), this);
     timeSetting->setData("timeSetting");
     menu->addAction(timeSetting );
 

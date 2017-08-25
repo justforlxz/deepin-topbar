@@ -16,7 +16,6 @@ HEADERS  += \
     item/pluginsitem.h \
     controller/pluginsitemcontroller.h \
     mainpanel.h \
-    frame.h \
     item/item.h \
     item/stretchitem.h \
     utils/itempopupwindow.h \
@@ -32,7 +31,6 @@ SOURCES += \
     item/pluginsitem.cpp \
     controller/pluginsitemcontroller.cpp \
     mainpanel.cpp \
-    frame.cpp \
     item/item.cpp \
     item/stretchitem.cpp \
     utils/itempopupwindow.cpp \
