@@ -1,0 +1,176 @@
+diff --git a/frame/frame.cpp b/frame/frame.cpp
+index 6edf503..4950e3b 100644
+--- a/frame/frame.cpp
++++ b/frame/frame.cpp
+@@ -5,48 +5,39 @@
+ #include <xcb/xcb.h>
+ #include <xcb/xcb_ewmh.h>
+ 
+-Frame::Frame(QWidget *parent) : QFrame(parent)
++Frame::Frame(QFrame *parent) : QFrame(parent)
+ {
+-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
++    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus | Qt::WindowStaysOnBottomHint);
+     setAttribute(Qt::WA_TranslucentBackground);
+ 
+-    connect(QApplication::desktop(), &QDesktopWidget::resized, this, &Frame::registerDesktop);
+-    connect(QApplication::desktop(), &QDesktopWidget::primaryScreenChanged, this, &Frame::registerDesktop);
++    connect(QApplication::desktop(), &QDesktopWidget::resized, this, &Frame::screenChanged);
++    connect(QApplication::desktop(), &QDesktopWidget::primaryScreenChanged, this, &Frame::screenChanged);
+ }
+ 
+-void Frame::registerDesktop()
++void Frame::screenChanged()
+ {
+     QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
+     resize(screen.width(), 28);
+     move(screen.x(), screen.y());
+ 
+-    //register type to Desktop
+-
+     xcb_ewmh_connection_t m_ewmh_connection;
+     xcb_intern_atom_cookie_t * cookie = xcb_ewmh_init_atoms(QX11Info::connection(), &m_ewmh_connection);
+ 
+-    // clear strut partial
++    xcb_ewmh_init_atoms_replies(&m_ewmh_connection, cookie, NULL);
++
+     xcb_ewmh_wm_strut_partial_t strutPartial;
+     memset(&strutPartial, 0, sizeof(xcb_ewmh_wm_strut_partial_t));
+-    xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, winId(), strutPartial);
+ 
+-    // set desktop type
+-    xcb_ewmh_init_atoms_replies(&m_ewmh_connection, cookie, NULL);
+-
+-    xcb_atom_t atoms[1];
+-    atoms[0] = m_ewmh_connection._NET_WM_WINDOW_TYPE_DESKTOP;
+-    xcb_ewmh_set_wm_window_type(&m_ewmh_connection, winId(), 1, atoms);
++    // clear strut partial
++    xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, winId(), strutPartial);
+ 
+     // set strct partial
+     xcb_ewmh_wm_strut_partial_t strut_partial;
+     memset(&strut_partial, 0, sizeof(xcb_ewmh_wm_strut_partial_t));
+ 
+-    const QPoint p(screen.x(), screen.y());
+-    const QRect r = QRect(p, size());
+-
+-    strut_partial.top = r.bottom();
+-    strut_partial.top_start_x = r.left();
+-    strut_partial.top_end_x = r.right();
++    strut_partial.top = height();
++    strut_partial.top_start_x = screen.x();
++    strut_partial.top_end_x = screen.width();
+ 
+     xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, winId(), strut_partial);
+ }
+diff --git a/frame/frame.h b/frame/frame.h
+index ccdb5f2..1ae09bd 100644
+--- a/frame/frame.h
++++ b/frame/frame.h
+@@ -7,10 +7,10 @@ class Frame : public QFrame
+ {
+     Q_OBJECT
+ public:
+-    explicit Frame(QWidget *parent = nullptr);
++    explicit Frame(QFrame *parent = nullptr);
+ 
+ public slots:
+-    void registerDesktop();
++    void screenChanged();
+ };
+ 
+ #endif // FRAME_H
+diff --git a/frame/main.cpp b/frame/main.cpp
+index e12c5a6..d83b047 100644
+--- a/frame/main.cpp
++++ b/frame/main.cpp
+@@ -16,6 +16,22 @@ void register_wm_state(WId winid) {
+     atoms[0] = m_ewmh_connection._NET_WM_WINDOW_TYPE_DOCK;
+     atoms[1] = m_ewmh_connection._NET_WM_STATE_BELOW;
+     xcb_ewmh_set_wm_window_type(&m_ewmh_connection, winid, 1, atoms);
++
++    xcb_ewmh_wm_strut_partial_t strutPartial;
++    memset(&strutPartial, 0, sizeof(xcb_ewmh_wm_strut_partial_t));
++
++    // clear strut partial
++    xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, winid, strutPartial);
++
++    // set strct partial
++    xcb_ewmh_wm_strut_partial_t strut_partial;
++    memset(&strut_partial, 0, sizeof(xcb_ewmh_wm_strut_partial_t));
++
++    strut_partial.top = 28;
++    strut_partial.top_start_x = 0;
++    strut_partial.top_end_x = 1920;
++
++    xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, winid, strut_partial);
+ }
+ 
+ int main(int argc, char *argv[])
+@@ -35,10 +51,11 @@ int main(int argc, char *argv[])
+         font.setFamily("Noto Sans CJK SC");
+         a.setFont(font);
+ 
+-        Frame *frame = new Frame;
+-        frame->registerDesktop();
+-        frame->show();
+-        frame->lower();
++//        Frame *frame = new Frame;
++//        register_wm_state(frame->winId());
++//        frame->screenChanged();
++//        frame->show();
++//        frame->lower();
+ 
+         MainFrame *mainFrame = new MainFrame;
+         register_wm_state(mainFrame->winId());
+diff --git a/frame/mainframe.cpp b/frame/mainframe.cpp
+index f641a82..7279dbe 100644
+--- a/frame/mainframe.cpp
++++ b/frame/mainframe.cpp
+@@ -39,7 +39,7 @@ void MainFrame::init()
+     m_handle->setBorderWidth(0);
+     m_handle->setWindowRadius(0);
+     m_handle->setEnableSystemMove(true);
+-    m_handle->setEnableSystemResize(true);
++    m_handle->setEnableSystemResize(false);
+ 
+     m_mainPanel = new MainPanel(this);
+ }
+diff --git a/plugins/timewidget/datetimeplugin.cpp b/plugins/timewidget/datetimeplugin.cpp
+index f58bfca..43a7420 100644
+--- a/plugins/timewidget/datetimeplugin.cpp
++++ b/plugins/timewidget/datetimeplugin.cpp
+@@ -95,11 +95,11 @@ QMenu *DateTimePlugin::itemContextMenu(const QString &itemKey)
+ 
+     QMenu *menu = new QMenu;
+ 
+-    QAction *is24 = new QAction;
++    QAction *is24 = new QAction(this);
+     is24->setText(tr("24 Hour Time"));
+     is24->setData("is24");
+ 
+-    QAction *is12 = new QAction;
++    QAction *is12 = new QAction(this);
+     is12->setText(tr("12 Hour Time"));
+     is12->setData("is12");
+ 
+@@ -121,8 +121,8 @@ QMenu *DateTimePlugin::itemContextMenu(const QString &itemKey)
+     timeMenu->addAction(is24);
+     menu->addMenu(timeMenu);
+ 
+-    QAction *centerPos = new QAction(tr("at Center"));
+-    QAction *defaultPos = new QAction(tr("at Default"));
++    QAction *centerPos = new QAction(tr("at Center"), this);
++    QAction *defaultPos = new QAction(tr("at Default"), this);
+ 
+     centerPos->setData("centerPos");
+     defaultPos->setData("defaultPos");
+@@ -145,7 +145,7 @@ QMenu *DateTimePlugin::itemContextMenu(const QString &itemKey)
+     posMenu->addAction(defaultPos);
+     menu->addMenu(posMenu);
+ 
+-    QAction *timeSetting = new QAction(tr("Time Settings"));
++    QAction *timeSetting = new QAction(tr("Time Settings"), this);
+     timeSetting->setData("timeSetting");
+     menu->addAction(timeSetting );
+ 
