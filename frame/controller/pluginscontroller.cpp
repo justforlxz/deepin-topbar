@@ -48,15 +48,6 @@ void PluginsController::itemRemoved(PluginsItemInterface * const itemInter, cons
     QTimer::singleShot(1, item, &PluginsItem::deleteLater);
 }
 
-void PluginsController::requestContextMenu(PluginsItemInterface * const itemInter, const QString &itemKey)
-{
-    PluginsItem *item = pluginItemAt(itemInter, itemKey);
-
-    Q_ASSERT(item);
-
-
-}
-
 void PluginsController::requestHidePopup()
 {
     for (QMap<QString, PluginsItem *> &map : m_pluginList.values()) {

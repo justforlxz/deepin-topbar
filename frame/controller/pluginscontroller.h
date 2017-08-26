@@ -21,7 +21,6 @@ public:
     void itemAdded(PluginsItemInterface * const itemInter, const QString &itemKey);
     void itemUpdate(PluginsItemInterface * const itemInter, const QString &itemKey);
     void itemRemoved(PluginsItemInterface * const itemInter, const QString &itemKey);
-    void requestContextMenu(PluginsItemInterface * const itemInter, const QString &itemKey);
     void requestHidePopup();
     void move(const QString &itemKey, const float x = 0, const float y = 0);
     bool saveConfig(const QString &itemKey, const QJsonObject &json);

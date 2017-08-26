@@ -35,11 +35,6 @@ public:
     /// \param itemKey
     ///
     virtual void itemRemoved(PluginsItemInterface * const itemInter, const QString &itemKey) = 0;
-    ///
-    /// \brief requestContextMenu
-    /// request show context menu
-    ///
-    virtual void requestContextMenu(PluginsItemInterface * const itemInter, const QString &itemKey) = 0;
 
     virtual void requestHidePopup() = 0;
 
