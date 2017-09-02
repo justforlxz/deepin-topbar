@@ -2,7 +2,6 @@
 #define SYSTEMINFOTHREAD_H
 
 #include "systeminfomodel.h"
-#include <memory>
 #include <QThread>
 #include <QFile>
 
@@ -22,8 +21,12 @@ protected:
 
 private:
     SystemInfoModel *m_model;
-    static unique_ptr<QFile> m_rx;
-    static unique_ptr<QFile> m_tx;
+    QFile *m_rx;
+    QFile *m_tx;
+    quint64 old_tx;
+    quint64 old_rx;
+    QString m_rxFilePath;
+    QString m_txFilePath;
 };
 
 #endif // SYSTEMINFOTHREAD_H

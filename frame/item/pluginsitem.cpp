@@ -128,7 +128,7 @@ QMenu *PluginsItem::contextMenu() const
 bool PluginsItem::containsPoint(const QPoint &point) const
 {
     // if click self;
-    QRect self(m_pluginInter->itemWidget("")->mapToGlobal(m_pluginInter->itemWidget("")->pos()), m_pluginInter->itemWidget("")->size());
+    QRect self(m_pluginInter->itemWidget(m_itemKey)->mapToGlobal(m_pluginInter->itemWidget(m_itemKey)->pos()), m_pluginInter->itemWidget(m_itemKey)->size());
     if (isVisible() && self.contains(point))
         return false;
 

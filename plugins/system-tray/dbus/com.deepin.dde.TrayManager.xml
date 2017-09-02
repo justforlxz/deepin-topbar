@@ -1,0 +1,31 @@
+     <interface name="com.deepin.dde.TrayManager">
+          <method name="EnableNotification">
+               <arg type="u" direction="in"></arg>
+               <arg type="b" direction="in"></arg>
+          </method>
+          <method name="GetName">
+               <arg type="u" direction="in"></arg>
+               <arg type="s" direction="out"></arg>
+          </method>
+          <method name="Manage">
+               <arg type="b" direction="out"></arg>
+          </method>
+          <method name="RetryManager"></method>
+          <method name="Unmanage">
+               <arg type="b" direction="out"></arg>
+          </method>
+          <signal name="Removed">
+               <arg type="u"></arg>
+          </signal>
+          <signal name="Added">
+               <arg type="u"></arg>
+          </signal>
+          <signal name="Changed">
+               <arg type="u"></arg>
+          </signal>
+          <signal name="Inited"></signal>
+          <property name="TrayIcons" type="au" access="read">
+               <annotation name="org.qtproject.QtDBus.QtTypeName" value="TrayList"/>
+          </property>
+     </interface>
+

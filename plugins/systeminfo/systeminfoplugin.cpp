@@ -3,7 +3,7 @@
 SystemInfoPlugin::SystemInfoPlugin()
 {
     m_systeminfo = new SystemInfoWidget;
-    m_popupWidget = new SystemInfoPopupWidget;
+//    m_popupWidget = new SystemInfoPopupWidget;
 }
 
 const QString SystemInfoPlugin::pluginName() const
@@ -17,9 +17,9 @@ void SystemInfoPlugin::init(PluginProxyInterface *proxyInter)
 
     m_proxyInter->itemAdded(this, "systeminfo");
 
-    connect(m_popupWidget, &SystemInfoPopupWidget::requestHidePopup, this, [=] {
-        m_proxyInter->requestHidePopup();
-    });
+//    connect(m_popupWidget, &SystemInfoPopupWidget::requestHidePopup, this, [=] {
+//        m_proxyInter->requestHidePopup();
+//    });
 }
 
 int SystemInfoPlugin::itemSortKey(const QString &itemKey)

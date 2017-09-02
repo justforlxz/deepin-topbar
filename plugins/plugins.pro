@@ -9,4 +9,5 @@ SUBDIRS = \
     systeminfo \
 #    network \
     sound \
-    account
+    account \
+#    system-tray
