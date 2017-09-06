@@ -4,6 +4,8 @@
 #include "systeminfomodel.h"
 #include <QThread>
 #include <QFile>
+#include <QVariant>
+#include <QDBusObjectPath>
 
 using namespace std;
 
@@ -19,14 +21,18 @@ signals:
 protected:
     void run() Q_DECL_OVERRIDE;
 
+private slots:
+    void onNetworkPropertyChanged(QVariantMap m);
+    void onConnectChanged(const QDBusObjectPath &path);
+    void onActiveChanged(const QVariant &value);
+    void onGetDeviceName(const QVariant &device);
+
 private:
     SystemInfoModel *m_model;
     QFile *m_rx;
     QFile *m_tx;
     quint64 old_tx;
     quint64 old_rx;
-    QString m_rxFilePath;
-    QString m_txFilePath;
 };
 
 #endif // SYSTEMINFOTHREAD_H

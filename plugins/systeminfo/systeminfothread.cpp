@@ -1,7 +1,9 @@
 #include "systeminfothread.h"
 #include "networkdevicemodel.h"
 #include <QFile>
-#include <QNetworkInterface>
+#include <QDBusConnection>
+#include <QDBusInterface>
+#include <QDebug>
 
 SysteminfoThread::SysteminfoThread(SystemInfoModel *model, QObject *parent) :
     QThread(parent),
@@ -12,52 +14,36 @@ SysteminfoThread::SysteminfoThread(SystemInfoModel *model, QObject *parent) :
 
     old_rx = 0;
     old_tx = 0;
+
+    QDBusConnection *dbus = new QDBusConnection(QDBusConnection::connectToBus(QDBusConnection::SystemBus, "org.freedesktop.NetworkManager"));
+    QDBusInterface *network = new QDBusInterface("org.freedesktop.NetworkManager",
+                                                 "/org/freedesktop/NetworkManager",
+                                                 "org.freedesktop.NetworkManager",
+                                                 *dbus,
+                                                 this);
+
+    QDBusConnection::systemBus().connect("org.freedesktop.NetworkManager",
+                                         "/org/freedesktop/NetworkManager",
+                                         "org.freedesktop.NetworkManager",
+                                         "PropertiesChanged",
+                                         "a{sv}",
+                                         this,
+                                         SLOT(onNetworkPropertyChanged(QVariantMap)));
+
+    const QDBusObjectPath &path = qvariant_cast<QDBusObjectPath>(network->property("PrimaryConnection"));
+    onConnectChanged(path);
 }
 
 void SysteminfoThread::run()
 {
     for (;;) {
-        QString device;
-        foreach (const QNetworkInterface &interface, QNetworkInterface::allInterfaces()) {
-            if (!device.isEmpty())
-                break;
-
-            if (interface.flags().testFlag(QNetworkInterface::IsUp) && !interface.flags().testFlag(QNetworkInterface::IsLoopBack)) {
-                foreach (QNetworkAddressEntry entry, interface.addressEntries()) {
-                    if ( interface.hardwareAddress() != "00:00:00:00:00:00" && entry.ip().toString().contains(".")) {
-//                         qDebug() << interface.name() + " "+ entry.ip().toString() +" " + interface.hardwareAddress();
-
-//                        NetworkDeviceModel *model = m_model->deviceByName(interface.name());
-
-//                        if (!model) {
-//                            model = new NetworkDeviceModel;
-//                            model->setName(interface.name());
-//                            model->setIp(entry.ip().toString());
-//                            model->setHardwareAddress(interface.hardwareAddress());
-//                            m_model->addDevice(model);
-//                        } else {
-//                            model->setName(interface.name());
-//                            model->setIp(entry.ip().toString());
-//                            model->setHardwareAddress(interface.hardwareAddress());
-//                        }
-
-                        const QString &r = "/sys/class/net/" + interface.name() + "/statistics/rx_bytes";
-                        const QString &t = "/sys/class/net/" + interface.name() + "/statistics/tx_bytes";
-
-                        if (r != m_rx->fileName() && t != m_tx->fileName() && device != interface.name()) {
-                            device = interface.name();
-                            m_rx->setFileName(r);
-                            m_tx->setFileName(t);
-                        }
-
-                        break;
-                    }
-                }
-            }
-        }
-
         Q_ASSERT(m_tx);
         Q_ASSERT(m_rx);
+
+        if ((m_tx->fileName().isEmpty() || m_rx->fileName().isEmpty())) {
+            msleep(1000);
+            continue;
+        }
 
         m_tx->open(QIODevice::ReadOnly | QIODevice::Text);
         m_rx->open(QIODevice::ReadOnly | QIODevice::Text);
@@ -65,10 +51,13 @@ void SysteminfoThread::run()
         old_tx = QString(m_tx->readAll()).remove("\n").toULongLong();
         old_rx = QString(m_rx->readAll()).remove("\n").toULongLong();
 
+        m_tx->close();
+        m_rx->close();
+
         msleep(1000);
 
-        m_tx->flush();
-        m_rx->flush();
+        m_tx->open(QIODevice::ReadOnly | QIODevice::Text);
+        m_rx->open(QIODevice::ReadOnly | QIODevice::Text);
 
         emit networkSpeedChanged(QString(m_tx->readAll()).remove("\n").toULongLong() - old_tx,
                                  QString(m_rx->readAll()).remove("\n").toULongLong() - old_rx);
@@ -80,3 +69,65 @@ void SysteminfoThread::run()
     }
     msleep(1000);
 }
+
+void SysteminfoThread::onNetworkPropertyChanged(QVariantMap m)
+{
+    QDBusObjectPath path = qvariant_cast<QDBusObjectPath>(m["PrimaryConnection"]);
+    if (path.path().isEmpty())
+        return;
+
+    qDebug() << "Network PrimaryConnect change to: " << path.path();
+
+    onConnectChanged(path);
+}
+
+void SysteminfoThread::onActiveChanged(const QVariant &value)
+{
+    QList<QDBusObjectPath> list = qvariant_cast<QList<QDBusObjectPath>>(value);
+    const QDBusObjectPath &path = list.first();
+    if (path.path().isEmpty())
+        return;
+
+    qDebug() << "Network Active change to: " << path.path();
+
+    QDBusConnection dbus(QDBusConnection::connectToBus(QDBusConnection::SystemBus, "org.freedesktop.NetworkManager"));
+    QDBusInterface network("org.freedesktop.NetworkManager",
+                           path.path(),
+                           "org.freedesktop.NetworkManager.Device",
+                           dbus,
+                           this);
+
+    onGetDeviceName(network.property("Interface"));
+}
+
+void SysteminfoThread::onConnectChanged(const QDBusObjectPath &path)
+{
+    QDBusConnection dbus(QDBusConnection::connectToBus(QDBusConnection::SystemBus, "org.freedesktop.NetworkManager"));
+    QDBusInterface network("org.freedesktop.NetworkManager",
+                           path.path(),
+                           "org.freedesktop.NetworkManager.Connection.Active",
+                           dbus,
+                           this);
+
+    qDebug() << "Network Connect change to: " << path.path();
+
+    // get device name
+    onActiveChanged(network.property("Devices"));
+}
+
+void SysteminfoThread::onGetDeviceName(const QVariant &device)
+{
+    const QString &name = device.toString();
+
+    if (name.isEmpty())
+        return;
+
+    qDebug() << "Device change to: " << name;
+
+    const QString &r = "/sys/class/net/" + name + "/statistics/rx_bytes";
+    const QString &t = "/sys/class/net/" + name + "/statistics/tx_bytes";
+
+    m_rx->setFileName(r);
+    m_tx->setFileName(t);
+}
+
