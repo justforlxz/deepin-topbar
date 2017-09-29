@@ -1,8 +1,14 @@
 #include "systeminfowidget.h"
 #include "systeminfothread.h"
 #include "systeminfomodel.h"
+#include "fontlabel.h"
+
 #include <QHBoxLayout>
 #include <QPainter>
+
+using namespace dtb;
+using namespace dtb::widgets;
+using namespace dtb::systeminfo;
 
 SystemInfoWidget::SystemInfoWidget(QWidget *parent) : QWidget(parent)
 {

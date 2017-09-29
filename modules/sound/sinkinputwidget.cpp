@@ -5,6 +5,9 @@
 
 DWIDGET_USE_NAMESPACE
 
+using namespace dtb;
+using namespace dtb::sound;
+
 SinkInputWidget::SinkInputWidget(const QString &inputPath, QWidget *parent)
     : QWidget(parent),
 

@@ -3,8 +3,8 @@
 #include <QDBusInterface>
 #include <QPushButton>
 
-namespace Plugin {
-namespace MediaControl {
+namespace dtb {
+namespace media {
 MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent) {
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);

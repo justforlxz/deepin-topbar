@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QPropertyAnimation>
 
+namespace dtb {
+namespace notify {
 class NotifyPopupWidget : public QWidget
 {
     Q_OBJECT
@@ -21,5 +23,7 @@ private:
     QPropertyAnimation *m_showAni;
     QPropertyAnimation *m_hideAni;
 };
+}
+}
 
 #endif // NOTIFYPOPUPWIDGET_H

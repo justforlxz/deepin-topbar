@@ -1,5 +1,8 @@
 #include "deviceitem.h"
 
+using namespace dtb;
+using namespace dtb::network;
+
 DeviceItem::DeviceItem(const QString &path)
     : QWidget(nullptr),
       m_devicePath(path),

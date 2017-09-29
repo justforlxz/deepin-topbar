@@ -3,6 +3,9 @@
 #include <QDebug>
 #include <QJsonObject>
 
+using namespace dtb;
+using namespace dtb::network;
+
 NetworkDevice::NetworkDevice(const NetworkType type, const QJsonObject &info)
     : m_type(type),
       m_infoObj(info)
@@ -70,5 +73,5 @@ NetworkDevice::NetworkType NetworkDevice::deviceType(const QString &type)
 
     Q_ASSERT(false);
 
-    return NetworkDevice::None;
+    return NetworkDevice::Done;
 }

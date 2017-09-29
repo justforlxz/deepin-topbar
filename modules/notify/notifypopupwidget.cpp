@@ -1,6 +1,9 @@
 #include "notifypopupwidget.h"
 #include <QVBoxLayout>
 
+using namespace dtb;
+using namespace dtb::notify;
+
 NotifyPopupWidget::NotifyPopupWidget(QWidget *parent) : QWidget(parent)
 {
     setFixedSize(300, 100);

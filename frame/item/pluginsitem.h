@@ -7,6 +7,7 @@
 #include "dbus/dbusmenumanager.h"
 #include <QWidget>
 
+namespace dtb {
 class PluginsItem : public Item
 {
     Q_OBJECT
@@ -44,5 +45,6 @@ private:
     EventMonitor *m_eventMonitor;
     DBusMenuManager *m_menuManagerInter;
 };
+}
 
 #endif // PLUGINSITEM_H

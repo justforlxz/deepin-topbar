@@ -1,4 +1,9 @@
 #include "notifyplugin.h"
+#include "notifypopupwidget.h"
+#include "notifywidget.h"
+
+using namespace dtb;
+using namespace dtb::notify;
 
 NotifyPlugin::NotifyPlugin()
 {
@@ -14,8 +19,6 @@ const QString NotifyPlugin::pluginName() const
 void NotifyPlugin::init(PluginProxyInterface *proxyInter)
 {
     m_proxyInter = proxyInter;
-
-    m_proxyInter->itemAdded(this, "notify");
 
     connect(m_popupWidget, &NotifyPopupWidget::requestHidePopup, this, [=] {
         m_proxyInter->requestHidePopup();

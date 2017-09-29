@@ -1,11 +1,17 @@
 #include "powerwidget.h"
+#include "dbuspower.h"
+#include "powerpopupwidget.h"
+#include "fontlabel.h"
+
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QPixmap>
 #include <QPainter>
 
-namespace Plugins {
-namespace Power {
+using namespace dtb::widgets;
+
+namespace dtb {
+namespace power {
 PowerWidget::PowerWidget(QWidget *parent) : QWidget(parent) {
     m_popup = new PowerPopupWidget;
 

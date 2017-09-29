@@ -1,6 +1,9 @@
 #include "networkmanager.h"
 #include "networkdevice.h"
 
+using namespace dtb;
+using namespace dtb::network;
+
 NetworkManager *NetworkManager::INSTANCE = nullptr;
 
 NetworkManager *NetworkManager::instance(QObject *parent)
@@ -115,8 +118,8 @@ const QJsonObject NetworkManager::deviceConnInfo(const QString &path) const
 NetworkManager::NetworkManager(QObject *parent)
     : QObject(parent),
 
-      m_states(NetworkDevice::None),
-      m_types(NetworkDevice::None),
+      m_states(NetworkDevice::Done),
+      m_types(NetworkDevice::Done),
 
       m_networkInter(new DBusNetwork(this))
 {
@@ -137,7 +140,7 @@ void NetworkManager::reloadDevices()
     Q_ASSERT(doc.isObject());
     const QJsonObject obj = doc.object();
 
-    NetworkDevice::NetworkTypes types = NetworkDevice::None;
+    NetworkDevice::NetworkTypes types = NetworkDevice::Done;
     QSet<NetworkDevice> deviceSet;
     for (auto infoList(obj.constBegin()); infoList != obj.constEnd(); ++infoList)
     {
@@ -205,7 +208,7 @@ void NetworkManager::reloadActiveConnections()
 
 void NetworkManager::reloadNetworkState()
 {
-    NetworkDevice::NetworkTypes states = NetworkDevice::None;
+    NetworkDevice::NetworkTypes states = NetworkDevice::Done;
     QSet<QString> activedDevices;
 
     const QJsonDocument doc = QJsonDocument::fromJson(m_networkInter->GetActiveConnectionInfo().value().toUtf8());

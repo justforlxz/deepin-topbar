@@ -6,12 +6,12 @@
 #include "soundapplet.h"
 #include <QObject>
 
-class SoundPlugin : public QObject, PluginsItemInterface
+namespace dtb {
+namespace sound {
+
+class SoundPlugin : public QObject, public PluginsItemInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PluginsItemInterface)
-    Q_PLUGIN_METADATA(IID "com.deepin.topbar.PluginsItemInterface" FILE "sound.json")
-
 public:
     SoundPlugin();
 
@@ -32,5 +32,7 @@ private:
     PluginProxyInterface *m_proxyInter;
     SoundItem *m_soundItem;
 };
+}
+}
 
 #endif // SoundPLUGIN_H

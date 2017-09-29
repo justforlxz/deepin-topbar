@@ -3,8 +3,13 @@
 
 #include <QLabel>
 
-class FontLabel;
+namespace dtb {
+namespace widgets {
 
+class FontLabel;
+}
+
+namespace notify {
 class NotifyWidget : public QLabel
 {
     Q_OBJECT
@@ -15,7 +20,11 @@ protected:
     bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    FontLabel *m_NotifyIcon;
+    widgets::FontLabel *m_NotifyIcon;
 };
+}
+}
+
+
 
 #endif // NOTIFYWIDGET_H

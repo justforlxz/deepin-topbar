@@ -1,6 +1,8 @@
 #include "item.h"
 #include <QDebug>
 
+using namespace dtb;
+
 std::unique_ptr<ItemPopupWindow> Item::PopupWindow(nullptr);
 
 Item::Item(QWidget *parent)

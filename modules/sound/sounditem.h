@@ -1,11 +1,18 @@
 #ifndef SOUNDITEM_H
 #define SOUNDITEM_H
 
-#include "soundapplet.h"
-#include "dbussink.h"
-#include "fontlabel.h"
 #include <QWidget>
 
+class DBusSink;
+
+namespace dtb {
+
+namespace widgets {
+class FontLabel;
+}
+
+namespace sound {
+class SoundApplet;
 class SoundItem : public QWidget
 {
     Q_OBJECT
@@ -26,10 +33,12 @@ private slots:
     void sinkChanged(DBusSink *sink);
 
 private:
-    FontLabel *m_fontLabel;
+    widgets::FontLabel *m_fontLabel;
     SoundApplet *m_applet;
     DBusSink *m_sinkInter;
     bool m_isEnter = false;
 };
+}
+}
 
 #endif // SOUNDITEM_H

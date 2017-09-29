@@ -6,6 +6,9 @@
 
 DWIDGET_USE_NAMESPACE
 
+using namespace dtb;
+using namespace dtb::network;
+
 AccessPointWidget::AccessPointWidget(const AccessPoint &ap)
     : QFrame(nullptr),
 

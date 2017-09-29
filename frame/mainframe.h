@@ -9,11 +9,11 @@
 #include <QPropertyAnimation>
 #include <DPlatformWindowHandle>
 
+#include "mainpanel.h"
+
 DWIDGET_USE_NAMESPACE
 
 #define TOPHEIGHT 28
-
-class MainPanel;
 
 class MainFrame : public QFrame
 {
@@ -33,7 +33,7 @@ private:
 
 private:
     QDesktopWidget *m_desktopWidget;
-    MainPanel *m_mainPanel;
+    dtb::MainPanel *m_mainPanel;
     DBlurEffectWidget *m_blurEffectWidget;
     DPlatformWindowHandle *m_handle;
 };

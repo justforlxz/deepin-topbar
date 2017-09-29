@@ -1,7 +1,10 @@
 #include "mediacontrolplugin.h"
 
+using namespace dtb;
+using namespace dtb::media;
+
 MediaControlPlugin::MediaControlPlugin(QObject *parent) : QObject(parent) {
-    m_centralWidget = new Plugin::MediaControl::MediaControlWidget;
+    m_centralWidget = new MediaControlWidget;
 }
 
 MediaControlPlugin::~MediaControlPlugin() {
@@ -14,8 +17,6 @@ const QString MediaControlPlugin::pluginName() const {
 
 void MediaControlPlugin::init(PluginProxyInterface *proxyInter) {
     m_proxyInter = proxyInter;
-
-    m_proxyInter->itemAdded(this, QString());
 }
 
 int MediaControlPlugin::itemSortKey(const QString &itemKey) {

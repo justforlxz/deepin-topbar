@@ -4,7 +4,10 @@
 #include <QWidget>
 #include <QX11Info>
 
-#include "xcb/xcb_icccm.h"
+#include <xcb/xcb_icccm.h>
+
+using namespace dtb;
+using namespace dtb::systemtray;
 
 SystemTrayPlugin::SystemTrayPlugin(QObject *parent)
     : QObject(parent),
@@ -141,8 +144,6 @@ void SystemTrayPlugin::trayAdded(const quint32 winId)
     TrayWidget *trayWidget = new TrayWidget(winId);
 
     m_trayList[winId] = trayWidget;
-
-    m_proxyInter->itemAdded(this, QString::number(winId));
 }
 
 void SystemTrayPlugin::trayRemoved(const quint32 winId)
@@ -151,7 +152,7 @@ void SystemTrayPlugin::trayRemoved(const quint32 winId)
         return;
 
     TrayWidget *widget = m_trayList[winId];
-    m_proxyInter->itemRemoved(this, QString::number(winId));
+
     m_trayList.remove(winId);
     widget->deleteLater();
 

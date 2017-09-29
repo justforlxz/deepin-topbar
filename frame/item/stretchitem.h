@@ -3,6 +3,7 @@
 
 #include "item.h"
 
+namespace dtb {
 class StretchItem : public Item
 {
     Q_OBJECT
@@ -14,5 +15,6 @@ public:
 protected:
     void mousePressEvent(QMouseEvent *e);
 };
+}
 
 #endif // STRETCHITEM_H

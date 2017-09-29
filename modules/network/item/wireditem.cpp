@@ -4,6 +4,9 @@
 #include <QMouseEvent>
 #include <QIcon>
 
+using namespace dtb;
+using namespace dtb::network;
+
 WiredItem::WiredItem(const QString &path)
     : DeviceItem(path),
 

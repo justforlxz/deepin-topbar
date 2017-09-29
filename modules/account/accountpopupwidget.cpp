@@ -4,6 +4,10 @@
 #include <QProcess>
 #include <QSignalMapper>
 
+using namespace dtb;
+using namespace dtb::widgets;
+using namespace dtb::account;
+
 AccountPopupWidget::AccountPopupWidget(QWidget *parent) : QWidget(parent)
 {
     setFixedSize(300, 100);

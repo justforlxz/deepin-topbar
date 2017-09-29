@@ -1,11 +1,11 @@
 #ifndef SYSTEMINFOWIDGET_H
 #define SYSTEMINFOWIDGET_H
 
-#include "fontlabel.h"
-
 #include <QWidget>
 #include <QLabel>
 
+namespace dtb {
+namespace systeminfo {
 class SystemInfoWidget : public QWidget
 {
     Q_OBJECT
@@ -25,5 +25,7 @@ private:
     QLabel *m_tx;
     bool m_enter;
 };
+}
+}
 
 #endif // SYSTEMINFOWIDGET_H

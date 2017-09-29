@@ -4,12 +4,15 @@
 #include <QFrame>
 #include <QLabel>
 #include <dimagebutton.h>
-#include "fontlabel.h"
 
 DWIDGET_USE_NAMESPACE
 
-namespace Plugin {
-    namespace MediaControl {
+namespace dtb {
+namespace widgets {
+class FontLabel;
+}
+
+    namespace media {
     class MediaControl : public QFrame
     {
         Q_OBJECT
@@ -36,9 +39,9 @@ namespace Plugin {
         bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
     private:
-        FontLabel *m_lastBtn;
-        FontLabel *m_previousBtn;
-        FontLabel *m_pauseBtn;
+        widgets::FontLabel *m_lastBtn;
+        widgets::FontLabel *m_previousBtn;
+        widgets::FontLabel *m_pauseBtn;
         PlayState m_playState;
     };
     }

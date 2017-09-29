@@ -9,6 +9,8 @@
 #include <dimagebutton.h>
 #include <QPainter>
 
+namespace dtb {
+namespace sound {
 class SinkInputWidget : public QWidget
 {
     Q_OBJECT
@@ -28,5 +30,8 @@ private:
     Dtk::Widget::DImageButton *m_volumeIcon;
     VolumeSlider *m_volumeSlider;
 };
+
+}
+}
 
 #endif // SINKINPUTWIDGET_H

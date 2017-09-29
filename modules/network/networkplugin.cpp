@@ -1,5 +1,8 @@
 #include "networkplugin.h"
 
+using namespace dtb;
+using namespace dtb::network;
+
 NetworkPlugin::NetworkPlugin()
 {
     m_network = new NetworkWidget;
@@ -16,8 +19,6 @@ const QString NetworkPlugin::pluginName() const
 void NetworkPlugin::init(PluginProxyInterface *proxyInter)
 {
     m_proxyInter = proxyInter;
-
-    m_proxyInter->itemAdded(this, "network");
 
     connect(m_popupWidget, &NetworkPopupWidget::requestHidePopup, this, [=] {
         m_proxyInter->requestHidePopup();
@@ -102,7 +103,6 @@ void NetworkPlugin::deviceRemoved(const NetworkDevice &device)
     if (item == m_deviceItemList.cend())
         return;
 
-    m_proxyInter->itemRemoved(this, (*item)->path());
     (*item)->deleteLater();
     m_deviceItemList.erase(item);
 }

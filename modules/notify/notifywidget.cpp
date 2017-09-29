@@ -5,6 +5,10 @@
 #include <QEvent>
 #include <QMouseEvent>
 
+using namespace dtb;
+using namespace dtb::widgets;
+using namespace dtb::notify;
+
 NotifyWidget::NotifyWidget(QWidget *parent) : QLabel(parent)
 {
       setFixedSize(30, 26);

@@ -1,11 +1,6 @@
 #ifndef SOUNDAPPLET_H
 #define SOUNDAPPLET_H
 
-#include "componments/volumeslider.h"
-#include "dbusaudio.h"
-#include "dbussink.h"
-#include "fontlabel.h"
-
 #include <QScrollArea>
 #include <QVBoxLayout>
 #include <QLabel>
@@ -13,6 +8,17 @@
 #include <QGSettings>
 #include <dimagebutton.h>
 
+class DBusAudio;
+class DBusSink;
+
+namespace dtb {
+
+namespace widgets {
+class FontLabel;
+}
+
+namespace sound {
+class VolumeSlider;
 class SoundApplet : public QScrollArea
 {
     Q_OBJECT
@@ -46,7 +52,7 @@ protected:
 private:
     QWidget *m_centralWidget;
     QWidget *m_applicationTitle;
-    FontLabel *m_volumeBtn;
+    widgets::FontLabel *m_volumeBtn;
     VolumeSlider *m_volumeSlider;
     QVBoxLayout *m_centralLayout;
 
@@ -54,5 +60,8 @@ private:
     DBusSink *m_defSinkInter;
     QGSettings *m_gsetting;
 };
+}
+}
+
 
 #endif // SOUNDAPPLET_H

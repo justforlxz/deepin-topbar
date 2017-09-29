@@ -4,6 +4,8 @@
 #include <QFont>
 #include <QFontDatabase>
 
+using namespace dtb::widgets;
+
 FontLabel::FontLabel(QWidget *parent) : QLabel(parent)
 {
     int fontId = QFontDatabase::addApplicationFont(":/segoe-mdl2-assets.ttf");

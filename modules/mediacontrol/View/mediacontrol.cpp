@@ -1,10 +1,14 @@
 #include "mediacontrol.h"
+#include "fontlabel.h"
+
 #include <QHBoxLayout>
 #include <QEvent>
 #include <QMouseEvent>
 
-namespace Plugin {
-namespace MediaControl {
+using namespace dtb;
+using namespace dtb::media;
+using namespace dtb::widgets;
+
 MediaControl::MediaControl(QWidget *parent) : QFrame(parent) {
     setWindowFlags(Qt::FramelessWindowHint);
 
@@ -93,7 +97,4 @@ bool MediaControl::eventFilter(QObject *watched, QEvent *event)
     }
 
     return false;
-}
-
-}
 }

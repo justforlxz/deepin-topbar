@@ -3,6 +3,8 @@
 
 #include <QLabel>
 
+namespace dtb {
+namespace widgets {
 class FontLabel : public QLabel
 {
     Q_OBJECT
@@ -19,5 +21,7 @@ protected:
 private:
     QFont m_iconFont;
 };
+}
+}
 
 #endif // FONTLABEL_H

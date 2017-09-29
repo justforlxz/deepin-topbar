@@ -1,14 +1,21 @@
 #ifndef POWERWIDGET_H
 #define POWERWIDGET_H
 
-#include "dbuspower.h"
-#include "powerpopupwidget.h"
-#include "fontlabel.h"
 #include <QWidget>
 #include <QLabel>
 
-namespace Plugins {
-namespace Power {
+class DBusPower;
+
+namespace dtb {
+
+namespace widgets {
+class FontLabel;
+}
+
+namespace power {
+
+class PowerPopupWidget;
+
 class PowerWidget : public QWidget
 {
     Q_OBJECT
@@ -30,7 +37,7 @@ protected:
 
 private:
     PowerPopupWidget *m_popup;
-    FontLabel *m_batteryIcon;
+    widgets::FontLabel *m_batteryIcon;
     QLabel *m_battery;
     DBusPower* m_powerInter;
     bool m_enter = false;

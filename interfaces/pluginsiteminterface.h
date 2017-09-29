@@ -12,9 +12,15 @@
 /// the topbar plugins item interface, all topbar plugins should
 /// inheirt this class and override all pure virtual function.
 ///
+
+namespace dtb {
+
 class PluginsItemInterface
 {
 public:
+
+    PluginsItemInterface() {}
+
     ///
     /// \brief ~PluginsItemInterface
     /// DON'T try to delete m_proxyInter.
@@ -34,7 +40,7 @@ public:
     /// \param proxyInter
     /// DON'T try to delete this pointer.
     ///
-    virtual void init(PluginProxyInterface *proxyInter) = 0;
+    virtual void init(PluginProxyInterface *proxyInter) { m_proxyInter = proxyInter;}
     ///
     /// \brief itemWidget
     /// your plugin item widget, each item should have a unique key.
@@ -150,12 +156,6 @@ protected:
     ///
     PluginProxyInterface *m_proxyInter;
 };
-
-QT_BEGIN_NAMESPACE
-
-#define ModuleInterface_iid "com.deepin.topbar.PluginsItemInterface"
-
-Q_DECLARE_INTERFACE(PluginsItemInterface, ModuleInterface_iid)
-QT_END_NAMESPACE
+}
 
 #endif // PLUGINSITEMINTERFACE_H

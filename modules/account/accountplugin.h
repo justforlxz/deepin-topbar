@@ -2,18 +2,19 @@
 #define AccountPLUGIN_H
 
 #include "../interfaces/pluginsiteminterface.h"
-#include "accountpopupwidget.h"
-#include "accountwidget.h"
 #include <QObject>
 
-class AccountPlugin : public QObject, PluginsItemInterface
+namespace dtb {
+namespace account {
+
+class AccountPopupWidget;
+class AccountWidget;
+
+class AccountPlugin : public QObject, public PluginsItemInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PluginsItemInterface)
-    Q_PLUGIN_METADATA(IID "com.deepin.topbar.PluginsItemInterface" FILE "account.json")
-
 public:
-    AccountPlugin();
+    explicit AccountPlugin(QObject *parent = 0);
 
     const QString pluginName() const Q_DECL_OVERRIDE;
     void init(PluginProxyInterface *proxyInter) Q_DECL_OVERRIDE;
@@ -33,5 +34,7 @@ private:
     AccountPopupWidget *m_popupWidget;
     AccountWidget *m_Account;
 };
+}
+}
 
 #endif // AccountPLUGIN_H

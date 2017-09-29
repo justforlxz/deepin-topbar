@@ -1,5 +1,7 @@
 #include "indicatorplugin.h"
 
+using namespace dtb;
+using namespace dtb::indicator;
 
 IndicatorPlugin::IndicatorPlugin(QObject *parent) : QObject(parent)
 {
@@ -14,8 +16,6 @@ const QString IndicatorPlugin::pluginName() const
 void IndicatorPlugin::init(PluginProxyInterface *proxyInter)
 {
     m_proxyInter = proxyInter;
-
-    m_proxyInter->itemAdded(this, QString());
 }
 
 int IndicatorPlugin::itemSortKey(const QString &itemKey)

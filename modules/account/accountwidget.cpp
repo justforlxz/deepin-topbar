@@ -5,6 +5,9 @@
 #include <QEvent>
 #include <QMouseEvent>
 
+using namespace dtb;
+using namespace dtb::account;
+
 AccountWidget::AccountWidget(QWidget *parent) : QLabel(parent)
 {
 

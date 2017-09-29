@@ -6,12 +6,12 @@
 #include "wallpaperwidget.h"
 #include <QObject>
 
-class WallpaperPlugin : public QObject, PluginsItemInterface
+namespace dtb {
+namespace wallpaper {
+
+class WallpaperPlugin : public QObject, public PluginsItemInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PluginsItemInterface)
-    Q_PLUGIN_METADATA(IID "com.deepin.topbar.PluginsItemInterface" FILE "wallpaper.json")
-
 public:
     WallpaperPlugin();
 
@@ -33,5 +33,7 @@ private:
     WallpaperPopupWidget *m_popupWidget;
     WallpaperWidget *m_Wallpaper;
 };
+}
+}
 
 #endif // WallpaperPLUGIN_H

@@ -6,12 +6,12 @@
 #include "systeminfowidget.h"
 #include <QObject>
 
-class SystemInfoPlugin : public QObject, PluginsItemInterface
+namespace dtb {
+namespace systeminfo {
+
+class SystemInfoPlugin : public QObject, public PluginsItemInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PluginsItemInterface)
-    Q_PLUGIN_METADATA(IID "com.deepin.topbar.PluginsItemInterface" FILE "systeminfo.json")
-
 public:
     SystemInfoPlugin();
 
@@ -33,5 +33,7 @@ private:
     SystemInfoPopupWidget *m_popupWidget;
     SystemInfoWidget *m_systeminfo;
 };
+}
+}
 
 #endif // SYSTEMINFOPLUGIN_H

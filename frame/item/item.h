@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <memory>
 
+namespace dtb {
 class Item : public QWidget
 {
     Q_OBJECT
@@ -33,5 +34,6 @@ public:
 protected:
     static std::unique_ptr<ItemPopupWindow> PopupWindow;
 };
+}
 
 #endif // ITEM_H

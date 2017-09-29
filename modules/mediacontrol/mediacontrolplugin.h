@@ -6,12 +6,12 @@
 #include <QObject>
 #include <QLabel>
 
-class MediaControlPlugin : public QObject, PluginsItemInterface
+namespace dtb {
+namespace media {
+
+class MediaControlPlugin : public QObject, public PluginsItemInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PluginsItemInterface)
-    Q_PLUGIN_METADATA(IID "com.deepin.topbar.PluginsItemInterface" FILE "mediacontrol.json")
-
 public:
     MediaControlPlugin(QObject *parent = 0);
     ~MediaControlPlugin();
@@ -28,7 +28,10 @@ public:
 
 private:
     PluginProxyInterface *m_proxyInter;
-    Plugin::MediaControl::MediaControlWidget *m_centralWidget;
+    MediaControlWidget *m_centralWidget;
 };
+}
+}
+
 
 #endif // MEDIACONTROLPLUGIN_H

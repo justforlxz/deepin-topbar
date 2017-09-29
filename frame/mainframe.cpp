@@ -1,5 +1,4 @@
 #include "mainframe.h"
-#include "mainpanel.h"
 #include <QScreen>
 #include <QApplication>
 #include <QRect>
@@ -44,7 +43,7 @@ void MainFrame::init()
     m_handle->setEnableSystemMove(true);
     m_handle->setEnableSystemResize(false);
 
-    m_mainPanel = new MainPanel(this);
+    m_mainPanel = new dtb::MainPanel(this);
 }
 
 void MainFrame::initConnect()

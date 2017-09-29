@@ -1,5 +1,8 @@
 #include "systeminfoplugin.h"
 
+using namespace dtb;
+using namespace dtb::systeminfo;
+
 SystemInfoPlugin::SystemInfoPlugin()
 {
     m_systeminfo = new SystemInfoWidget;
@@ -14,8 +17,6 @@ const QString SystemInfoPlugin::pluginName() const
 void SystemInfoPlugin::init(PluginProxyInterface *proxyInter)
 {
     m_proxyInter = proxyInter;
-
-    m_proxyInter->itemAdded(this, "systeminfo");
 
 //    connect(m_popupWidget, &SystemInfoPopupWidget::requestHidePopup, this, [=] {
 //        m_proxyInter->requestHidePopup();

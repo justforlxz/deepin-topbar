@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+namespace dtb {
+namespace sound {
 class HorizontalSeparator : public QWidget
 {
     Q_OBJECT
@@ -13,5 +15,7 @@ public:
 protected:
     void paintEvent(QPaintEvent *e);
 };
+}
+}
 
 #endif // HORIZONTALSEPARATOR_H

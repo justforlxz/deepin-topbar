@@ -1,11 +1,26 @@
 #include "mainpanel.h"
+#include "../modules/account/accountplugin.h"
+#include "../modules/indicator/indicatorplugin.h"
+#include "../modules/mediacontrol/mediacontrolplugin.h"
+#include "../modules/network/networkplugin.h"
+#include "../modules/power/powerplugin.h"
+#include "../modules/sound/soundplugin.h"
+#include "../modules/timewidget/datetimeplugin.h"
+#include "../modules/system-tray/systemtrayplugin.h"
+#include "../modules/systeminfo/systeminfoplugin.h"
+#include "../modules/notify/notifyplugin.h"
+
 #include <QPainter>
 #include <QPen>
+
+using namespace dtb;
 
 MainPanel::MainPanel(QWidget *parent) : QWidget(parent)
 {
     initUI();
     initConnect();
+
+    loadModules();
 }
 
 void MainPanel::initUI()
@@ -14,7 +29,6 @@ void MainPanel::initUI()
     setAttribute(Qt::WA_TranslucentBackground);
 
     m_mainLayout = new QHBoxLayout;
-    m_itemController = PluginsItemController::instance(this);
 
     m_mainLayout->setMargin(0);
     m_mainLayout->setSpacing(3);
@@ -25,41 +39,59 @@ void MainPanel::initUI()
 
 void MainPanel::initConnect()
 {
-    connect(m_itemController, &PluginsItemController::itemInserted, this, &MainPanel::itemInserted, Qt::DirectConnection);
-    connect(m_itemController, &PluginsItemController::itemRemoved, this, &MainPanel::itemRemoved, Qt::DirectConnection);
-    connect(m_itemController, &PluginsItemController::itemMoved, this, &MainPanel::itemMoved, Qt::DirectConnection);
 }
 
-void MainPanel::itemInserted(const int index, Item *item)
+void MainPanel::requestHidePopup()
 {
-    item->setVisible(true);
-    item->setParent(this);
 
-    // here can connect some func
-    m_mainLayout->insertWidget(index, item);
 }
 
-void MainPanel::itemRemoved(Item *item)
+bool MainPanel::saveConfig(const QString &itemKey, const QJsonObject &json)
 {
-    m_mainLayout->removeWidget(item);
+
 }
 
-void MainPanel::itemMoved(Item *item, const QPoint &point)
+const QJsonObject MainPanel::loadConfig(const QString &itemKey)
 {
-    m_mainLayout->removeWidget(item);
-    item->setVisible(true);
-    item->setParent(this);
-    item->move(point);
+
 }
 
-void MainPanel::itemSort()
+void MainPanel::loadModules()
 {
+    // indicator is special
 
+
+    //Stretch
+
+
+    // I think here need system tray module
+    loadModule(new systemtray::SystemTrayPlugin);
+
+    loadModule(new media::MediaControlPlugin);
+
+    loadModule(new power::PowerPlugin);
+
+    loadModule(new sound::SoundPlugin);
+
+    loadModule(new network::NetworkPlugin);
+
+    loadModule(new systeminfo::SystemInfoPlugin);
+
+    loadModule(new account::AccountPlugin);
+
+    loadModule(new notify::NotifyPlugin);
 }
 
 void MainPanel::loadModule(PluginsItemInterface * const module)
 {
+    // init
+    module->init(this);
 
+
+    // get main widget
+    QWidget * w = module->itemWidget("");
+
+    m_mainLayout->addWidget(w);
 }
 
 void MainPanel::paintEvent(QPaintEvent *event)

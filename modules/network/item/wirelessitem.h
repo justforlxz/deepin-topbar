@@ -8,6 +8,8 @@
 
 #include <QHash>
 
+namespace dtb {
+namespace network {
 class WirelessItem : public DeviceItem
 {
     Q_OBJECT
@@ -45,5 +47,7 @@ private:
     QLabel *m_wirelessPopup;
     WirelessList *m_APList;
 };
+}
+}
 
 #endif // WIRELESSITEM_H

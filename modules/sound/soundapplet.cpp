@@ -1,6 +1,10 @@
 #include "soundapplet.h"
 #include "sinkinputwidget.h"
 #include "componments/horizontalseparator.h"
+#include "componments/volumeslider.h"
+#include "dbusaudio.h"
+#include "dbussink.h"
+#include "fontlabel.h"
 
 #include <QMouseEvent>
 #include <QLabel>
@@ -11,6 +15,10 @@
 #define ICON_SIZE   24
 
 DWIDGET_USE_NAMESPACE
+
+using namespace dtb;
+using namespace dtb::sound;
+using namespace dtb::widgets;
 
 SoundApplet::SoundApplet(QWidget *parent)
     : QScrollArea(parent),

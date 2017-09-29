@@ -7,6 +7,8 @@
 #include <QDBusObjectPath>
 #include <QJsonObject>
 
+namespace dtb {
+namespace network {
 class NetworkDevice
 {
 public:
@@ -27,7 +29,7 @@ public:
     };
 
     enum NetworkType {
-        None        = 0,
+        Done        = 0,
         Generic     = 1 << 0,
         Wired       = 1 << 1,
         Wireless    = 1 << 2,
@@ -58,11 +60,14 @@ private:
     QJsonObject m_infoObj;
 };
 
-inline uint qHash(const NetworkDevice &device)
+inline uint qHash(const dtb::network::NetworkDevice &device)
 {
     return qHash(device.path());
 }
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(NetworkDevice::NetworkTypes)
+Q_DECLARE_OPERATORS_FOR_FLAGS(dtb::network::NetworkDevice::NetworkTypes)
+
+}
+}
 
 #endif // NETWORKDEVICE_H

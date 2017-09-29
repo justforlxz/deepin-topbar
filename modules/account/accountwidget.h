@@ -8,6 +8,8 @@
 using DBusLogined = com::deepin::daemon::Logined;
 using DBusUser = com::deepin::daemon::accounts::User;
 
+namespace dtb {
+namespace account {
 class AccountWidget : public QLabel
 {
     Q_OBJECT
@@ -25,5 +27,7 @@ private:
     DBusLogined *m_dbusLogined;
     DBusUser *m_dbusUser;
 };
+}
+}
 
 #endif // AccountWIDGET_H

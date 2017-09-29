@@ -4,6 +4,9 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
+using namespace dtb;
+using namespace dtb::datetime;
+
 DateTimePlugin::DateTimePlugin(QWidget *parent)
     : QObject(parent) {
     m_centralWidget = new Plugin::DateTime::DateTimeWidget;
@@ -29,8 +32,6 @@ const QString DateTimePlugin::pluginName() const {
 
 void DateTimePlugin::init(PluginProxyInterface *proxyInter) {
     m_proxyInter = proxyInter;
-
-    m_proxyInter->itemAdded(this, QString());
 }
 
 int DateTimePlugin::itemSortKey(const QString &itemKey) {
@@ -81,12 +82,12 @@ void DateTimePlugin::finished()
 
     m_centralWidget->adjustSize();
 
-    if (m_settings.isCenter) {
-        QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
-        m_proxyInter->move(pluginName(), (screen.width() - m_centralWidget->width()) / 2, 0);
-    } else {
-        m_proxyInter->move("");
-    }
+//    if (m_settings.isCenter) {
+//        QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
+//        m_proxyInter->move(pluginName(), (screen.width() - m_centralWidget->width()) / 2, 0);
+//    } else {
+//        m_proxyInter->move("");
+//    }
 }
 
 QMenu *DateTimePlugin::itemContextMenu(const QString &itemKey)

@@ -4,6 +4,8 @@
 #include <QSlider>
 #include <QTimer>
 
+namespace dtb {
+namespace sound {
 class VolumeSlider : public QSlider
 {
     Q_OBJECT
@@ -29,5 +31,7 @@ private:
     bool m_pressed;
     QTimer *m_timer;
 };
+}
+}
 
 #endif // VOLUMESLIDER_H

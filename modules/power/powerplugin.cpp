@@ -1,9 +1,11 @@
 #include "powerplugin.h"
 #include "powerpopupwidget.h"
 
-PowerPlugin::PowerPlugin(QObject *parent) : QObject(parent) {
-    m_centralWidget = new Plugins::Power::PowerWidget;
+using namespace dtb;
+using namespace dtb::power;
 
+PowerPlugin::PowerPlugin(QObject *parent) : QObject(parent) {
+    m_centralWidget = new PowerWidget;
 }
 
 PowerPlugin::~PowerPlugin() {
@@ -17,9 +19,7 @@ const QString PowerPlugin::pluginName() const {
 void PowerPlugin::init(PluginProxyInterface *proxyInter) {
     m_proxyInter = proxyInter;
 
-    m_proxyInter->itemAdded(this, QString());
-
-    connect(m_centralWidget, &Plugins::Power::PowerWidget::requestHidePopup, this, [=] {
+    connect(m_centralWidget, &PowerWidget::requestHidePopup, this, [=] {
         m_proxyInter->requestHidePopup();
     });
 }

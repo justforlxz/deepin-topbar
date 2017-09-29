@@ -13,8 +13,8 @@ DWIDGET_USE_NAMESPACE
 
 using DBusMPRIS = DBusMediaPlayer2;
 
-namespace Plugin {
-namespace MediaControl {
+namespace dtb {
+namespace media {
 class MediaControlWidget : public QFrame
 {
     Q_OBJECT

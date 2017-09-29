@@ -9,12 +9,12 @@
 #include <QSettings>
 #include <QLabel>
 
-class SystemTrayPlugin : public QObject, PluginsItemInterface
+namespace dtb {
+namespace systemtray {
+
+class SystemTrayPlugin : public QObject, public PluginsItemInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PluginsItemInterface)
-    Q_PLUGIN_METADATA(IID "com.deepin.topbar.PluginsItemInterface" FILE "system-tray.json")
-
 public:
     explicit SystemTrayPlugin(QObject *parent = 0);
 
@@ -50,5 +50,7 @@ private:
 
     QSettings *m_containerSettings;
 };
+}
+}
 
 #endif // SYSTEMTRAYPLUGIN_H

@@ -4,6 +4,9 @@
 #include <QDebug>
 #include <QTimer>
 
+using namespace dtb;
+using namespace dtb::sound;
+
 VolumeSlider::VolumeSlider(QWidget *parent)
     : QSlider(Qt::Horizontal, parent),
       m_pressed(false),

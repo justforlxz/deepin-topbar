@@ -8,6 +8,8 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 
+namespace dtb {
+namespace network {
 class NetworkManager : public QObject
 {
     Q_OBJECT
@@ -73,4 +75,7 @@ private:
 
     static NetworkManager *INSTANCE;
 };
+}
+}
+
 #endif // NETWORKMANAGER_H

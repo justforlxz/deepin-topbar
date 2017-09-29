@@ -12,6 +12,8 @@
 #include <dimagebutton.h>
 #include <dpicturesequenceview.h>
 
+namespace dtb {
+namespace network {
 class AccessPointWidget : public QFrame
 {
     Q_OBJECT
@@ -46,5 +48,7 @@ private:
     QLabel *m_securityIcon;
     QLabel *m_strengthIcon;
 };
+}
+}
 
 #endif // ACCESSPOINTWIDGET_H

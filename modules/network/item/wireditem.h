@@ -7,6 +7,8 @@
 #include <QLabel>
 #include <QTimer>
 
+namespace dtb {
+namespace network {
 class WiredItem : public DeviceItem
 {
     Q_OBJECT
@@ -37,5 +39,7 @@ private:
     QLabel *m_itemTips;
     QTimer *m_delayTimer;
 };
+}
+}
 
 #endif // WIREDITEM_H

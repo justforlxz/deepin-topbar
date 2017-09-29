@@ -9,6 +9,8 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
+using namespace dtb;
+
 PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString &itemKey, QWidget *parent) :
     Item(parent),
     m_pluginInter(pluginInter),

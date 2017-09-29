@@ -5,6 +5,8 @@
 
 #include <QWidget>
 
+namespace dtb {
+namespace network {
 class DeviceItem : public QWidget
 {
     Q_OBJECT
@@ -36,5 +38,7 @@ protected:
 
     NetworkManager *m_networkManager;
 };
+}
+}
 
 #endif // DEVICEITEM_H

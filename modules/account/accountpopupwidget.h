@@ -4,7 +4,13 @@
 #include <QWidget>
 #include <QPropertyAnimation>
 
+
+namespace dtb {
+namespace widgets {
 class FontLabel;
+}
+
+namespace account {
 
 class AccountPopupWidget : public QWidget
 {
@@ -26,11 +32,14 @@ private slots:
 private:
     QPropertyAnimation *m_showAni;
     QPropertyAnimation *m_hideAni;
-    FontLabel *m_lock;
-    FontLabel *m_logout;
-    FontLabel *m_reboot;
-    FontLabel *m_suspend;
-    FontLabel *m_shutdown;
+    widgets::FontLabel *m_lock;
+    widgets::FontLabel *m_logout;
+    widgets::FontLabel *m_reboot;
+    widgets::FontLabel *m_suspend;
+    widgets::FontLabel *m_shutdown;
 };
+
+}
+}
 
 #endif // AccountPOPUPWIDGET_H

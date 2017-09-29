@@ -14,6 +14,9 @@ DWIDGET_USE_NAMESPACE
 #define MAX_HEIGHT      300
 #define ITEM_HEIGHT     30
 
+using namespace dtb;
+using namespace dtb::network;
+
 WirelessList::WirelessList(const QSet<NetworkDevice>::const_iterator &deviceIter, QWidget *parent)
     : QScrollArea(parent),
 
@@ -33,7 +36,7 @@ WirelessList::WirelessList(const QSet<NetworkDevice>::const_iterator &deviceIter
 
     m_autoConnBox->setText(tr("Auto-connect"));
 
-    m_pwdDialog->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Dialog);
+//    m_pwdDialog->setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Dialog);
     m_pwdDialog->setTextEchoMode(DLineEdit::Password);
     m_pwdDialog->setIcon(QIcon::fromTheme("notification-network-wireless-full"));
     m_pwdDialog->addSpacing(10);

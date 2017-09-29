@@ -11,14 +11,12 @@ CONFIG         += c++11 link_pkgconfig
 DESTDIR         = $$_PRO_FILE_PWD_/../
 PKGCONFIG += xcb-ewmh dtkcore dtkwidget \
              dframeworkdbus x11 xcb-util \
-             xtst xext gsettings-qt
+             xtst xext gsettings-qt xcb-image \
+             xcb-icccm xcb-composite
 
 HEADERS  += \
     $$PWD/mainframe.h \
-    $$PWD/controller/pluginloader.h \
-    $$PWD/controller/pluginscontroller.h \
     $$PWD/item/pluginsitem.h \
-    $$PWD/controller/pluginsitemcontroller.h \
     $$PWD/mainpanel.h \
     $$PWD/item/item.h \
     $$PWD/item/stretchitem.h \
@@ -30,10 +28,7 @@ HEADERS  += \
 SOURCES += \
     $$PWD/main.cpp\
     $$PWD/mainframe.cpp \
-    $$PWD/controller/pluginloader.cpp \
-    $$PWD/controller/pluginscontroller.cpp \
     $$PWD/item/pluginsitem.cpp \
-    $$PWD/controller/pluginsitemcontroller.cpp \
     $$PWD/mainpanel.cpp \
     $$PWD/item/item.cpp \
     $$PWD/item/stretchitem.cpp \

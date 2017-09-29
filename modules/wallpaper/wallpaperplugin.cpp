@@ -1,5 +1,8 @@
 #include "wallpaperplugin.h"
 
+using namespace dtb;
+using namespace dtb::wallpaper;
+
 WallpaperPlugin::WallpaperPlugin()
 {
     m_Wallpaper = new WallpaperWidget;
@@ -14,8 +17,6 @@ const QString WallpaperPlugin::pluginName() const
 void WallpaperPlugin::init(PluginProxyInterface *proxyInter)
 {
     m_proxyInter = proxyInter;
-
-    m_proxyInter->itemAdded(this, "wallpaper");
 
     connect(m_popupWidget, &WallpaperPopupWidget::requestHidePopup, this, [=] {
         m_proxyInter->requestHidePopup();

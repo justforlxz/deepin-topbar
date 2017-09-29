@@ -14,6 +14,8 @@
 #include <dinputdialog.h>
 #include <QCheckBox>
 
+namespace dtb {
+namespace network {
 class WirelessList : public QScrollArea
 {
     Q_OBJECT
@@ -68,5 +70,7 @@ private:
     DeviceControlWidget *m_controlPanel;
     DBusNetwork *m_networkInter;
 };
+}
+}
 
 #endif // WIRELESSAPPLET_H

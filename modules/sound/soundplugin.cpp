@@ -1,5 +1,9 @@
 #include "soundplugin.h"
 
+using namespace dtb;
+using namespace dtb::sound;
+using namespace dtb::widgets;
+
 SoundPlugin::SoundPlugin()
 {
     m_soundItem = new SoundItem;
@@ -13,8 +17,6 @@ const QString SoundPlugin::pluginName() const
 void SoundPlugin::init(PluginProxyInterface *proxyInter)
 {
     m_proxyInter = proxyInter;
-
-    m_proxyInter->itemAdded(this, "sound");
 
     SoundApplet * applet = qobject_cast<SoundApplet *>(m_soundItem->popupApplet());
 

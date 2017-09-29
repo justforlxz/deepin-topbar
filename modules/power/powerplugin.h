@@ -5,12 +5,12 @@
 #include "powerwidget.h"
 #include <QObject>
 
-class PowerPlugin : public QObject, PluginsItemInterface
+namespace dtb {
+namespace power {
+
+class PowerPlugin : public QObject, public PluginsItemInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PluginsItemInterface)
-    Q_PLUGIN_METADATA(IID "com.deepin.topbar.PluginsItemInterface" FILE "power.json")
-
 public:
     PowerPlugin(QObject *parent = 0);
     ~PowerPlugin();
@@ -33,7 +33,9 @@ public:
 
 private:
     PluginProxyInterface *m_proxyInter;
-    Plugins::Power::PowerWidget *m_centralWidget;
+    PowerWidget *m_centralWidget;
 };
+}
+}
 
 #endif // POWERPLUGIN_H

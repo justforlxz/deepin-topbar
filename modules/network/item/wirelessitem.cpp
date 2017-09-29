@@ -4,6 +4,9 @@
 #include <QPainter>
 #include <QMouseEvent>
 
+using namespace dtb;
+using namespace dtb::network;
+
 WirelessItem::WirelessItem(const QString &path)
     : DeviceItem(path),
 

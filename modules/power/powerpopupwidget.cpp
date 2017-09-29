@@ -12,8 +12,8 @@
 
 using namespace topbar::widgets;
 
-namespace Plugins {
-namespace Power {
+namespace dtb {
+namespace power {
 PowerPopupWidget::PowerPopupWidget(QWidget *parent) : QWidget(parent) {
     m_mainLayout = new QVBoxLayout;
     m_mainLayout->setMargin(0);

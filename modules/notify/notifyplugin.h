@@ -2,16 +2,18 @@
 #define NOTIFYPLUGIN_H
 
 #include "../interfaces/pluginsiteminterface.h"
-#include "notifypopupwidget.h"
-#include "notifywidget.h"
+
 #include <QObject>
 
-class NotifyPlugin : public QObject, PluginsItemInterface
+namespace dtb {
+namespace notify {
+
+class NotifyPopupWidget;
+class NotifyWidget;
+
+class NotifyPlugin : public QObject, public PluginsItemInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PluginsItemInterface)
-    Q_PLUGIN_METADATA(IID "com.deepin.topbar.PluginsItemInterface" FILE "notify.json")
-
 public:
     NotifyPlugin();
 
@@ -33,5 +35,7 @@ private:
     NotifyPopupWidget *m_popupWidget;
     NotifyWidget *m_notify;
 };
+}
+}
 
 #endif // NOTIFYPLUGIN_H

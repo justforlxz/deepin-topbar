@@ -1,13 +1,14 @@
 #ifndef MAINPANEL_H
 #define MAINPANEL_H
 
-#include "controller/pluginsitemcontroller.h"
+#include "pluginproxyinterface.h"
 #include "item/pluginsitem.h"
 #include "item/item.h"
 #include <QHBoxLayout>
 #include <QWidget>
 
-class MainPanel : public QWidget
+namespace dtb {
+class MainPanel : public QWidget, public PluginProxyInterface
 {
     Q_OBJECT
 public:
@@ -15,11 +16,12 @@ public:
     void initUI();
     void initConnect();
 
+    void requestHidePopup() Q_DECL_OVERRIDE;
+    bool saveConfig(const QString &itemKey, const QJsonObject &json) Q_DECL_OVERRIDE;
+    const QJsonObject loadConfig(const QString &itemKey) Q_DECL_OVERRIDE;
+
 private slots:
-    void itemInserted(const int index, Item *item);
-    void itemRemoved(Item *item);
-    void itemMoved(Item *item, const QPoint &point);
-    void itemSort();
+    void loadModules();
     void loadModule(PluginsItemInterface * const module);
 
 protected:
@@ -27,7 +29,7 @@ protected:
 
 private:
     QHBoxLayout *m_mainLayout;
-    PluginsItemController *m_itemController;
 };
+}
 
 #endif // MAINPANEL_H

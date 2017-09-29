@@ -10,12 +10,13 @@
 #include "item/wirelessitem.h"
 #include <QObject>
 
-class NetworkPlugin : public QObject, PluginsItemInterface
+
+namespace dtb {
+namespace network {
+
+class NetworkPlugin : public QObject, public PluginsItemInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PluginsItemInterface)
-    Q_PLUGIN_METADATA(IID "com.deepin.topbar.PluginsItemInterface" FILE "network.json")
-
 public:
     NetworkPlugin();
 
@@ -46,5 +47,7 @@ private:
     NetworkManager *m_networkManager;
     QList<DeviceItem *> m_deviceItemList;
 };
+}
+}
 
 #endif // networkPLUGIN_H

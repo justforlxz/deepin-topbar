@@ -7,8 +7,8 @@
 #include <QGraphicsOpacityEffect>
 #include <QGroupBox>
 
-namespace Plugins {
-namespace Power {
+namespace dtb {
+namespace power {
 class PowerPopupWidget : public QWidget
 {
     Q_OBJECT

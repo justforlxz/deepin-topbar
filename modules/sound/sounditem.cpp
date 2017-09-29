@@ -1,5 +1,9 @@
 #include "sounditem.h"
 #include "constants.h"
+#include "soundapplet.h"
+#include "dbussink.h"
+#include "fontlabel.h"
+#include "componments/volumeslider.h"
 
 #include <QPainter>
 #include <QIcon>
@@ -9,6 +13,10 @@
 // menu actions
 #define MUTE    "mute"
 #define SETTINS "settings"
+
+using namespace dtb;
+using namespace dtb::sound;
+using namespace dtb::widgets;
 
 SoundItem::SoundItem(QWidget *parent)
     : QWidget(parent),

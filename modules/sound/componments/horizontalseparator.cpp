@@ -2,6 +2,9 @@
 
 #include <QPainter>
 
+using namespace dtb;
+using namespace dtb::sound;
+
 HorizontalSeparator::HorizontalSeparator(QWidget *parent)
     : QWidget(parent)
 {

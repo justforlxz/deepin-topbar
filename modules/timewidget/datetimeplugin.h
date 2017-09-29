@@ -6,12 +6,12 @@
 #include "datetimepopup.h"
 #include <QLabel>
 
-class DateTimePlugin : public QObject, PluginsItemInterface
+namespace dtb {
+namespace datetime {
+
+class DateTimePlugin : public QObject, public PluginsItemInterface
 {
     Q_OBJECT
-    Q_INTERFACES(PluginsItemInterface)
-    Q_PLUGIN_METADATA(IID "com.deepin.topbar.PluginsItemInterface" FILE "datetime.json")
-
 public:
     DateTimePlugin(QWidget *parent = 0);
     ~DateTimePlugin();
@@ -49,5 +49,7 @@ private:
     Plugin::DateTime::DateTimePopup *m_popup;
     MenuModel m_settings;
 };
+}
+}
 
 #endif // TIMEWIDGET_H
