@@ -6,7 +6,7 @@
 #include <QFutureWatcher>
 #include <QtConcurrent>
 #include <QDBusConnection>
-#include "themeappicon.h"
+#include "../themeappicon.h"
 
 namespace Plugin {
 namespace Indicator {

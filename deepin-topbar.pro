@@ -1,6 +1,5 @@
 TEMPLATE = subdirs
-SUBDIRS = frame \
-          plugins
+SUBDIRS = frame
 
 isEmpty(PREFIX) {
     PREFIX = /usr

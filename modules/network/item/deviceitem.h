@@ -1,7 +1,7 @@
 #ifndef DEVICEITEM_H
 #define DEVICEITEM_H
 
-#include "networkmanager.h"
+#include "../networkmanager.h"
 
 #include <QWidget>
 

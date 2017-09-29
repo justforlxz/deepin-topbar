@@ -57,6 +57,11 @@ void MainPanel::itemSort()
 
 }
 
+void MainPanel::loadModule(PluginsItemInterface * const module)
+{
+
+}
+
 void MainPanel::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);

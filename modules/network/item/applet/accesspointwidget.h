@@ -2,7 +2,7 @@
 #define ACCESSPOINTWIDGET_H
 
 #include "accesspoint.h"
-#include "networkdevice.h"
+#include "../../networkdevice.h"
 
 #include <QWidget>
 #include <QLabel>

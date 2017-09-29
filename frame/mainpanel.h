@@ -20,6 +20,7 @@ private slots:
     void itemRemoved(Item *item);
     void itemMoved(Item *item, const QPoint &point);
     void itemSort();
+    void loadModule(PluginsItemInterface * const module);
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;

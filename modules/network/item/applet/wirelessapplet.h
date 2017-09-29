@@ -4,7 +4,7 @@
 #include "devicecontrolwidget.h"
 #include "accesspoint.h"
 #include "../../networkdevice.h"
-#include "../../dbus/dbusnetwork.h"
+#include "dbusnetwork.h"
 
 #include <QScrollArea>
 #include <QVBoxLayout>
