@@ -59,10 +59,10 @@ const QJsonObject MainPanel::loadConfig(const QString &itemKey)
 void MainPanel::loadModules()
 {
     // indicator is special
-
+    loadModule(new indicator::IndicatorPlugin);
 
     //Stretch
-
+    m_mainLayout->addStretch();
 
     // I think here need system tray module
     loadModule(new systemtray::SystemTrayPlugin);
