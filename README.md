@@ -67,7 +67,6 @@ You can create a issue, I will help you.
 You may also find these channels useful if you encounter any other issues:
 
 * [deepin community](https://bbs.deepin.org) Topbar is also the community software that you can post for help.
-* QQ Group: 97215190 or telegram: @kirigayakazushin
 
 ## License
 
