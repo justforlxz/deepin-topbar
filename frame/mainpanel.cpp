@@ -83,6 +83,8 @@ void MainPanel::loadModules()
 
     loadModule(new account::AccountPlugin);
 
+    loadModule(new datetime::DateTimePlugin);
+
     loadModule(new notify::NotifyPlugin);
 }
 

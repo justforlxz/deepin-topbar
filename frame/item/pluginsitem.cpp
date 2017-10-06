@@ -58,6 +58,8 @@ const QRect PluginsItem::popupMarkGeometry() const
     QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
     ItemPopupWindow *popup = PopupWindow.get();
 
+    qDebug() << popup->width() << pos() << screen.width();
+
     // check popup is last right
     if (popup->width() + pos().x() >= screen.width()) {
         return QRect(QPoint(pos().x() - popup->width() + width(), height()), size());
@@ -143,10 +145,7 @@ void PluginsItem::showContextMenu()
     if (!menu)
         return;
 
-    const QRect r = popupMarkGeometry();
-    const QPoint p = QPoint(r.x(), r.y());
-
-    menu->exec(p);
+    menu->exec(QPoint(pos().x(), height()));
 
     hidePopup();
 }
