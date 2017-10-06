@@ -58,8 +58,6 @@ const QRect PluginsItem::popupMarkGeometry() const
     QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
     ItemPopupWindow *popup = PopupWindow.get();
 
-    qDebug() << popup->width() << pos() << screen.width();
-
     // check popup is last right
     if (popup->width() + pos().x() >= screen.width()) {
         return QRect(QPoint(pos().x() - popup->width() + width(), height()), size());
@@ -129,9 +127,14 @@ bool PluginsItem::containsPoint(const QPoint &point) const
 {
     const qreal ratio = devicePixelRatioF();
 
+    QWidget *w = m_pluginInter->itemWidget(m_itemKey);
+
+    if (!w)
+        return false;
+
     // if click self;
-    QRect self(m_pluginInter->itemWidget(m_itemKey)->mapToGlobal(m_pluginInter->itemWidget(m_itemKey)->pos()) * ratio,
-               m_pluginInter->itemWidget(m_itemKey)->size() * ratio);
+    QRect self(w->mapToGlobal(w->pos()) * ratio,
+               w->size() * ratio);
 
     if (isVisible() && self.contains(point))
         return false;

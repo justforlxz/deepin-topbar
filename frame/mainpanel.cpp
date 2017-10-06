@@ -101,7 +101,7 @@ void MainPanel::loadModules()
     m_mainLayout->addStretch();
 
     // I think here need system tray module
-//    loadModule(new systemtray::SystemTrayPlugin);
+    loadModule(new systemtray::SystemTrayPlugin);
 
     loadModule(new media::MediaControlPlugin);
 
@@ -109,7 +109,7 @@ void MainPanel::loadModules()
 
     loadModule(new sound::SoundPlugin);
 
-//    loadModule(new network::NetworkPlugin);
+    loadModule(new network::NetworkPlugin);
 
     loadModule(new systeminfo::SystemInfoPlugin);
 
