@@ -33,6 +33,7 @@ PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString
         ItemPopupWindow *popup = PopupWindow.get();
         if (!containsPoint(QPoint(x, y)) && popup->isVisible()) {
             m_pluginInter->popupHide();
+            popup->setVisible(false);
         }
     });
 }
@@ -40,18 +41,6 @@ PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString
 PluginsItem::~PluginsItem()
 {
 
-}
-
-PluginsItem::ItemType PluginsItem::itemType() const
-{
-    if (m_pluginInter->pluginName() == "indicator")
-        return Indicator;
-    if (m_pluginInter->pluginName() == "datetime")
-        return DateTime;
-    if (m_pluginInter->pluginName() == "notify")
-        return Notify;
-
-    return Plugin;
 }
 
 const QString PluginsItem::name() const
@@ -129,14 +118,19 @@ QMenu *PluginsItem::contextMenu() const
 
 bool PluginsItem::containsPoint(const QPoint &point) const
 {
+    const qreal ratio = devicePixelRatioF();
+
     // if click self;
-    QRect self(m_pluginInter->itemWidget(m_itemKey)->mapToGlobal(m_pluginInter->itemWidget(m_itemKey)->pos()), m_pluginInter->itemWidget(m_itemKey)->size());
+    QRect self(m_pluginInter->itemWidget(m_itemKey)->mapToGlobal(m_pluginInter->itemWidget(m_itemKey)->pos()) * ratio,
+               m_pluginInter->itemWidget(m_itemKey)->size() * ratio);
+
     if (isVisible() && self.contains(point))
         return false;
 
     QRect s = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
-    QRegion screen(s.x(), s.y(), s.width(), 27);
+    QRegion screen(s.x(), s.y(), s.width(), 27 * ratio);
     ItemPopupWindow *popup = PopupWindow.get();
+
     if (screen.contains(point) || popup->geometry().contains(point))
         return true;
 

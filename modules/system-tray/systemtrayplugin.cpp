@@ -46,7 +46,9 @@ QWidget *SystemTrayPlugin::itemWidget(const QString &itemKey)
 {
     const quint32 trayWinId = itemKey.toUInt();
 
-    return m_trayList[trayWinId];
+    QWidget *w = m_trayList[trayWinId];
+
+    return w ? w : nullptr;
 }
 
 QWidget *SystemTrayPlugin::itemTipsWidget(const QString &itemKey)

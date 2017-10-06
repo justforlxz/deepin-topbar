@@ -10,8 +10,12 @@
 #include "../modules/systeminfo/systeminfoplugin.h"
 #include "../modules/notify/notifyplugin.h"
 
+#include "item/pluginsitem.h"
+
 #include <QPainter>
 #include <QPen>
+#include <QKeyEvent>
+#include <QEvent>
 
 using namespace dtb;
 
@@ -65,7 +69,7 @@ void MainPanel::loadModules()
     m_mainLayout->addStretch();
 
     // I think here need system tray module
-    loadModule(new systemtray::SystemTrayPlugin);
+//    loadModule(new systemtray::SystemTrayPlugin);
 
     loadModule(new media::MediaControlPlugin);
 
@@ -87,11 +91,9 @@ void MainPanel::loadModule(PluginsItemInterface * const module)
     // init
     module->init(this);
 
+    PluginsItem *item = new PluginsItem(module, "");
 
-    // get main widget
-    QWidget * w = module->itemWidget("");
-
-    m_mainLayout->addWidget(w);
+    m_mainLayout->addWidget(item);
 }
 
 void MainPanel::paintEvent(QPaintEvent *event)
@@ -104,4 +106,18 @@ void MainPanel::paintEvent(QPaintEvent *event)
     pen.setWidth(2);
     painter.setPen(pen);
     painter.drawLine(QPoint(0, 27), QPoint(width(), 27));
+}
+
+bool MainPanel::eventFilter(QObject *watched, QEvent *event)
+{
+    Q_UNUSED(watched);
+
+//    QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+//    if (!keyEvent)
+//        return false;
+
+//    if (event->type() == QEvent::KeyRelease)
+
+    return false;
 }

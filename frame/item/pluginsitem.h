@@ -15,7 +15,6 @@ public:
     explicit PluginsItem(PluginsItemInterface* const pluginInter, const QString &itemKey, QWidget *parent = 0);
     ~PluginsItem();
 
-    ItemType itemType() const Q_DECL_OVERRIDE;
     const QString name() const Q_DECL_OVERRIDE;
     void finished() Q_DECL_OVERRIDE;
     const QRect popupMarkGeometry() const;

@@ -10,8 +10,6 @@ class StretchItem : public Item
 public:
     explicit StretchItem(QWidget *parent = 0);
 
-    ItemType itemType() const;
-
 protected:
     void mousePressEvent(QMouseEvent *e);
 };
