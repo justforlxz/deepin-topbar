@@ -17,6 +17,8 @@ const QString MediaControlPlugin::pluginName() const {
 
 void MediaControlPlugin::init(PluginProxyInterface *proxyInter) {
     m_proxyInter = proxyInter;
+
+    m_proxyInter->addItem(this, "");
 }
 
 int MediaControlPlugin::itemSortKey(const QString &itemKey) {

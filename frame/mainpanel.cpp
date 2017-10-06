@@ -45,6 +45,38 @@ void MainPanel::initConnect()
 {
 }
 
+void MainPanel::addItem(PluginsItemInterface * const module, const QString &itemKey)
+{
+    // check
+
+    if (m_moduleMap.contains(module))
+        if (m_moduleMap[module].contains(itemKey))
+            return;
+
+    PluginsItem *item = new PluginsItem(module, itemKey);
+
+    m_moduleMap[module][itemKey] = item;
+
+    m_mainLayout->addWidget(item);
+}
+
+void MainPanel::removeItem(PluginsItemInterface * const module, const QString &itemKey)
+{
+    if (!m_moduleMap.contains(module))
+        return;
+
+    PluginsItem * item = m_moduleMap[module][itemKey];
+
+    if (!item)
+        return;
+
+    m_mainLayout->removeWidget(item);
+
+    m_moduleMap[module].remove(itemKey);
+
+    item->deleteLater();
+}
+
 void MainPanel::requestHidePopup()
 {
 
@@ -77,7 +109,7 @@ void MainPanel::loadModules()
 
     loadModule(new sound::SoundPlugin);
 
-    loadModule(new network::NetworkPlugin);
+//    loadModule(new network::NetworkPlugin);
 
     loadModule(new systeminfo::SystemInfoPlugin);
 
@@ -92,10 +124,6 @@ void MainPanel::loadModule(PluginsItemInterface * const module)
 {
     // init
     module->init(this);
-
-    PluginsItem *item = new PluginsItem(module, "");
-
-    m_mainLayout->addWidget(item);
 }
 
 void MainPanel::paintEvent(QPaintEvent *event)
@@ -108,18 +136,4 @@ void MainPanel::paintEvent(QPaintEvent *event)
     pen.setWidth(2);
     painter.setPen(pen);
     painter.drawLine(QPoint(0, 27), QPoint(width(), 27));
-}
-
-bool MainPanel::eventFilter(QObject *watched, QEvent *event)
-{
-    Q_UNUSED(watched);
-
-//    QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-
-//    if (!keyEvent)
-//        return false;
-
-//    if (event->type() == QEvent::KeyRelease)
-
-    return false;
 }

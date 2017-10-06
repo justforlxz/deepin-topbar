@@ -16,6 +16,8 @@ const QString IndicatorPlugin::pluginName() const
 void IndicatorPlugin::init(PluginProxyInterface *proxyInter)
 {
     m_proxyInter = proxyInter;
+
+    m_proxyInter->addItem(this, "");
 }
 
 int IndicatorPlugin::itemSortKey(const QString &itemKey)

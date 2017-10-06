@@ -23,6 +23,8 @@ void NotifyPlugin::init(PluginProxyInterface *proxyInter)
     connect(m_popupWidget, &NotifyPopupWidget::requestHidePopup, this, [=] {
         m_proxyInter->requestHidePopup();
     });
+
+    m_proxyInter->addItem(this, "");
 }
 
 int NotifyPlugin::itemSortKey(const QString &itemKey)

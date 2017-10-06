@@ -22,6 +22,8 @@ void PowerPlugin::init(PluginProxyInterface *proxyInter) {
     connect(m_centralWidget, &PowerWidget::requestHidePopup, this, [=] {
         m_proxyInter->requestHidePopup();
     });
+
+    m_proxyInter->addItem(this, "");
 }
 
 int PowerPlugin::itemSortKey(const QString &itemKey) {

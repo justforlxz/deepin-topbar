@@ -16,6 +16,9 @@ public:
     void initUI();
     void initConnect();
 
+    void addItem(PluginsItemInterface * const module, const QString &itemKey);
+    void removeItem(PluginsItemInterface * const module, const QString &itemKey);
+
     void requestHidePopup() Q_DECL_OVERRIDE;
     bool saveConfig(const QString &itemKey, const QJsonObject &json) Q_DECL_OVERRIDE;
     const QJsonObject loadConfig(const QString &itemKey) Q_DECL_OVERRIDE;
@@ -26,10 +29,10 @@ private slots:
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
-    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
 private:
     QHBoxLayout *m_mainLayout;
+    QMap<PluginsItemInterface*, QMap<QString, PluginsItem*>> m_moduleMap;
 };
 }
 

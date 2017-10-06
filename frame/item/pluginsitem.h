@@ -22,6 +22,7 @@ public:
     void showPopupWindow(QWidget * const content) Q_DECL_OVERRIDE;
     void hidePopup() Q_DECL_OVERRIDE;
     QMenu* contextMenu() const Q_DECL_OVERRIDE;
+    void detachPluginWidget();
 
 private:
     QWidget *popupTips() Q_DECL_OVERRIDE;

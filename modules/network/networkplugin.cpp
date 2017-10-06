@@ -41,6 +41,9 @@ QWidget *NetworkPlugin::itemWidget(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
+    // return widget have main layout
+    // all network widget in this widget;
+
     return m_network;
 }
 

@@ -23,6 +23,8 @@ void AccountPlugin::init(PluginProxyInterface *proxyInter)
     connect(m_popupWidget, &AccountPopupWidget::requestHidePopup, this, [=] {
         m_proxyInter->requestHidePopup();
     });
+
+    m_proxyInter->addItem(this, "");
 }
 
 int AccountPlugin::itemSortKey(const QString &itemKey)

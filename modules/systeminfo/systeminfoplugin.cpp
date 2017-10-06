@@ -21,6 +21,8 @@ void SystemInfoPlugin::init(PluginProxyInterface *proxyInter)
 //    connect(m_popupWidget, &SystemInfoPopupWidget::requestHidePopup, this, [=] {
 //        m_proxyInter->requestHidePopup();
 //    });
+
+    m_proxyInter->addItem(this, "");
 }
 
 int SystemInfoPlugin::itemSortKey(const QString &itemKey)

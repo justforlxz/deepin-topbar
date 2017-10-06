@@ -21,6 +21,8 @@ void WallpaperPlugin::init(PluginProxyInterface *proxyInter)
     connect(m_popupWidget, &WallpaperPopupWidget::requestHidePopup, this, [=] {
         m_proxyInter->requestHidePopup();
     });
+
+    m_proxyInter->addItem(this, "");
 }
 
 int WallpaperPlugin::itemSortKey(const QString &itemKey)

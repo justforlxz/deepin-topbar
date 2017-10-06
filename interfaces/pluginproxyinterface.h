@@ -10,6 +10,11 @@ class PluginsItemInterface;
 class PluginProxyInterface
 {
 public:
+
+    virtual void addItem(PluginsItemInterface * const module, const QString &itemKey) = 0;
+
+    virtual void removeItem(PluginsItemInterface * const module, const QString &itemKey) = 0;
+
     virtual void requestHidePopup() = 0;
 
     virtual bool saveConfig(const QString &itemKey, const QJsonObject &json) { Q_UNUSED(itemKey); Q_UNUSED(json); return false;}

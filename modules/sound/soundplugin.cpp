@@ -23,6 +23,8 @@ void SoundPlugin::init(PluginProxyInterface *proxyInter)
     connect(applet, &SoundApplet::requestHidePopup, this, [=] {
         m_proxyInter->requestHidePopup();
     });
+
+    m_proxyInter->addItem(this, "");
 }
 
 int SoundPlugin::itemSortKey(const QString &itemKey)

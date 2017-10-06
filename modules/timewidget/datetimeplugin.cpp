@@ -32,6 +32,8 @@ const QString DateTimePlugin::pluginName() const {
 
 void DateTimePlugin::init(PluginProxyInterface *proxyInter) {
     m_proxyInter = proxyInter;
+
+    m_proxyInter->addItem(this, "");
 }
 
 int DateTimePlugin::itemSortKey(const QString &itemKey) {
