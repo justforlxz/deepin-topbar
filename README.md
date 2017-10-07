@@ -15,6 +15,9 @@ This is a project that I have a whim to help improve my ability to write code.
 * xcb-ewmh (developer package)
 * xcb-util (developer package)
 * xtst (developer package)
+* xcb-image (developer package)
+* xcb-icccm (developer package)
+* xcb-composite (developer package)
 
 ### Runtime dependencies
 
@@ -33,6 +36,9 @@ This is a project that I have a whim to help improve my ability to write code.
 * xcb-ewmh
 * xcb-util
 * xtst
+* xcb-image
+* xcb-icccm
+* xcb-composite
 
 If you use Deepin, just add my ppa. see [here](https://blog.mkacg.com/2017/07/20/topbar-PPA/)
 
