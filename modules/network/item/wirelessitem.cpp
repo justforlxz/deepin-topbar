@@ -3,6 +3,8 @@
 
 #include <QPainter>
 #include <QMouseEvent>
+#include <QSvgRenderer>
+#include <QPixmap>
 
 using namespace dtb;
 using namespace dtb::network;
@@ -83,17 +85,11 @@ void WirelessItem::paintEvent(QPaintEvent *e)
 {
     DeviceItem::paintEvent(e);
 
-    const Dock::DisplayMode displayMode = qApp->property(PROP_DISPLAY_MODE).value<Dock::DisplayMode>();
-
-    const int iconSize = displayMode == Dock::Fashion ? std::min(width(), height()) * 0.8 : 16;
-    const QPixmap pixmap = iconPix(displayMode, iconSize);
+    const int iconSize =  16;
+    const QPixmap pixmap = iconPix(iconSize);
 
     QPainter painter(this);
-    if (displayMode == Dock::Fashion)
-    {
-        const QPixmap pixmap = backgroundPix(iconSize);
-        painter.drawPixmap(rect().center() - pixmap.rect().center(), pixmap);
-    }
+
     painter.drawPixmap(rect().center() - pixmap.rect().center(), pixmap);
 }
 
@@ -119,7 +115,7 @@ void WirelessItem::mousePressEvent(QMouseEvent *e)
     return QWidget::mousePressEvent(e);
 }
 
-const QPixmap WirelessItem::iconPix(const Dock::DisplayMode displayMode, const int size)
+const QPixmap WirelessItem::iconPix(const int size)
 {
     QString type;
 
@@ -152,20 +148,27 @@ const QPixmap WirelessItem::iconPix(const Dock::DisplayMode displayMode, const i
 
     const QString key = QString("wireless-%1%2")
                                 .arg(type)
-                                .arg(displayMode == Dock::Fashion ? "" : "-symbolic");
+                                .arg("-symbolic");
 
     return cachedPix(key, size);
 }
 
-const QPixmap WirelessItem::backgroundPix(const int size)
-{
-    return cachedPix("wireless-background", size);
-}
-
 const QPixmap WirelessItem::cachedPix(const QString &key, const int size)
 {
-//    if (!m_icons.contains(key))
-//        m_icons.insert(key, ImageUtil::loadSvg(":/wireless/resources/wireless/" + key + ".svg", size));
+    if (!m_icons.contains(key)) {
+
+        QPixmap pixmap(size, size);
+//        QSvgRenderer renderer(":/wireless/resources/wireless/" + key + ".svg");
+        QSvgRenderer renderer(QString(":/wireless/resources/wireless/wireless-4.symbolic.svg"));
+        pixmap.fill(Qt::transparent);
+
+        QPainter painter;
+        painter.begin(&pixmap);
+        renderer.render(&painter);
+        painter.end();
+
+        m_icons.insert(key, pixmap);
+    }
 
     return m_icons.value(key);
 }

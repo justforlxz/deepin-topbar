@@ -3,7 +3,7 @@ include(../widgets/widgets.pri)
 include(../modules/modules.pri)
 include(../dbus/dbus.pri)
 
-QT       += core gui x11extras widgets dbus concurrent
+QT       += core gui x11extras widgets dbus concurrent svg
 
 TARGET = deepin-topbar
 TEMPLATE = app

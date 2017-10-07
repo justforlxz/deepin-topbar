@@ -33,6 +33,7 @@ public:
     void popupShow() Q_DECL_OVERRIDE;
     void popupHide() Q_DECL_OVERRIDE;
 
+    void refershDeviceItemVisible();
 
 private slots:
     void deviceAdded(const NetworkDevice &device);
@@ -46,6 +47,7 @@ private:
     NetworkWidget *m_network;
     NetworkManager *m_networkManager;
     QList<DeviceItem *> m_deviceItemList;
+    QTimer *m_refershTimer;
 };
 }
 }

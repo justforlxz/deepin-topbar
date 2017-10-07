@@ -40,7 +40,9 @@ PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString
 
 PluginsItem::~PluginsItem()
 {
+    m_eventMonitor->deleteLater();
 
+    m_menuManagerInter->deleteLater();
 }
 
 const QString PluginsItem::name() const

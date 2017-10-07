@@ -1,5 +1,4 @@
 #include "sounditem.h"
-#include "constants.h"
 #include "soundapplet.h"
 #include "dbussink.h"
 #include "fontlabel.h"

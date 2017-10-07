@@ -146,6 +146,8 @@ void SystemTrayPlugin::trayAdded(const quint32 winId)
     TrayWidget *trayWidget = new TrayWidget(winId);
 
     m_trayList[winId] = trayWidget;
+
+    m_proxyInter->addItem(this, QString::number(winId));
 }
 
 void SystemTrayPlugin::trayRemoved(const quint32 winId)
@@ -160,6 +162,8 @@ void SystemTrayPlugin::trayRemoved(const quint32 winId)
 
     if (m_trayApplet->isVisible())
         updateTipsContent();
+
+    m_proxyInter->removeItem(this, QString::number(winId));
 }
 
 void SystemTrayPlugin::trayChanged(const quint32 winId)

@@ -1,4 +1,3 @@
-#include "constants.h"
 #include "wireditem.h"
 #include <QPainter>
 #include <QMouseEvent>
@@ -109,8 +108,6 @@ void WiredItem::reloadIcon()
 {
     Q_ASSERT(sender() == m_delayTimer);
 
-    const Dock::DisplayMode displayMode = qApp->property(PROP_DISPLAY_MODE).value<Dock::DisplayMode>();
-
     QString iconName = "network-";
     if (!m_connected)
     {
@@ -129,10 +126,7 @@ void WiredItem::reloadIcon()
             iconName.append("idle");
     }
 
-    if (displayMode == Dock::Efficient)
-        iconName.append("-symbolic");
-
-    const int size = displayMode == Dock::Efficient ? 16 : std::min(width(), height()) * 0.8;
+    const int size = std::min(width(), height()) * 0.8;
     m_icon = QIcon::fromTheme(iconName).pixmap(size, size);
     update();
 }

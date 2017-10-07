@@ -7,7 +7,7 @@ NetworkPlugin::NetworkPlugin()
 {
     m_network = new NetworkWidget;
     m_popupWidget = new NetworkPopupWidget;
-
+    m_refershTimer = new QTimer(this);
     m_networkManager = NetworkManager::instance(this);
 }
 
@@ -24,8 +24,15 @@ void NetworkPlugin::init(PluginProxyInterface *proxyInter)
         m_proxyInter->requestHidePopup();
     });
 
+    m_refershTimer->setInterval(100);
+    m_refershTimer->setSingleShot(true);
+
+    connect(m_networkManager, &NetworkManager::networkStateChanged, this, &NetworkPlugin::networkStateChanged);
+    connect(m_networkManager, &NetworkManager::deviceTypesChanged, this, &NetworkPlugin::deviceTypesChanged);
     connect(m_networkManager, &NetworkManager::deviceAdded, this, &NetworkPlugin::deviceAdded);
     connect(m_networkManager, &NetworkManager::deviceRemoved, this, &NetworkPlugin::deviceRemoved);
+    connect(m_networkManager, &NetworkManager::deviceChanged, m_refershTimer, static_cast<void (QTimer::*)(void)>(&QTimer::start));
+    connect(m_refershTimer, &QTimer::timeout, this, &NetworkPlugin::refershDeviceItemVisible);
 
     m_networkManager->init();
 }
@@ -39,29 +46,20 @@ int NetworkPlugin::itemSortKey(const QString &itemKey)
 
 QWidget *NetworkPlugin::itemWidget(const QString &itemKey)
 {
-    Q_UNUSED(itemKey);
+    for (auto deviceItem : m_deviceItemList)
+        if (deviceItem->path() == itemKey)
+            return deviceItem;
 
-    // return widget have main layout
-    // all network widget in this widget;
-
-    return m_network;
+    return nullptr;
 }
 
 QWidget *NetworkPlugin::itemPopupApplet(const QString &itemKey)
 {
-    Q_UNUSED(itemKey);
-
-//    return m_popupWidget;
-
-    for (auto deviceItem : m_deviceItemList) {
-        continue;
-        return deviceItem->itemApplet();
-    }
-//        if (deviceItem->path() == itemKey)
-//            return deviceItem->itemCommand();
+    for (auto deviceItem : m_deviceItemList)
+        if (deviceItem->path() == itemKey)
+            return deviceItem->itemApplet();
 
     return nullptr;
-
 }
 
 const QString NetworkPlugin::itemCommand(const QString &itemKey)
@@ -112,10 +110,46 @@ void NetworkPlugin::deviceRemoved(const NetworkDevice &device)
 
 void NetworkPlugin::networkStateChanged(const NetworkDevice::NetworkTypes &states)
 {
+    Q_UNUSED(states);
 
+    m_refershTimer->start();
 }
 
 void NetworkPlugin::deviceTypesChanged(const NetworkDevice::NetworkTypes &types)
 {
+    Q_UNUSED(types);
 
+    m_refershTimer->start();
+}
+
+void NetworkPlugin::refershDeviceItemVisible()
+{
+    const NetworkDevice::NetworkTypes types = m_networkManager->types();
+    const bool hasWiredDevice = types.testFlag(NetworkDevice::Wired);
+    const bool hasWirelessDevice = types.testFlag(NetworkDevice::Wireless);
+
+//    qDebug() << hasWiredDevice << hasWirelessDevice;
+
+    for (auto item : m_deviceItemList)
+    {
+        switch (item->type())
+        {
+        case NetworkDevice::Wireless:
+            m_proxyInter->addItem(this, item->path());
+            break;
+
+        case NetworkDevice::Wired:
+            if (hasWiredDevice && (item->state() == NetworkDevice::Activated || !hasWirelessDevice))
+                m_proxyInter->addItem(this, item->path());
+            else
+                m_proxyInter->removeItem(this, item->path());
+            break;
+
+        default:
+            Q_UNREACHABLE();
+        }
+    }
+
+    for (auto *item : m_deviceItemList)
+        item->refreshIcon();
 }

@@ -1,8 +1,6 @@
 #ifndef WIRELESSITEM_H
 #define WIRELESSITEM_H
 
-#include "constants.h"
-
 #include "deviceitem.h"
 #include "applet/wirelessapplet.h"
 
@@ -30,8 +28,7 @@ protected:
     void mousePressEvent(QMouseEvent *e);
 
 private:
-    const QPixmap iconPix(const Dock::DisplayMode displayMode, const int size);
-    const QPixmap backgroundPix(const int size);
+    const QPixmap iconPix(const int size);
     const QPixmap cachedPix(const QString &key, const int size);
 
 private slots:
