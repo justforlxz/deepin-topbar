@@ -19,6 +19,9 @@ public slots:
     void showAni();
     void hideAni();
 
+private slots:
+    void onScreenChanged();
+
 private:
     QPropertyAnimation *m_showAni;
     QPropertyAnimation *m_hideAni;

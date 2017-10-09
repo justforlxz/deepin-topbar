@@ -1,13 +1,13 @@
 #include "notifypopupwidget.h"
 #include <QVBoxLayout>
+#include <QDesktopWidget>
+#include <QApplication>
 
 using namespace dtb;
 using namespace dtb::notify;
 
 NotifyPopupWidget::NotifyPopupWidget(QWidget *parent) : QWidget(parent)
 {
-    setFixedSize(300, 100);
-
     QVBoxLayout *layout = new QVBoxLayout;
 
     setLayout(layout);
@@ -26,6 +26,11 @@ NotifyPopupWidget::NotifyPopupWidget(QWidget *parent) : QWidget(parent)
 
     connect(m_hideAni, &QPropertyAnimation::finished, this, &NotifyPopupWidget::requestHidePopup);
 
+    QDesktopWidget *desktopWidget = qApp->desktop();
+    connect(desktopWidget, &QDesktopWidget::screenCountChanged, this, &NotifyPopupWidget::onScreenChanged);
+    connect(desktopWidget, &QDesktopWidget::primaryScreenChanged, this, &NotifyPopupWidget::onScreenChanged);
+
+    onScreenChanged();
 
     //load notify
 }
@@ -38,4 +43,12 @@ void NotifyPopupWidget::showAni()
 void NotifyPopupWidget::hideAni()
 {
     m_hideAni->start();
+}
+
+void NotifyPopupWidget::onScreenChanged()
+{
+    QDesktopWidget *desktopWidget = qApp->desktop();
+    QRect rect = desktopWidget->screenGeometry(desktopWidget->primaryScreen());
+
+    setFixedSize(360 * devicePixelRatioF(), rect.height() - 28 * devicePixelRatioF());
 }
