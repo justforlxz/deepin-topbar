@@ -77,19 +77,11 @@ void DateTimePlugin::finished()
         return;
 
     m_settings.is24 = config["Is24"].toBool();
-    m_settings.isCenter = config["Center"].toBool();
     m_settings.format = config["Format"].toString();
     m_centralWidget->setFormat(m_settings.format);
     m_centralWidget->set24HourFormat(m_settings.is24);
 
     m_centralWidget->adjustSize();
-
-//    if (m_settings.isCenter) {
-//        QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
-//        m_proxyInter->move(pluginName(), (screen.width() - m_centralWidget->width()) / 2, 0);
-//    } else {
-//        m_proxyInter->move("");
-//    }
 }
 
 QMenu *DateTimePlugin::itemContextMenu(const QString &itemKey)
@@ -124,30 +116,6 @@ QMenu *DateTimePlugin::itemContextMenu(const QString &itemKey)
     timeMenu->addAction(is24);
     menu->addMenu(timeMenu);
 
-    QAction *centerPos = new QAction(tr("at Center"), this);
-    QAction *defaultPos = new QAction(tr("at Default"), this);
-
-    centerPos->setData("centerPos");
-    defaultPos->setData("defaultPos");
-
-    centerPos->setCheckable(true);
-    defaultPos->setCheckable(true);
-
-    QActionGroup *posGrp = new QActionGroup(this);
-    posGrp->setExclusive(true);
-    posGrp->addAction(centerPos);
-    posGrp->addAction(defaultPos);
-
-    if (m_settings.isCenter)
-        centerPos->setChecked(true);
-    else
-        defaultPos->setChecked(true);
-
-    QMenu *posMenu = new QMenu(tr("Position"));
-    posMenu->addAction(centerPos);
-    posMenu->addAction(defaultPos);
-    menu->addMenu(posMenu);
-
     QAction *timeSetting = new QAction(tr("Time Settings"), this);
     timeSetting->setData("timeSetting");
     menu->addAction(timeSetting );
@@ -165,9 +133,6 @@ void DateTimePlugin::invokedMenuItem(QAction *action)
     if (value == "is24" || value == "is12")
         m_settings.is24 = value == "is24";
 
-    if (value == "centerPos" || value == "defaultPos")
-        m_settings.isCenter = value == "centerPos";
-
     if (value == "timeSetting")
         QProcess::startDetached("dbus-send --print-reply --dest=com.deepin.dde.ControlCenter /com/deepin/dde/ControlCenter com.deepin.dde.ControlCenter.ShowModule \"string:datetime\"");
 
@@ -181,7 +146,6 @@ void DateTimePlugin::saveConfig()
     QJsonObject object;
 
     object.insert("Is24", m_settings.is24);
-    object.insert("Center", m_settings.isCenter);
     object.insert("Format", m_settings.format);
     m_proxyInter->saveConfig(pluginName(), object);
 

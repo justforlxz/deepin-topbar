@@ -18,7 +18,6 @@ public:
 
     struct MenuModel {
         bool is24;
-        bool isCenter;
         QString format;
     };
 

@@ -29,7 +29,7 @@ DateTimeWidget::DateTimeWidget(QWidget *parent) : QLabel(parent) {
 
     setContentsMargins(3, 0, 3, 0);
 
-    m_format = "hh:mm A";
+    m_format = "hh:mm";
 }
 
 DateTimeWidget::~DateTimeWidget() {
@@ -52,7 +52,8 @@ void DateTimeWidget::set24HourFormat(bool is24HourFormat)
 
 void DateTimeWidget::setFormat(const QString &value)
 {
-    m_format = value;
+    if (!value.isEmpty())
+        m_format = value;
 
     updateTime();
 }
