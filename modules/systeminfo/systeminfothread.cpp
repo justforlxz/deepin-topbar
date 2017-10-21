@@ -84,6 +84,9 @@ void SysteminfoThread::onNetworkPropertyChanged(QVariantMap m)
 void SysteminfoThread::onActiveChanged(const QVariant &value)
 {
     QList<QDBusObjectPath> list = qvariant_cast<QList<QDBusObjectPath>>(value);
+    if (list.isEmpty())
+        return;
+
     const QDBusObjectPath &path = list.first();
     if (path.path().isEmpty())
         return;
