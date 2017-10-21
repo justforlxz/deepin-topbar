@@ -131,10 +131,7 @@ void MainPanel::loadModules()
     //Stretch
     m_mainLayout->addStretch();
 
-#ifdef QT_DEBUG
-    // I think here need system tray module
     loadModule(new systemtray::SystemTrayPlugin);
-#endif
 
     loadModule(new media::MediaControlPlugin);
 

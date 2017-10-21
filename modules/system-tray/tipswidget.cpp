@@ -25,7 +25,7 @@ void TrayApplet::clear()
 
 void TrayApplet::addWidgets(QList<TrayWidget *> widgets)
 {
-    for (auto w : widgets)
+    for (TrayWidget *w : widgets)
     {
         w->setVisible(true);
         m_mainLayout->addWidget(w);

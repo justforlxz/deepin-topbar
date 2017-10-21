@@ -35,6 +35,8 @@ void SystemTrayPlugin::init(PluginProxyInterface *proxyInter)
 {
     m_proxyInter = proxyInter;
 
+    m_proxyInter->addItem(this, "system-tray");
+
     connect(m_trayInter, &DBusTrayManager::TrayIconsChanged, this, &SystemTrayPlugin::trayListChanged);
     connect(m_trayInter, &DBusTrayManager::Changed, this, &SystemTrayPlugin::trayChanged);
 
@@ -44,11 +46,9 @@ void SystemTrayPlugin::init(PluginProxyInterface *proxyInter)
 
 QWidget *SystemTrayPlugin::itemWidget(const QString &itemKey)
 {
-    const quint32 trayWinId = itemKey.toUInt();
+    Q_UNUSED(itemKey);
 
-    QWidget *w = m_trayList[trayWinId];
-
-    return w ? w : nullptr;
+    return m_trayApplet;
 }
 
 QWidget *SystemTrayPlugin::itemTipsWidget(const QString &itemKey)
@@ -90,7 +90,6 @@ int SystemTrayPlugin::itemSortKey(const QString &itemKey)
 
 void SystemTrayPlugin::setItemIsInContainer(const QString &itemKey, const bool container)
 {
-//    qDebug() << getWindowClass(itemKey.toInt());
     m_containerSettings->setValue(getWindowClass(itemKey.toInt()), container);
 }
 
@@ -126,6 +125,13 @@ const QString SystemTrayPlugin::getWindowClass(quint32 winId)
 
 void SystemTrayPlugin::trayListChanged()
 {
+    // sleep some times wait dock add icons;
+
+    QEventLoop loop;
+
+    QTimer::singleShot(800, &loop, &QEventLoop::quit);
+    loop.exec();
+
     QList<quint32> trayList = m_trayInter->trayIcons();
 
     for (auto tray : m_trayList.keys())
@@ -146,8 +152,6 @@ void SystemTrayPlugin::trayAdded(const quint32 winId)
     TrayWidget *trayWidget = new TrayWidget(winId);
 
     m_trayList[winId] = trayWidget;
-
-    m_proxyInter->addItem(this, QString::number(winId));
 }
 
 void SystemTrayPlugin::trayRemoved(const quint32 winId)
@@ -160,10 +164,7 @@ void SystemTrayPlugin::trayRemoved(const quint32 winId)
     m_trayList.remove(winId);
     widget->deleteLater();
 
-    if (m_trayApplet->isVisible())
-        updateTipsContent();
-
-    m_proxyInter->removeItem(this, QString::number(winId));
+    updateTipsContent();
 }
 
 void SystemTrayPlugin::trayChanged(const quint32 winId)
@@ -173,6 +174,5 @@ void SystemTrayPlugin::trayChanged(const quint32 winId)
 
     m_trayList[winId]->updateIcon();
 
-    if (m_trayApplet->isVisible())
-        updateTipsContent();
+    updateTipsContent();
 }
