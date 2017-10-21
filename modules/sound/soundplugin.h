@@ -28,9 +28,12 @@ public:
     void popupShow() Q_DECL_OVERRIDE;
     void popupHide() Q_DECL_OVERRIDE;
 
+    QMenu* itemContextMenu(const QString &itemKey) Q_DECL_OVERRIDE;
+
 private:
     PluginProxyInterface *m_proxyInter;
     SoundItem *m_soundItem;
+    QMenu *m_menu;
 };
 }
 }

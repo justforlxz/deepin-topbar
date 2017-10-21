@@ -80,37 +80,9 @@ PluginsItemInterface *PluginsItem::itemInter()
 
 void PluginsItem::mousePressEvent(QMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton)
-        showPopup();
+    Item::mousePressEvent(event);
 
-    if (event->button() == Qt::RightButton)
-        showContextMenu();
-}
-
-void PluginsItem::showPopup()
-{
-    QWidget * const content = popupTips();
-    if (!content)
-        return;
-
-    showPopupWindow(content);
-}
-
-void PluginsItem::showPopupWindow(QWidget * const content)
-{
-    ItemPopupWindow *popup = PopupWindow.get();
-    popup->setContent(content);
-    m_pluginInter->popupShow();
-    PopupWindow->setVisible(true);
-
-    popup->setRect(popupMarkGeometry());
-}
-
-void PluginsItem::hidePopup()
-{
-    ItemPopupWindow *popup = PopupWindow.get();
-    PopupWindow->setVisible(false);
-    popup->setVisible(false);
+    showContextMenu();
 }
 
 QMenu *PluginsItem::contextMenu() const
@@ -158,7 +130,5 @@ void PluginsItem::showContextMenu()
         return;
 
     menu->exec(QPoint(pos().x(), height()));
-
-    hidePopup();
 }
 

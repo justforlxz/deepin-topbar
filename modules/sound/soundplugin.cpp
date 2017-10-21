@@ -6,7 +6,6 @@ using namespace dtb::widgets;
 
 SoundPlugin::SoundPlugin()
 {
-    m_soundItem = new SoundItem;
 }
 
 const QString SoundPlugin::pluginName() const
@@ -16,6 +15,10 @@ const QString SoundPlugin::pluginName() const
 
 void SoundPlugin::init(PluginProxyInterface *proxyInter)
 {
+    m_soundItem = new SoundItem;
+
+    m_menu = new QMenu;
+
     m_proxyInter = proxyInter;
 
     SoundApplet * applet = qobject_cast<SoundApplet *>(m_soundItem->popupApplet());
@@ -65,4 +68,11 @@ void SoundPlugin::popupHide()
 {
     SoundApplet * applet = qobject_cast<SoundApplet *>(m_soundItem->popupApplet());
     applet->hideAni();
+}
+
+QMenu *SoundPlugin::itemContextMenu(const QString &itemKey)
+{
+    Q_UNUSED(itemKey);
+
+    return m_menu;
 }
