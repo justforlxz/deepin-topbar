@@ -1,9 +1,7 @@
 SOURCES += \
     $$PWD/accountplugin.cpp \
-    $$PWD/accountwidget.cpp \
-    $$PWD/accountpopupwidget.cpp
+    $$PWD/accountwidget.cpp
 
 HEADERS += \
     $$PWD/accountplugin.h \
-    $$PWD/accountwidget.h \
-    $$PWD/accountpopupwidget.h
+    $$PWD/accountwidget.h

@@ -7,7 +7,6 @@
 namespace dtb {
 namespace account {
 
-class AccountPopupWidget;
 class AccountWidget;
 
 class AccountPlugin : public QObject, public PluginsItemInterface
@@ -23,7 +22,6 @@ public:
 
 private:
     PluginProxyInterface *m_proxyInter;
-    AccountPopupWidget *m_popupWidget;
     AccountWidget *m_Account;
 };
 }

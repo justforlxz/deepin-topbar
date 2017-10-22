@@ -1,5 +1,4 @@
 #include "accountplugin.h"
-#include "accountpopupwidget.h"
 #include "accountwidget.h"
 
 namespace dtb {
@@ -8,7 +7,6 @@ AccountPlugin::AccountPlugin(QObject *parent)
     : QObject(parent)
 {
     m_Account = new AccountWidget;
-    m_popupWidget = new AccountPopupWidget;
 }
 
 const QString AccountPlugin::pluginName() const
