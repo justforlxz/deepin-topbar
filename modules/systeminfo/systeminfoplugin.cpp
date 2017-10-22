@@ -25,41 +25,9 @@ void SystemInfoPlugin::init(PluginProxyInterface *proxyInter)
     m_proxyInter->addItem(this, "");
 }
 
-int SystemInfoPlugin::itemSortKey(const QString &itemKey)
-{
-    Q_UNUSED(itemKey);
-
-    return 0;
-}
-
 QWidget *SystemInfoPlugin::itemWidget(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
     return m_systeminfo;
-}
-
-QWidget *SystemInfoPlugin::itemPopupApplet(const QString &itemKey)
-{
-    Q_UNUSED(itemKey);
-
-    return nullptr;
-}
-
-const QString SystemInfoPlugin::itemCommand(const QString &itemKey)
-{
-    Q_UNUSED(itemKey);
-
-    return "deepin-systeminfo";
-}
-
-void SystemInfoPlugin::popupShow()
-{
-//    m_popupWidget->showAni();
-}
-
-void SystemInfoPlugin::popupHide()
-{
-    m_proxyInter->requestHidePopup();
-//    m_popupWidget->hideAni();
 }

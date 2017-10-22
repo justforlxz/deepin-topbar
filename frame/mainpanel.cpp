@@ -77,11 +77,6 @@ void MainPanel::removeItem(PluginsItemInterface * const module, const QString &i
     item->deleteLater();
 }
 
-void MainPanel::requestHidePopup()
-{
-
-}
-
 bool MainPanel::saveConfig(const QString &itemKey, const QJsonObject &json)
 {
     const QString &configFile = QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).first() + "/deepin-topbar/" + itemKey + "/config.json";

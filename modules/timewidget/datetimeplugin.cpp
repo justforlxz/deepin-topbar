@@ -36,11 +36,6 @@ void DateTimePlugin::init(PluginProxyInterface *proxyInter) {
     m_proxyInter->addItem(this, "");
 }
 
-int DateTimePlugin::itemSortKey(const QString &itemKey) {
-    Q_UNUSED(itemKey);
-
-    return 0;
-}
 
 QWidget *DateTimePlugin::itemWidget(const QString &itemKey) {
     Q_UNUSED(itemKey);
@@ -48,41 +43,20 @@ QWidget *DateTimePlugin::itemWidget(const QString &itemKey) {
     return m_centralWidget;
 }
 
-QWidget *DateTimePlugin::itemPopupApplet(const QString &itemKey) {
-    Q_UNUSED(itemKey);
+//void DateTimePlugin::finished()
+//{
+//    const QJsonObject &config = m_proxyInter->loadConfig(pluginName());
 
-    return nullptr;
-}
+//    if (config.isEmpty())
+//        return;
 
-const QString DateTimePlugin::itemCommand(const QString &itemKey) {
-    Q_UNUSED(itemKey);
+//    m_settings.is24 = config["Is24"].toBool();
+//    m_settings.format = config["Format"].toString();
+//    m_centralWidget->setFormat(m_settings.format);
+//    m_centralWidget->set24HourFormat(m_settings.is24);
 
-    return QString("deepin-datetime");
-}
-
-void DateTimePlugin::popupShow()
-{
-}
-
-void DateTimePlugin::popupHide()
-{
-    m_proxyInter->requestHidePopup();
-}
-
-void DateTimePlugin::finished()
-{
-    const QJsonObject &config = m_proxyInter->loadConfig(pluginName());
-
-    if (config.isEmpty())
-        return;
-
-    m_settings.is24 = config["Is24"].toBool();
-    m_settings.format = config["Format"].toString();
-    m_centralWidget->setFormat(m_settings.format);
-    m_centralWidget->set24HourFormat(m_settings.is24);
-
-    m_centralWidget->adjustSize();
-}
+//    m_centralWidget->adjustSize();
+//}
 
 QMenu *DateTimePlugin::itemContextMenu(const QString &itemKey)
 {
@@ -148,6 +122,4 @@ void DateTimePlugin::saveConfig()
     object.insert("Is24", m_settings.is24);
     object.insert("Format", m_settings.format);
     m_proxyInter->saveConfig(pluginName(), object);
-
-    finished();
 }

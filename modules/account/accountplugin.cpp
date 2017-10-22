@@ -20,18 +20,7 @@ void AccountPlugin::init(PluginProxyInterface *proxyInter)
 {
     m_proxyInter = proxyInter;
 
-    connect(m_popupWidget, &AccountPopupWidget::requestHidePopup, this, [=] {
-        m_proxyInter->requestHidePopup();
-    });
-
     m_proxyInter->addItem(this, "");
-}
-
-int AccountPlugin::itemSortKey(const QString &itemKey)
-{
-    Q_UNUSED(itemKey);
-
-    return 0;
 }
 
 QWidget *AccountPlugin::itemWidget(const QString &itemKey)
@@ -41,30 +30,10 @@ QWidget *AccountPlugin::itemWidget(const QString &itemKey)
     return m_Account;
 }
 
-QWidget *AccountPlugin::itemPopupApplet(const QString &itemKey)
+QMenu *AccountPlugin::itemContextMenu(const QString &itemKey)
 {
-    Q_UNUSED(itemKey);
-
-    QWidget * w = qobject_cast<QWidget*>(m_popupWidget);
-
-    return w;
+    return nullptr;
 }
 
-const QString AccountPlugin::itemCommand(const QString &itemKey)
-{
-    Q_UNUSED(itemKey);
-
-    return "deepin-account";
-}
-
-void AccountPlugin::popupShow()
-{
-    m_popupWidget->showAni();
-}
-
-void AccountPlugin::popupHide()
-{
-    m_popupWidget->hideAni();
-}
 }
 }

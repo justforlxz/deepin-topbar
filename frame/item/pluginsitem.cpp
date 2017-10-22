@@ -16,10 +16,8 @@ PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString
     m_pluginInter(pluginInter),
     m_centralWidget(pluginInter->itemWidget(itemKey)),
     m_itemKey(itemKey),
-    m_eventMonitor(new EventMonitor(this)),
     m_menuManagerInter(new DBusMenuManager(this))
 {
-    m_eventMonitor->start();
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setMargin(0);
@@ -28,31 +26,16 @@ PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString
     mainLayout->addWidget(m_centralWidget);
 
     setLayout(mainLayout);
-
-    connect(m_eventMonitor, &EventMonitor::buttonPress, this, [=] (int x, int y) {
-        ItemPopupWindow *popup = PopupWindow.get();
-        if (!containsPoint(QPoint(x, y)) && popup->isVisible()) {
-            m_pluginInter->popupHide();
-            popup->setVisible(false);
-        }
-    });
 }
 
 PluginsItem::~PluginsItem()
 {
-    m_eventMonitor->deleteLater();
-
     m_menuManagerInter->deleteLater();
 }
 
 const QString PluginsItem::name() const
 {
     return m_pluginInter->pluginName();
-}
-
-void PluginsItem::finished()
-{
-    m_pluginInter->finished();
 }
 
 const QRect PluginsItem::popupMarkGeometry() const
@@ -68,10 +51,6 @@ const QRect PluginsItem::popupMarkGeometry() const
     }
 }
 
-QWidget *PluginsItem::popupTips()
-{
-    return m_pluginInter->itemPopupApplet(m_itemKey);
-}
 
 PluginsItemInterface *PluginsItem::itemInter()
 {

@@ -20,10 +20,6 @@ void NetworkPlugin::init(PluginProxyInterface *proxyInter)
 {
     m_proxyInter = proxyInter;
 
-    connect(m_popupWidget, &NetworkPopupWidget::requestHidePopup, this, [=] {
-        m_proxyInter->requestHidePopup();
-    });
-
     m_refershTimer->setInterval(100);
     m_refershTimer->setSingleShot(true);
 
@@ -37,13 +33,6 @@ void NetworkPlugin::init(PluginProxyInterface *proxyInter)
     m_networkManager->init();
 }
 
-int NetworkPlugin::itemSortKey(const QString &itemKey)
-{
-    Q_UNUSED(itemKey);
-
-    return 0;
-}
-
 QWidget *NetworkPlugin::itemWidget(const QString &itemKey)
 {
     for (auto deviceItem : m_deviceItemList)
@@ -51,32 +40,6 @@ QWidget *NetworkPlugin::itemWidget(const QString &itemKey)
             return deviceItem;
 
     return nullptr;
-}
-
-QWidget *NetworkPlugin::itemPopupApplet(const QString &itemKey)
-{
-    for (auto deviceItem : m_deviceItemList)
-        if (deviceItem->path() == itemKey)
-            return deviceItem->itemApplet();
-
-    return nullptr;
-}
-
-const QString NetworkPlugin::itemCommand(const QString &itemKey)
-{
-    Q_UNUSED(itemKey);
-
-    return "deepin-network";
-}
-
-void NetworkPlugin::popupShow()
-{
-    m_popupWidget->showAni();
-}
-
-void NetworkPlugin::popupHide()
-{
-    m_popupWidget->hideAni();
 }
 
 void NetworkPlugin::deviceAdded(const NetworkDevice &device)

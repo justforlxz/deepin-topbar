@@ -15,11 +15,6 @@ Item::Item(QWidget *parent)
     }
 }
 
-QWidget *Item::popupTips()
-{
-    return nullptr;
-}
-
 const QRect Item::popupMarkGeometry()
 {
     return QRect();

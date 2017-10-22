@@ -19,7 +19,6 @@ public:
     void addItem(PluginsItemInterface * const module, const QString &itemKey);
     void removeItem(PluginsItemInterface * const module, const QString &itemKey);
 
-    void requestHidePopup() Q_DECL_OVERRIDE;
     bool saveConfig(const QString &itemKey, const QJsonObject &json) Q_DECL_OVERRIDE;
     const QJsonObject loadConfig(const QString &itemKey) Q_DECL_OVERRIDE;
 

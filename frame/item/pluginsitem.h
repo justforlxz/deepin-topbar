@@ -16,13 +16,11 @@ public:
     ~PluginsItem();
 
     const QString name() const Q_DECL_OVERRIDE;
-    void finished() Q_DECL_OVERRIDE;
     const QRect popupMarkGeometry() const;
     QMenu* contextMenu() const Q_DECL_OVERRIDE;
     void detachPluginWidget();
 
 private:
-    QWidget *popupTips() Q_DECL_OVERRIDE;
     PluginsItemInterface *itemInter() Q_DECL_OVERRIDE;
     bool containsPoint(const QPoint &point) const;
 
