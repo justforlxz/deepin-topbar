@@ -32,7 +32,9 @@ QWidget *AccountPlugin::itemWidget(const QString &itemKey)
 
 QMenu *AccountPlugin::itemContextMenu(const QString &itemKey)
 {
-    return nullptr;
+    Q_UNUSED(itemKey);
+
+    return m_Account->menu();
 }
 
 }

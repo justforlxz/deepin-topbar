@@ -61,6 +61,13 @@ AccountWidget::AccountWidget(QWidget *parent) : QLabel(parent)
     setLayout(layout);
 
     installEventFilter(this);
+
+    initMenu();
+}
+
+AccountWidget::~AccountWidget()
+{
+    m_menu->deleteLater();
 }
 
 bool AccountWidget::eventFilter(QObject *watched, QEvent *event)
@@ -90,4 +97,53 @@ void AccountWidget::iconUpdate(const QString &file)
         return iconUpdate(url.path());
 
     m_accountIcon->setPixmap(QPixmap(file).scaled(26, 26));
+}
+
+void AccountWidget::handleShutdownAction(const QString &action)
+{
+    const QString command = QString("dbus-send --print-reply --dest=com.deepin.dde.shutdownFront " \
+                                    "/com/deepin/dde/shutdownFront " \
+                                    "com.deepin.dde.shutdownFront.%1").arg(action);
+
+    QProcess::startDetached(command);
+}
+
+void AccountWidget::handleLockAction()
+{
+    const QString command = QString("dbus-send --print-reply --dest=com.deepin.dde.lockFront " \
+                                    "/com/deepin/dde/lockFront " \
+                                    "com.deepin.dde.lockFront.Show");
+
+    QProcess::startDetached(command);
+}
+
+void AccountWidget::initMenu()
+{
+    m_menu = new QMenu;
+
+    QAction* m_lock = new QAction(tr("Lock"), this);
+    QAction* m_logout = new QAction(tr("Logout"), this);
+    QAction* m_suspend = new QAction(tr("Suspend"), this);
+    QAction* m_shutdown = new QAction(tr("Shutdown"), this);
+    QAction* m_reboot = new QAction(tr("Restart"), this);
+
+    m_menu->addAction(m_lock);
+    m_menu->addAction(m_logout);
+    m_menu->addAction(m_suspend);
+    m_menu->addAction(m_shutdown);
+    m_menu->addAction(m_reboot);
+
+    QSignalMapper *signalMapper = new QSignalMapper(this);
+
+    connect(m_lock, &QAction::triggered, this, &AccountWidget::handleLockAction);
+    connect(m_logout, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
+    connect(m_suspend, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
+    connect(m_shutdown, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
+    connect(m_reboot, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
+
+    signalMapper->setMapping(m_logout, "Logout");
+    signalMapper->setMapping(m_suspend, "Suspend");
+    signalMapper->setMapping(m_shutdown, "Shutdown");
+    signalMapper->setMapping(m_reboot, "Restart");
+    connect(signalMapper, static_cast<void (QSignalMapper::*)(const QString &)>(&QSignalMapper::mapped), this, &AccountWidget::handleShutdownAction);
 }
