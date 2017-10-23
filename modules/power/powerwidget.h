@@ -15,7 +15,7 @@ class FontLabel;
 
 namespace power {
 
-class PowerPopupWidget;
+class PowerWidgetAction;
 
 class PowerWidget : public QWidget
 {
@@ -23,10 +23,7 @@ class PowerWidget : public QWidget
 public:
     explicit PowerWidget(QWidget *parent = nullptr);
 
-    QWidget *popup();
-
-signals:
-    void requestHidePopup();
+    inline QMenu *menu() { return m_menu;}
 
 public slots:
     void updateBatteryIcon();
@@ -40,7 +37,7 @@ private:
     void initMenu();
 
 private:
-    PowerPopupWidget *m_popup;
+    PowerWidgetAction *m_powerActionWidget;
     widgets::FontLabel *m_batteryIcon;
     QLabel *m_battery;
     DBusPower* m_powerInter;

@@ -1,12 +1,12 @@
 SOURCES += \
     $$PWD/powerplugin.cpp \
     $$PWD/powerwidget.cpp \
-    $$PWD/powerpopupwidget.cpp
+    $$PWD/powerwidgetaction.cpp
 
 HEADERS += \
     $$PWD/powerplugin.h \
     $$PWD/powerwidget.h \
-    $$PWD/powerpopupwidget.h
+    $$PWD/powerwidgetaction.h
 
 RESOURCES += \
     $$PWD/power.qrc

@@ -1,5 +1,5 @@
 #include "powerplugin.h"
-#include "powerpopupwidget.h"
+#include "powerwidgetaction.h"
 
 using namespace dtb;
 using namespace dtb::power;
@@ -32,10 +32,5 @@ QMenu *PowerPlugin::itemContextMenu(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return new QMenu();
-}
-
-void PowerPlugin::invokedMenuItem(QAction *action)
-{
-
+    return m_centralWidget->menu();
 }

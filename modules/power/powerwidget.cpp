@@ -1,6 +1,6 @@
 #include "powerwidget.h"
 #include "dbuspower.h"
-#include "powerpopupwidget.h"
+#include "powerwidgetaction.h"
 #include "fontlabel.h"
 
 #include <QHBoxLayout>
@@ -13,7 +13,7 @@ using namespace dtb::widgets;
 namespace dtb {
 namespace power {
 PowerWidget::PowerWidget(QWidget *parent) : QWidget(parent) {
-    m_popup = new PowerPopupWidget;
+    m_powerActionWidget = new PowerWidgetAction;
 
     setFixedHeight(26);
 
@@ -43,15 +43,11 @@ PowerWidget::PowerWidget(QWidget *parent) : QWidget(parent) {
 
     updateBatteryIcon();
 
+    initMenu();
+
     connect(m_powerInter, &DBusPower::BatteryPercentageChanged, this, &PowerWidget::updateBatteryIcon);
     connect(m_powerInter, &DBusPower::BatteryStateChanged, this, &PowerWidget::updateBatteryIcon);
     connect(m_powerInter, &DBusPower::OnBatteryChanged, this, &PowerWidget::updateBatteryIcon);
-    connect(m_popup, &PowerPopupWidget::requestPowerPrecent, m_battery, &QLabel::setVisible);
-    connect(m_popup, &PowerPopupWidget::requestHidePopup, this, &PowerWidget::requestHidePopup);
-}
-
-QWidget *PowerWidget::popup() {
-    return m_popup;
 }
 
 void PowerWidget::updateBatteryIcon() {
@@ -176,7 +172,7 @@ void PowerWidget::initMenu()
 {
     m_menu = new QMenu;
 
-
+    m_menu->addAction(m_powerActionWidget);
 }
 }
 }
