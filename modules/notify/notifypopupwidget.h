@@ -12,15 +12,16 @@ class NotifyPopupWidget : public QWidget
 public:
     explicit NotifyPopupWidget(QWidget *parent = 0);
 
-signals:
-    void requestHidePopup() const;
-
-public slots:
-    void showAni();
-    void hideAni();
+protected:
+    void showEvent(QShowEvent *event) Q_DECL_OVERRIDE;
+    void hideEvent(QHideEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
     void onScreenChanged();
+
+private:
+    void initUI();
+    void initConnect();
 
 private:
     QPropertyAnimation *m_showAni;

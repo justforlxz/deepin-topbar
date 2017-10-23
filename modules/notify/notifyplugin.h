@@ -21,7 +21,7 @@ public:
     void init(PluginProxyInterface *proxyInter) Q_DECL_OVERRIDE;
 
     QWidget *itemWidget(const QString &itemKey) Q_DECL_OVERRIDE;
-
+    QMenu* itemContextMenu(const QString &itemKey) Q_DECL_OVERRIDE;
 
 private:
     PluginProxyInterface *m_proxyInter;
