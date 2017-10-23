@@ -87,7 +87,7 @@ void PowerWidget::updateBatteryIcon() {
         else if (percentage <= 80)
             percentageStr = 0xE862;
         else if (percentage <= 90)
-            percentageStr = 0xE863;
+            percentageStr = 0xE83E;
         else if (percentage <= 100)
             percentageStr = 0xEA93;
     } else {
