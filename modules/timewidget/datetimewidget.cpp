@@ -29,7 +29,7 @@ DateTimeWidget::DateTimeWidget(QWidget *parent) : QLabel(parent) {
 
     setContentsMargins(3, 0, 3, 0);
 
-    m_format = "hh:mm";
+    m_format = "yyyy-MM-dd hh:mm";
 }
 
 DateTimeWidget::~DateTimeWidget() {
