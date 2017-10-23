@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QLabel>
+#include <QMenu>
 
 class DBusPower;
 
@@ -36,11 +37,15 @@ protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
 private:
+    void initMenu();
+
+private:
     PowerPopupWidget *m_popup;
     widgets::FontLabel *m_batteryIcon;
     QLabel *m_battery;
     DBusPower* m_powerInter;
     bool m_enter = false;
+    QMenu *m_menu;
 };
 }
 }

@@ -171,5 +171,12 @@ void PowerWidget::paintEvent(QPaintEvent *event)
         painter.fillRect(rect(), QColor("#1E90FF"));
     }
 }
+
+void PowerWidget::initMenu()
+{
+    m_menu = new QMenu;
+
+
+}
 }
 }
