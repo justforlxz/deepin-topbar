@@ -40,8 +40,9 @@ void SystemTrayPlugin::init(PluginProxyInterface *proxyInter)
     connect(m_trayInter, &DBusTrayManager::TrayIconsChanged, this, &SystemTrayPlugin::trayListChanged);
     connect(m_trayInter, &DBusTrayManager::Changed, this, &SystemTrayPlugin::trayChanged);
 
-    m_trayInter->RetryManager();
-    trayListChanged();
+    m_trayInter->Manage();
+
+    QTimer::singleShot(1, this, &SystemTrayPlugin::trayListChanged);
 }
 
 QWidget *SystemTrayPlugin::itemWidget(const QString &itemKey)
@@ -128,7 +129,6 @@ void SystemTrayPlugin::trayListChanged()
     // sleep some times wait dock add icons;
 
     QEventLoop loop;
-
     QTimer::singleShot(800, &loop, &QEventLoop::quit);
     loop.exec();
 
@@ -152,6 +152,8 @@ void SystemTrayPlugin::trayAdded(const quint32 winId)
     TrayWidget *trayWidget = new TrayWidget(winId);
 
     m_trayList[winId] = trayWidget;
+
+    m_trayApplet->addWidget(trayWidget);
 }
 
 void SystemTrayPlugin::trayRemoved(const quint32 winId)

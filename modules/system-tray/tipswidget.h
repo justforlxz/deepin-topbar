@@ -13,6 +13,7 @@ public:
     explicit TrayApplet(QWidget *parent = 0);
 
     void clear();
+    void addWidget(TrayWidget * widget);
     void addWidgets(QList<TrayWidget *> widgets);
 
 private:

@@ -23,12 +23,16 @@ void TrayApplet::clear()
     }
 }
 
+void TrayApplet::addWidget(TrayWidget *widget)
+{
+    widget->setVisible(true);
+    m_mainLayout->addWidget(widget);
+}
+
 void TrayApplet::addWidgets(QList<TrayWidget *> widgets)
 {
-    for (TrayWidget *w : widgets)
-    {
+    for (TrayWidget *w : widgets) {
         w->setVisible(true);
         m_mainLayout->addWidget(w);
     }
-    setFixedWidth(widgets.size() * 26);
 }
