@@ -158,8 +158,7 @@ const QPixmap WirelessItem::cachedPix(const QString &key, const int size)
     if (!m_icons.contains(key)) {
 
         QPixmap pixmap(size, size);
-//        QSvgRenderer renderer(":/wireless/resources/wireless/" + key + ".svg");
-        QSvgRenderer renderer(QString(":/wireless/resources/wireless/wireless-4.symbolic.svg"));
+        QSvgRenderer renderer(":/wireless/resources/wireless/" + key + ".svg");
         pixmap.fill(Qt::transparent);
 
         QPainter painter;

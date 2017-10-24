@@ -4,6 +4,8 @@
         <file>resources/wired/wired-connected.svg</file>
         <file>resources/wired/wired-disconnected-small.svg</file>
         <file>resources/wired/wired-disconnected.svg</file>
+        <file>resources/wired/wired-error-small.svg</file>
+        <file>resources/wired/wired-unaccessable-small.svg</file>
     </qresource>
     <qresource prefix="/wireless">
         <file>resources/wireless/wireless-0.svg</file>

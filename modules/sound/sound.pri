@@ -15,4 +15,4 @@ HEADERS += \
     $$PWD/sounditem.h
 
 RESOURCES += \
-    $$PWD/resources/resources.qrc
+    $$PWD/resources/sound.qrc

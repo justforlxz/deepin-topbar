@@ -11,4 +11,4 @@ SOURCES += \
     $$PWD/tipswidget.cpp
 
 RESOURCES += \
-    $$PWD/resources.qrc
+    $$PWD/system-tray.qrc

@@ -31,4 +31,4 @@ HEADERS += \
     $$PWD/util/imageutil.h
 
 RESOURCES += \
-    $$PWD/resources.qrc
+    $$PWD/network.qrc
