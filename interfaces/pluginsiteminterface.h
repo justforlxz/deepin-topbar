@@ -50,7 +50,7 @@ public:
     ///
     virtual QWidget *itemWidget(const QString &itemKey) = 0;
 
-    virtual QMenu* itemContextMenu(const QString &itemKey) { Q_UNUSED(itemKey); return new QMenu();}
+    virtual QMenu* itemContextMenu(const QString &itemKey) { Q_UNUSED(itemKey); return nullptr;}
 
 protected:
     ///
