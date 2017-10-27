@@ -9,6 +9,9 @@
 namespace dtb {
 namespace wallpaper {
 
+class WallpaperWorker;
+class WallpaperModel;
+
 class WallpaperPlugin : public QObject, public PluginsItemInterface
 {
     Q_OBJECT
@@ -26,6 +29,8 @@ private:
     PluginProxyInterface *m_proxyInter;
     WallpaperPopupWidget *m_popupWidget;
     WallpaperWidget *m_Wallpaper;
+    WallpaperModel *m_model;
+    WallpaperWorker *m_worker;
 };
 }
 }

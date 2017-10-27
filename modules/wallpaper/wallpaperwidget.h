@@ -7,31 +7,38 @@
 
 DWIDGET_USE_NAMESPACE
 
-class WallpaperWidget : public QLabel
-{
-    Q_OBJECT
-public:
-    explicit WallpaperWidget(QWidget *parent = 0);
+namespace dtb {
+    namespace wallpaper {
+    class WallpaperModel;
+    class WallpaperWidget : public QLabel
+    {
+        Q_OBJECT
+    public:
+        explicit WallpaperWidget(QWidget *parent = 0);
+        void setModel(WallpaperModel *model);
 
-    enum HandleAction{
-        Next,
-        Abount,
-        Brow,
-        Preferences
+        enum HandleAction{
+            Next,
+            Abount,
+            Brow,
+            Preferences
+        };
+
+        QMenu *menu() const;
+
+    private:
+        void handleAction(const int &action);
+
+    private:
+        void initUI();
+        void initMenu();
+
+    private:
+        QMenu *m_menu;
+        DAboutDialog *m_about;
+        WallpaperModel *m_model;
     };
-
-    QMenu *menu() const;
-
-private:
-    void handleAction(const int &action);
-
-private:
-    void initUI();
-    void initMenu();
-
-private:
-    QMenu *m_menu;
-    DAboutDialog *m_about;
-};
+    }
+}
 
 #endif // WallpaperWIDGET_H

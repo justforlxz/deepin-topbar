@@ -5,6 +5,9 @@
 #include <QSignalMapper>
 #include <QEvent>
 
+using namespace dtb;
+using namespace dtb::wallpaper;
+
 WallpaperWidget::WallpaperWidget(QWidget *parent) : QLabel(parent)
 {
       initUI();
@@ -86,4 +89,9 @@ void WallpaperWidget::initMenu()
     signalMapper->setMapping(preference, Preferences);
     connect(signalMapper, static_cast<void (QSignalMapper::*)(const int)>(&QSignalMapper::mapped), this, &WallpaperWidget::handleAction);
 
+}
+
+void WallpaperWidget::setModel(WallpaperModel *model)
+{
+    m_model = model;
 }
