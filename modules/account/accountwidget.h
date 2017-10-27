@@ -20,9 +20,6 @@ public:
 
     inline QMenu *menu() { return m_menu;}
 
-protected:
-    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
-
 private slots:
     void iconUpdate(const QString &file);
     void handleShutdownAction(const QString &action);

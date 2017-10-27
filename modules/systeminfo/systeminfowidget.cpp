@@ -15,14 +15,6 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent) : QWidget(parent)
     setObjectName("SystemInfoWidget");
     setFixedSize(80, 26);
 
-    setStyleSheet("QLabel {"
-                  "color: rgb(67, 67, 62);"
-                  "font-size: 11px;"
-                  "font-weight: 500;"
-                  "}");
-
-    m_enter = false;
-
     m_tx = new QLabel;
     m_tx->setFixedHeight(12);
     m_tx->setText(converSpeed(0));
@@ -68,47 +60,6 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent) : QWidget(parent)
     });
 
     systeminfoThread->start();
-}
-
-void SystemInfoWidget::enterEvent(QEvent *event)
-{
-    QWidget::enterEvent(event);
-
-    m_enter = true;
-
-    setStyleSheet("QLabel {"
-                  "color: white;"
-                  "font-size: 11px;"
-                  "font-weight: 500;"
-                  "}");
-
-    update();
-}
-
-void SystemInfoWidget::leaveEvent(QEvent *event)
-{
-    QWidget::leaveEvent(event);
-
-    m_enter = false;
-
-    setStyleSheet("QLabel {"
-                  "color: rgb(67, 67, 62);"
-                  "font-size: 11px;"
-                  "font-weight: 500;"
-                  "}");
-
-    update();
-}
-
-void SystemInfoWidget::paintEvent(QPaintEvent *event)
-{
-    QWidget::paintEvent(event);
-
-    QPainter painter(this);
-
-    if (m_enter) {
-        painter.fillRect(rect(), QColor("#1E90FF"));
-    }
 }
 
 const QString SystemInfoWidget::converSpeed(const int value)

@@ -12,18 +12,12 @@ class SystemInfoWidget : public QWidget
 public:
     explicit SystemInfoWidget(QWidget *parent = 0);
 
-protected:
-    void enterEvent(QEvent *event) Q_DECL_OVERRIDE;
-    void leaveEvent(QEvent *event) Q_DECL_OVERRIDE;
-    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
-
 private:
     const QString converSpeed(const int value);
 
 private:
     QLabel *m_rx;
     QLabel *m_tx;
-    bool m_enter;
 };
 }
 }

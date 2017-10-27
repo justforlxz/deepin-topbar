@@ -16,9 +16,6 @@ class NotifyWidget : public QLabel
 public:
     explicit NotifyWidget(QWidget *parent = 0);
 
-protected:
-    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
-
 private:
     widgets::FontLabel *m_NotifyIcon;
 };

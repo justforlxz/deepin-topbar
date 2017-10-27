@@ -22,6 +22,8 @@ PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString
 
     mainLayout->addWidget(m_centralWidget);
 
+    setStyleSheet("QLabel {color: rgb(67, 67, 62);background: transparent;}");
+
     setLayout(mainLayout);
 }
 
@@ -103,8 +105,10 @@ bool PluginsItem::containsPoint(const QPoint &point) const
 void PluginsItem::showContextMenu()
 {
     QMenu* menu = contextMenu();
-    if (!menu)
+    if (!menu) {
+        setStyleSheet("QLabel {color: rgb(67, 67, 62);background: transparent;}");
         return;
+    }
 
     connect(menu, &QMenu::aboutToHide, this,[=] {
         setStyleSheet("QLabel {color: rgb(67, 67, 62);background: transparent;}");

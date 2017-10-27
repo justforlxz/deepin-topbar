@@ -38,13 +38,6 @@ AccountWidget::AccountWidget(QWidget *parent) : QLabel(parent)
 
     setFixedSize(30, 26);
 
-    setStyleSheet("QLabel {"
-                  "background: transparent;"
-                  "}"
-                  "QLabel:hover {"
-                  "background: #1E90FF;"
-                  "}");
-
     m_accountIcon = new QLabel;
     m_accountIcon->setFixedSize(30, 22);
 
@@ -60,31 +53,12 @@ AccountWidget::AccountWidget(QWidget *parent) : QLabel(parent)
 
     setLayout(layout);
 
-    installEventFilter(this);
-
     initMenu();
 }
 
 AccountWidget::~AccountWidget()
 {
     m_menu->deleteLater();
-}
-
-bool AccountWidget::eventFilter(QObject *watched, QEvent *event)
-{
-    Q_UNUSED(watched);
-
-    if (event->type() == QMouseEvent::Enter) {
-        m_accountIcon->setStyleSheet("background: transparent;"
-                                    "color: white;");
-    }
-
-    if (event->type() == QMouseEvent::Leave) {
-        m_accountIcon->setStyleSheet("background: transparent;"
-                                    "color: rgb(67, 67, 62);");
-    }
-
-    return false;
 }
 
 void AccountWidget::iconUpdate(const QString &file)

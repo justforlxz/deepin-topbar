@@ -29,16 +29,6 @@ PowerWidget::PowerWidget(QWidget *parent) : QWidget(parent) {
 
     setLayout(layout);
 
-    m_battery->setStyleSheet("QLabel {"
-                             "font: 14px;"
-                             "color: rgb(67, 67, 62);"
-                             "font-weight: 500;"
-                             "}");
-
-    m_batteryIcon->setStyleSheet("QLabel {"
-                                 "color: rgb(67, 67, 62);"
-                                 "}");
-
     m_powerInter = new DBusPower(this);
 
     updateBatteryIcon();
@@ -117,55 +107,6 @@ void PowerWidget::updateBatteryIcon() {
 
     m_battery->setText(QString::number(percentage) + "%");
     m_batteryIcon->setIcon(percentageStr, 17);
-}
-
-void PowerWidget::enterEvent(QEvent *event)
-{
-    QWidget::enterEvent(event);
-
-    m_enter = true;
-
-    m_battery->setStyleSheet("QLabel {"
-                             "font: 14px;"
-                             "color: white;"
-                             "font-weight: 500;"
-                             "}");
-
-    m_batteryIcon->setStyleSheet("QLabel {"
-                                 "color: white;"
-                                 "}");
-
-    update();
-}
-
-void PowerWidget::leaveEvent(QEvent *event)
-{
-    QWidget::leaveEvent(event);
-
-    m_enter = false;
-
-    m_battery->setStyleSheet("QLabel {"
-                             "font: 14px;"
-                             "color: rgb(67, 67, 62);"
-                             "font-weight: 500;"
-                             "}");
-
-    m_batteryIcon->setStyleSheet("QLabel {"
-                                 "color: rgb(67, 67, 62);"
-                                 "}");
-
-    update();
-}
-
-void PowerWidget::paintEvent(QPaintEvent *event)
-{
-    QWidget::paintEvent(event);
-
-    QPainter painter(this);
-
-    if (m_enter) {
-        painter.fillRect(rect(), QColor("#1E90FF"));
-    }
 }
 
 void PowerWidget::initMenu()

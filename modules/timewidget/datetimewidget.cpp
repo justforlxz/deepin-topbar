@@ -6,17 +6,6 @@ namespace Plugin {
 namespace DateTime {
 DateTimeWidget::DateTimeWidget(QWidget *parent) : QLabel(parent) {
 
-    setStyleSheet("QLabel {"
-                  "font: 14px;"
-                  "color: rgb(67, 67, 62);"
-                  "font-weight: 500;"
-                  "background: transparent;"
-                  "}"
-                  "QLabel:hover {"
-                  "color: white;"
-                  "background: #1E90FF;"
-                  "}");
-
     m_dateTime = new QDateTime;
     QTimer *timer = new QTimer(this);
     timer->setInterval(1000);

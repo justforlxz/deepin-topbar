@@ -24,9 +24,6 @@ public:
 
 protected:
     void wheelEvent(QWheelEvent *e) Q_DECL_OVERRIDE;
-    void enterEvent(QEvent *event) Q_DECL_OVERRIDE;
-    void leaveEvent(QEvent *event) Q_DECL_OVERRIDE;
-    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
     void refershIcon();
@@ -36,7 +33,6 @@ private:
     widgets::FontLabel *m_fontLabel;
     SoundApplet *m_applet;
     DBusSink *m_sinkInter;
-    bool m_isEnter = false;
 };
 }
 }
