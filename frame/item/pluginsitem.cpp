@@ -1,8 +1,6 @@
 #include "pluginsitem.h"
-#include "dbus/dbusmenu.h"
+#include <QEvent>
 #include <QHBoxLayout>
-#include <QDBusPendingReply>
-#include <QDBusObjectPath>
 #include <QPoint>
 #include <QMouseEvent>
 #include <QScreen>
@@ -15,8 +13,7 @@ PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString
     Item(parent),
     m_pluginInter(pluginInter),
     m_centralWidget(pluginInter->itemWidget(itemKey)),
-    m_itemKey(itemKey),
-    m_menuManagerInter(new DBusMenuManager(this))
+    m_itemKey(itemKey)
 {
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
@@ -30,7 +27,6 @@ PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString
 
 PluginsItem::~PluginsItem()
 {
-    m_menuManagerInter->deleteLater();
 }
 
 const QString PluginsItem::name() const
@@ -60,6 +56,8 @@ PluginsItemInterface *PluginsItem::itemInter()
 void PluginsItem::mousePressEvent(QMouseEvent *event)
 {
     Item::mousePressEvent(event);
+
+    setStyleSheet("QLabel {color: white;background: #1E90FF;}");
 
     showContextMenu();
 }
@@ -107,6 +105,10 @@ void PluginsItem::showContextMenu()
     QMenu* menu = contextMenu();
     if (!menu)
         return;
+
+    connect(menu, &QMenu::aboutToHide, this,[=] {
+        setStyleSheet("QLabel {color: rgb(67, 67, 62);background: transparent;}");
+    });
 
     menu->exec(QPoint(pos().x(), height()));
 }

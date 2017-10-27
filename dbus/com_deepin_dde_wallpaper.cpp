@@ -9,7 +9,7 @@
  * before re-generating it.
  */
 
-#include "generated/com_deepin_dde_wallpaper.h"
+#include "com_deepin_dde_wallpaper.h"
 
 /*
  * Implementation of interface class __Wallpaper

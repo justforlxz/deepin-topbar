@@ -3,8 +3,6 @@
 
 #include "../interfaces/pluginsiteminterface.h"
 #include "item.h"
-#include "utils/event_monitor.h"
-#include "dbus/dbusmenumanager.h"
 #include <QWidget>
 
 namespace dtb {
@@ -16,7 +14,7 @@ public:
     ~PluginsItem();
 
     const QString name() const Q_DECL_OVERRIDE;
-    const QRect popupMarkGeometry() const;
+    const QRect popupMarkGeometry() const Q_DECL_OVERRIDE;
     QMenu* contextMenu() const Q_DECL_OVERRIDE;
     void detachPluginWidget();
 
@@ -37,8 +35,6 @@ private:
     PluginsItemInterface * m_pluginInter;
     QWidget *m_centralWidget;
     QString m_itemKey;
-    EventMonitor *m_eventMonitor;
-    DBusMenuManager *m_menuManagerInter;
 };
 }
 

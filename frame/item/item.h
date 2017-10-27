@@ -14,7 +14,7 @@ public:
     explicit Item(QWidget *parent = 0);
 
     virtual const QString name() const {return QString();}
-    virtual const QRect popupMarkGeometry();
+    virtual const QRect popupMarkGeometry() const;
     virtual PluginsItemInterface *itemInter();
     virtual QMenu* contextMenu() const;
 

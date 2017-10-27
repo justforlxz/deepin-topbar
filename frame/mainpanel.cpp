@@ -9,6 +9,7 @@
 #include "../modules/system-tray/systemtrayplugin.h"
 #include "../modules/systeminfo/systeminfoplugin.h"
 #include "../modules/notify/notifyplugin.h"
+#include "../modules/wallpaper/wallpaperplugin.h"
 
 #include "item/pluginsitem.h"
 
@@ -127,6 +128,8 @@ void MainPanel::loadModules()
     m_mainLayout->addStretch();
 
     loadModule(new systemtray::SystemTrayPlugin);
+
+    loadModule(new wallpaper::WallpaperPlugin);
 
     loadModule(new media::MediaControlPlugin);
 

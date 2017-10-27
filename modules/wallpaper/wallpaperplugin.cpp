@@ -27,3 +27,8 @@ QWidget *WallpaperPlugin::itemWidget(const QString &itemKey)
 
     return m_Wallpaper;
 }
+
+QMenu *WallpaperPlugin::itemContextMenu(const QString &itemKey)
+{
+    return m_Wallpaper->menu();
+}
