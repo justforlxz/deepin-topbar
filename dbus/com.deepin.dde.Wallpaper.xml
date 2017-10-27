@@ -1,0 +1,16 @@
+<interface name="com.deepin.dde.Wallpaper">
+  <method name="setFolder">
+    <arg name="list" type="as" direction="in"/>
+    <arg name="isVideo" type="b" direction="in"/>
+  </method>
+  <method name="setVolume">
+    <arg name="volume" type="i" direction="in"/>
+  </method>
+  <method name="setInterval">
+    <arg name="interval" type="i" direction="in"/>
+  </method>
+  <method name="clear"></method>
+  <method name="play"></method>
+  <method name="pause"></method>
+  <method name="stop"></method>
+</interface>
