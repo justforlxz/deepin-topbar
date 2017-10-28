@@ -22,8 +22,6 @@ HEADERS  += \
     $$PWD/item/stretchitem.h \
     $$PWD/utils/itempopupwindow.h \
     $$PWD/utils/event_monitor.h \
-    $$PWD/dbus/dbusmenu.h \
-    $$PWD/dbus/dbusmenumanager.h \
     item/contentmodule.h
 
 SOURCES += \
@@ -35,8 +33,6 @@ SOURCES += \
     $$PWD/item/stretchitem.cpp \
     $$PWD/utils/itempopupwindow.cpp \
     $$PWD/utils/event_monitor.cpp \
-    $$PWD/dbus/dbusmenu.cpp \
-    $$PWD/dbus/dbusmenumanager.cpp \
     item/contentmodule.cpp
 
 headers.files += ../interfaces/pluginsiteminterface.h \
