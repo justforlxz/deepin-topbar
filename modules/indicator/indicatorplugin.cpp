@@ -5,7 +5,7 @@ using namespace dtb::indicator;
 
 IndicatorPlugin::IndicatorPlugin(QObject *parent) : QObject(parent)
 {
-    m_centralWidget = new Plugin::Indicator::IndicatorWidget;
+    m_centralWidget = new IndicatorWidget;
 }
 
 const QString IndicatorPlugin::pluginName() const

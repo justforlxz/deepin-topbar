@@ -2,8 +2,8 @@
 #include <QHBoxLayout>
 #include <QIcon>
 
-namespace Plugin {
-namespace Indicator {
+namespace dtb {
+namespace indicator {
 
 Entry::Entry(QWidget *parent) : QWidget(parent)
 {

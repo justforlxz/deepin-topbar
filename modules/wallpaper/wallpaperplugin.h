@@ -16,7 +16,7 @@ class WallpaperPlugin : public QObject, public PluginsItemInterface
 {
     Q_OBJECT
 public:
-    WallpaperPlugin();
+    WallpaperPlugin(QObject *parent = nullptr);
 
     const QString pluginName() const Q_DECL_OVERRIDE;
     void init(PluginProxyInterface *proxyInter) Q_DECL_OVERRIDE;

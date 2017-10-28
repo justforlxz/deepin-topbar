@@ -4,8 +4,8 @@
 #include <QWidget>
 #include <QLabel>
 
-namespace Plugin {
-namespace Indicator {
+namespace dtb {
+namespace indicator {
 
 class Entry : public QWidget
 {

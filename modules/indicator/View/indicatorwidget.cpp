@@ -8,8 +8,8 @@
 #include <QDBusConnection>
 #include "../themeappicon.h"
 
-namespace Plugin {
-namespace Indicator {
+namespace dtb {
+namespace indicator {
 
 IndicatorWidget::IndicatorWidget(QWidget *parent) : QWidget(parent)
 {

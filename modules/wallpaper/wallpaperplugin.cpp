@@ -5,7 +5,13 @@
 using namespace dtb;
 using namespace dtb::wallpaper;
 
-WallpaperPlugin::WallpaperPlugin()
+WallpaperPlugin::WallpaperPlugin(QObject *parent)
+    : QObject(parent)
+    , m_proxyInter(nullptr)
+    , m_popupWidget(nullptr)
+    , m_Wallpaper(nullptr)
+    , m_model(nullptr)
+    , m_worker(nullptr)
 {
 
 }

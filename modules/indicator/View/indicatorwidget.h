@@ -9,8 +9,8 @@
 
 using systeminfo = com::deepin::daemon::SystemInfo;
 
-namespace Plugin {
-namespace Indicator {
+namespace dtb {
+namespace indicator {
 class IndicatorWidget : public QWidget
 {
     Q_OBJECT
