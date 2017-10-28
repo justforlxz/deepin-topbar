@@ -16,31 +16,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WALLPAPERWORKER_H
-#define WALLPAPERWORKER_H
+#ifndef WALLPAPERSETTINGS_H
+#define WALLPAPERSETTINGS_H
 
-#include "com_deepin_dde_wallpaper.h"
-#include <QObject>
-
-using Wallpaper = com::deepin::dde::Wallpaper;
+#include <QWidget>
+#include <QVBoxLayout>
+#include <QListWidget>
 
 namespace dtb {
 namespace wallpaper {
-class WallpaperModel;
-class WallpaperWorker : public QObject
+class WallpaperSettings : public QWidget
 {
     Q_OBJECT
 public:
-    explicit WallpaperWorker(WallpaperModel *model, QObject *parent = nullptr);
+    explicit WallpaperSettings(QWidget *parent = nullptr);
 
-public slots:
-    void setWallpaperList(const QJsonObject &value);
+signals:
+    void requestFinished(const QJsonObject &value);
 
 private:
-    WallpaperModel *m_model;
-    Wallpaper *m_wallpaperInter;
+    void addOne();
+    void removeOne();
+    void clean();
+    void finished();
+
+private:
+    QVBoxLayout *m_layout;
+    QListWidget *m_listView;
+    QStringList m_list;
 };
 }
 }
 
-#endif // WALLPAPERWORKER_H
+#endif // WALLPAPERSETTINGS_H

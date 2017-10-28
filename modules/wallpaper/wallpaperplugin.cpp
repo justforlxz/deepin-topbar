@@ -8,12 +8,10 @@ using namespace dtb::wallpaper;
 WallpaperPlugin::WallpaperPlugin(QObject *parent)
     : QObject(parent)
     , m_proxyInter(nullptr)
-    , m_popupWidget(nullptr)
-    , m_Wallpaper(new WallpaperWidget)
+    , m_wallpaper(new WallpaperWidget)
     , m_model(new WallpaperModel)
     , m_worker(new WallpaperWorker(m_model))
 {
-
 }
 
 const QString WallpaperPlugin::pluginName() const
@@ -25,11 +23,12 @@ void WallpaperPlugin::init(PluginProxyInterface *proxyInter)
 {
     m_proxyInter = proxyInter;
 
-    m_Wallpaper->setModel(m_model);
+    m_wallpaper->setModel(m_model);
 
     m_model->moveToThread(qApp->thread());
     m_worker->moveToThread(qApp->thread());
 
+    connect(m_wallpaper, &WallpaperWidget::requestSetWallpapers, m_worker, &WallpaperWorker::setWallpaperList);
 
     m_proxyInter->addItem(this, "");
 }
@@ -38,12 +37,12 @@ QWidget *WallpaperPlugin::itemWidget(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return m_Wallpaper;
+    return m_wallpaper;
 }
 
 QMenu *WallpaperPlugin::itemContextMenu(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return m_Wallpaper->menu();
+    return m_wallpaper->menu();
 }

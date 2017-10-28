@@ -2,7 +2,6 @@
 #define WallpaperPLUGIN_H
 
 #include "../interfaces/pluginsiteminterface.h"
-#include "wallpaperpopupwidget.h"
 #include "wallpaperwidget.h"
 #include <QObject>
 
@@ -27,8 +26,7 @@ public:
 
 private:
     PluginProxyInterface *m_proxyInter;
-    WallpaperPopupWidget *m_popupWidget;
-    WallpaperWidget *m_Wallpaper;
+    WallpaperWidget *m_wallpaper;
     WallpaperModel *m_model;
     WallpaperWorker *m_worker;
 };

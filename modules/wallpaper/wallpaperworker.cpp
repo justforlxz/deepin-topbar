@@ -19,12 +19,28 @@
 #include "wallpaperworker.h"
 #include "wallpapermodel.h"
 
+#include <QDebug>
+
 using namespace dtb;
 using namespace dtb::wallpaper;
 
 WallpaperWorker::WallpaperWorker(WallpaperModel *model, QObject *parent)
     : QObject(parent)
     , m_model(model)
+    , m_wallpaperInter(new Wallpaper("com.deepin.dde.Wallpaper", "/com/deepin/dde/Wallpaper", QDBusConnection::sessionBus(), this))
 {
+    m_wallpaperInter->setSync(false);
+}
 
+void WallpaperWorker::setWallpaperList(const QJsonObject &value)
+{
+    QJsonArray array = value["Folder"].toArray();
+    QStringList list;
+
+    for (const QJsonValue &v : array)
+        list << v.toString();
+
+    m_wallpaperInter->setFolder(list, false);
+    m_wallpaperInter->setInterval(value["Interval"].toInt());
+    m_wallpaperInter->play();
 }

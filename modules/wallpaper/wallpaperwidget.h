@@ -2,6 +2,7 @@
 #define WallpaperWIDGET_H
 
 #include "item/contentmodule.h"
+#include "wallpapersettings.h"
 #include <QLabel>
 #include <QMenu>
 #include <DAboutDialog>
@@ -27,17 +28,22 @@ namespace dtb {
 
         QMenu *menu() const;
 
+    signals:
+        void requestSetWallpapers(const QJsonObject &value);
+
     private:
         void handleAction(const int &action);
 
     private:
         void initUI();
         void initMenu();
+        void initConnect();
 
     private:
         QMenu *m_menu;
         DAboutDialog *m_about;
         WallpaperModel *m_model;
+        WallpaperSettings *m_settings;
     };
     }
 }

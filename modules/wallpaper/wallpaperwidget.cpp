@@ -5,15 +5,19 @@
 #include <QLabel>
 #include <QSignalMapper>
 #include <QEvent>
+#include <DWidgetUtil>
 
 using namespace dtb;
 using namespace dtb::wallpaper;
+
+DWIDGET_USE_NAMESPACE
 
 WallpaperWidget::WallpaperWidget(QWidget *parent)
     : ContentModule(parent)
 {
       initUI();
       initMenu();
+      initConnect();
 }
 
 QMenu *WallpaperWidget::menu() const
@@ -31,6 +35,8 @@ void WallpaperWidget::handleAction(const int &action)
         m_about->show();
         break;
     case Preferences:
+        m_settings->show();
+        moveToCenter(m_settings);
         break;
     case Brow:
         break;
@@ -64,6 +70,8 @@ void WallpaperWidget::initUI()
     m_about->setTitle(tr("DreamScene"));
     m_about->setVersion("0.1.1");
     m_about->setWebsiteLink("https://blog.mkacg.com/");
+
+    m_settings = new WallpaperSettings;
 }
 
 void WallpaperWidget::initMenu()
@@ -92,6 +100,11 @@ void WallpaperWidget::initMenu()
     signalMapper->setMapping(preference, Preferences);
     connect(signalMapper, static_cast<void (QSignalMapper::*)(const int)>(&QSignalMapper::mapped), this, &WallpaperWidget::handleAction);
 
+}
+
+void WallpaperWidget::initConnect()
+{
+    connect(m_settings, &WallpaperSettings::requestFinished, this, &WallpaperWidget::requestSetWallpapers);
 }
 
 void WallpaperWidget::setModel(WallpaperModel *model)
