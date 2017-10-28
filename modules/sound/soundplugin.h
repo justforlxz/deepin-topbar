@@ -3,7 +3,6 @@
 
 #include "../interfaces/pluginsiteminterface.h"
 #include "sounditem.h"
-#include "soundapplet.h"
 #include <QObject>
 
 namespace dtb {
@@ -26,7 +25,6 @@ public:
 private:
     PluginProxyInterface *m_proxyInter;
     SoundItem *m_soundItem;
-    QMenu *m_menu;
 };
 }
 }

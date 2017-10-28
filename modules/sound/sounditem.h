@@ -3,6 +3,7 @@
 
 #include "item/contentmodule.h"
 
+#include <QMenu>
 #include <QWidget>
 
 class DBusSink;
@@ -22,7 +23,7 @@ class SoundItem : public ContentModule
 public:
     explicit SoundItem(QWidget *parent = 0);
 
-    QWidget *popupApplet();
+    QMenu *menu() const;
 
 protected:
     void wheelEvent(QWheelEvent *e) Q_DECL_OVERRIDE;
@@ -30,11 +31,13 @@ protected:
 private slots:
     void refershIcon();
     void sinkChanged(DBusSink *sink);
+    void handleAction(const int &action);
 
 private:
     widgets::FontLabel *m_fontLabel;
     SoundApplet *m_applet;
     DBusSink *m_sinkInter;
+    QMenu *m_menu;
 };
 }
 }

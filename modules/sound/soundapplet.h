@@ -1,6 +1,8 @@
 #ifndef SOUNDAPPLET_H
 #define SOUNDAPPLET_H
 
+#include <QWidgetAction>
+
 #include <QScrollArea>
 #include <QVBoxLayout>
 #include <QLabel>
@@ -18,48 +20,68 @@ class FontLabel;
 }
 
 namespace sound {
-class VolumeSlider;
-class SoundApplet : public QScrollArea
+
+class SoundApplet : public QWidgetAction
 {
     Q_OBJECT
-
 public:
-    explicit SoundApplet(QWidget *parent = 0);
-
+    SoundApplet(QWidget *parent = nullptr);
+    QSlider *mainSlider();
     int volumeValue() const;
-    VolumeSlider *mainSlider();
-
-    void showAni();
-    void hideAni();
 
 signals:
     void volumeChanged(const int value) const;
     void defaultSinkChanged(DBusSink *sink) const;
-    void requestHidePopup() const;
-
-private slots:
-    void defaultSinkChanged();
-    void onVolumeChanged();
-    void volumeSliderValueChanged();
-    void sinkInputsChanged();
-    void toggleMute();
-    void delayLoad();
-    void onPlaySoundEffect();
 
 protected:
-    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
+    QWidget *createWidget(QWidget *parent) Q_DECL_OVERRIDE;
 
 private:
-    QWidget *m_centralWidget;
-    QWidget *m_applicationTitle;
-    widgets::FontLabel *m_volumeBtn;
-    VolumeSlider *m_volumeSlider;
-    QVBoxLayout *m_centralLayout;
-
-    DBusAudio *m_audioInter;
-    DBusSink *m_defSinkInter;
-    QGSettings *m_gsetting;
+    QSlider *m_slider;
 };
+
+
+//class SoundApplet : public QScrollArea
+//{
+//    Q_OBJECT
+
+//public:
+//    explicit SoundApplet(QWidget *parent = 0);
+
+//    int volumeValue() const;
+//    VolumeSlider *mainSlider();
+
+//    void showAni();
+//    void hideAni();
+
+//signals:
+//    void volumeChanged(const int value) const;
+//    void defaultSinkChanged(DBusSink *sink) const;
+//    void requestHidePopup() const;
+
+//private slots:
+//    void defaultSinkChanged();
+//    void onVolumeChanged();
+//    void volumeSliderValueChanged();
+//    void sinkInputsChanged();
+//    void toggleMute();
+//    void delayLoad();
+//    void onPlaySoundEffect();
+
+//protected:
+//    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
+
+//private:
+//    QWidget *m_centralWidget;
+//    QWidget *m_applicationTitle;
+//    widgets::FontLabel *m_volumeBtn;
+//    VolumeSlider *m_volumeSlider;
+//    QVBoxLayout *m_centralLayout;
+
+//    DBusAudio *m_audioInter;
+//    DBusSink *m_defSinkInter;
+//    QGSettings *m_gsetting;
+//};
 }
 }
 

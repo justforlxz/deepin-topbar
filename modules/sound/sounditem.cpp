@@ -18,10 +18,11 @@ using namespace dtb::sound;
 using namespace dtb::widgets;
 
 SoundItem::SoundItem(QWidget *parent)
-    : ContentModule(parent),
-      m_fontLabel(new FontLabel),
-      m_applet(new SoundApplet(this)),
-      m_sinkInter(nullptr)
+    : ContentModule(parent)
+    , m_fontLabel(new FontLabel)
+    , m_applet(new SoundApplet(this))
+    , m_sinkInter(nullptr)
+    , m_menu(new QMenu)
 {
     setObjectName("SoundItem");
     m_applet->setVisible(false);
@@ -39,11 +40,28 @@ SoundItem::SoundItem(QWidget *parent)
     connect(m_applet, static_cast<void (SoundApplet::*)(DBusSink*) const>(&SoundApplet::defaultSinkChanged), this, &SoundItem::sinkChanged);
 
     refershIcon();
+
+
+    // new actions
+
+    QAction *advanced = new QAction(tr("Advanced Settings"));
+
+    m_menu->addAction(m_applet);
+
+    m_menu->addSeparator();
+
+    m_menu->addAction(advanced);
+
+    QSignalMapper *signalMapper = new QSignalMapper(this);
+    connect(advanced, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
+
+    signalMapper->setMapping(advanced, 1);
+    connect(signalMapper, static_cast<void (QSignalMapper::*)(const int)>(&QSignalMapper::mapped), this, &SoundItem::handleAction);
 }
 
-QWidget *SoundItem::popupApplet()
+QMenu* SoundItem::menu() const
 {
-    return m_applet;
+    return m_menu;
 }
 
 void SoundItem::wheelEvent(QWheelEvent *e)
@@ -85,4 +103,15 @@ void SoundItem::sinkChanged(DBusSink *sink)
     connect(m_sinkInter, &DBusSink::MuteChanged, this, &SoundItem::refershIcon);
     connect(m_sinkInter, &DBusSink::VolumeChanged, this, &SoundItem::refershIcon);
     refershIcon();
+}
+
+void SoundItem::handleAction(const int &action)
+{
+    switch (action) {
+    case 1:
+        QProcess::startDetached("dbus-send --print-reply --dest=com.deepin.dde.ControlCenter /com/deepin/dde/ControlCenter com.deepin.dde.ControlCenter.ShowModule \"string:sound\"");
+        break;
+    default:
+        break;
+    }
 }
