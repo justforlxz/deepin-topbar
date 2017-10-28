@@ -76,7 +76,7 @@ void WallpaperWidget::initUI()
 
 void WallpaperWidget::initMenu()
 {
-    QAction* next = new QAction(tr("Skip to next item"), this);
+    QAction* next = new QAction(tr("Skip to next wallpaper"), this);
     QAction* brow = new QAction(tr("Browsing mode"), this);
     QAction* about = new QAction(tr("About DreamSense"), this);
     QAction* preference = new QAction(tr("Preferences..."), this);
