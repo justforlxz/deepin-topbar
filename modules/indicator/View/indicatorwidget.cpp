@@ -11,7 +11,8 @@
 namespace dtb {
 namespace indicator {
 
-IndicatorWidget::IndicatorWidget(QWidget *parent) : QWidget(parent)
+IndicatorWidget::IndicatorWidget(QWidget *parent)
+    : ContentModule(parent)
 {
     initUI();
 
@@ -44,6 +45,8 @@ IndicatorWidget::~IndicatorWidget()
 
 void IndicatorWidget::initUI()
 {
+    setObjectName("Indiactor");
+
     setWindowFlags(Qt::WindowDoesNotAcceptFocus);
     setAttribute(Qt::WA_TranslucentBackground);
 

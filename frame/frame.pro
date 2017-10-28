@@ -23,7 +23,8 @@ HEADERS  += \
     $$PWD/utils/itempopupwindow.h \
     $$PWD/utils/event_monitor.h \
     $$PWD/dbus/dbusmenu.h \
-    $$PWD/dbus/dbusmenumanager.h
+    $$PWD/dbus/dbusmenumanager.h \
+    item/contentmodule.h
 
 SOURCES += \
     $$PWD/main.cpp\
@@ -35,7 +36,8 @@ SOURCES += \
     $$PWD/utils/itempopupwindow.cpp \
     $$PWD/utils/event_monitor.cpp \
     $$PWD/dbus/dbusmenu.cpp \
-    $$PWD/dbus/dbusmenumanager.cpp
+    $$PWD/dbus/dbusmenumanager.cpp \
+    item/contentmodule.cpp
 
 headers.files += ../interfaces/pluginsiteminterface.h \
                  ../interfaces/pluginproxyinterface.h

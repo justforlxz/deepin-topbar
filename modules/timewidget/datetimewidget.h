@@ -1,13 +1,15 @@
 #ifndef DATETIMEWIDGET_H
 #define DATETIMEWIDGET_H
 
+#include "item/contentmodule.h"
+
 #include <QWidget>
 #include <QLabel>
 #include <QSettings>
 
 namespace Plugin {
 namespace DateTime {
-class DateTimeWidget : public QLabel
+class DateTimeWidget : public ContentModule
 {
     Q_OBJECT
 public:
@@ -25,6 +27,7 @@ private:
     QDateTime *m_dateTime;
     bool m_24HourFormat;
     QString m_format;
+    QLabel *m_timeLbl;
 };
 }
 }

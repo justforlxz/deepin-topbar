@@ -1,12 +1,14 @@
 #ifndef SYSTEMINFOWIDGET_H
 #define SYSTEMINFOWIDGET_H
 
+#include "item/contentmodule.h"
+
 #include <QWidget>
 #include <QLabel>
 
 namespace dtb {
 namespace systeminfo {
-class SystemInfoWidget : public QWidget
+class SystemInfoWidget : public ContentModule
 {
     Q_OBJECT
 public:

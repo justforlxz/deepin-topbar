@@ -1,6 +1,7 @@
 #ifndef NOTIFYWIDGET_H
 #define NOTIFYWIDGET_H
 
+#include "item/contentmodule.h"
 #include <QLabel>
 
 namespace dtb {
@@ -10,7 +11,7 @@ class FontLabel;
 }
 
 namespace notify {
-class NotifyWidget : public QLabel
+class NotifyWidget : public ContentModule
 {
     Q_OBJECT
 public:

@@ -8,9 +8,9 @@
 using namespace dtb;
 using namespace dtb::account;
 
-AccountWidget::AccountWidget(QWidget *parent) : QLabel(parent)
+AccountWidget::AccountWidget(QWidget *parent)
+    : ContentModule(parent)
 {
-
     m_dbusLogined = new DBusLogined("com.deepin.daemon.Accounts",
                                     "/com/deepin/daemon/Logined",
                                     QDBusConnection::systemBus(), this);

@@ -9,7 +9,8 @@ using namespace dtb;
 using namespace dtb::widgets;
 using namespace dtb::notify;
 
-NotifyWidget::NotifyWidget(QWidget *parent) : QLabel(parent)
+NotifyWidget::NotifyWidget(QWidget *parent)
+    : ContentModule(parent)
 {
       setFixedSize(30, 26);
 

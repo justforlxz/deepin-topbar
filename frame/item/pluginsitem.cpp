@@ -6,6 +6,10 @@
 #include <QScreen>
 #include <QApplication>
 #include <QDesktopWidget>
+#include "contentmodule.h"
+
+#define DEFAULT_COLOR "QLabel {color: rgb(67, 67, 62); background: transparent;} #ContentModule {background: transparent;}"
+#define CLICK_COLOR "QLabel {color: white; background: transparent;} #ContentModule {background: #1E90FF;}"
 
 using namespace dtb;
 
@@ -15,15 +19,13 @@ PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString
     m_centralWidget(pluginInter->itemWidget(itemKey)),
     m_itemKey(itemKey)
 {
-
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
 
     mainLayout->addWidget(m_centralWidget);
 
-    setStyleSheet("QLabel {color: rgb(67, 67, 62);background: transparent;}");
-
+    setStyleSheet(DEFAULT_COLOR);
     setLayout(mainLayout);
 }
 
@@ -59,7 +61,7 @@ void PluginsItem::mousePressEvent(QMouseEvent *event)
 {
     Item::mousePressEvent(event);
 
-    setStyleSheet("QLabel {color: white;background: #1E90FF;}");
+    setStyleSheet(CLICK_COLOR);
 
     showContextMenu();
 }
@@ -106,13 +108,13 @@ void PluginsItem::showContextMenu()
 {
     QMenu* menu = contextMenu();
     if (!menu) {
-        setStyleSheet("QLabel {color: rgb(67, 67, 62);background: transparent;}");
+        setStyleSheet(DEFAULT_COLOR);
         return;
     }
 
     connect(menu, &QMenu::aboutToHide, this,[=] {
-        setStyleSheet("QLabel {color: rgb(67, 67, 62);background: transparent;}");
-    });
+        setStyleSheet(DEFAULT_COLOR);
+    }, Qt::UniqueConnection);
 
     menu->exec(QPoint(pos().x(), height()));
 }

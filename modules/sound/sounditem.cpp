@@ -18,7 +18,7 @@ using namespace dtb::sound;
 using namespace dtb::widgets;
 
 SoundItem::SoundItem(QWidget *parent)
-    : QWidget(parent),
+    : ContentModule(parent),
       m_fontLabel(new FontLabel),
       m_applet(new SoundApplet(this)),
       m_sinkInter(nullptr)

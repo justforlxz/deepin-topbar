@@ -2,7 +2,7 @@
 #include "traywidget.h"
 
 TrayApplet::TrayApplet(QWidget *parent)
-    : QWidget(parent),
+    : ContentModule(parent),
       m_mainLayout(new QHBoxLayout)
 {
     m_mainLayout->setMargin(0);

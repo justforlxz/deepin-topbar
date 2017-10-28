@@ -1,6 +1,7 @@
 #ifndef AccountWIDGET_H
 #define AccountWIDGET_H
 
+#include "item/contentmodule.h"
 #include <com_deepin_daemon_logined.h>
 #include <com_deepin_daemon_accounts_user.h>
 #include <QLabel>
@@ -11,7 +12,7 @@ using DBusUser = com::deepin::daemon::accounts::User;
 
 namespace dtb {
 namespace account {
-class AccountWidget : public QLabel
+class AccountWidget : public ContentModule
 {
     Q_OBJECT
 public:

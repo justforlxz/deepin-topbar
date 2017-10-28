@@ -1,22 +1,30 @@
 #include "datetimewidget.h"
 #include <QTimer>
 #include <QDateTime>
+#include <QHBoxLayout>
 
 namespace Plugin {
 namespace DateTime {
-DateTimeWidget::DateTimeWidget(QWidget *parent) : QLabel(parent) {
-
+DateTimeWidget::DateTimeWidget(QWidget *parent)
+    : ContentModule(parent)
+{
     m_dateTime = new QDateTime;
     QTimer *timer = new QTimer(this);
     timer->setInterval(1000);
     connect(timer, &QTimer::timeout, this, &DateTimeWidget::updateTime);
     timer->start();
 
-    setAlignment(Qt::AlignVCenter);
+    m_timeLbl = new QLabel;
+    m_timeLbl->setAlignment(Qt::AlignVCenter);
 
-    setFixedHeight(26);
+    QHBoxLayout *layout = new QHBoxLayout;
 
-    setContentsMargins(3, 0, 3, 0);
+    layout->setContentsMargins(3, 0, 3, 0);
+    layout->setMargin(0);
+    layout->setSpacing(0);
+    layout->addWidget(m_timeLbl);
+
+    setLayout(layout);
 
     m_format = "yyyy-MM-dd hh:mm";
 }
@@ -26,7 +34,7 @@ DateTimeWidget::~DateTimeWidget() {
 }
 
 void DateTimeWidget::updateTime() {
-    setText(m_dateTime->currentDateTime().toString(m_format + (m_24HourFormat ? "" : " A")));
+    m_timeLbl->setText(m_dateTime->currentDateTime().toString(m_format + (m_24HourFormat ? "" : " A")));
 }
 
 void DateTimeWidget::set24HourFormat(bool is24HourFormat)

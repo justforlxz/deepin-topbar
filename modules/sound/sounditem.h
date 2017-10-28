@@ -1,6 +1,8 @@
 #ifndef SOUNDITEM_H
 #define SOUNDITEM_H
 
+#include "item/contentmodule.h"
+
 #include <QWidget>
 
 class DBusSink;
@@ -13,7 +15,7 @@ class FontLabel;
 
 namespace sound {
 class SoundApplet;
-class SoundItem : public QWidget
+class SoundItem : public ContentModule
 {
     Q_OBJECT
 

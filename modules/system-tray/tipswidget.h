@@ -1,11 +1,13 @@
 #ifndef TIPSWIDGET_H
 #define TIPSWIDGET_H
 
+#include "item/contentmodule.h"
+
 #include <QWidget>
 #include <QBoxLayout>
 
 class TrayWidget;
-class TrayApplet : public QWidget
+class TrayApplet : public ContentModule
 {
     Q_OBJECT
 

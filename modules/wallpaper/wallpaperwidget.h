@@ -1,6 +1,7 @@
 #ifndef WallpaperWIDGET_H
 #define WallpaperWIDGET_H
 
+#include "item/contentmodule.h"
 #include <QLabel>
 #include <QMenu>
 #include <DAboutDialog>
@@ -10,7 +11,7 @@ DWIDGET_USE_NAMESPACE
 namespace dtb {
     namespace wallpaper {
     class WallpaperModel;
-    class WallpaperWidget : public QLabel
+    class WallpaperWidget : public ContentModule
     {
         Q_OBJECT
     public:

@@ -5,7 +5,9 @@
 
 namespace dtb {
 namespace media {
-MediaControlWidget::MediaControlWidget(QWidget *parent) : QFrame(parent) {
+MediaControlWidget::MediaControlWidget(QWidget *parent)
+    : ContentModule(parent)
+{
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
 

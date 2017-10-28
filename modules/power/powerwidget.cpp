@@ -12,7 +12,9 @@ using namespace dtb::widgets;
 
 namespace dtb {
 namespace power {
-PowerWidget::PowerWidget(QWidget *parent) : QWidget(parent) {
+PowerWidget::PowerWidget(QWidget *parent)
+    : ContentModule(parent)
+{
     m_powerActionWidget = new PowerWidgetAction;
 
     setFixedHeight(26);

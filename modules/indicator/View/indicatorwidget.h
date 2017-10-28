@@ -1,6 +1,7 @@
 #ifndef INDICATORWIDGET_H
 #define INDICATORWIDGET_H
 
+#include "item/contentmodule.h"
 #include "entry.h"
 #include <QWidget>
 #include <dbusdock.h>
@@ -11,7 +12,7 @@ using systeminfo = com::deepin::daemon::SystemInfo;
 
 namespace dtb {
 namespace indicator {
-class IndicatorWidget : public QWidget
+class IndicatorWidget : public ContentModule
 {
     Q_OBJECT
 public:

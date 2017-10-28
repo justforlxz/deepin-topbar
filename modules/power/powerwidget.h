@@ -1,6 +1,8 @@
 #ifndef POWERWIDGET_H
 #define POWERWIDGET_H
 
+#include "item/contentmodule.h"
+
 #include <QWidget>
 #include <QLabel>
 #include <QMenu>
@@ -17,7 +19,7 @@ namespace power {
 
 class PowerWidgetAction;
 
-class PowerWidget : public QWidget
+class PowerWidget : public ContentModule
 {
     Q_OBJECT
 public:

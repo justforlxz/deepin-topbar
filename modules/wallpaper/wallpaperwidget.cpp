@@ -1,4 +1,5 @@
 #include "wallpaperwidget.h"
+#include "fontlabel.h"
 #include <QIcon>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -8,7 +9,8 @@
 using namespace dtb;
 using namespace dtb::wallpaper;
 
-WallpaperWidget::WallpaperWidget(QWidget *parent) : QLabel(parent)
+WallpaperWidget::WallpaperWidget(QWidget *parent)
+    : ContentModule(parent)
 {
       initUI();
       initMenu();
@@ -44,6 +46,7 @@ void WallpaperWidget::initUI()
     QLabel *label = new QLabel;
     label->setFixedSize(22, 22);
     label->setPixmap(QIcon::fromTheme("view-list-details").pixmap(22, 22));
+
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);

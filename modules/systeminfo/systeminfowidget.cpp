@@ -10,7 +10,8 @@ using namespace dtb;
 using namespace dtb::widgets;
 using namespace dtb::systeminfo;
 
-SystemInfoWidget::SystemInfoWidget(QWidget *parent) : QWidget(parent)
+SystemInfoWidget::SystemInfoWidget(QWidget *parent)
+    : ContentModule(parent)
 {
     setObjectName("SystemInfoWidget");
     setFixedSize(80, 26);

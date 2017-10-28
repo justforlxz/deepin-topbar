@@ -1,6 +1,7 @@
 #ifndef MEDIACONTROLWIDGET_H
 #define MEDIACONTROLWIDGET_H
 
+#include "item/contentmodule.h"
 #include "mediacontrol.h"
 #include "dbusinterface.h"
 #include "dbusmediaplayer2.h"
@@ -15,7 +16,7 @@ using DBusMPRIS = DBusMediaPlayer2;
 
 namespace dtb {
 namespace media {
-class MediaControlWidget : public QFrame
+class MediaControlWidget : public ContentModule
 {
     Q_OBJECT
 public:
