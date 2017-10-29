@@ -27,6 +27,8 @@ void IndicatorPlugin::init(PluginProxyInterface *proxyInter)
     m_model->moveToThread(qApp->thread());
     m_worker->moveToThread(qApp->thread());
 
+    connect(m_logo, &SystemLogo::requestForceQuit, m_centralWidget, &IndicatorWidget::forceQuit);
+
     m_proxyInter->addItem(this, "Logo");
     m_proxyInter->addItem(this, "Indicator");
 }

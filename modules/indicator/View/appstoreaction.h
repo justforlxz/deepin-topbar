@@ -21,19 +21,31 @@
 
 #include <QWidgetAction>
 
+class QLabel;
+
 namespace dtb {
 namespace indicator {
+class IndicatorModel;
 class AppstoreAction : public QWidgetAction
 {
     Q_OBJECT
 public:
     explicit AppstoreAction(QWidget *parent = nullptr);
 
+    void setModel(IndicatorModel *model);
+
 protected:
     QWidget *createWidget(QWidget *parent) Q_DECL_OVERRIDE;
+    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
+
+private slots:
+    void onUpdatesChanged(const QStringList &list);
 
 private:
     QWidget *m_widget;
+    IndicatorModel *m_model;
+    QLabel *m_updateLbl;
+    bool m_enter;
 };
 }
 }

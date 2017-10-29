@@ -45,7 +45,7 @@ class DBusDockEntry: public QDBusAbstractInterface
             for (int i=self->propertyOffset(); i < self->propertyCount(); ++i) {
                 QMetaProperty p = self->property(i);
                 if (p.name() == prop) {
- 	            Q_EMIT p.notifySignal().invoke(this);
+                Q_EMIT p.notifySignal().invoke(this);
                 }
             }
         }

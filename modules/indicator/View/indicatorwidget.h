@@ -20,6 +20,9 @@ public:
     ~IndicatorWidget();
     void initUI();
 
+public slots:
+    void forceQuit();
+
 private slots:
     void getAllEntry();
     void addEntry(const QDBusObjectPath &entryPath, const int index);

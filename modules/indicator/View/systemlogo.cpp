@@ -50,7 +50,7 @@ SystemLogo::SystemLogo(QWidget *parent)
 
     QAction *about = new QAction(tr("About"), this);
     QAction *preference = new QAction(tr("Preference setting"), this);
-    QAction *appstore = new QAction(this);
+    m_appstore = new AppstoreAction(this);
     QAction *forceQuit = new QAction(tr("Force quit"), this);
     QAction *sleep = new QAction(tr("Sleep"), this);
     QAction *restart = new QAction(tr("Restart"), this);
@@ -60,7 +60,8 @@ SystemLogo::SystemLogo(QWidget *parent)
     m_menu->addAction(about);
     m_menu->addSeparator();
     m_menu->addAction(preference);
-    m_menu->addAction(appstore);
+    m_menu->addAction(m_appstore);
+    m_menu->addSeparator();
     m_menu->addAction(forceQuit);
     m_menu->addSeparator();
     m_menu->addAction(sleep);
@@ -73,7 +74,7 @@ SystemLogo::SystemLogo(QWidget *parent)
 
     connect(about, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
     connect(preference, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
-    connect(appstore, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
+    connect(m_appstore, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
     connect(forceQuit, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
     connect(sleep, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
     connect(restart, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
@@ -82,7 +83,7 @@ SystemLogo::SystemLogo(QWidget *parent)
 
     signalMapper->setMapping(about, About);
     signalMapper->setMapping(preference, Preference);
-    signalMapper->setMapping(appstore, Appstore);
+    signalMapper->setMapping(m_appstore, Appstore);
     signalMapper->setMapping(forceQuit, ForceQuit);
     signalMapper->setMapping(sleep, Sleep);
     signalMapper->setMapping(restart, Restart);
@@ -99,6 +100,8 @@ QMenu *SystemLogo::menu() const
 void SystemLogo::setModel(IndicatorModel *model)
 {
     m_model = model;
+
+    m_appstore->setModel(model);
 }
 
 void SystemLogo::handleAction(const int &action)

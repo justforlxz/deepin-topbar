@@ -20,7 +20,7 @@
 #define SYSTEMLOGO_H
 
 #include "item/contentmodule.h"
-
+#include "appstoreaction.h"
 #include <QMenu>
 
 namespace dtb {
@@ -57,6 +57,7 @@ private:
 private:
     QMenu *m_menu;
     IndicatorModel *m_model;
+    AppstoreAction *m_appstore;
 };
 }
 }

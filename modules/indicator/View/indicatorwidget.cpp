@@ -60,6 +60,16 @@ void IndicatorWidget::initUI()
     setLayout(mainLayout);
 }
 
+void IndicatorWidget::forceQuit()
+{
+    for (DBusDockEntry *entry : m_entryList) {
+        if (entry->active()) {
+            entry->HandleMenuItem("2");
+            return;
+        }
+    }
+}
+
 void IndicatorWidget::getAllEntry()
 {
     for (const QDBusObjectPath &entryPath : m_dockInter->entries())
