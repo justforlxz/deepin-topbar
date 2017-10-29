@@ -1,4 +1,4 @@
-include(account/account.pri)
+#include(account/account.pri)
 include(indicator/indicator.pri)
 include(mediacontrol/mediacontrol.pri)
 include(network/network.pri)

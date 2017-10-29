@@ -145,7 +145,7 @@ void MainPanel::loadModules()
 
     loadModule(new datetime::DateTimePlugin);
 
-    loadModule(new account::AccountPlugin);
+//    loadModule(new account::AccountPlugin);
 
     loadModule(new notify::NotifyPlugin);
 }
