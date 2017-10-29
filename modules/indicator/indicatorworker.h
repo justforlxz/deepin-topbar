@@ -19,7 +19,15 @@
 #ifndef INDICATORWORKER_H
 #define INDICATORWORKER_H
 
+#include <com_deepin_lastore_job.h>
+#include <com_deepin_lastore_jobmanager.h>
+#include <com_deepin_lastore_updater.h>
+
 #include <QObject>
+
+using UpdateInter=com::deepin::lastore::Updater;
+using JobInter=com::deepin::lastore::Job;
+using ManagerInter=com::deepin::lastore::Manager;
 
 namespace dtb {
 namespace indicator {
@@ -31,8 +39,15 @@ class IndicatorWorker : public QObject
 public:
     explicit IndicatorWorker(IndicatorModel* model, QObject *parent = nullptr);
 
+private slots:
+    void checkUpdates();
+    void setCheckUpdatesJob(const QString &jobPath);
+
 private:
     IndicatorModel *m_model;
+    JobInter* m_checkUpdateJob;
+    ManagerInter* m_managerInter;
+    UpdateInter* m_updateInter;
 };
 }
 }

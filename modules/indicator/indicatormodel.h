@@ -29,9 +29,15 @@ class IndicatorModel : public QObject
 public:
     explicit IndicatorModel(QObject *parent = nullptr);
 
-signals:
+    QStringList appslist() const;
+    void setAppslist(const QStringList &appslist);
 
-public slots:
+signals:
+    void appsListChanged(const QStringList &list);
+
+
+private:
+    QStringList m_appslist;
 };
 }
 }

@@ -25,6 +25,7 @@
 
 namespace dtb {
 namespace indicator {
+class IndicatorModel;
 class SystemLogo : public ContentModule
 {
     Q_OBJECT
@@ -32,6 +33,8 @@ public:
     explicit SystemLogo(QWidget *parent = nullptr);
 
     QMenu *menu() const;
+
+    void setModel(IndicatorModel *model);
 
 signals:
     void requestForceQuit();
@@ -53,6 +56,7 @@ private:
 
 private:
     QMenu *m_menu;
+    IndicatorModel *m_model;
 };
 }
 }

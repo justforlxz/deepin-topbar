@@ -17,6 +17,7 @@
  */
 
 #include "systemlogo.h"
+#include "../indicatormodel.h"
 
 #include <QIcon>
 #include <QHBoxLayout>
@@ -93,6 +94,11 @@ SystemLogo::SystemLogo(QWidget *parent)
 QMenu *SystemLogo::menu() const
 {
     return m_menu;
+}
+
+void SystemLogo::setModel(IndicatorModel *model)
+{
+    m_model = model;
 }
 
 void SystemLogo::handleAction(const int &action)

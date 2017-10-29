@@ -38,6 +38,5 @@ QWidget *AppstoreAction::createWidget(QWidget *parent)
 {
     m_widget->setParent(parent);
 
-
     return m_widget;
 }

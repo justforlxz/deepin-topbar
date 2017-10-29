@@ -22,6 +22,8 @@ void IndicatorPlugin::init(PluginProxyInterface *proxyInter)
     m_model = new IndicatorModel;
     m_worker = new IndicatorWorker(m_model);
 
+    m_logo->setModel(m_model);
+
     m_model->moveToThread(qApp->thread());
     m_worker->moveToThread(qApp->thread());
 

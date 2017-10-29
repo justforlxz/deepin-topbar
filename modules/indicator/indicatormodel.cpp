@@ -17,6 +17,7 @@
  */
 
 #include "indicatormodel.h"
+#include <QDebug>
 
 using namespace dtb;
 using namespace dtb::indicator;
@@ -24,4 +25,19 @@ using namespace dtb::indicator;
 IndicatorModel::IndicatorModel(QObject *parent) : QObject(parent)
 {
 
+}
+
+QStringList IndicatorModel::appslist() const
+{
+    return m_appslist;
+}
+
+void IndicatorModel::setAppslist(const QStringList &appslist)
+{
+    if (m_appslist == appslist)
+        return;
+
+    m_appslist = appslist;
+
+    emit appsListChanged(appslist);
 }
