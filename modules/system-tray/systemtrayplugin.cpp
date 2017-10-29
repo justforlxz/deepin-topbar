@@ -175,6 +175,4 @@ void SystemTrayPlugin::trayChanged(const quint32 winId)
         return;
 
     m_trayList[winId]->updateIcon();
-
-    updateTipsContent();
 }
