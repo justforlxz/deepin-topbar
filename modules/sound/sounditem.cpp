@@ -44,7 +44,7 @@ SoundItem::SoundItem(QWidget *parent)
 
     // new actions
 
-    QAction *advanced = new QAction(tr("Advanced Settings"));
+    QAction *advanced = new QAction(tr("Advanced Settings"), this);
 
     m_menu->addAction(m_applet);
 

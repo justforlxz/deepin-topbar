@@ -13,11 +13,9 @@ class Entry : public QWidget
 public:
     explicit Entry(QWidget *parent = 0);
 
-    void setNormalIcon(const QIcon &normalIcon);
     void setText(const QString &text);
 
 private:
-    QLabel *m_normalIcon;
     QLabel *m_title;
 };
 }

@@ -25,14 +25,12 @@ private slots:
     void addEntry(const QDBusObjectPath &entryPath, const int index);
     void removeEntry(const QString &entryID);
     void refreshActiveWindow();
-    void refreshIcon();
 
 private:
     DBusDock *m_dockInter;
     QList<DBusDockEntry *> m_entryList;
     Entry *m_entry;
     DBusDockEntry *m_activeWindow;
-    QFutureWatcher<QPixmap> *m_smallWatcher;
     systeminfo *m_systeminfo;
     QString m_systemVersion;
 };

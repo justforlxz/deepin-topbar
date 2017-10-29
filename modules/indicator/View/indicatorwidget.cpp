@@ -28,12 +28,9 @@ IndicatorWidget::IndicatorWidget(QWidget *parent)
     });
     
     m_dockInter = new DBusDock("com.deepin.dde.daemon.Dock","/com/deepin/dde/daemon/Dock" , QDBusConnection::sessionBus(),this);
-    m_smallWatcher= new QFutureWatcher<QPixmap>(this);
 
     connect(m_dockInter, &DBusDock::EntryAdded, this, &IndicatorWidget::addEntry);
     connect(m_dockInter, &DBusDock::EntryRemoved, this, &IndicatorWidget::removeEntry);
-
-    connect(m_smallWatcher, &QFutureWatcher<QPixmap>::finished, this, &IndicatorWidget::refreshIcon);
 
     getAllEntry();
 }
@@ -101,8 +98,6 @@ void IndicatorWidget::refreshActiveWindow()
 {
     for (DBusDockEntry *entry : m_entryList) {
         if (entry->active()) {
-            m_smallWatcher->cancel();
-            m_smallWatcher->setFuture(QtConcurrent::run(ThemeAppIcon::getIcon, entry->icon()));
             m_entry->setText(entry->name());
             m_entry->setVisible(true);
             return;
@@ -110,12 +105,6 @@ void IndicatorWidget::refreshActiveWindow()
     }
 
     m_entry->setText(m_systemVersion);
-    m_entry->setNormalIcon(QIcon::fromTheme("dde"));
-}
-
-void IndicatorWidget::refreshIcon()
-{
-    m_entry->setNormalIcon(QIcon(m_smallWatcher->result()));
 }
 
 }
