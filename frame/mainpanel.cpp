@@ -133,9 +133,9 @@ void MainPanel::loadModules()
 
     loadModule(new media::MediaControlPlugin);
 
-    loadModule(new power::PowerPlugin);
-
     loadModule(new sound::SoundPlugin);
+
+    loadModule(new power::PowerPlugin);
 
 #ifdef QT_DEBUG
     loadModule(new network::NetworkPlugin);
