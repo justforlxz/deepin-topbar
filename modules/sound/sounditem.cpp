@@ -3,6 +3,7 @@
 #include "dbussink.h"
 #include "fontlabel.h"
 #include "componments/volumeslider.h"
+#include "dwidgetaction.h"
 
 #include <QPainter>
 #include <QIcon>
@@ -24,7 +25,6 @@ SoundItem::SoundItem(QWidget *parent)
     , m_sinkInter(nullptr)
     , m_menu(new QMenu)
 {
-    setObjectName("SoundItem");
     m_applet->setVisible(false);
 
     setFixedSize(26, 26);
@@ -46,7 +46,9 @@ SoundItem::SoundItem(QWidget *parent)
 
     QAction *advanced = new QAction(tr("Advanced Settings"), this);
 
-    m_menu->addAction(m_applet);
+    DWidgetAction *applet = new DWidgetAction(m_applet);
+
+    m_menu->addAction(applet);
 
     m_menu->addSeparator();
 

@@ -20,68 +20,48 @@ class FontLabel;
 }
 
 namespace sound {
-
-class SoundApplet : public QWidgetAction
+class VolumeSlider;
+class SoundApplet : public QScrollArea
 {
     Q_OBJECT
+
 public:
-    SoundApplet(QWidget *parent = nullptr);
-    QSlider *mainSlider();
+    explicit SoundApplet(QWidget *parent = 0);
+
     int volumeValue() const;
+    VolumeSlider *mainSlider();
+
+    void showAni();
+    void hideAni();
 
 signals:
     void volumeChanged(const int value) const;
     void defaultSinkChanged(DBusSink *sink) const;
+    void requestHidePopup() const;
+
+private slots:
+    void defaultSinkChanged();
+    void onVolumeChanged();
+    void volumeSliderValueChanged();
+    void sinkInputsChanged();
+    void toggleMute();
+    void delayLoad();
+    void onPlaySoundEffect();
 
 protected:
-    QWidget *createWidget(QWidget *parent) Q_DECL_OVERRIDE;
+    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    QSlider *m_slider;
+    QWidget *m_centralWidget;
+    QWidget *m_applicationTitle;
+    widgets::FontLabel *m_volumeBtn;
+    VolumeSlider *m_volumeSlider;
+    QVBoxLayout *m_centralLayout;
+
+    DBusAudio *m_audioInter;
+    DBusSink *m_defSinkInter;
+    QGSettings *m_gsetting;
 };
-
-
-//class SoundApplet : public QScrollArea
-//{
-//    Q_OBJECT
-
-//public:
-//    explicit SoundApplet(QWidget *parent = 0);
-
-//    int volumeValue() const;
-//    VolumeSlider *mainSlider();
-
-//    void showAni();
-//    void hideAni();
-
-//signals:
-//    void volumeChanged(const int value) const;
-//    void defaultSinkChanged(DBusSink *sink) const;
-//    void requestHidePopup() const;
-
-//private slots:
-//    void defaultSinkChanged();
-//    void onVolumeChanged();
-//    void volumeSliderValueChanged();
-//    void sinkInputsChanged();
-//    void toggleMute();
-//    void delayLoad();
-//    void onPlaySoundEffect();
-
-//protected:
-//    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
-
-//private:
-//    QWidget *m_centralWidget;
-//    QWidget *m_applicationTitle;
-//    widgets::FontLabel *m_volumeBtn;
-//    VolumeSlider *m_volumeSlider;
-//    QVBoxLayout *m_centralLayout;
-
-//    DBusAudio *m_audioInter;
-//    DBusSink *m_defSinkInter;
-//    QGSettings *m_gsetting;
-//};
 }
 }
 
