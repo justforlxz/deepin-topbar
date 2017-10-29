@@ -1,7 +1,6 @@
 SOURCES += \
     $$PWD/networkplugin.cpp \
     $$PWD/networkwidget.cpp \
-    $$PWD/networkpopupwidget.cpp \
     $$PWD/item/applet/accesspoint.cpp \
     $$PWD/item/applet/accesspointwidget.cpp \
     $$PWD/item/applet/devicecontrolwidget.cpp \
@@ -17,7 +16,6 @@ SOURCES += \
 HEADERS += \
     $$PWD/networkplugin.h \
     $$PWD/networkwidget.h \
-    $$PWD/networkpopupwidget.h \
     $$PWD/item/applet/accesspoint.h \
     $$PWD/item/applet/accesspointwidget.h \
     $$PWD/item/applet/devicecontrolwidget.h \

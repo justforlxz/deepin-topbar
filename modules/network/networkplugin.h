@@ -2,7 +2,6 @@
 #define networkPLUGIN_H
 
 #include "../interfaces/pluginsiteminterface.h"
-#include "networkpopupwidget.h"
 #include "networkwidget.h"
 #include "networkmanager.h"
 #include "item/deviceitem.h"
@@ -35,7 +34,6 @@ private slots:
 
 private:
     PluginProxyInterface *m_proxyInter;
-    NetworkPopupWidget *m_popupWidget;
     NetworkWidget *m_network;
     NetworkManager *m_networkManager;
     QList<DeviceItem *> m_deviceItemList;

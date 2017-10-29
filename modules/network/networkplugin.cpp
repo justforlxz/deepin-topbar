@@ -6,7 +6,6 @@ using namespace dtb::network;
 NetworkPlugin::NetworkPlugin()
 {
     m_network = new NetworkWidget;
-    m_popupWidget = new NetworkPopupWidget;
     m_refershTimer = new QTimer(this);
     m_networkManager = NetworkManager::instance(this);
 }
