@@ -41,6 +41,7 @@ signals:
 
 private slots:
     void handleAction(const int &action);
+    void handleShutdownAction(const QString &action);
 
 private:
     enum Action{
@@ -48,10 +49,6 @@ private:
         Preference,
         Appstore,
         ForceQuit,
-        Sleep,
-        Restart,
-        PowerOff,
-        Logout,
     };
 
 private:

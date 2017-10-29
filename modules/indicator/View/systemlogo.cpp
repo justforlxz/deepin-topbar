@@ -85,11 +85,13 @@ SystemLogo::SystemLogo(QWidget *parent)
     signalMapper->setMapping(preference, Preference);
     signalMapper->setMapping(m_appstore, Appstore);
     signalMapper->setMapping(forceQuit, ForceQuit);
-    signalMapper->setMapping(sleep, Sleep);
-    signalMapper->setMapping(restart, Restart);
-    signalMapper->setMapping(shutdown, PowerOff);
-    signalMapper->setMapping(logout, Logout);
+    signalMapper->setMapping(sleep, "Suspend");
+    signalMapper->setMapping(restart, "Restart");
+    signalMapper->setMapping(shutdown, "Shutdown");
+    signalMapper->setMapping(logout, "Logout");
+
     connect(signalMapper, static_cast<void (QSignalMapper::*)(const int)>(&QSignalMapper::mapped), this, &SystemLogo::handleAction);
+    connect(signalMapper, static_cast<void (QSignalMapper::*)(const QString &)>(&QSignalMapper::mapped), this, &SystemLogo::handleShutdownAction);
 }
 
 QMenu *SystemLogo::menu() const
@@ -118,15 +120,16 @@ void SystemLogo::handleAction(const int &action)
     case ForceQuit:
         emit requestForceQuit();
         break;
-    case Sleep:
-        break;
-    case Restart:
-        break;
-    case PowerOff:
-        break;
-    case Logout:
-        break;
     default:
         break;
     }
+}
+
+void SystemLogo::handleShutdownAction(const QString &action)
+{
+    const QString command = QString("dbus-send --print-reply --dest=com.deepin.dde.shutdownFront " \
+                                    "/com/deepin/dde/shutdownFront " \
+                                    "com.deepin.dde.shutdownFront.%1").arg(action);
+
+    QProcess::startDetached(command);
 }
