@@ -2,6 +2,7 @@
 #include "dbuspower.h"
 #include "powerwidgetaction.h"
 #include "fontlabel.h"
+#include "dwidgetaction.h"
 
 #include <QHBoxLayout>
 #include <QIcon>
@@ -115,7 +116,15 @@ void PowerWidget::initMenu()
 {
     m_menu = new QMenu;
 
-    m_menu->addAction(m_powerActionWidget);
+    QAction *source = new QAction(tr("Power source:") + (m_powerInter->onBattery() ? tr("Battery") : tr("Direct current")), this);
+    QAction *percentage = new QAction(tr("Show percentage"), this);
+    QAction *preference = new QAction(tr("Open Energy saver preferences"), this);
+
+    m_menu->addAction(source);
+    m_menu->addSeparator();
+    m_menu->addAction(percentage);
+    m_menu->addAction(preference);
+
 }
 }
 }
