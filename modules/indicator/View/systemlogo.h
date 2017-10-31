@@ -21,6 +21,7 @@
 
 #include "item/contentmodule.h"
 #include "appstoreaction.h"
+
 #include <QMenu>
 
 namespace dtb {

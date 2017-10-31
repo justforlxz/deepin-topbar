@@ -24,20 +24,21 @@
 #include <QLabel>
 #include <QEvent>
 #include <QPainter>
+#include <QDebug>
 
 using namespace dtb;
 using namespace dtb::indicator;
 
 AppstoreAction::AppstoreAction(QWidget *parent)
-    : QWidgetAction(parent)
-    , m_widget(new QWidget)
+    : QWidget(parent)
     , m_updateLbl(new QLabel)
     , m_enter(false)
 {
+    setAttribute(Qt::WA_TranslucentBackground);
+
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(10);
-    layout->setContentsMargins(27, 0, 25, 0);
 
     QLabel *title = new QLabel("App Store");
 
@@ -47,11 +48,10 @@ AppstoreAction::AppstoreAction(QWidget *parent)
     m_updateLbl->setAlignment(Qt::AlignCenter);
 
     m_updateLbl->installEventFilter(this);
-    m_widget->installEventFilter(this);
 
-    m_widget->setFixedHeight(28);
+    installEventFilter(this);
 
-    m_widget->setLayout(layout);
+    setLayout(layout);
 }
 
 void AppstoreAction::setModel(IndicatorModel *model)
@@ -63,49 +63,40 @@ void AppstoreAction::setModel(IndicatorModel *model)
     onUpdatesChanged(model->appslist());
 }
 
-QWidget *AppstoreAction::createWidget(QWidget *parent)
-{
-    m_widget->setParent(parent);
-
-    return m_widget;
-}
-
 bool AppstoreAction::eventFilter(QObject *watched, QEvent *event)
 {
+    if (watched == this) {
+        if (event->type() == QEvent::Enter) {
+            setStyleSheet("QLabel {color: white;}");
+            m_enter = true;
+            m_updateLbl->update();
+        }
+
+        if (event->type() == QEvent::Leave) {
+            setStyleSheet("QLabel {color: black;}");
+            m_enter = false;
+            m_updateLbl->update();
+        }
+    }
+
     if (watched == m_updateLbl) {
         if (event->type() == QEvent::Paint) {
             QPainter painter(m_updateLbl);
 
             painter.setOpacity(m_enter ? 1.0 : 0.85);
 
-            painter.setBrush(QColor(181, 181, 181, 0.3 * 255));
+            painter.setBrush(QColor(181, 181, 181, 0.5 * 255));
             painter.setPen(Qt::NoPen);
 
             QFont font = qApp->font();
             QFontMetrics fm(font);
             int h = (m_updateLbl->height() - fm.height()) / 2 - 2;
+
             painter.drawRoundRect(m_updateLbl->rect().marginsRemoved(QMargins(0, h, 0, h)), 10, 10);
         }
     }
 
-    if (watched == m_widget) {
-        if (event->type() == QEvent::Paint) {
-            QPainter painter(m_widget);
-            painter.fillRect(m_widget->rect(), m_enter ? QColor("#0b8cff") : QColor(0, 0, 0, 0));
-        }
-        if (event->type() == QEvent::Enter) {
-            m_enter = true;
-            m_widget->update();
-            m_updateLbl->update();
-        }
-        if (event->type() == QEvent::Leave) {
-            m_enter = false;
-            m_widget->update();
-            m_updateLbl->update();
-        }
-    }
-return false;
-    return QWidgetAction::eventFilter(watched, event);
+    return QWidget::eventFilter(watched, event);
 }
 
 void AppstoreAction::onUpdatesChanged(const QStringList &list)

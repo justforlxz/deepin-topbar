@@ -43,7 +43,8 @@ QWidget *IndicatorPlugin::itemWidget(const QString &itemKey)
 
 QMenu *IndicatorPlugin::itemContextMenu(const QString &itemKey)
 {
-    Q_UNUSED(itemKey);
+    if (itemKey == "Logo")
+        return m_logo->menu();
 
-    return m_logo->menu();
+    return nullptr;
 }

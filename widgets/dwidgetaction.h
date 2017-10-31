@@ -19,7 +19,10 @@
 #ifndef DWIDGETACTION_H
 #define DWIDGETACTION_H
 
+#include "dactionbutton.h"
+
 #include <QWidgetAction>
+#include <QHBoxLayout>
 
 namespace dtb {
 namespace widgets {
@@ -32,7 +35,7 @@ public:
     QWidget *createWidget(QWidget *parent) Q_DECL_OVERRIDE;
 
 private:
-    QWidget *m_widget;
+    DActionButton *m_widget;
 };
 }
 }

@@ -16,24 +16,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "dwidgetaction.h"
-#include <QEvent>
-#include <QPainter>
+#ifndef DACTIONBUTTON_H
+#define DACTIONBUTTON_H
 
-using namespace dtb;
-using namespace dtb::widgets;
+#include <QWidget>
+#include <QHBoxLayout>
 
-DWidgetAction::DWidgetAction(QWidget *parent)
-    : QWidgetAction(parent)
+namespace dtb {
+namespace widgets {
+class DActionButton : public QWidget
 {
-    m_widget = new DActionButton;
+    Q_OBJECT
+public:
+    explicit DActionButton(QWidget *parent = nullptr);
+    void setContent(QWidget *widget);
 
-    m_widget->setContent(parent);
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
+
+private:
+    QHBoxLayout *m_layout;
+    bool m_isEnter;
+};
+
+}
 }
 
-QWidget *DWidgetAction::createWidget(QWidget *parent)
-{
-    m_widget->setParent(parent);
 
-    return m_widget;
-}
+#endif // DACTIONBUTTON_H
