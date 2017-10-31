@@ -25,10 +25,8 @@ using namespace dtb::widgets;
 
 DWidgetAction::DWidgetAction(QWidget *parent)
     : QWidgetAction(parent)
+    , m_widget(parent)
 {
-    m_widget = new DActionButton;
-
-    m_widget->setContent(parent);
 }
 
 QWidget *DWidgetAction::createWidget(QWidget *parent)

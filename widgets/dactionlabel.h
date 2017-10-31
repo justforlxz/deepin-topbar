@@ -16,26 +16,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DWIDGETACTION_H
-#define DWIDGETACTION_H
+#ifndef DACTIONLABEL_H
+#define DACTIONLABEL_H
+
+#include "dactionbutton.h"
 
 #include <QWidgetAction>
-#include <QHBoxLayout>
 
 namespace dtb {
 namespace widgets {
-class DWidgetAction : public QWidgetAction
+class DActionLabel : public QWidgetAction
 {
     Q_OBJECT
 public:
-    explicit DWidgetAction(QWidget *parent = nullptr);
+    explicit DActionLabel(QWidget *parent = nullptr);
 
     QWidget *createWidget(QWidget *parent) Q_DECL_OVERRIDE;
 
 private:
-    QWidget *m_widget;
+    DActionButton *m_widget;
 };
 }
 }
 
-#endif // DWIDGETACTION_H
+#endif // DACTIONLABEL_H

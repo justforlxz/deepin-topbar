@@ -18,7 +18,7 @@
 
 #include "systemlogo.h"
 #include "../indicatormodel.h"
-#include "dwidgetaction.h"
+#include "dactionlabel.h"
 
 #include <QIcon>
 #include <QHBoxLayout>
@@ -62,8 +62,8 @@ SystemLogo::SystemLogo(QWidget *parent)
     QAction *shutdown = new QAction(tr("Power off"), this);
     QAction *logout = new QAction(tr("Logout for %1").arg(QString(qgetenv("USER"))), this);
 
-    DWidgetAction *app = new DWidgetAction(m_appstore);
-    DWidgetAction *pre = new DWidgetAction(preference);
+    DActionLabel *app = new DActionLabel(m_appstore);
+    DActionLabel *pre = new DActionLabel(preference);
 
     m_menu->addAction(about);
     m_menu->addSeparator();
