@@ -29,6 +29,7 @@ public:
 
 public slots:
     void updateBatteryIcon();
+    void onActionHandle(const QString &action);
 
 private:
     void initMenu();

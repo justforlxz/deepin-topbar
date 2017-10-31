@@ -8,6 +8,7 @@
 #include <QIcon>
 #include <QPixmap>
 #include <QPainter>
+#include <QSignalMapper>
 
 using namespace dtb::widgets;
 
@@ -112,6 +113,19 @@ void PowerWidget::updateBatteryIcon() {
     m_batteryIcon->setIcon(percentageStr, 17);
 }
 
+void PowerWidget::onActionHandle(const QString &action)
+{
+    if (action == "percentage") {
+
+        return;
+    }
+
+    if (action == "preference") {
+        QProcess::startDetached("dbus-send --print-reply --dest=com.deepin.dde.ControlCenter /com/deepin/dde/ControlCenter com.deepin.dde.ControlCenter.ShowModule \"string:power\"");
+        return;
+    }
+}
+
 void PowerWidget::initMenu()
 {
     m_menu = new QMenu;
@@ -120,11 +134,25 @@ void PowerWidget::initMenu()
     QAction *percentage = new QAction(tr("Show percentage"), this);
     QAction *preference = new QAction(tr("Open Energy saver preferences"), this);
 
+    source->setEnabled(false);
+
+    percentage->setCheckable(true);
+    percentage->setChecked(true);
+
     m_menu->addAction(source);
     m_menu->addSeparator();
     m_menu->addAction(percentage);
     m_menu->addAction(preference);
 
+    QSignalMapper *signalMapper = new QSignalMapper(this);
+
+    connect(percentage, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
+    connect(preference, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
+
+    signalMapper->setMapping(percentage, "percentage");
+    signalMapper->setMapping(preference, "preference");
+
+    connect(signalMapper, static_cast<void (QSignalMapper::*)(const QString &)>(&QSignalMapper::mapped), this, &PowerWidget::onActionHandle);
 }
 }
 }
