@@ -33,7 +33,6 @@ DActionButton::DActionButton(QWidget *parent)
 
     m_layout->setMargin(0);
     m_layout->setSpacing(0);
-    m_layout->setContentsMargins(27, 0, 25, 0);
 
     setLayout(m_layout);
 

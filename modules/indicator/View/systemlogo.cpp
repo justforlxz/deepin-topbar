@@ -27,6 +27,7 @@
 #include <QProcess>
 #include <QAction>
 #include <QDebug>
+#include <QEvent>
 
 using namespace dtb;
 using namespace dtb::indicator;
@@ -49,12 +50,22 @@ SystemLogo::SystemLogo(QWidget *parent)
 
     layout->addWidget(logoLbl);
 
-    setStyleSheet("QLabel {color: black;}");
-
     setLayout(layout);
 
     QAction *about = new QAction(tr("About"), this);
-    QLabel *preference = new QLabel(tr("Preference setting"), this);
+
+    m_preference = new QWidget;
+    m_preference->setObjectName("Preference");
+
+    m_preference->installEventFilter(this);
+
+    QHBoxLayout *preLayout = new QHBoxLayout(m_preference);
+    preLayout->setMargin(0);
+    preLayout->setSpacing(0);
+
+    preLayout->addSpacing(27);
+    preLayout->addWidget(new QLabel(tr("Preference setting")));
+
     m_appstore = new AppstoreAction;
     QAction *forceQuit = new QAction(tr("Force quit"), this);
     QAction *sleep = new QAction(tr("Sleep"), this);
@@ -63,7 +74,7 @@ SystemLogo::SystemLogo(QWidget *parent)
     QAction *logout = new QAction(tr("Logout for %1").arg(QString(qgetenv("USER"))), this);
 
     DActionLabel *app = new DActionLabel(m_appstore);
-    DActionLabel *pre = new DActionLabel(preference);
+    DActionLabel *pre = new DActionLabel(m_preference);
 
     m_menu->addAction(about);
     m_menu->addSeparator();
@@ -100,6 +111,8 @@ SystemLogo::SystemLogo(QWidget *parent)
 
     connect(signalMapper, static_cast<void (QSignalMapper::*)(const int)>(&QSignalMapper::mapped), this, &SystemLogo::handleAction);
     connect(signalMapper, static_cast<void (QSignalMapper::*)(const QString &)>(&QSignalMapper::mapped), this, &SystemLogo::handleShutdownAction);
+
+    setStyleSheet("QWidget#Preference QLabel {color: black;}");
 }
 
 QMenu *SystemLogo::menu() const
@@ -140,4 +153,19 @@ void SystemLogo::handleShutdownAction(const QString &action)
                                     "com.deepin.dde.shutdownFront.%1").arg(action);
 
     QProcess::startDetached(command);
+}
+
+bool SystemLogo::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == m_preference) {
+        if (event->type() == QEvent::Enter) {
+            setStyleSheet("QWidget#Preference QLabel { color: white;}");
+        }
+
+        if (event->type() == QEvent::Leave) {
+            setStyleSheet("QWidget#Preference QLabel { color: black;}");
+        }
+    }
+
+    return ContentModule::eventFilter(watched, event);
 }

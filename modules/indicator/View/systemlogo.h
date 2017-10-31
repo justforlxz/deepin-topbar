@@ -44,6 +44,9 @@ private slots:
     void handleAction(const int &action);
     void handleShutdownAction(const QString &action);
 
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
+
 private:
     enum Action{
         About,
@@ -56,6 +59,7 @@ private:
     QMenu *m_menu;
     IndicatorModel *m_model;
     AppstoreAction *m_appstore;
+    QWidget *m_preference;
 };
 }
 }

@@ -42,8 +42,10 @@ AppstoreAction::AppstoreAction(QWidget *parent)
 
     QLabel *title = new QLabel("App Store");
 
+    layout->addSpacing(27);
     layout->addWidget(title, 0, Qt::AlignLeft);
     layout->addWidget(m_updateLbl, 0, Qt::AlignRight);
+    layout->addSpacing(20);
 
     m_updateLbl->setAlignment(Qt::AlignCenter);
 
@@ -52,6 +54,8 @@ AppstoreAction::AppstoreAction(QWidget *parent)
     installEventFilter(this);
 
     setLayout(layout);
+
+    setStyleSheet("QLabel {color: black;}");
 }
 
 void AppstoreAction::setModel(IndicatorModel *model)
