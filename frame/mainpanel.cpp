@@ -129,7 +129,7 @@ void MainPanel::loadModules()
 
     loadModule(new systemtray::SystemTrayPlugin);
 
-    loadModule(new wallpaper::WallpaperPlugin);
+//    loadModule(new wallpaper::WallpaperPlugin);
 
     loadModule(new media::MediaControlPlugin);
 
