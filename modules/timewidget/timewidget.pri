@@ -1,10 +1,8 @@
 SOURCES   += \
     $$PWD/datetimewidget.cpp \
-    $$PWD/datetimeplugin.cpp \
-    $$PWD/datetimepopup.cpp
+    $$PWD/datetimeplugin.cpp
 
 HEADERS   += \
     $$PWD/datetimewidget.h \
-    $$PWD/datetimeplugin.h \
-    $$PWD/datetimepopup.h
+    $$PWD/datetimeplugin.h
 

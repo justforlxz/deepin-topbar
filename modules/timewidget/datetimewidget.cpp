@@ -19,10 +19,11 @@ DateTimeWidget::DateTimeWidget(QWidget *parent)
 
     QHBoxLayout *layout = new QHBoxLayout;
 
-    layout->setContentsMargins(3, 0, 3, 0);
     layout->setMargin(0);
     layout->setSpacing(0);
-    layout->addWidget(m_timeLbl);
+    layout->setContentsMargins(10, 0, 10, 0);
+
+    layout->addWidget(m_timeLbl, 0, Qt::AlignCenter);
 
     setLayout(layout);
 

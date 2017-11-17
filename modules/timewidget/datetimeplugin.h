@@ -3,7 +3,7 @@
 
 #include "../interfaces/pluginsiteminterface.h"
 #include "datetimewidget.h"
-#include "datetimepopup.h"
+
 #include <QLabel>
 
 namespace dtb {
@@ -19,6 +19,20 @@ public:
     struct MenuModel {
         bool is24;
         QString format;
+
+        void setModel(const QJsonObject &obj) {
+            is24 = obj["Is24"].toBool();
+            format = obj["Format"].toString();
+        }
+
+        const QJsonObject value() {
+            QJsonObject obj;
+
+            obj["Is24"] = is24;
+            obj["Format"] = format;
+
+            return obj;
+        }
     };
 
     const QString pluginName() const override;
@@ -35,7 +49,6 @@ private slots:
 private:
     PluginProxyInterface *m_proxyInter;
     Plugin::DateTime::DateTimeWidget *m_centralWidget;
-    Plugin::DateTime::DateTimePopup *m_popup;
     MenuModel m_settings;
 };
 }
