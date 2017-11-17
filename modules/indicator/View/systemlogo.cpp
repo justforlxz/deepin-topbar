@@ -41,6 +41,7 @@ SystemLogo::SystemLogo(QWidget *parent)
 
     layout->setMargin(0);
     layout->setSpacing(0);
+    layout->setContentsMargins(10, 0, 10, 0);
 
     QLabel *logoLbl = new QLabel;
     QPixmap pixmap = QIcon::fromTheme("dde").pixmap(QSize(22, 22) * devicePixelRatioF());

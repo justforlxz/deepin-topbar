@@ -6,6 +6,7 @@
 #include <QScreen>
 #include <QApplication>
 #include <QDesktopWidget>
+
 #include "contentmodule.h"
 
 #define DEFAULT_COLOR "QLabel {color: rgb(67, 67, 62); background: transparent;} #ContentModule {background: transparent;}"
@@ -38,20 +39,6 @@ const QString PluginsItem::name() const
     return m_pluginInter->pluginName();
 }
 
-const QRect PluginsItem::popupMarkGeometry() const
-{
-    QRect screen = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
-    ItemPopupWindow *popup = PopupWindow.get();
-
-    // check popup is last right
-    if (popup->width() + pos().x() >= screen.width()) {
-        return QRect(QPoint(pos().x() - popup->width() + width(), height()), size());
-    } else {
-        return QRect(QPoint(pos().x(), height()), size());
-    }
-}
-
-
 PluginsItemInterface *PluginsItem::itemInter()
 {
     return m_pluginInter;
@@ -76,32 +63,6 @@ void PluginsItem::detachPluginWidget()
     QWidget *widget = m_pluginInter->itemWidget(m_itemKey);
     if (widget)
         widget->setParent(nullptr);
-}
-
-bool PluginsItem::containsPoint(const QPoint &point) const
-{
-    const qreal ratio = devicePixelRatioF();
-
-    QWidget *w = m_pluginInter->itemWidget(m_itemKey);
-
-    if (!w)
-        return false;
-
-    // if click self;
-    QRect self(w->mapToGlobal(w->pos()) * ratio,
-               w->size() * ratio);
-
-    if (isVisible() && self.contains(point))
-        return false;
-
-    QRect s = QApplication::desktop()->screenGeometry(QApplication::desktop()->primaryScreen());
-    QRegion screen(s.x(), s.y(), s.width(), 27 * ratio);
-    ItemPopupWindow *popup = PopupWindow.get();
-
-    if (screen.contains(point) || popup->geometry().contains(point))
-        return true;
-
-    return false;
 }
 
 void PluginsItem::showContextMenu()

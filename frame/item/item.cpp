@@ -15,11 +15,6 @@ Item::Item(QWidget *parent)
     }
 }
 
-const QRect Item::popupMarkGeometry() const
-{
-    return QRect();
-}
-
 PluginsItemInterface *Item::itemInter()
 {
     return nullptr;
