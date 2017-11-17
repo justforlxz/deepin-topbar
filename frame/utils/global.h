@@ -16,12 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "contentmodule.h"
-#include "utils/global.h"
+#ifndef GLOBAL_H
+#define GLOBAL_H
 
-ContentModule::ContentModule(QWidget *parent) : QFrame(parent)
+#include <QObject>
+
+#define TOPHEIGHT 28
+
+class Global : public QObject
 {
-    setObjectName("ContentModule");
+    Q_OBJECT
+public:
+    explicit Global(QObject *parent = nullptr);
 
-    setFixedHeight(TOPHEIGHT);
-}
+signals:
+
+public slots:
+};
+
+#endif // GLOBAL_H

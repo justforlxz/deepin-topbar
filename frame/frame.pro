@@ -22,7 +22,8 @@ HEADERS  += \
     $$PWD/item/stretchitem.h \
     $$PWD/utils/itempopupwindow.h \
     $$PWD/utils/event_monitor.h \
-    item/contentmodule.h
+    item/contentmodule.h \
+    utils/global.h
 
 SOURCES += \
     $$PWD/main.cpp\
@@ -33,7 +34,8 @@ SOURCES += \
     $$PWD/item/stretchitem.cpp \
     $$PWD/utils/itempopupwindow.cpp \
     $$PWD/utils/event_monitor.cpp \
-    item/contentmodule.cpp
+    item/contentmodule.cpp \
+    utils/global.cpp
 
 headers.files += ../interfaces/pluginsiteminterface.h \
                  ../interfaces/pluginproxyinterface.h

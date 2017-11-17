@@ -1,4 +1,6 @@
 #include "indicatorwidget.h"
+#include "utils/global.h"
+
 #include <QHBoxLayout>
 #include <QIcon>
 #include <QMouseEvent>
@@ -47,7 +49,7 @@ void IndicatorWidget::initUI()
     setWindowFlags(Qt::WindowDoesNotAcceptFocus);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    setFixedSize(QSize(200, 26));
+    setFixedSize(QSize(200, TOPHEIGHT));
 
     m_entry = new Entry;
 

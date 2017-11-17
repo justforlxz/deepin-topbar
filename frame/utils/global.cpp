@@ -16,12 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "contentmodule.h"
-#include "utils/global.h"
+#include "global.h"
 
-ContentModule::ContentModule(QWidget *parent) : QFrame(parent)
+Global::Global(QObject *parent) : QObject(parent)
 {
-    setObjectName("ContentModule");
 
-    setFixedHeight(TOPHEIGHT);
 }

@@ -17,7 +17,6 @@ Entry::Entry(QWidget *parent) : QWidget(parent)
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
 
-    mainLayout->addSpacing(10);
     mainLayout->addWidget(m_title, 0, Qt::AlignVCenter | Qt::AlignLeft);
 
     setLayout(mainLayout);

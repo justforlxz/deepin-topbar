@@ -19,6 +19,7 @@
 #include "systemlogo.h"
 #include "../indicatormodel.h"
 #include "dactionlabel.h"
+#include "utils/global.h"
 
 #include <QIcon>
 #include <QHBoxLayout>
@@ -42,6 +43,8 @@ SystemLogo::SystemLogo(QWidget *parent)
     layout->setMargin(0);
     layout->setSpacing(0);
     layout->setContentsMargins(10, 0, 10, 0);
+
+    setFixedHeight(TOPHEIGHT);
 
     QLabel *logoLbl = new QLabel;
     QPixmap pixmap = QIcon::fromTheme("dde").pixmap(QSize(22, 22) * devicePixelRatioF());

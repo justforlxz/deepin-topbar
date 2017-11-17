@@ -3,6 +3,7 @@
 #include "powerwidgetaction.h"
 #include "fontlabel.h"
 #include "dwidgetaction.h"
+#include "utils/global.h"
 
 #include <QHBoxLayout>
 #include <QIcon>
@@ -18,8 +19,6 @@ PowerWidget::PowerWidget(QWidget *parent)
     : ContentModule(parent)
 {
     m_powerActionWidget = new PowerWidgetAction;
-
-    setFixedHeight(26);
 
     m_batteryIcon = new FontLabel;
     m_battery = new QLabel;

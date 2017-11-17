@@ -20,11 +20,13 @@ PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString
     m_centralWidget(pluginInter->itemWidget(itemKey)),
     m_itemKey(itemKey)
 {
-    QHBoxLayout *mainLayout = new QHBoxLayout;
+    QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
 
+    mainLayout->addStretch();
     mainLayout->addWidget(m_centralWidget);
+    mainLayout->addStretch();
 
     setStyleSheet(DEFAULT_COLOR);
     setLayout(mainLayout);

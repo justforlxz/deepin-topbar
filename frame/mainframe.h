@@ -13,8 +13,6 @@
 
 DWIDGET_USE_NAMESPACE
 
-#define TOPHEIGHT 28
-
 class MainFrame : public QFrame
 {
     Q_OBJECT

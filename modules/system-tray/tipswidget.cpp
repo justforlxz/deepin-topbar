@@ -9,7 +9,6 @@ TrayApplet::TrayApplet(QWidget *parent)
     m_mainLayout->setSpacing(0);
 
     setLayout(m_mainLayout);
-    setFixedHeight(26);
 }
 
 void TrayApplet::clear()
@@ -26,13 +25,11 @@ void TrayApplet::clear()
 void TrayApplet::addWidget(TrayWidget *widget)
 {
     widget->setVisible(true);
-    m_mainLayout->addWidget(widget);
+    m_mainLayout->addWidget(widget, 0, Qt::AlignCenter);
 }
 
 void TrayApplet::addWidgets(QList<TrayWidget *> widgets)
 {
-    for (TrayWidget *w : widgets) {
-        w->setVisible(true);
-        m_mainLayout->addWidget(w);
-    }
+    for (TrayWidget *w : widgets)
+        addWidget(w);
 }

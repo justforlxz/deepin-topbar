@@ -1,4 +1,7 @@
 #include "mainframe.h"
+
+#include "utils/global.h"
+
 #include <QScreen>
 #include <QApplication>
 #include <QRect>

@@ -1,4 +1,6 @@
 #include "mediacontrolwidget.h"
+#include "utils/global.h"
+
 #include <QHBoxLayout>
 #include <QDBusInterface>
 #include <QPushButton>
@@ -11,13 +13,13 @@ MediaControlWidget::MediaControlWidget(QWidget *parent)
     setWindowFlags(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    setFixedSize(100, 26);
+    setFixedSize(100, TOPHEIGHT);
 
     setVisible(false);
 
     m_mediaTitle = new QLabel(this);
     m_mediaTitle->setAlignment(Qt::AlignVCenter);
-    m_mediaTitle->setFixedSize(100, 26);
+    m_mediaTitle->setFixedSize(100, TOPHEIGHT);
 
     m_mediaTitle->setStyleSheet("QLabel {"
                                 "background: transparent;"
@@ -35,7 +37,7 @@ MediaControlWidget::MediaControlWidget(QWidget *parent)
 
     m_mediaControl = new MediaControl(this);
 
-    m_mediaControl->resize(100, 26);
+    m_mediaControl->resize(100, TOPHEIGHT);
     m_mediaControl->move(0, -m_mediaControl->height());
 
     //Animation
@@ -52,11 +54,11 @@ MediaControlWidget::MediaControlWidget(QWidget *parent)
     m_showControlAni->setEasingCurve(QEasingCurve::InOutCubic);
 
     connect(m_hoverControlAni, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
-        m_mediaTitle->move(0, 26 + value.toPoint().y());
+        m_mediaTitle->move(0, TOPHEIGHT + value.toPoint().y());
     });
 
     connect(m_showControlAni, &QPropertyAnimation::valueChanged ,this, [=](const QVariant &value) {
-        m_mediaTitle->move(0, 26 + value.toPoint().y());
+        m_mediaTitle->move(0, TOPHEIGHT + value.toPoint().y());
     });
 
     m_mprisInter = nullptr;

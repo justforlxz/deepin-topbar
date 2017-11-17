@@ -1,4 +1,5 @@
 #include "traywidget.h"
+#include "utils/global.h"
 
 #include <QWindow>
 #include <QPainter>
@@ -42,7 +43,7 @@ TrayWidget::TrayWidget(quint32 winId, QWidget *parent)
 
     connect(m_updateTimer, &QTimer::timeout, this, &TrayWidget::refershIconImage);
 
-    setFixedSize(26, 26);
+    setFixedSize(TOPHEIGHT, TOPHEIGHT);
     m_updateTimer->start();
 }
 
@@ -57,7 +58,7 @@ const QImage TrayWidget::trayImage()
 
 QSize TrayWidget::sizeHint() const
 {
-    return QSize(26, 26);
+    return QSize(TOPHEIGHT, TOPHEIGHT);
 }
 
 void TrayWidget::showEvent(QShowEvent *e)
