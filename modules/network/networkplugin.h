@@ -24,13 +24,9 @@ public:
 
     QWidget *itemWidget(const QString &itemKey) Q_DECL_OVERRIDE;
 
-    void refershDeviceItemVisible();
-
 private slots:
     void deviceAdded(const NetworkDevice &device);
     void deviceRemoved(const NetworkDevice &device);
-    void networkStateChanged(const NetworkDevice::NetworkTypes &states);
-    void deviceTypesChanged(const NetworkDevice::NetworkTypes &types);
 
 private:
     PluginProxyInterface *m_proxyInter;

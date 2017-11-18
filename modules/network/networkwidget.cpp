@@ -24,8 +24,6 @@ void NetworkWidget::remove(DeviceItem *item)
     m_layout->removeWidget(item);
 
     m_devices.removeOne(item);
-
-    item->deleteLater();
 }
 
 void NetworkWidget::initUI()
