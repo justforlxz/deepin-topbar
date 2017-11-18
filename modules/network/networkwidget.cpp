@@ -1,31 +1,40 @@
 #include "networkwidget.h"
-#include <QIcon>
+#include "item/deviceitem.h"
+
 #include <QHBoxLayout>
-#include <QLabel>
 
-NetworkWidget::NetworkWidget(QWidget *parent) : QLabel(parent)
+using namespace dtb;
+using namespace dtb::network;
+
+NetworkWidget::NetworkWidget(QWidget *parent)
+    : QWidget(parent)
 {
-      setFixedSize(26, 26);
+    initUI();
+}
 
-      QLabel *label = new QLabel;
-      label->setFixedSize(22, 22);
-      label->setPixmap(QIcon::fromTheme("view-list-details").pixmap(22, 22));
+void NetworkWidget::addItem(DeviceItem *item)
+{
+    m_layout->addWidget(item);
 
-      QHBoxLayout *layout = new QHBoxLayout;
-      layout->setMargin(0);
-      layout->setSpacing(0);
-      layout->setContentsMargins(3, 0, 3, 0);
+    m_devices << item;
+}
 
-      layout->addWidget(label, 0, Qt::AlignCenter);
+void NetworkWidget::remove(DeviceItem *item)
+{
+    m_layout->removeWidget(item);
 
-      setLayout(layout);
+    m_devices.removeOne(item);
 
-      setStyleSheet("QLabel {"
-                    "color: rgb(67, 67, 62);"
-                    "background: transparent;"
-                    "}"
-                    "QLabel:hover {"
-                    "color: white;"
-                    "background: #1E90FF;"
-                    "}");
+    item->deleteLater();
+}
+
+void NetworkWidget::initUI()
+{
+    m_layout = new QHBoxLayout;
+
+    m_layout->setMargin(0);
+    m_layout->setSpacing(10);
+    m_layout->setContentsMargins(10, 0, 10, 0);
+
+    setLayout(m_layout);
 }

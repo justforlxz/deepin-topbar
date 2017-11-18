@@ -34,11 +34,9 @@ void NetworkPlugin::init(PluginProxyInterface *proxyInter)
 
 QWidget *NetworkPlugin::itemWidget(const QString &itemKey)
 {
-    for (auto deviceItem : m_deviceItemList)
-        if (deviceItem->path() == itemKey)
-            return deviceItem;
+    Q_UNUSED(itemKey);
 
-    return nullptr;
+    return m_network;
 }
 
 void NetworkPlugin::deviceAdded(const NetworkDevice &device)

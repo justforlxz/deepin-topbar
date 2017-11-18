@@ -7,8 +7,8 @@
 #include "item/deviceitem.h"
 #include "item/wireditem.h"
 #include "item/wirelessitem.h"
-#include <QObject>
 
+#include <QObject>
 
 namespace dtb {
 namespace network {
