@@ -41,6 +41,7 @@ public:
 public:
     static NetworkType deviceType(const QString &type);
 
+    explicit NetworkDevice() = default;
     explicit NetworkDevice(const NetworkType type, const QJsonObject &info);
     bool operator==(const QString &path) const;
     bool operator==(const NetworkDevice &device) const;
