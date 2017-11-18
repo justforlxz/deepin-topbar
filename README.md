@@ -2,6 +2,14 @@
 
 This is a project that I have a whim to help improve my ability to write code.
 
+## How to get my message and software updates?
+
+I'll release messages on my twitter and google plus.
+
+[Twitter @kirigayakazshin](https://twitter.com/kirigayakazshin)
+
+[Google+](https://plus.google.com/+kirigayakazushin)
+
 ## Dependencies
 
 ### Build dependencies
@@ -83,14 +91,3 @@ Deepin-topbar is licensed under [GPLv3](LICENSE).
 It's simple.
 
 * fork and pull request. I want more people to help me improve it.
-
-* Help me with money. It's no joke. I need money to pay for some service, and I'll make public any contribution.
-
-# alipay (支付宝)
-![alipay](readme/zhifubao.jpg) 
-
-# wechat (微信)
-![wechat](readme/weixin.jpg)
-
-# paypal
-[Paypal](paypal.me/zhangdingyuan)
