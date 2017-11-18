@@ -1,8 +1,6 @@
 #ifndef NETWORKDEVICE_H
 #define NETWORKDEVICE_H
 
-#include "networkdevice.h"
-
 #include <QUuid>
 #include <QDBusObjectPath>
 #include <QJsonObject>

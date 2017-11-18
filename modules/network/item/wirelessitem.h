@@ -2,7 +2,9 @@
 #define WIRELESSITEM_H
 
 #include "deviceitem.h"
+#include "../networkdevice.h"
 #include "applet/wirelessapplet.h"
+#include "applet/accesspointwidget.h"
 #include "../widgets/fontlabel.h"
 
 namespace dtb {
@@ -18,14 +20,37 @@ public:
     NetworkDevice::NetworkType type() const;
     NetworkDevice::NetworkState state() const;
 
+signals:
+    void activeAPChanged() const;
+
 private slots:
     void init();
     void onActivateConnectChanged();
+    void deviceEnabled(const QString &devPath, const bool enable);
+    void deviceStateChanged();
 
+    void APAdded(const QString &devPath, const QString &info);
+    void APRemoved(const QString &devPath, const QString &info);
+    void APPropertiesChanged(const QString &devPath, const QString &info);
+
+    void loadAPList();
+    void onActiveAPChanged();
+    void updateAPList();
+    void needSecrets(const QString &info);
+    void pwdDialogAccepted();
+    void pwdDialogCanceled();
 private:
     widgets::FontLabel *m_wirelessLbl;
     bool m_isConnected;
     NetworkDevice m_device;
+    DBusNetwork *m_networkInter;
+    NetworkDevice::NetworkState m_activeState;
+    QList<AccessPoint> m_apList;
+    AccessPoint m_activeAP;
+    QTimer *m_updateAPTimer;
+    Dtk::Widget::DInputDialog *m_pwdDialog;
+    QString m_lastConnPath;
+    QString m_lastConnSecurity;
 };
 }
 }
