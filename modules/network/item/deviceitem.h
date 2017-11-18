@@ -2,15 +2,16 @@
 #define DEVICEITEM_H
 
 #include "../networkmanager.h"
+#include "../../../frame/item/contentmodule.h"
 
 #include <QWidget>
+#include <QMenu>
 
 namespace dtb {
 namespace network {
-class DeviceItem : public QWidget
+class DeviceItem : public ContentModule
 {
     Q_OBJECT
-
 public:
     explicit DeviceItem(const QString &path);
 
@@ -18,25 +19,17 @@ public:
 
     virtual NetworkDevice::NetworkType type() const = 0;
     virtual NetworkDevice::NetworkState state() const = 0;
-    virtual void refreshIcon() = 0;
-    virtual const QString itemCommand() const;
-    virtual const QString itemContextMenu();
-    virtual QWidget *itemApplet();
-    virtual QWidget *itemPopup();
-    virtual void invokeMenuItem(const QString &menuId);
-
-signals:
-    void requestContextMenu() const;
 
 protected:
     bool enabled() const;
     void setEnabled(const bool enable);
-    QSize sizeHint() const;
+    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
 protected:
     const QString m_devicePath;
 
     NetworkManager *m_networkManager;
+    QMenu *m_menu;
 };
 }
 }

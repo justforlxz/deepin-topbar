@@ -81,38 +81,11 @@ bool WirelessItem::eventFilter(QObject *o, QEvent *e)
     return false;
 }
 
-void WirelessItem::paintEvent(QPaintEvent *e)
-{
-    DeviceItem::paintEvent(e);
-
-    const int iconSize =  16;
-    const QPixmap pixmap = iconPix(iconSize);
-
-    QPainter painter(this);
-
-    painter.drawPixmap(rect().center() - pixmap.rect().center(), pixmap);
-}
-
 void WirelessItem::resizeEvent(QResizeEvent *e)
 {
     DeviceItem::resizeEvent(e);
 
     m_icons.clear();
-}
-
-void WirelessItem::mousePressEvent(QMouseEvent *e)
-{
-    if (e->button() != Qt::RightButton)
-        return QWidget::mousePressEvent(e);
-
-    const QPoint p(e->pos() - rect().center());
-    if (p.manhattanLength() < std::min(width(), height()) * 0.8 * 0.5)
-    {
-        emit requestContextMenu();
-        return;
-    }
-
-    return QWidget::mousePressEvent(e);
 }
 
 const QPixmap WirelessItem::iconPix(const int size)
@@ -195,9 +168,3 @@ void WirelessItem::adjustHeight()
 {
     m_wirelessApplet->setFixedHeight(m_APList->height() + m_APList->controlPanel()->height());
 }
-
-void WirelessItem::refreshIcon()
-{
-    update();
-}
-

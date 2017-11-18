@@ -23,9 +23,7 @@ public:
 
 protected:
     bool eventFilter(QObject *o, QEvent *e);
-    void paintEvent(QPaintEvent *e);
     void resizeEvent(QResizeEvent *e);
-    void mousePressEvent(QMouseEvent *e);
 
 private:
     const QPixmap iconPix(const int size);
@@ -34,7 +32,6 @@ private:
 private slots:
     void init();
     void adjustHeight();
-    void refreshIcon();
 
 private:
     QHash<QString, QPixmap> m_icons;

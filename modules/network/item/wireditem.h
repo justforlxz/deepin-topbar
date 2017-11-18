@@ -4,10 +4,13 @@
 #include "deviceitem.h"
 
 #include <QWidget>
-#include <QLabel>
 #include <QTimer>
+#include <QMenu>
 
 namespace dtb {
+namespace widgets {
+class FontLabel;
+}
 namespace network {
 class WiredItem : public DeviceItem
 {
@@ -18,25 +21,17 @@ public:
 
     NetworkDevice::NetworkType type() const override;
     NetworkDevice::NetworkState state() const override;
-    QWidget *itemPopup() override;
-    const QString itemCommand() const override;
 
 protected:
-    void paintEvent(QPaintEvent *e) override;
-    void resizeEvent(QResizeEvent *e) override;
-    void mousePressEvent(QMouseEvent *e) override;
+    void resizeEvent(QResizeEvent *e) Q_DECL_OVERRIDE;
 
 private slots:
-    void refreshIcon() override;
-    void reloadIcon();
     void activeConnectionChanged();
     void deviceStateChanged(const NetworkDevice &device);
 
 private:
     bool m_connected;
-    QPixmap m_icon;
-
-    QLabel *m_itemTips;
+    widgets::FontLabel *m_networkLbl;
     QTimer *m_delayTimer;
 };
 }

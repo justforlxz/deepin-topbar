@@ -26,6 +26,8 @@ void NetworkPlugin::init(PluginProxyInterface *proxyInter)
     connect(m_networkManager, &NetworkManager::deviceRemoved, this, &NetworkPlugin::deviceRemoved);
 
     m_networkManager->init();
+
+    m_proxyInter->addItem(this, "network");
 }
 
 QWidget *NetworkPlugin::itemWidget(const QString &itemKey)
