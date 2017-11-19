@@ -24,6 +24,13 @@ WiredItem::WiredItem(const QString &path)
     connect(m_networkManager, &NetworkManager::activeConnectionChanged, this, &WiredItem::activeConnectionChanged);
     connect(m_delayTimer, &QTimer::timeout, this, &WiredItem::onDelayTimeOut);
 
+    m_preferences = new QAction(tr("Open Network Preferences..."), this);
+
+    connect(m_menu, &QMenu::triggered, this, [=] (QAction *action) {
+        if (action == m_preferences)
+            QProcess::startDetached("dbus-send --print-reply --dest=com.deepin.dde.ControlCenter /com/deepin/dde/ControlCenter com.deepin.dde.ControlCenter.ShowModule \"string:network\"");
+    });
+
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(0);
@@ -76,4 +83,8 @@ void WiredItem::deviceStateChanged(const NetworkDevice &device)
 void WiredItem::onDelayTimeOut()
 {
     setVisible(m_networkManager->deviceEnabled(m_devicePath));
+
+    m_menu->clear();
+
+    m_menu->addAction(m_preferences);
 }

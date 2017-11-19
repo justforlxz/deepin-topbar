@@ -34,6 +34,7 @@ private:
     bool m_connected;
     widgets::FontLabel *m_networkLbl;
     QTimer *m_delayTimer;
+    QAction *m_preferences;
 };
 }
 }
