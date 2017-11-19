@@ -1,5 +1,4 @@
 #include "accesspointwidget.h"
-#include "horizontalseperator.h"
 
 #include <QHBoxLayout>
 #include <QDebug>

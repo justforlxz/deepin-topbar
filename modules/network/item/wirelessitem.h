@@ -3,10 +3,13 @@
 
 #include "deviceitem.h"
 #include "../networkdevice.h"
-#include "applet/wirelessapplet.h"
 #include "applet/accesspointwidget.h"
 #include "../widgets/fontlabel.h"
 #include "../widgets/dactionlabel.h"
+
+#include <dinputdialog.h>
+
+DWIDGET_USE_NAMESPACE
 
 namespace dtb {
 namespace network {
