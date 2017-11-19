@@ -1,23 +1,26 @@
 #include "accesspointwidget.h"
+#include "../../../../frame/utils/global.h"
 
 #include <QHBoxLayout>
 #include <QDebug>
+#include <QEvent>
 
 DWIDGET_USE_NAMESPACE
 
 using namespace dtb;
 using namespace dtb::network;
+using namespace dtb::widgets;
 
 AccessPointWidget::AccessPointWidget(const AccessPoint &ap)
-    : QFrame(nullptr),
-
-      m_activeState(NetworkDevice::Unknow),
-      m_ap(ap),
-      m_ssidBtn(new QPushButton(this)),
-      m_indicator(new DPictureSequenceView(this)),
-      m_disconnectBtn(new DImageButton(this)),
-      m_securityIcon(new QLabel),
-      m_strengthIcon(new QLabel)
+    : QFrame(nullptr)
+    , m_activeState(NetworkDevice::Unknow)
+    , m_ap(ap)
+    , m_ssidBtn(new QPushButton(this))
+    , m_indicator(new DPictureSequenceView(this))
+    , m_connectedBtn(new QFrame(this))
+    , m_disconnectBtn(new FontLabel)
+    , m_securityIcon(new FontLabel)
+    , m_strengthIcon(new FontLabel)
 {
     setFixedWidth(250);
 
@@ -25,10 +28,11 @@ AccessPointWidget::AccessPointWidget(const AccessPoint &ap)
     m_ssidBtn->setText(ap.ssid());
     m_ssidBtn->setObjectName("Ssid");
 
+    m_connectedBtn->setFixedSize(16, 16);
+
     m_disconnectBtn->setVisible(false);
-    m_disconnectBtn->setNormalPic(":/wireless/resources/wireless/selected.png");
-    m_disconnectBtn->setHoverPic(":/wireless/resources/wireless/disconnect.png");
-    m_disconnectBtn->setPressPic(":/wireless/resources/wireless/disconnect_pressed.png");
+    m_disconnectBtn->setIcon(QChar(0xE8FB), FONTSIZE);
+    m_disconnectBtn->installEventFilter(this);
 
     QStringList indicatorList;
     for (uint i(1); i != 91; ++i)
@@ -38,25 +42,23 @@ AccessPointWidget::AccessPointWidget(const AccessPoint &ap)
     m_indicator->setVisible(false);
 
     if (ap.secured())
-        m_securityIcon->setPixmap(QPixmap(":/wireless/resources/wireless/security.svg"));
-    else
-    {
-        QPixmap pixmap(16, 16);
-        pixmap.fill(Qt::transparent);
-        m_securityIcon->setPixmap(pixmap);
-    }
+        m_securityIcon->setIcon(QChar(0xE72E), FONTSIZE);
 
     QHBoxLayout *infoLayout = new QHBoxLayout;
+    infoLayout->setSpacing(0);
+    infoLayout->setMargin(0);
+
+    infoLayout->addSpacing(2);
+    infoLayout->addWidget(m_indicator);
+    infoLayout->addWidget(m_connectedBtn);
+    infoLayout->addWidget(m_disconnectBtn);
+    infoLayout->addSpacing(2);
+    infoLayout->addWidget(m_ssidBtn);
+    infoLayout->addSpacing(10);
     infoLayout->addWidget(m_securityIcon);
     infoLayout->addSpacing(5);
     infoLayout->addWidget(m_strengthIcon);
-    infoLayout->addSpacing(10);
-    infoLayout->addWidget(m_ssidBtn);
-    infoLayout->addWidget(m_indicator);
-    infoLayout->addWidget(m_disconnectBtn);
-    infoLayout->addSpacing(20);
-    infoLayout->setSpacing(0);
-    infoLayout->setContentsMargins(15, 0, 0, 0);
+    infoLayout->addSpacing(5);
 
     QVBoxLayout *centralLayout = new QVBoxLayout;
     centralLayout->addLayout(infoLayout);
@@ -71,23 +73,14 @@ AccessPointWidget::AccessPointWidget(const AccessPoint &ap)
                   "border:none;"
                   "text-align:left;"
                   "}"
-                  "dtb--network--AccessPointWidget {"
-                  "border-radius:4px;"
-                  "margin:0 2px;"
-                  "border-top:1px solid rgba(255, 255, 255, .05);"
-                  "}"
                   "dtb--network--AccessPointWidget:hover {"
                   "color: white;"
                   "border:none;"
                   "margin:0;"
                   "background-color:rgba(255, 255, 255, .1);"
-                  "}"
-                  "dtb--network--AccessPointWidget[active=true] #Ssid {"
-//                  "color:#2ca7f8;"
                   "}");
 
     connect(m_ssidBtn, &QPushButton::clicked, this, &AccessPointWidget::ssidClicked);
-    connect(m_disconnectBtn, &DImageButton::clicked, this, &AccessPointWidget::disconnectBtnClicked);
 }
 
 bool AccessPointWidget::active() const
@@ -105,6 +98,7 @@ void AccessPointWidget::setActiveState(const NetworkDevice::NetworkState state)
 
     const bool isActive = active();
     m_disconnectBtn->setVisible(isActive);
+    m_connectedBtn->setVisible(!isActive);
 
     if (!isActive && state > NetworkDevice::Disconnected)
     {
@@ -118,21 +112,37 @@ void AccessPointWidget::setActiveState(const NetworkDevice::NetworkState state)
 void AccessPointWidget::enterEvent(QEvent *e)
 {
     QWidget::enterEvent(e);
-    m_disconnectBtn->setNormalPic(":/wireless/resources/wireless/disconnect.png");
+    m_disconnectBtn->setIcon(QChar(0xE711), FONTSIZE);
 }
 
 void AccessPointWidget::leaveEvent(QEvent *e)
 {
     QWidget::leaveEvent(e);
-    m_disconnectBtn->setNormalPic(":/wireless/resources/wireless/selected.png");
+    m_disconnectBtn->setIcon(QChar(0xE8FB), FONTSIZE);
 }
 
 void AccessPointWidget::setStrengthIcon(const int strength)
 {
-    if (strength == 100)
-        return m_strengthIcon->setPixmap(QPixmap(":/wireless/resources/wireless/wireless-8-symbolic.svg"));
+    if (strength <= 20)
+        m_strengthIcon->setIcon(QChar(0xEC37), FONTSIZE);
+    else if (strength <= 40)
+        m_strengthIcon->setIcon(QChar(0xEC38), FONTSIZE);
+    else if (strength <= 60)
+        m_strengthIcon->setIcon(QChar(0xEC39), FONTSIZE);
+    else if (strength <= 80)
+        m_strengthIcon->setIcon(QChar(0xEC3A), FONTSIZE);
+    else
+        m_strengthIcon->setIcon(QChar(0xEC3B), FONTSIZE);
+}
 
-    m_strengthIcon->setPixmap(QPixmap(QString(":/wireless/resources/wireless/wireless-%1-symbolic.svg").arg(strength / 10 & ~0x1)));
+bool AccessPointWidget::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == m_disconnectBtn) {
+        if (event->type() == QEvent::MouseButtonRelease)
+            emit disconnectBtnClicked();
+    }
+
+    return QFrame::eventFilter(watched, event);
 }
 
 void AccessPointWidget::ssidClicked()

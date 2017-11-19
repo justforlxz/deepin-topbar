@@ -3,13 +3,13 @@
 
 #include "accesspoint.h"
 #include "../../networkdevice.h"
+#include "../../../../widgets/fontlabel.h"
 
 #include <QWidget>
 #include <QLabel>
 #include <QPushButton>
 #include <QDBusObjectPath>
 
-#include <dimagebutton.h>
 #include <dpicturesequenceview.h>
 
 namespace dtb {
@@ -30,9 +30,12 @@ signals:
     void requestDeactiveAP(const AccessPoint &ap) const;
 
 private:
-    void enterEvent(QEvent *e);
-    void leaveEvent(QEvent *e);
     void setStrengthIcon(const int strength);
+
+protected:
+    void enterEvent(QEvent *e) Q_DECL_OVERRIDE;
+    void leaveEvent(QEvent *e) Q_DECL_OVERRIDE;
+    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
 private slots:
     void ssidClicked();
@@ -44,9 +47,10 @@ private:
     AccessPoint m_ap;
     QPushButton *m_ssidBtn;
     Dtk::Widget::DPictureSequenceView *m_indicator;
-    Dtk::Widget::DImageButton *m_disconnectBtn;
-    QLabel *m_securityIcon;
-    QLabel *m_strengthIcon;
+    QFrame *m_connectedBtn;
+    widgets::FontLabel *m_disconnectBtn;
+    widgets::FontLabel *m_securityIcon;
+    widgets::FontLabel *m_strengthIcon;
 };
 }
 }
