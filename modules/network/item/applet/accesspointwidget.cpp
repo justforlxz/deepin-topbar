@@ -19,6 +19,8 @@ AccessPointWidget::AccessPointWidget(const AccessPoint &ap)
       m_securityIcon(new QLabel),
       m_strengthIcon(new QLabel)
 {
+    setFixedWidth(250);
+
     m_ssidBtn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     m_ssidBtn->setText(ap.ssid());
     m_ssidBtn->setObjectName("Ssid");
@@ -63,23 +65,24 @@ AccessPointWidget::AccessPointWidget(const AccessPoint &ap)
 
     setStrengthIcon(ap.strength());
     setLayout(centralLayout);
-    setStyleSheet("AccessPointWidget #Ssid {"
-                  "color:white;"
+    setStyleSheet("dtb--network--AccessPointWidget #Ssid {"
+                  "color:black;"
                   "background-color:transparent;"
                   "border:none;"
                   "text-align:left;"
                   "}"
-                  "AccessPointWidget {"
+                  "dtb--network--AccessPointWidget {"
                   "border-radius:4px;"
                   "margin:0 2px;"
                   "border-top:1px solid rgba(255, 255, 255, .05);"
                   "}"
-                  "AccessPointWidget:hover {"
+                  "dtb--network--AccessPointWidget:hover {"
+                  "color: white;"
                   "border:none;"
                   "margin:0;"
                   "background-color:rgba(255, 255, 255, .1);"
                   "}"
-                  "AccessPointWidget[active=true] #Ssid {"
+                  "dtb--network--AccessPointWidget[active=true] #Ssid {"
 //                  "color:#2ca7f8;"
                   "}");
 
