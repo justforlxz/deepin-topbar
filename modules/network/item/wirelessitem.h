@@ -59,6 +59,7 @@ private:
     QString m_lastConnPath;
     QString m_lastConnSecurity;
     QMap<widgets::DActionLabel*, AccessPointWidget*> m_menuLists;
+    QMap<AccessPointWidget*, AccessPoint> m_oldApList;
     QAction *m_joinOther;
     QAction *m_preferences;
 };

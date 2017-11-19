@@ -226,24 +226,15 @@ void WirelessItem::updateAPList()
     const bool isEnabled = m_networkManager->deviceEnabled(m_devicePath);
     setVisible(isEnabled);
 
-    QMapIterator<DActionLabel*, AccessPointWidget*> i(m_menuLists);
-
-    while (i.hasNext()) {
-        i.next();
-
-        m_menu->removeAction(i.key());
-
-        i.key()->deleteLater();
-        i.value()->deleteLater();
-    }
-
-    m_menuLists.clear();
-
     if (isEnabled) {
         // sort ap list by strength
         std::sort(m_apList.begin(), m_apList.end(), std::greater<AccessPoint>());
 
         for (const AccessPoint &ap : m_apList) {
+
+            if (m_oldApList.values().contains(ap))
+                continue;
+
             AccessPointWidget *apw = new AccessPointWidget(ap);
 
             connect(apw, &AccessPointWidget::requestActiveAP, this, &WirelessItem::activateAP, Qt::UniqueConnection);
@@ -252,6 +243,8 @@ void WirelessItem::updateAPList()
             DActionLabel *action = new DActionLabel(apw);
 
             m_menuLists[action] = apw;
+
+            m_oldApList[apw] = ap;
 
             m_menu->addAction(action);
 
@@ -271,6 +264,23 @@ void WirelessItem::updateAPList()
                 else
                     m_wirelessLbl->setIcon(QChar(0xE908), FONTSIZE);
             }
+        }
+
+        for (int i(0); i != m_oldApList.size(); ++i) {
+            const AccessPoint &ap = m_oldApList.values().takeAt(i);
+
+            if (m_apList.contains(ap))
+                continue;
+
+            AccessPointWidget *apw = m_oldApList.key(ap);
+            DActionLabel *btn = m_menuLists.key(apw);
+
+            m_menuLists.remove(btn);
+            m_menu->removeAction(btn);
+            m_oldApList.remove(apw);
+
+            apw->deleteLater();
+            btn->deleteLater();
         }
 
         m_menu->addSeparator();
