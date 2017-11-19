@@ -12,6 +12,10 @@ DeviceItem::DeviceItem(const QString &path)
     , m_menu(new QMenu)
 {
     installEventFilter(this);
+
+    connect(m_menu, &QMenu::aboutToHide, this, [=] {
+        setStyleSheet("QLabel {color: rgb(67, 67, 62); background: transparent;} #ContentModule {background: transparent;}");
+    });
 }
 
 bool DeviceItem::enabled() const

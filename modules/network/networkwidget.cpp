@@ -31,8 +31,7 @@ void NetworkWidget::initUI()
     m_layout = new QHBoxLayout;
 
     m_layout->setMargin(0);
-    m_layout->setSpacing(10);
-    m_layout->setContentsMargins(10, 0, 10, 0);
+    m_layout->setSpacing(0);
 
     setLayout(m_layout);
 }

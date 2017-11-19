@@ -27,6 +27,7 @@ WiredItem::WiredItem(const QString &path)
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(0);
+    layout->setContentsMargins(10, 0, 10, 0);
 
     m_networkLbl->setIcon(QChar(0xEC27), FONTSIZE);
     m_networkLbl->setObjectName("NetworkLabel");

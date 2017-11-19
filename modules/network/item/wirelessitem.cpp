@@ -46,6 +46,7 @@ void WirelessItem::init()
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->setMargin(0);
     vLayout->setSpacing(0);
+    vLayout->setContentsMargins(10, 0, 10,0);
 
     vLayout->addWidget(m_wirelessLbl, 0, Qt::AlignCenter);
 
