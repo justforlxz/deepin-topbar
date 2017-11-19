@@ -6,6 +6,7 @@
 #include "applet/wirelessapplet.h"
 #include "applet/accesspointwidget.h"
 #include "../widgets/fontlabel.h"
+#include "../widgets/dactionlabel.h"
 
 namespace dtb {
 namespace network {
@@ -39,6 +40,9 @@ private slots:
     void needSecrets(const QString &info);
     void pwdDialogAccepted();
     void pwdDialogCanceled();
+    void activateAP(const QDBusObjectPath &apPath, const QString &ssid);
+    void deactiveAP();
+
 private:
     widgets::FontLabel *m_wirelessLbl;
     bool m_isConnected;
@@ -51,6 +55,9 @@ private:
     Dtk::Widget::DInputDialog *m_pwdDialog;
     QString m_lastConnPath;
     QString m_lastConnSecurity;
+    QMap<widgets::DActionLabel*, AccessPointWidget*> m_menuLists;
+    QAction *m_joinOther;
+    QAction *m_preferences;
 };
 }
 }

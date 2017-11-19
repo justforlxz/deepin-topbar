@@ -1,5 +1,7 @@
 #include "deviceitem.h"
 
+#include <QPainter>
+
 using namespace dtb;
 using namespace dtb::network;
 
@@ -9,6 +11,7 @@ DeviceItem::DeviceItem(const QString &path)
     , m_networkManager(NetworkManager::instance(this))
     , m_menu(new QMenu)
 {
+    installEventFilter(this);
 }
 
 bool DeviceItem::enabled() const
@@ -26,4 +29,13 @@ void DeviceItem::mouseReleaseEvent(QMouseEvent *event)
     ContentModule::mouseReleaseEvent(event);
 
     m_menu->exec(QPoint(mapToGlobal(rect().topLeft()).x(), height()));
+}
+
+bool DeviceItem::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == this && event->type() == QEvent::MouseButtonPress) {
+        setStyleSheet("QLabel {color: white; background: transparent;} #ContentModule {background: #1E90FF;}");
+    }
+
+    return ContentModule::eventFilter(watched, event);
 }

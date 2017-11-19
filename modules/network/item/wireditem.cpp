@@ -22,6 +22,7 @@ WiredItem::WiredItem(const QString &path)
     connect(m_networkManager, &NetworkManager::deviceChanged, this, &WiredItem::deviceStateChanged);
     connect(m_networkManager, &NetworkManager::networkStateChanged, m_delayTimer, static_cast<void (QTimer::*)()>(&QTimer::start));
     connect(m_networkManager, &NetworkManager::activeConnectionChanged, this, &WiredItem::activeConnectionChanged);
+    connect(m_delayTimer, &QTimer::timeout, this, &WiredItem::onDelayTimeOut);
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
@@ -69,4 +70,9 @@ void WiredItem::deviceStateChanged(const NetworkDevice &device)
         return;
 
     m_delayTimer->start();
+}
+
+void WiredItem::onDelayTimeOut()
+{
+    setVisible(m_networkManager->deviceEnabled(m_devicePath));
 }

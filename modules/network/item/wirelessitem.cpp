@@ -12,7 +12,6 @@ WirelessItem::WirelessItem(const QString &path)
     , m_isConnected(false)
 {
     QMetaObject::invokeMethod(this, "init", Qt::QueuedConnection);
-    connect(m_networkManager, &NetworkManager::activeConnectionChanged, this, &WirelessItem::onActivateConnectChanged);
 }
 
 WirelessItem::~WirelessItem()
@@ -52,6 +51,7 @@ void WirelessItem::init()
 
     setLayout(vLayout);
 
+    connect(m_networkManager, &NetworkManager::activeConnectionChanged, this, &WirelessItem::onActivateConnectChanged);
     connect(m_networkInter, &DBusNetwork::AccessPointAdded, this, &WirelessItem::APAdded);
     connect(m_networkInter, &DBusNetwork::AccessPointRemoved, this, &WirelessItem::APRemoved);
     connect(m_networkInter, &DBusNetwork::AccessPointPropertiesChanged, this, &WirelessItem::APPropertiesChanged);
@@ -67,6 +67,16 @@ void WirelessItem::init()
     connect(m_updateAPTimer, &QTimer::timeout, this, &WirelessItem::updateAPList);
 
     connect(this, &WirelessItem::activeAPChanged, m_updateAPTimer, static_cast<void (QTimer::*)()>(&QTimer::start));
+
+    m_joinOther = new QAction(tr("Join Other Network..."), this);
+    m_preferences = new QAction(tr("Open Network Preferences..."), this);
+
+    connect(m_menu, &QMenu::triggered, this, [=] (QAction *action) {
+        if (action == m_joinOther)
+            QProcess::startDetached("dbus-send --print-reply --dest=com.deepin.dde.ControlCenter /com/deepin/dde/ControlCenter com.deepin.dde.ControlCenter.ShowPage \"string:network\" \"string:network\"");
+        if (action == m_preferences)
+            QProcess::startDetached("dbus-send --print-reply --dest=com.deepin.dde.ControlCenter /com/deepin/dde/ControlCenter com.deepin.dde.ControlCenter.ShowModule \"string:network\"");
+    });
 
     loadAPList();
     onActiveAPChanged();
@@ -212,15 +222,40 @@ void WirelessItem::onActiveAPChanged()
 
 void WirelessItem::updateAPList()
 {
-    if (m_networkInter->IsDeviceEnabled(m_device.dbusPath()))
-    {
+    const bool isEnabled = m_networkManager->deviceEnabled(m_devicePath);
+    setVisible(isEnabled);
+
+    QMapIterator<DActionLabel*, AccessPointWidget*> i(m_menuLists);
+
+    while (i.hasNext()) {
+        i.next();
+
+        m_menu->removeAction(i.key());
+
+        i.key()->deleteLater();
+        i.value()->deleteLater();
+    }
+
+    m_menuLists.clear();
+
+    if (isEnabled) {
         // sort ap list by strength
         std::sort(m_apList.begin(), m_apList.end(), std::greater<AccessPoint>());
 
-        for (const AccessPoint &ap : m_apList)
-        {
+        for (const AccessPoint &ap : m_apList) {
+            AccessPointWidget *apw = new AccessPointWidget(ap);
+
+            connect(apw, &AccessPointWidget::requestActiveAP, this, &WirelessItem::activateAP, Qt::UniqueConnection);
+            connect(apw, &AccessPointWidget::requestDeactiveAP, this, &WirelessItem::deactiveAP, Qt::UniqueConnection);
+
+            DActionLabel *action = new DActionLabel(apw);
+
+            m_menuLists[action] = apw;
+
+            m_menu->addAction(action);
+
             if (ap == m_activeAP) {
-                // update current
+                apw->setActiveState(m_device.state());
 
                 const int i = ap.strength();
 
@@ -236,6 +271,10 @@ void WirelessItem::updateAPList()
                     m_wirelessLbl->setIcon(QChar(0xE908), FONTSIZE);
             }
         }
+
+        m_menu->addSeparator();
+        m_menu->addAction(m_joinOther);
+        m_menu->addAction(m_preferences);
     }
 }
 
@@ -285,4 +324,31 @@ void WirelessItem::pwdDialogCanceled()
 {
     m_networkInter->CancelSecret(m_lastConnPath, m_lastConnSecurity);
     m_pwdDialog->close();
+}
+
+void WirelessItem::activateAP(const QDBusObjectPath &apPath, const QString &ssid)
+{
+    QString uuid;
+
+    const QJsonDocument doc = QJsonDocument::fromJson(m_networkInter->connections().toUtf8());
+    for (auto it : doc.object().value("wireless").toArray())
+    {
+        const QJsonObject obj = it.toObject();
+        if (obj.value("Ssid").toString() != ssid)
+            continue;
+        if (obj.value("HwAddress").toString() != m_device.hwAddress())
+            continue;
+
+        uuid = obj.value("Uuid").toString();
+        if (!uuid.isEmpty())
+            break;
+    }
+
+    m_networkInter->ActivateAccessPoint(uuid, apPath, m_device.dbusPath()).waitForFinished();
+}
+
+void WirelessItem::deactiveAP()
+{
+    m_activeAP = AccessPoint();
+    m_networkInter->DisconnectDevice(QDBusObjectPath(m_device.path()));
 }

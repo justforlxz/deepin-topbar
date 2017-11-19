@@ -28,6 +28,7 @@ protected:
 private slots:
     void activeConnectionChanged();
     void deviceStateChanged(const NetworkDevice &device);
+    void onDelayTimeOut();
 
 private:
     bool m_connected;

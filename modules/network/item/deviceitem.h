@@ -24,10 +24,10 @@ protected:
     bool enabled() const;
     void setEnabled(const bool enable);
     void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    bool eventFilter(QObject *watched, QEvent *event) Q_DECL_OVERRIDE;
 
 protected:
     const QString m_devicePath;
-
     NetworkManager *m_networkManager;
     QMenu *m_menu;
 };
