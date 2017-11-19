@@ -42,6 +42,7 @@ void WirelessItem::init()
     m_pwdDialog = new Dtk::Widget::DInputDialog(nullptr);
 
     m_wirelessLbl->setStyleSheet("#NetworkLabel {color: black;}");
+    m_wirelessLbl->setIcon(QChar(0xE908), FONTSIZE);
 
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->setMargin(0);
