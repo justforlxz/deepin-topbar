@@ -9,8 +9,13 @@
 
 #include "contentmodule.h"
 
+#ifdef QT_DEBUG
+#define DEFAULT_COLOR "QLabel {color: white; background: transparent;} #ContentModule {background: transparent;}"
+#define CLICK_COLOR "QLabel {color: white; background: transparent;} #ContentModule {background: #1E90FF;}"
+#else
 #define DEFAULT_COLOR "QLabel {color: rgb(67, 67, 62); background: transparent;} #ContentModule {background: transparent;}"
 #define CLICK_COLOR "QLabel {color: white; background: transparent;} #ContentModule {background: #1E90FF;}"
+#endif
 
 using namespace dtb;
 

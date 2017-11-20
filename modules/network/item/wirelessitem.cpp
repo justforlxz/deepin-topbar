@@ -267,7 +267,7 @@ void WirelessItem::updateAPList()
             }
         }
 
-        for (int i(0); i != m_oldApList.size(); ++i) {
+        for (int i(0); i < m_oldApList.size(); i++) {
             const AccessPoint &ap = m_oldApList.values().takeAt(i);
 
             if (m_apList.contains(ap))

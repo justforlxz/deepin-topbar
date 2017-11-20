@@ -40,6 +40,10 @@ void MainFrame::init()
     m_blurEffectWidget->setMaskColor(DBlurEffectWidget::LightColor);
     m_blurEffectWidget->setWindowFlags(Qt::WindowDoesNotAcceptFocus);
 
+#ifdef QT_DEBUG
+    m_blurEffectWidget->setMaskColor(DBlurEffectWidget::DarkColor);
+#endif
+
     m_handle = new DPlatformWindowHandle(this);
     m_handle->setBorderWidth(0);
     m_handle->setWindowRadius(0);
