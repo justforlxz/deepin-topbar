@@ -1,3 +1,5 @@
 <RCC>
-    <qresource prefix="/"/>
+    <qresource prefix="/indicator">
+        <file>icons/dde.svg</file>
+    </qresource>
 </RCC>

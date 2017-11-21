@@ -29,6 +29,7 @@
 #include <QAction>
 #include <QDebug>
 #include <QEvent>
+#include <QImageReader>
 
 using namespace dtb;
 using namespace dtb::indicator;
@@ -47,7 +48,14 @@ SystemLogo::SystemLogo(QWidget *parent)
     setFixedHeight(TOPHEIGHT);
 
     QLabel *logoLbl = new QLabel;
-    QPixmap pixmap = QIcon::fromTheme("dde").pixmap(QSize(22, 22) * devicePixelRatioF());
+
+    QPixmap pixmap;
+
+    QImageReader reader;
+    reader.setFileName(":/indicator/icons/dde.svg");
+
+    reader.setScaledSize(QSize(TOPHEIGHT - 5, TOPHEIGHT - 5) * devicePixelRatioF());
+    pixmap = QPixmap::fromImage(reader.read());
     pixmap.setDevicePixelRatio(devicePixelRatioF());
 
     logoLbl->setPixmap(pixmap);

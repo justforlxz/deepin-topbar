@@ -17,3 +17,6 @@ HEADERS += \
     $$PWD/View/appstoreaction.h \
     $$PWD/indicatorworker.h \
     $$PWD/indicatormodel.h
+
+RESOURCES += \
+    $$PWD/indicator.qrc
