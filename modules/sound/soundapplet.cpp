@@ -24,7 +24,6 @@ SoundApplet::SoundApplet(QWidget *parent)
     : QScrollArea(parent),
 
       m_centralWidget(new QWidget),
-      m_applicationTitle(new QWidget),
       m_volumeBtn(new FontLabel),
       m_volumeSlider(new VolumeSlider),
 
@@ -63,20 +62,6 @@ SoundApplet::SoundApplet(QWidget *parent)
     appLabel->setStyleSheet("color: rgb(67, 67, 62);"
                             "background: transparent;");
 
-    QHBoxLayout *appLineHLayout = new QHBoxLayout;
-    appLineHLayout->addWidget(appLabel);
-    appLineHLayout->addWidget(new HorizontalSeparator);
-    appLineHLayout->setMargin(0);
-    appLineHLayout->setSpacing(10);
-
-    QVBoxLayout *appLineVLayout = new QVBoxLayout;
-    appLineVLayout->addSpacing(10);
-    appLineVLayout->addLayout(appLineHLayout);
-    appLineVLayout->addSpacing(8);
-    appLineVLayout->setSpacing(0);
-    appLineVLayout->setMargin(0);
-
-    m_applicationTitle->setLayout(appLineVLayout);
 
     m_volumeBtn->setFixedSize(ICON_SIZE, ICON_SIZE);
     m_volumeSlider->setMinimum(0);
@@ -86,7 +71,6 @@ SoundApplet::SoundApplet(QWidget *parent)
     m_centralLayout->addLayout(deviceLineLayout);
     m_centralLayout->addSpacing(8);
     m_centralLayout->addLayout(volumeCtrlLayout);
-    m_centralLayout->addWidget(m_applicationTitle);
 
     m_centralWidget->setLayout(m_centralLayout);
     m_centralWidget->setFixedWidth(WIDTH);
@@ -178,26 +162,18 @@ void SoundApplet::volumeSliderValueChanged()
 
 void SoundApplet::sinkInputsChanged()
 {
-    m_centralWidget->setVisible(false);
-    QVBoxLayout *appLayout = m_centralLayout;
-    while (QLayoutItem *item = appLayout->takeAt(4))
-    {
-        delete item->widget();
-        delete item;
-    }
+    emit removeAll();
 
-    m_applicationTitle->setVisible(false);
-    for (auto input : m_audioInter->sinkInputs())
-    {
-        m_applicationTitle->setVisible(true);
+    for (SinkInputWidget *w : m_inputList)
+        w->deleteLater();
+
+    m_inputList.clear();
+
+    for (auto input : m_audioInter->sinkInputs()) {
         SinkInputWidget *si = new SinkInputWidget(input.path());
-        appLayout->addWidget(si);
+        m_inputList << si;
+        emit addNew(si);
     }
-
-    const int contentHeight = m_centralWidget->sizeHint().height();
-    m_centralWidget->setFixedHeight(contentHeight);
-    m_centralWidget->setVisible(true);
-    setFixedHeight(std::min(contentHeight, MAX_HEIGHT));
 }
 
 void SoundApplet::toggleMute()

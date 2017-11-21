@@ -4,6 +4,7 @@
 #include "fontlabel.h"
 #include "componments/volumeslider.h"
 #include "dwidgetaction.h"
+#include "sinkinputwidget.h"
 
 #include <QPainter>
 #include <QIcon>
@@ -25,7 +26,7 @@ SoundItem::SoundItem(QWidget *parent)
     , m_sinkInter(nullptr)
     , m_menu(new QMenu)
 {
-    m_applet->setVisible(false);
+//    m_applet->setVisible(false);
 
     setFixedSize(26, 26);
 
@@ -41,16 +42,20 @@ SoundItem::SoundItem(QWidget *parent)
 
     refershIcon();
 
-
     // new actions
 
     QAction *advanced = new QAction(tr("Advanced Settings"), this);
+
+    m_separator = new QAction(this);
+    m_separator->setSeparator(true);
 
     DWidgetAction *applet = new DWidgetAction(m_applet);
 
     m_menu->addAction(applet);
 
     m_menu->addSeparator();
+
+    m_menu->addAction(m_separator);
 
     m_menu->addAction(advanced);
 
@@ -59,6 +64,9 @@ SoundItem::SoundItem(QWidget *parent)
 
     signalMapper->setMapping(advanced, 1);
     connect(signalMapper, static_cast<void (QSignalMapper::*)(const int)>(&QSignalMapper::mapped), this, &SoundItem::handleAction);
+
+    connect(m_applet, &SoundApplet::addNew, this, &SoundItem::addNewInput);
+    connect(m_applet, &SoundApplet::removeAll, this, &SoundItem::clearAllInput);
 }
 
 QMenu* SoundItem::menu() const
@@ -116,4 +124,26 @@ void SoundItem::handleAction(const int &action)
     default:
         break;
     }
+}
+
+void SoundItem::clearAllInput()
+{
+    QMapIterator<DWidgetAction*, SinkInputWidget*> i(m_inputMap);
+
+    while (i.hasNext()) {
+        i.next();
+
+        m_menu->removeAction(i.key());
+        i.key()->deleteLater();
+        i.value()->deleteLater();
+    }
+
+    m_inputMap.clear();
+}
+
+void SoundItem::addNewInput(SinkInputWidget *w)
+{
+    DWidgetAction *action = new DWidgetAction(w);
+    m_menu->insertAction(m_separator, action);
+    m_inputMap[action] = w;
 }

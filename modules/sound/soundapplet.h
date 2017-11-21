@@ -21,6 +21,7 @@ class FontLabel;
 
 namespace sound {
 class VolumeSlider;
+class SinkInputWidget;
 class SoundApplet : public QScrollArea
 {
     Q_OBJECT
@@ -38,6 +39,8 @@ signals:
     void volumeChanged(const int value) const;
     void defaultSinkChanged(DBusSink *sink) const;
     void requestHidePopup() const;
+    void addNew(SinkInputWidget *w);
+    void removeAll();
 
 private slots:
     void defaultSinkChanged();
@@ -53,7 +56,6 @@ protected:
 
 private:
     QWidget *m_centralWidget;
-    QWidget *m_applicationTitle;
     widgets::FontLabel *m_volumeBtn;
     VolumeSlider *m_volumeSlider;
     QVBoxLayout *m_centralLayout;
@@ -61,6 +63,7 @@ private:
     DBusAudio *m_audioInter;
     DBusSink *m_defSinkInter;
     QGSettings *m_gsetting;
+    QList<SinkInputWidget*> m_inputList;
 };
 }
 }

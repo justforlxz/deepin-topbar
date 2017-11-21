@@ -28,6 +28,7 @@ SinkInputWidget::SinkInputWidget(const QString &inputPath, QWidget *parent)
     centralLayout->addWidget(m_volumeSlider);
     centralLayout->setSpacing(2);
     centralLayout->setMargin(0);
+    centralLayout->setContentsMargins(10, 0, 10, 0);
 
     connect(m_volumeSlider, &VolumeSlider::valueChanged, this, &SinkInputWidget::setVolume);
     connect(m_volumeSlider, &VolumeSlider::requestPlaySoundEffect, this, &SinkInputWidget::onPlaySoundEffect);

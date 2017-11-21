@@ -12,10 +12,12 @@ namespace dtb {
 
 namespace widgets {
 class FontLabel;
+class DWidgetAction;
 }
 
 namespace sound {
 class SoundApplet;
+class SinkInputWidget;
 class SoundItem : public ContentModule
 {
     Q_OBJECT
@@ -32,12 +34,16 @@ private slots:
     void refershIcon();
     void sinkChanged(DBusSink *sink);
     void handleAction(const int &action);
+    void clearAllInput();
+    void addNewInput(SinkInputWidget *w);
 
 private:
     widgets::FontLabel *m_fontLabel;
     SoundApplet *m_applet;
     DBusSink *m_sinkInter;
     QMenu *m_menu;
+    QAction *m_separator;
+    QMap<widgets::DWidgetAction*, SinkInputWidget*> m_inputMap;
 };
 }
 }
