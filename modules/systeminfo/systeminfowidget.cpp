@@ -1,10 +1,10 @@
 #include "systeminfowidget.h"
-#include "systeminfothread.h"
 #include "systeminfomodel.h"
 #include "fontlabel.h"
 
 #include <QHBoxLayout>
 #include <QPainter>
+#include <QDebug>
 
 using namespace dtb;
 using namespace dtb::widgets;
@@ -51,17 +51,16 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent)
     mainlayout->addLayout(downlayout);
 
     setLayout(mainlayout);
+}
 
-    SystemInfoModel *systeminfoModel = new SystemInfoModel;
+void SystemInfoWidget::setModel(SystemInfoModel *model)
+{
+    m_model = model;
 
-    SysteminfoThread *systeminfoThread = new SysteminfoThread(systeminfoModel);
-
-    connect(systeminfoThread, &SysteminfoThread::networkSpeedChanged, this, [=] (const quint64 tx, const quint64 rx) {
+    connect(model, &SystemInfoModel::networkSpeedChanged, this, [=] (const quint64 tx, const quint64 rx) {
         m_tx->setText(converSpeed(tx));
         m_rx->setText(converSpeed(rx));
     });
-
-    systeminfoThread->start();
 }
 
 const QString SystemInfoWidget::converSpeed(const int value)

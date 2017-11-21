@@ -1,27 +1,28 @@
 #ifndef SYSTEMINFOMODEL_H
 #define SYSTEMINFOMODEL_H
 
-#include "networkdevicemodel.h"
-
 #include <QObject>
 
+namespace dtb {
+namespace systeminfo {
 class SystemInfoModel : public QObject
 {
     Q_OBJECT
 public:
     explicit SystemInfoModel(QObject *parent = 0);
-    NetworkDeviceModel * deviceByName(const QString &name);
+
+    int cputime() const { return m_cputime;}
+    void setCputime(int cputime);
 
 signals:
-    void requestDeviceAdded(NetworkDeviceModel *dev);
-    void requestDeviceRemoved(const QString &name);
-
-public slots:
-    void addDevice(NetworkDeviceModel *dev);
-    void removeDevice(const QString &name);
+    void networkSpeedChanged(const quint64 tx, const quint64 rx);
+    void cputimeChanged(int cputime);
 
 private:
-    QList<NetworkDeviceModel*> m_devices;
+    int m_cputime;
 };
+}
+}
+
 
 #endif // SYSTEMINFOMODEL_H

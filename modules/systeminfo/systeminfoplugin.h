@@ -8,7 +8,8 @@
 
 namespace dtb {
 namespace systeminfo {
-
+class SystemInfoModel;
+class SysteminfoThread;
 class SystemInfoPlugin : public QObject, public PluginsItemInterface
 {
     Q_OBJECT
@@ -24,6 +25,8 @@ private:
     PluginProxyInterface *m_proxyInter;
     SystemInfoPopupWidget *m_popupWidget;
     SystemInfoWidget *m_systeminfo;
+    SystemInfoModel *m_systemModel;
+    SysteminfoThread *m_systemWorker;
 };
 }
 }

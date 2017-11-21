@@ -1,4 +1,6 @@
 #include "systeminfoplugin.h"
+#include "systeminfothread.h"
+#include "systeminfomodel.h"
 
 using namespace dtb;
 using namespace dtb::systeminfo;
@@ -6,7 +8,9 @@ using namespace dtb::systeminfo;
 SystemInfoPlugin::SystemInfoPlugin()
 {
     m_systeminfo = new SystemInfoWidget;
-//    m_popupWidget = new SystemInfoPopupWidget;
+    m_systemModel = new SystemInfoModel;
+    m_systemWorker = new SysteminfoThread(m_systemModel);
+    m_systeminfo->setModel(m_systemModel);
 }
 
 const QString SystemInfoPlugin::pluginName() const
@@ -18,11 +22,9 @@ void SystemInfoPlugin::init(PluginProxyInterface *proxyInter)
 {
     m_proxyInter = proxyInter;
 
-//    connect(m_popupWidget, &SystemInfoPopupWidget::requestHidePopup, this, [=] {
-//        m_proxyInter->requestHidePopup();
-//    });
-
     m_proxyInter->addItem(this, "");
+
+    m_systemWorker->start();
 }
 
 QWidget *SystemInfoPlugin::itemWidget(const QString &itemKey)

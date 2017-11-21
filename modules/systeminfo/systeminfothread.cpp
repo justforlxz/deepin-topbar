@@ -1,9 +1,12 @@
 #include "systeminfothread.h"
-#include "networkdevicemodel.h"
+
 #include <QFile>
 #include <QDBusConnection>
 #include <QDBusInterface>
 #include <QDebug>
+
+using namespace dtb;
+using namespace dtb::systeminfo;
 
 SysteminfoThread::SysteminfoThread(SystemInfoModel *model, QObject *parent) :
     QThread(parent),
@@ -11,6 +14,8 @@ SysteminfoThread::SysteminfoThread(SystemInfoModel *model, QObject *parent) :
 {
     m_tx = new QFile(this);
     m_rx = new QFile(this);
+
+    m_statFile = new QFile(this);
 
     old_rx = 0;
     old_tx = 0;
@@ -39,6 +44,14 @@ void SysteminfoThread::run()
     for (;;) {
         Q_ASSERT(m_tx);
         Q_ASSERT(m_rx);
+        Q_ASSERT(m_statFile);
+
+        // update cpu infos
+
+        unsigned long long currentWorkTime = 0, prevWorkTime = 0;
+        unsigned long long currentTotalTime = 0, prevTotalTime = 0;
+
+        getCpuTime(prevWorkTime, prevTotalTime);
 
         if ((m_tx->fileName().isEmpty() || m_rx->fileName().isEmpty())) {
             msleep(1000);
@@ -56,11 +69,15 @@ void SysteminfoThread::run()
 
         msleep(1000);
 
+        getCpuTime(currentWorkTime, currentTotalTime);
+
+        m_model->setCputime((currentWorkTime - prevWorkTime) * 100.0 / (currentTotalTime - prevTotalTime));
+
         m_tx->open(QIODevice::ReadOnly | QIODevice::Text);
         m_rx->open(QIODevice::ReadOnly | QIODevice::Text);
 
-        emit networkSpeedChanged(QString(m_tx->readAll()).remove("\n").toULongLong() - old_tx,
-                                 QString(m_rx->readAll()).remove("\n").toULongLong() - old_rx);
+        emit m_model->networkSpeedChanged(QString(m_tx->readAll()).remove("\n").toULongLong() - old_tx,
+                                          QString(m_rx->readAll()).remove("\n").toULongLong() - old_rx);
 
         m_tx->close();
         m_rx->close();
@@ -134,3 +151,29 @@ void SysteminfoThread::onGetDeviceName(const QVariant &device)
     m_tx->setFileName(t);
 }
 
+void SysteminfoThread::getCpuTime(unsigned long long &workTime, unsigned long long &totalTime)
+{
+    m_statFile->setFileName("/proc/stat");
+    Q_ASSERT(m_statFile->open(QIODevice::ReadOnly | QIODevice::Text));
+
+    QString buffer = m_statFile->readAll();
+    QStringList list = buffer.split("\n").filter(QRegExp("^cpu "));
+    QString line = list.first();
+    QStringList lines = line.trimmed().split(QRegExp("\\s+"));
+
+    unsigned long long user = lines.at(1).toLong();
+    unsigned long long nice = lines.at(2).toLong();
+    unsigned long long system = lines.at(3).toLong();
+    unsigned long long idle = lines.at(4).toLong();
+    unsigned long long iowait = lines.at(5).toLong();
+    unsigned long long irq = lines.at(6).toLong();
+    unsigned long long softirq = lines.at(7).toLong();
+    unsigned long long steal = lines.at(8).toLong();
+    //unsigned long long guest = lines.at(9).toLong();
+    //unsigned long long guestnice = lines.at(10).toLong();
+
+    workTime = user + nice + system;
+    totalTime = user + nice + system + idle + iowait + irq + softirq + steal;
+
+    m_statFile->close();
+}
