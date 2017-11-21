@@ -129,23 +129,17 @@ void MainPanel::loadModules()
 
     loadModule(new systemtray::SystemTrayPlugin);
 
-//    loadModule(new wallpaper::WallpaperPlugin);
-
     loadModule(new media::MediaControlPlugin);
 
     loadModule(new sound::SoundPlugin);
 
     loadModule(new power::PowerPlugin);
 
-#ifdef QT_DEBUG
     loadModule(new network::NetworkPlugin);
-#endif
 
     loadModule(new systeminfo::SystemInfoPlugin);
 
     loadModule(new datetime::DateTimePlugin);
-
-//    loadModule(new account::AccountPlugin);
 
     loadModule(new notify::NotifyPlugin);
 }
