@@ -40,6 +40,7 @@ private:
     QLabel *m_battery;
     DBusPower* m_powerInter;
     QMenu *m_menu;
+    QAction *m_sourceAction;
 };
 }
 }

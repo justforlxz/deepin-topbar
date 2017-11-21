@@ -34,9 +34,9 @@ PowerWidget::PowerWidget(QWidget *parent)
 
     m_powerInter = new DBusPower(this);
 
-    updateBatteryIcon();
-
     initMenu();
+
+    updateBatteryIcon();
 
     connect(m_powerInter, &DBusPower::BatteryPercentageChanged, this, &PowerWidget::updateBatteryIcon);
     connect(m_powerInter, &DBusPower::BatteryStateChanged, this, &PowerWidget::updateBatteryIcon);
@@ -45,6 +45,8 @@ PowerWidget::PowerWidget(QWidget *parent)
 
 void PowerWidget::updateBatteryIcon() {
     const BatteryPercentageMap data = m_powerInter->batteryPercentage();
+
+    m_sourceAction->setText(tr("Power source:") + (m_powerInter->onBattery() ? tr("Battery") : tr("Direct current")));
 
     if (data.isEmpty()) {
         m_battery->hide();
@@ -129,16 +131,16 @@ void PowerWidget::initMenu()
 {
     m_menu = new QMenu;
 
-    QAction *source = new QAction(tr("Power source:") + (m_powerInter->onBattery() ? tr("Battery") : tr("Direct current")), this);
+    m_sourceAction = new QAction(this);
     QAction *percentage = new QAction(tr("Show percentage"), this);
     QAction *preference = new QAction(tr("Open Energy saver preferences"), this);
 
-    source->setEnabled(false);
+    m_sourceAction->setEnabled(false);
 
     percentage->setCheckable(true);
     percentage->setChecked(true);
 
-    m_menu->addAction(source);
+    m_menu->addAction(m_sourceAction);
     m_menu->addSeparator();
     m_menu->addAction(percentage);
     m_menu->addAction(preference);
