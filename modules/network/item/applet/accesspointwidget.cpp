@@ -31,6 +31,7 @@ AccessPointWidget::AccessPointWidget(const AccessPoint &ap)
     m_connectedBtn->setFixedSize(16, 16);
 
     m_disconnectBtn->setVisible(false);
+    m_disconnectBtn->setFixedSize(16, 16);
     m_disconnectBtn->setIcon(QChar(0xE8FB), FONTSIZE);
     m_disconnectBtn->installEventFilter(this);
 
@@ -68,16 +69,17 @@ AccessPointWidget::AccessPointWidget(const AccessPoint &ap)
     setStrengthIcon(ap.strength());
     setLayout(centralLayout);
     setStyleSheet("dtb--network--AccessPointWidget #Ssid {"
-                  "color:black;"
                   "background-color:transparent;"
                   "border:none;"
                   "text-align:left;"
                   "}"
                   "dtb--network--AccessPointWidget:hover {"
-                  "color: white;"
                   "border:none;"
                   "margin:0;"
                   "background-color:rgba(255, 255, 255, .1);"
+                  "}"
+                  "dtb--network--AccessPointWidget QPushButton {"
+                  "color: black;"
                   "}");
 
     connect(m_ssidBtn, &QPushButton::clicked, this, &AccessPointWidget::ssidClicked);
@@ -113,12 +115,16 @@ void AccessPointWidget::enterEvent(QEvent *e)
 {
     QWidget::enterEvent(e);
     m_disconnectBtn->setIcon(QChar(0xE711), FONTSIZE);
+    m_ssidBtn->setStyleSheet("color: white;");
+    m_disconnectBtn->setStyleSheet("color: white;");
 }
 
 void AccessPointWidget::leaveEvent(QEvent *e)
 {
     QWidget::leaveEvent(e);
     m_disconnectBtn->setIcon(QChar(0xE8FB), FONTSIZE);
+    m_ssidBtn->setStyleSheet("color: black;");
+    m_disconnectBtn->setStyleSheet("color: black;");
 }
 
 void AccessPointWidget::setStrengthIcon(const int strength)
