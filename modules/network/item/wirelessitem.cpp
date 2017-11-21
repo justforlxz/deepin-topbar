@@ -232,9 +232,11 @@ void WirelessItem::updateAPList()
         std::sort(m_apList.begin(), m_apList.end(), std::greater<AccessPoint>());
 
         for (const AccessPoint &ap : m_apList) {
-
-            if (m_oldApList.values().contains(ap))
+            if (m_oldApList.values().contains(ap)) {
+                if (ap == m_activeAP)
+                    m_oldApList.key(ap)->setActiveState(m_device.state());
                 continue;
+            }
 
             AccessPointWidget *apw = new AccessPointWidget(ap);
 
