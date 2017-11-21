@@ -1,0 +1,5 @@
+[clog]
+repository = "https://github.com/kirigayakazushin/deepin-topbar"
+from-latest-tag = true
+
+changelog = "CHANGELOG.md"
