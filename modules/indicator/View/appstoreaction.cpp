@@ -105,7 +105,7 @@ bool AppstoreAction::eventFilter(QObject *watched, QEvent *event)
 
 void AppstoreAction::onUpdatesChanged(const QStringList &list)
 {
-    m_updateLbl->setText(tr("%1 update(s)").arg(list.count()));
+    m_updateLbl->setText(tr("%n update(s)").arg(list.count()));
 
     QFont font = qApp->font();
     QFontMetrics fm(font);
