@@ -154,7 +154,9 @@ void SysteminfoThread::onGetDeviceName(const QVariant &device)
 void SysteminfoThread::getCpuTime(unsigned long long &workTime, unsigned long long &totalTime)
 {
     m_statFile->setFileName("/proc/stat");
-    Q_ASSERT(m_statFile->open(QIODevice::ReadOnly | QIODevice::Text));
+
+    if (!m_statFile->open(QIODevice::ReadOnly))
+        Q_ASSERT(nullptr);
 
     QString buffer = m_statFile->readAll();
     QStringList list = buffer.split("\n").filter(QRegExp("^cpu "));
