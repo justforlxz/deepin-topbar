@@ -95,7 +95,7 @@ void MainFrame::screenChanged()
 
     strut_partial.top = TOPHEIGHT * devicePixelRatioF();
     strut_partial.top_start_x = x();
-    strut_partial.top_end_x = width();
+    strut_partial.top_end_x = x() + width();
 
     xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, winId(), strut_partial);
 }
