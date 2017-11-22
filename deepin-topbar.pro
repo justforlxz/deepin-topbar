@@ -23,4 +23,7 @@ autostart.files = deepin-topbar-autostart.desktop
 icon.path = $${PREFIX}/share/deepin-topbar/icons
 icon.files = deepin-topbar.svg
 
-INSTALLS += desktop service autostart qm_files icon
+gsetting.path = $${PREFIX}/share/glib-2.0/schemas
+gsetting.files = com.deepin.dde.topbar.gschema.xml
+
+INSTALLS += desktop service autostart qm_files icon gsetting

@@ -17,6 +17,7 @@
 #include <QPen>
 #include <QKeyEvent>
 #include <QEvent>
+#include <QGSettings>
 
 using namespace dtb;
 
@@ -26,6 +27,10 @@ MainPanel::MainPanel(QWidget *parent) : QWidget(parent)
     initConnect();
 
     loadModules();
+
+    m_gsettings = new QGSettings("com.deepin.dde.topbar", "/com/deepin/dde/topbar/", this);
+    connect(m_gsettings, &QGSettings::changed, this, &MainPanel::setTheme);
+    setTheme("lightTheme");
 }
 
 void MainPanel::initUI()
@@ -150,9 +155,20 @@ void MainPanel::loadModule(PluginsItemInterface * const module)
     module->init(this);
 }
 
+void MainPanel::setTheme(const QString &key)
+{
+    if (key == "lightTheme") {
+        m_isLight = m_gsettings->get("light-theme").toBool();
+        update();
+    }
+}
+
 void MainPanel::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);
+
+    if (!m_isLight)
+        return;
 
     QPainter painter(this);
     QPen pen(painter.pen());

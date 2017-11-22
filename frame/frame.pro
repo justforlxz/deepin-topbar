@@ -12,7 +12,7 @@ DESTDIR         = $$_PRO_FILE_PWD_/../
 PKGCONFIG += xcb-ewmh dtkcore dtkwidget \
              dframeworkdbus x11 xcb-util \
              xtst xext gsettings-qt xcb-image \
-             xcb-icccm xcb-composite
+             xcb-icccm xcb-composite gsettings-qt
 
 HEADERS  += \
     $$PWD/mainframe.h \
