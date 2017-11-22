@@ -28,6 +28,10 @@ class SearchButton : public ContentModule
     Q_OBJECT
 public:
     explicit SearchButton(QFrame *parent = nullptr);
+
+protected:
+    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 };
 }
 }

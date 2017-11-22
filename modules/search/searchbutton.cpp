@@ -42,3 +42,17 @@ SearchButton::SearchButton(QFrame *parent)
 
     setLayout(layout);
 }
+
+void SearchButton::mousePressEvent(QMouseEvent *event)
+{
+    ContentModule::mousePressEvent(event);
+
+    setStyleSheet("background: #1E90FF;");
+}
+
+void SearchButton::mouseReleaseEvent(QMouseEvent *event)
+{
+    ContentModule::mouseReleaseEvent(event);
+
+    setStyleSheet("background: transparent;");
+}
