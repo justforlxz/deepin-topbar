@@ -52,6 +52,8 @@ public:
 
     virtual QMenu* itemContextMenu(const QString &itemKey) { Q_UNUSED(itemKey); return nullptr;}
 
+    virtual void setDefaultColor(PluginProxyInterface::DefaultColor) {}
+
 protected:
     ///
     /// \brief m_proxyInter

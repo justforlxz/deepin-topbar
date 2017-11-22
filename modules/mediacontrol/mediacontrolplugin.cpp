@@ -26,3 +26,8 @@ QWidget *MediaControlPlugin::itemWidget(const QString &itemKey) {
 
     return m_centralWidget;
 }
+
+void MediaControlPlugin::setDefaultColor(PluginProxyInterface::DefaultColor color)
+{
+
+}

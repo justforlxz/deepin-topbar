@@ -23,10 +23,11 @@ public:
     bool saveConfig(const QString &itemKey, const QJsonObject &json) Q_DECL_OVERRIDE;
     const QJsonObject loadConfig(const QString &itemKey) Q_DECL_OVERRIDE;
 
+    void setDefaultColor(const DefaultColor &defaultColor);
+
 private slots:
     void loadModules();
     void loadModule(PluginsItemInterface * const module);
-    void setTheme(const QString &key);
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
@@ -36,6 +37,7 @@ private:
     QMap<PluginsItemInterface*, QMap<QString, PluginsItem*>> m_moduleMap;
     QGSettings *m_gsettings;
     bool m_isLight;
+    DefaultColor m_defaultColor;
 };
 }
 

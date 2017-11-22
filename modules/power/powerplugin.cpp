@@ -34,3 +34,8 @@ QMenu *PowerPlugin::itemContextMenu(const QString &itemKey)
 
     return m_centralWidget->menu();
 }
+
+void PowerPlugin::setDefaultColor(PluginProxyInterface::DefaultColor color)
+{
+
+}

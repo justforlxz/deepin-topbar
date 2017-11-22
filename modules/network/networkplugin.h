@@ -24,6 +24,8 @@ public:
 
     QWidget *itemWidget(const QString &itemKey) Q_DECL_OVERRIDE;
 
+    void setDefaultColor(PluginProxyInterface::DefaultColor color) Q_DECL_OVERRIDE;
+
 private slots:
     void deviceAdded(const NetworkDevice &device);
     void deviceRemoved(const NetworkDevice &device);

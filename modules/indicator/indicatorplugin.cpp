@@ -1,4 +1,7 @@
 #include "indicatorplugin.h"
+#include <DThemeManager>
+
+DWIDGET_USE_NAMESPACE
 
 using namespace dtb;
 using namespace dtb::indicator;
@@ -47,4 +50,9 @@ QMenu *IndicatorPlugin::itemContextMenu(const QString &itemKey)
         return m_logo->menu();
 
     return nullptr;
+}
+
+void IndicatorPlugin::setDefaultColor(PluginProxyInterface::DefaultColor color)
+{
+
 }

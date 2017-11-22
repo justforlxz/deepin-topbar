@@ -81,6 +81,11 @@ QMenu *DateTimePlugin::itemContextMenu(const QString &itemKey)
     return menu;
 }
 
+void DateTimePlugin::setDefaultColor(PluginProxyInterface::DefaultColor color)
+{
+
+}
+
 void DateTimePlugin::invokedMenuItem(QAction *action)
 {
     const QString &value = action->data().toString();

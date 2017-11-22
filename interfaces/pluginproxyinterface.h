@@ -1,7 +1,7 @@
 #ifndef PLUGINPROXYINTERFACE_H
 #define PLUGINPROXYINTERFACE_H
 
-#include <QtCore>
+#include <QObject>
 #include <QJsonObject>
 
 namespace dtb {
@@ -10,6 +10,10 @@ class PluginsItemInterface;
 class PluginProxyInterface
 {
 public:
+    enum DefaultColor {
+        Light,
+        Dark
+    };
 
     virtual void addItem(PluginsItemInterface * const module, const QString &itemKey) = 0;
 

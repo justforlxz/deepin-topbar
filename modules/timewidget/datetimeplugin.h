@@ -42,6 +42,8 @@ public:
 
     QMenu* itemContextMenu(const QString &itemKey) Q_DECL_OVERRIDE;
 
+    void setDefaultColor(PluginProxyInterface::DefaultColor color) Q_DECL_OVERRIDE;
+
 private slots:
     void saveConfig();
     void invokedMenuItem(QAction *);

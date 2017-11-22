@@ -35,3 +35,8 @@ QMenu *SoundPlugin::itemContextMenu(const QString &itemKey)
 
     return m_soundItem->menu();
 }
+
+void SoundPlugin::setDefaultColor(PluginProxyInterface::DefaultColor color)
+{
+
+}

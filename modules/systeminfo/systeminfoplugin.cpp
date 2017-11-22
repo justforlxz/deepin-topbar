@@ -33,3 +33,8 @@ QWidget *SystemInfoPlugin::itemWidget(const QString &itemKey)
 
     return m_systeminfo;
 }
+
+void SystemInfoPlugin::setDefaultColor(PluginProxyInterface::DefaultColor color)
+{
+
+}

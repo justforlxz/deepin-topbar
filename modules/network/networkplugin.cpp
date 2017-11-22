@@ -37,6 +37,11 @@ QWidget *NetworkPlugin::itemWidget(const QString &itemKey)
     return m_network;
 }
 
+void NetworkPlugin::setDefaultColor(PluginProxyInterface::DefaultColor color)
+{
+
+}
+
 void NetworkPlugin::deviceAdded(const NetworkDevice &device)
 {
     DeviceItem *item = nullptr;

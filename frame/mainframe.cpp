@@ -8,6 +8,7 @@
 #include <xcb/xcb.h>
 #include <xcb/xcb_ewmh.h>
 #include <QtX11Extras/QX11Info>
+#include <QGSettings>
 
 DWIDGET_USE_NAMESPACE
 
@@ -20,6 +21,10 @@ MainFrame::MainFrame(QWidget *parent): QFrame(parent)
     initAnimation();
     screenChanged();
     initConnect();
+
+    m_gsettings = new QGSettings("com.deepin.dde.topbar", "/com/deepin/dde/topbar/", this);
+    connect(m_gsettings, &QGSettings::changed, this, &MainFrame::setTheme);
+    setTheme("lightTheme");
 }
 
 MainFrame::~MainFrame()
@@ -37,12 +42,7 @@ void MainFrame::init()
 
     m_blurEffectWidget = new DBlurEffectWidget(this);
     m_blurEffectWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
-    m_blurEffectWidget->setMaskColor(DBlurEffectWidget::LightColor);
     m_blurEffectWidget->setWindowFlags(Qt::WindowDoesNotAcceptFocus);
-
-#ifdef QT_DEBUG
-    m_blurEffectWidget->setMaskColor(DBlurEffectWidget::DarkColor);
-#endif
 
     m_handle = new DPlatformWindowHandle(this);
     m_handle->setBorderWidth(0);
@@ -62,6 +62,15 @@ void MainFrame::initConnect()
 void MainFrame::initAnimation()
 {
 
+}
+
+void MainFrame::setTheme(const QString &key)
+{
+    if (key == "lightTheme") {
+        const bool isLight = m_gsettings->get("light-theme").toBool();
+        m_blurEffectWidget->setMaskColor(isLight ? DBlurEffectWidget::LightColor : DBlurEffectWidget::DarkColor);
+        m_mainPanel->setDefaultColor(isLight ? dtb::MainPanel::Light : dtb::MainPanel::Dark);
+    }
 }
 
 void MainFrame::screenChanged()

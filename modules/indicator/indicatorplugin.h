@@ -27,6 +27,8 @@ public:
 
     QMenu* itemContextMenu(const QString &itemKey) Q_DECL_OVERRIDE;
 
+    void setDefaultColor(PluginProxyInterface::DefaultColor color) Q_DECL_OVERRIDE;
+
 private:
     PluginProxyInterface *m_proxyInter;
     IndicatorWidget *m_centralWidget;

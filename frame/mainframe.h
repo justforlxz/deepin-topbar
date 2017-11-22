@@ -28,12 +28,14 @@ private:
     void init();
     void initConnect();
     void initAnimation();
+    void setTheme(const QString &key);
 
 private:
     QDesktopWidget *m_desktopWidget;
     dtb::MainPanel *m_mainPanel;
     DBlurEffectWidget *m_blurEffectWidget;
     DPlatformWindowHandle *m_handle;
+    QGSettings *m_gsettings;
 };
 
 #endif // MAINFRAME_H

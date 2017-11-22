@@ -21,6 +21,8 @@ public:
 
     QWidget *itemWidget(const QString &itemKey) override;
 
+    void setDefaultColor(PluginProxyInterface::DefaultColor color) Q_DECL_OVERRIDE;
+
 private:
     PluginProxyInterface *m_proxyInter;
     MediaControlWidget *m_centralWidget;

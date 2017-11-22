@@ -36,3 +36,8 @@ QMenu *NotifyPlugin::itemContextMenu(const QString &itemKey)
 
     return nullptr;
 }
+
+void NotifyPlugin::setDefaultColor(PluginProxyInterface::DefaultColor color)
+{
+
+}

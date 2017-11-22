@@ -94,6 +94,11 @@ void SystemTrayPlugin::setItemIsInContainer(const QString &itemKey, const bool c
     m_containerSettings->setValue(getWindowClass(itemKey.toInt()), container);
 }
 
+void SystemTrayPlugin::setDefaultColor(PluginProxyInterface::DefaultColor color)
+{
+    Q_UNUSED(color);
+}
+
 void SystemTrayPlugin::updateTipsContent()
 {
     auto trayList = m_trayList.values();

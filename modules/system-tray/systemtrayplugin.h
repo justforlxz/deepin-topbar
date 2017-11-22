@@ -30,6 +30,8 @@ public:
     int itemSortKey(const QString &itemKey);
     void setItemIsInContainer(const QString &itemKey, const bool container);
 
+    void setDefaultColor(PluginProxyInterface::DefaultColor color);
+
 private:
     void updateTipsContent();
     const QString getWindowClass(quint32 winId);
