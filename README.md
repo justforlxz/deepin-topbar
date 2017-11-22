@@ -81,7 +81,7 @@ $ make
 $ sudo make install
 ```
 
-The executable binary file could be found at `/usr/bin/deepin-topbar` after the installation is finished, and plugins will be placed into `/usr/lib/deepin-topbar/plugins/`.
+The executable binary file could be found at `/usr/bin/deepin-topbar` after the installation is finished.
 
 ## Getting help
 
