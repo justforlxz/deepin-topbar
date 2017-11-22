@@ -21,6 +21,8 @@
 
 #include "../../frame/item/contentmodule.h"
 
+#include <QFileSystemWatcher>
+
 namespace dtb {
 namespace search {
 class SearchButton : public ContentModule
@@ -32,6 +34,12 @@ public:
 protected:
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
     void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+
+private slots:
+    void onDirectoryChanged();
+
+private:
+    QFileSystemWatcher *m_fileWatcher;
 };
 }
 }

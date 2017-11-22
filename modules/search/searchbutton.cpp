@@ -21,6 +21,7 @@
 #include "../../frame/utils/global.h"
 
 #include <QHBoxLayout>
+#include <QProcess>
 
 using namespace dtb;
 using namespace dtb::search;
@@ -28,6 +29,7 @@ using namespace dtb::widgets;
 
 SearchButton::SearchButton(QFrame *parent)
     : ContentModule(parent)
+    , m_fileWatcher(new QFileSystemWatcher(this))
 {
     QHBoxLayout *layout = new QHBoxLayout;
 
@@ -41,6 +43,12 @@ SearchButton::SearchButton(QFrame *parent)
     layout->addWidget(label);
 
     setLayout(layout);
+
+    m_fileWatcher->addPath("/usr/bin/");
+
+    connect(m_fileWatcher, &QFileSystemWatcher::directoryChanged, this, &SearchButton::onDirectoryChanged);
+
+    onDirectoryChanged();
 }
 
 void SearchButton::mousePressEvent(QMouseEvent *event)
@@ -55,4 +63,15 @@ void SearchButton::mouseReleaseEvent(QMouseEvent *event)
     ContentModule::mouseReleaseEvent(event);
 
     setStyleSheet("background: transparent;");
+
+    QProcess::startDetached("albert", QStringList() << "show");
+}
+
+void SearchButton::onDirectoryChanged()
+{
+    QProcess *process = new QProcess;
+
+    const bool isAlbertValid = process->execute("which", QStringList() << "albert") == 0;
+
+    setVisible(isAlbertValid);
 }
