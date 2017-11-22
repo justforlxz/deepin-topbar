@@ -1,4 +1,29 @@
 <a name=""></a>
+##  0.3.5 (2017-11-22)
+
+
+#### Bug Fixes
+
+* **frame:**
+  *  menu pos error ([764b5842](https://github.com/kirigayakazushin/deepin-topbar/commit/764b58426b9f6537251a44346f924ff012f26e08))
+  *  set strut end x point error ([955a6c01](https://github.com/kirigayakazushin/deepin-topbar/commit/955a6c01702245beebc8ad2ea223b90075c74987))
+* **item:**  not draw background ([e97ced70](https://github.com/kirigayakazushin/deepin-topbar/commit/e97ced7001339687a35dd6cebf298c1872837f4f))
+* **search:**
+  *  run albert ([f1cdc5c1](https://github.com/kirigayakazushin/deepin-topbar/commit/f1cdc5c1ea24e59ae0ba848de58f1b66af44f5b5))
+  *  item not set press style ([ab932b49](https://github.com/kirigayakazushin/deepin-topbar/commit/ab932b490bfaba1debc170b9fa78290e6a268a4e))
+
+#### Features
+
+* **frame:**  add gsetting ([3752cc43](https://github.com/kirigayakazushin/deepin-topbar/commit/3752cc43b1f8537423cc09494e1f8ba45a911e42))
+* **icon:**  using icons provided by carecm ([5408ebed](https://github.com/kirigayakazushin/deepin-topbar/commit/5408ebed86c4634f2cf619ee52889ef660e20c24))
+* **indicator:**  add theme files ([31363df7](https://github.com/kirigayakazushin/deepin-topbar/commit/31363df779f69ea2b8837a3d1472b6c6ecea1a23))
+* **module:**
+  *  add search widget ([1ef60237](https://github.com/kirigayakazushin/deepin-topbar/commit/1ef60237e38f796ca9186739dd6530c021e63d84))
+  *  add light and dark theme interface ([6dcd751d](https://github.com/kirigayakazushin/deepin-topbar/commit/6dcd751d8b27783af533ad22d1008d33093fabc5))
+
+
+
+<a name=""></a>
 ##  0.3.4 (2017-11-21)
 
 
