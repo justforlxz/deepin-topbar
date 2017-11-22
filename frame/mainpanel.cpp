@@ -9,7 +9,7 @@
 #include "../modules/system-tray/systemtrayplugin.h"
 #include "../modules/systeminfo/systeminfoplugin.h"
 #include "../modules/notify/notifyplugin.h"
-#include "../modules/wallpaper/wallpaperplugin.h"
+#include "../modules/search/searchmodule.h"
 
 #include "item/pluginsitem.h"
 
@@ -140,6 +140,8 @@ void MainPanel::loadModules()
     loadModule(new systeminfo::SystemInfoPlugin);
 
     loadModule(new datetime::DateTimePlugin);
+
+    loadModule(new search::SearchModule);
 
     loadModule(new notify::NotifyPlugin);
 }
