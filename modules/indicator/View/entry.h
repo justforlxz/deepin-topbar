@@ -7,7 +7,7 @@
 namespace dtb {
 namespace indicator {
 
-class Entry : public QWidget
+class Entry : public QFrame
 {
     Q_OBJECT
 public:

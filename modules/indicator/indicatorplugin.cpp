@@ -1,12 +1,12 @@
 #include "indicatorplugin.h"
-#include <DThemeManager>
-
-DWIDGET_USE_NAMESPACE
+#include "../frame/utils/global.h"
 
 using namespace dtb;
 using namespace dtb::indicator;
 
-IndicatorPlugin::IndicatorPlugin(QObject *parent) : QObject(parent)
+IndicatorPlugin::IndicatorPlugin(QObject *parent)
+    : QObject(parent)
+    , m_themeManager(DThemeManager::instance())
 {
 }
 
@@ -54,5 +54,16 @@ QMenu *IndicatorPlugin::itemContextMenu(const QString &itemKey)
 
 void IndicatorPlugin::setDefaultColor(PluginProxyInterface::DefaultColor color)
 {
-
+    switch (color) {
+    case PluginProxyInterface::Light:
+        m_themeManager->setTheme(m_logo, "light/theme/light");
+        m_themeManager->setTheme(m_centralWidget, "light/theme/light");
+        break;
+    case PluginProxyInterface::Dark:
+        m_themeManager->setTheme(m_logo, "dark/theme/dark");
+        m_themeManager->setTheme(m_centralWidget, "dark/theme/dark");
+        break;
+    default:
+        break;
+    }
 }

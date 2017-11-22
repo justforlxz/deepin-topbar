@@ -6,8 +6,10 @@
 namespace dtb {
 namespace indicator {
 
-Entry::Entry(QWidget *parent) : QWidget(parent)
+Entry::Entry(QWidget *parent) : QFrame(parent)
 {
+    setObjectName("Entry");
+
     setWindowFlags(Qt::WindowDoesNotAcceptFocus);
     setAttribute(Qt::WA_TranslucentBackground);
 

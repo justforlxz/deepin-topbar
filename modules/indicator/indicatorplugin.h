@@ -8,6 +8,9 @@
 #include "indicatorworker.h"
 #include <QLabel>
 #include <QObject>
+#include <DThemeManager>
+
+DWIDGET_USE_NAMESPACE
 
 namespace dtb {
 namespace indicator {
@@ -35,6 +38,7 @@ private:
     SystemLogo *m_logo;
     IndicatorModel *m_model;
     IndicatorWorker *m_worker;
+    DThemeManager *m_themeManager;
 };
 }
 }

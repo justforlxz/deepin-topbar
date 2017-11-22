@@ -2,4 +2,12 @@
     <qresource prefix="/indicator">
         <file>icons/dde.svg</file>
     </qresource>
+    <qresource prefix="/light">
+        <file>theme/light/IndicatorWidget.theme</file>
+        <file>theme/light/SystemLogo.theme</file>
+    </qresource>
+    <qresource prefix="/dark">
+        <file>theme/dark/IndicatorWidget.theme</file>
+        <file>theme/dark/SystemLogo.theme</file>
+    </qresource>
 </RCC>
