@@ -25,6 +25,7 @@ signals:
 
 protected:
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
 protected slots:
     void showContextMenu();
@@ -33,6 +34,7 @@ private:
     PluginsItemInterface * m_pluginInter;
     QWidget *m_centralWidget;
     QString m_itemKey;
+    bool m_isPressed;
 };
 }
 
