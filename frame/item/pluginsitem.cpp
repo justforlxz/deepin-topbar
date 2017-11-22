@@ -84,6 +84,6 @@ void PluginsItem::showContextMenu()
         setStyleSheet(DEFAULT_COLOR);
     }, Qt::UniqueConnection);
 
-    menu->exec(QPoint(pos().x(), height()));
+    menu->exec(mapToGlobal(QPoint(pos().x(), height()) - pos()));
 }
 
