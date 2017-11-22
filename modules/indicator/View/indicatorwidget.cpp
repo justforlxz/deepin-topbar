@@ -50,6 +50,7 @@ void IndicatorWidget::initUI()
     setAttribute(Qt::WA_TranslucentBackground);
 
     setFixedSize(QSize(200, TOPHEIGHT));
+    setStyleSheet("font-size: 13.5pt; font-weight: 500;");
 
     m_entry = new Entry;
 
