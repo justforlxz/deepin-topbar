@@ -48,6 +48,15 @@ I'll release messages on my twitter and google plus.
 * xcb-icccm
 * xcb-composite
 
+## Partial Preview
+
+<p align="center"><img src="https://s18.postimg.org/zd035of55/dde-menu.png"></p>
+<p align="center"><img src="https://s18.postimg.org/a892rt59l/network.png"></p>
+<p align="center"><img src="https://s18.postimg.org/qj96o5kc9/power.png"></p>
+<p align="center"><img src="https://s18.postimg.org/9iqafempl/sound.png"></p>
+<p align="center"><img src="https://s18.postimg.org/sntjpa3zd/date.png"></p>
+<p align="center"><img src="https://s18.postimg.org/83opqvvyx/search.png"></p>
+
 If you use Deepin, just add my ppa. see [here](https://blog.mkacg.com/2017/07/20/topbar-PPA/)
 
 If you use Arch, you can install deepin-topbar with aur.
