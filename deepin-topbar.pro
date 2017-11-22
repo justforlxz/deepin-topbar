@@ -8,7 +8,7 @@ isEmpty(PREFIX) {
 # Automating generation .qm files from .ts files
 !system($$PWD/translate_generation.sh): error("Failed to generate translation")
 
-qm_files.path = /usr/share/deepin-topbar/translations/
+qm_files.path = $${PREFIX}/share/deepin-topbar/translations/
 qm_files.files = translations/*.qm
 
 service.path = $${PREFIX}/share/dbus-1/services
@@ -20,4 +20,7 @@ desktop.files = deepin-topbar.desktop
 autostart.path = /etc/xdg/autostart/
 autostart.files = deepin-topbar-autostart.desktop
 
-INSTALLS += desktop service autostart qm_files
+icon.path = $${PREFIX}/share/deepin-topbar/icons
+icon.files = deepin-topbar.svg
+
+INSTALLS += desktop service autostart qm_files icon
