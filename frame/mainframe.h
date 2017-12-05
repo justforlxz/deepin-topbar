@@ -8,6 +8,7 @@
 #include <DBlurEffectWidget>
 #include <QPropertyAnimation>
 #include <DPlatformWindowHandle>
+#include <QPropertyAnimation>
 
 #include "mainpanel.h"
 
@@ -36,6 +37,7 @@ private:
     DBlurEffectWidget *m_blurEffectWidget;
     DPlatformWindowHandle *m_handle;
     QGSettings *m_gsettings;
+    QPropertyAnimation *m_launchAni;
 };
 
 #endif // MAINFRAME_H
