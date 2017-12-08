@@ -19,8 +19,8 @@ MainFrame::MainFrame(QWidget *parent): QFrame(parent)
 
     init();
     initAnimation();
-    screenChanged();
     initConnect();
+    screenChanged();
 
     m_gsettings = new QGSettings("com.deepin.dde.topbar", "/com/deepin/dde/topbar/", this);
     connect(m_gsettings, &QGSettings::changed, this, &MainFrame::setTheme);
@@ -64,10 +64,6 @@ void MainFrame::initAnimation()
     m_launchAni = new QPropertyAnimation(this, "pos", this);
     m_launchAni->setDuration(1000);
     m_launchAni->setEasingCurve(QEasingCurve::OutBounce);
-
-    QTimer::singleShot(400, this, [=] {
-        m_launchAni->start();
-    });
 }
 
 void MainFrame::setTheme(const QString &key)
@@ -116,4 +112,8 @@ void MainFrame::screenChanged()
 
     m_launchAni->setStartValue(QPoint(screen.x(), -TOPHEIGHT));
     m_launchAni->setEndValue(QPoint(screen.x(), 0));
+
+    QTimer::singleShot(400, this, [=] {
+        m_launchAni->start();
+    });
 }
