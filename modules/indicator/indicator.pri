@@ -6,7 +6,8 @@ SOURCES += \
     $$PWD/View/systemlogo.cpp \
     $$PWD/View/appstoreaction.cpp \
     $$PWD/indicatorworker.cpp \
-    $$PWD/indicatormodel.cpp
+    $$PWD/indicatormodel.cpp \
+    $$PWD/View/positionwidget.cpp
 
 HEADERS += \
     $$PWD/indicatorplugin.h \
@@ -16,7 +17,8 @@ HEADERS += \
     $$PWD/View/systemlogo.h \
     $$PWD/View/appstoreaction.h \
     $$PWD/indicatorworker.h \
-    $$PWD/indicatormodel.h
+    $$PWD/indicatormodel.h \
+    $$PWD/View/positionwidget.h
 
 RESOURCES += \
     $$PWD/indicator.qrc
