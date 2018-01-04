@@ -5,6 +5,7 @@
     <qresource prefix="/light">
         <file>theme/light/IndicatorWidget.theme</file>
         <file>theme/light/SystemLogo.theme</file>
+        <file>theme/light/PositionWidget.theme</file>
     </qresource>
     <qresource prefix="/dark">
         <file>theme/dark/IndicatorWidget.theme</file>

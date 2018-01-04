@@ -156,7 +156,7 @@ void SysteminfoThread::getCpuTime(unsigned long long &workTime, unsigned long lo
     m_statFile->setFileName("/proc/stat");
 
     if (!m_statFile->open(QIODevice::ReadOnly))
-        Q_ASSERT(nullptr);
+        Q_ASSERT(true);
 
     QString buffer = m_statFile->readAll();
     QStringList list = buffer.split("\n").filter(QRegExp("^cpu "));

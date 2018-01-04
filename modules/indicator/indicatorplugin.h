@@ -4,6 +4,7 @@
 #include "../interfaces/pluginsiteminterface.h"
 #include "View/indicatorwidget.h"
 #include "View/systemlogo.h"
+#include "View/positionwidget.h"
 #include "indicatormodel.h"
 #include "indicatorworker.h"
 #include <QLabel>
@@ -39,6 +40,7 @@ private:
     IndicatorModel *m_model;
     IndicatorWorker *m_worker;
     DThemeManager *m_themeManager;
+    PositionWidget *m_positionLbl;
 };
 }
 }

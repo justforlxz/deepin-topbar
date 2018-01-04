@@ -23,10 +23,7 @@ PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
 
-    mainLayout->addStretch();
-    mainLayout->addWidget(m_centralWidget);
-    mainLayout->addStretch();
-
+    mainLayout->addWidget(m_centralWidget, 0, Qt::AlignCenter);
     setLayout(mainLayout);
 }
 

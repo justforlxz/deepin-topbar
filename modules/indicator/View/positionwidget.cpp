@@ -30,10 +30,11 @@ PositionWidget::PositionWidget(QWidget *parent)
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(0);
+    layout->setContentsMargins(10, 0, 10, 0);
 
     QLabel *posLbl = new QLabel(tr("Position"));
 
-    layout->addWidget(posLbl, 0, Qt::AlignCenter);
+    layout->addWidget(posLbl, 0, Qt::AlignLeft | Qt::AlignVCenter);
 
     setLayout(layout);
 }

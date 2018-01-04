@@ -1,4 +1,4 @@
-dtb--indicator--Entry QLabel {
+dtb--indicator--PositionWidget QLabel {
     font-size: 11pt;
     font-weight: 500;
     color: black;

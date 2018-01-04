@@ -22,6 +22,8 @@ void IndicatorPlugin::init(PluginProxyInterface *proxyInter)
     m_centralWidget = new IndicatorWidget;
     m_logo = new SystemLogo;
 
+    m_positionLbl = new PositionWidget;
+
     m_model = new IndicatorModel;
     m_worker = new IndicatorWorker(m_model);
 
@@ -34,12 +36,15 @@ void IndicatorPlugin::init(PluginProxyInterface *proxyInter)
 
     m_proxyInter->addItem(this, "Logo");
     m_proxyInter->addItem(this, "Indicator");
+//    m_proxyInter->addItem(this, "Position");
 }
 
 QWidget *IndicatorPlugin::itemWidget(const QString &itemKey)
 {
     if (itemKey == "Logo")
         return m_logo;
+    else if (itemKey == "Position")
+        return m_positionLbl;
     else
         return m_centralWidget;
 }
@@ -58,6 +63,7 @@ void IndicatorPlugin::setDefaultColor(PluginProxyInterface::DefaultColor color)
     case PluginProxyInterface::Light:
         m_themeManager->setTheme(m_logo, "light/theme/light");
         m_themeManager->setTheme(m_centralWidget, "light/theme/light");
+        m_themeManager->setTheme(m_positionLbl, "light/theme/light");
         break;
     case PluginProxyInterface::Dark:
         m_themeManager->setTheme(m_logo, "dark/theme/dark");
