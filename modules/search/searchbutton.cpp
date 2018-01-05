@@ -64,6 +64,8 @@ void SearchButton::mouseReleaseEvent(QMouseEvent *event)
 
     setStyleSheet("background: transparent;");
 
+    QProcess::startDetached("albert");
+
     QProcess::startDetached("albert", QStringList() << "show");
 }
 
