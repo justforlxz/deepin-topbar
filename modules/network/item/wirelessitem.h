@@ -58,8 +58,9 @@ private:
     Dtk::Widget::DInputDialog *m_pwdDialog;
     QString m_lastConnPath;
     QString m_lastConnSecurity;
-    QMap<widgets::DActionLabel*, AccessPointWidget*> m_menuLists;
-    QMap<AccessPointWidget*, AccessPoint> m_oldApList;
+    QList<AccessPointWidget*> m_apwLists;
+    QList<widgets::DActionLabel*> m_acList;
+
     QAction *m_joinOther;
     QAction *m_preferences;
     QAction *m_separator;
