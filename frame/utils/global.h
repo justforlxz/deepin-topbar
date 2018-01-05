@@ -21,7 +21,7 @@
 
 #include <QObject>
 
-#define TOPHEIGHT 28
+#define TOPHEIGHT 24
 #define FONTSIZE 13
 
 class Global : public QObject

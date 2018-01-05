@@ -6,6 +6,8 @@
 #include "dwidgetaction.h"
 #include "sinkinputwidget.h"
 
+#include "utils/global.h"
+
 #include <QPainter>
 #include <QIcon>
 #include <QMouseEvent>
@@ -26,10 +28,6 @@ SoundItem::SoundItem(QWidget *parent)
     , m_sinkInter(nullptr)
     , m_menu(new QMenu)
 {
-//    m_applet->setVisible(false);
-
-    setFixedSize(26, 26);
-
     QVBoxLayout *layout = new QVBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(0);
