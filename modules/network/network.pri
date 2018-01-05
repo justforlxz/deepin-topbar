@@ -7,7 +7,8 @@ SOURCES += \
     $$PWD/item/wireditem.cpp \
     $$PWD/item/wirelessitem.cpp \
     $$PWD/networkdevice.cpp \
-    $$PWD/networkmanager.cpp
+    $$PWD/networkmanager.cpp \
+    $$PWD/item/applet/refreshaction.cpp
 
 HEADERS += \
     $$PWD/networkplugin.h \
@@ -18,7 +19,8 @@ HEADERS += \
     $$PWD/item/wireditem.h \
     $$PWD/item/wirelessitem.h \
     $$PWD/networkdevice.h \
-    $$PWD/networkmanager.h
+    $$PWD/networkmanager.h \
+    $$PWD/item/applet/refreshaction.h
 
 RESOURCES += \
     $$PWD/network.qrc

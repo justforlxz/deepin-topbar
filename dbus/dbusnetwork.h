@@ -41,7 +41,7 @@ class DBusNetwork: public QDBusAbstractInterface
             for (int i=self->propertyOffset(); i < self->propertyCount(); ++i) {
                 QMetaProperty p = self->property(i);
                 if (p.name() == prop) {
- 	            Q_EMIT p.notifySignal().invoke(this);
+                Q_EMIT p.notifySignal().invoke(this);
                 }
             }
         }
@@ -255,6 +255,12 @@ public Q_SLOTS: // METHODS
         QList<QVariant> argumentList;
         argumentList << QVariant::fromValue(in0);
         return asyncCallWithArgumentList(QStringLiteral("SetProxyMethod"), argumentList);
+    }
+
+    inline QDBusPendingReply<> RequestWirelessScan()
+    {
+        QList<QVariant> argumentList;
+        return asyncCallWithArgumentList(QStringLiteral("RequestWirelessScan"), argumentList);
     }
 
 Q_SIGNALS: // SIGNALS

@@ -1,6 +1,7 @@
 #include "wirelessitem.h"
 #include "applet/accesspoint.h"
 #include "../frame/utils/global.h"
+#include "applet/refreshaction.h"
 
 using namespace dtb;
 using namespace dtb::network;
@@ -70,9 +71,26 @@ void WirelessItem::init()
 
     connect(this, &WirelessItem::activeAPChanged, m_updateAPTimer, static_cast<void (QTimer::*)()>(&QTimer::start));
 
+    RefreshAction *refreshAction = new RefreshAction;
+
+    m_refreshTimer = new QTimer(this);
+    m_refreshTimer->setInterval(10 * 1000);
+
+    connect(m_refreshTimer, &QTimer::timeout, this, [=] {
+        m_networkInter->RequestWirelessScan();
+        refreshAction->setIsRefresh(true);
+
+        QTimer::singleShot(7 * 1000, this, [=] {
+            refreshAction->setIsRefresh(false);
+        });
+    });
+
     m_separator = new QAction(this);
     m_joinOther = new QAction(tr("Join Other Network..."), this);
     m_preferences = new QAction(tr("Open Network Preferences..."), this);
+
+    connect(m_menu, &QMenu::aboutToShow, m_refreshTimer, static_cast<void (QTimer::*)()>(&QTimer::start));
+    connect(m_menu, &QMenu::aboutToHide, m_refreshTimer, &QTimer::stop);
 
     connect(m_menu, &QMenu::triggered, this, [=] (QAction *action) {
         if (action == m_joinOther)
@@ -80,6 +98,10 @@ void WirelessItem::init()
         if (action == m_preferences)
             QProcess::startDetached("dbus-send --print-reply --dest=com.deepin.dde.ControlCenter /com/deepin/dde/ControlCenter com.deepin.dde.ControlCenter.ShowModule \"string:network\"");
     });
+
+    DActionLabel *action = new DActionLabel(refreshAction);
+
+    m_menu->addAction(action);
 
     m_separator->setSeparator(true);
 

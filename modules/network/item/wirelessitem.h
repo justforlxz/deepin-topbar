@@ -60,6 +60,7 @@ private:
     QString m_lastConnSecurity;
     QList<AccessPointWidget*> m_apwLists;
     QList<widgets::DActionLabel*> m_acList;
+    QTimer *m_refreshTimer;
 
     QAction *m_joinOther;
     QAction *m_preferences;
