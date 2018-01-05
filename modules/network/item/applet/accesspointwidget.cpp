@@ -11,10 +11,9 @@ using namespace dtb;
 using namespace dtb::network;
 using namespace dtb::widgets;
 
-AccessPointWidget::AccessPointWidget(const AccessPoint &ap)
-    : QFrame(nullptr)
+AccessPointWidget::AccessPointWidget(QFrame *parent)
+    : QFrame(parent)
     , m_activeState(NetworkDevice::Unknow)
-    , m_ap(ap)
     , m_ssidBtn(new QPushButton(this))
     , m_indicator(new DPictureSequenceView(this))
     , m_connectedBtn(new QFrame(this))
@@ -25,7 +24,6 @@ AccessPointWidget::AccessPointWidget(const AccessPoint &ap)
     setFixedWidth(250);
 
     m_ssidBtn->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    m_ssidBtn->setText(ap.ssid());
     m_ssidBtn->setObjectName("Ssid");
 
     m_connectedBtn->setFixedSize(16, 16);
@@ -41,9 +39,6 @@ AccessPointWidget::AccessPointWidget(const AccessPoint &ap)
     m_indicator->setPictureSequence(indicatorList);
     m_indicator->setFixedSize(14, 14);
     m_indicator->setVisible(false);
-
-    if (ap.secured())
-        m_securityIcon->setIcon(QChar(0xE72E), FONTSIZE);
 
     QHBoxLayout *infoLayout = new QHBoxLayout;
     infoLayout->setSpacing(0);
@@ -66,7 +61,6 @@ AccessPointWidget::AccessPointWidget(const AccessPoint &ap)
     centralLayout->setSpacing(0);
     centralLayout->setMargin(0);
 
-    setStrengthIcon(ap.strength());
     setLayout(centralLayout);
     setStyleSheet("dtb--network--AccessPointWidget #Ssid {"
                   "background-color:transparent;"
@@ -83,6 +77,17 @@ AccessPointWidget::AccessPointWidget(const AccessPoint &ap)
                   "}");
 
     connect(m_ssidBtn, &QPushButton::clicked, this, &AccessPointWidget::ssidClicked);
+}
+
+void AccessPointWidget::updateAP(const AccessPoint &ap)
+{
+    m_ap = ap;
+    m_ssidBtn->setText(ap.ssid());
+    setStrengthIcon(ap.strength());
+    if (ap.secured())
+        m_securityIcon->setIcon(QChar(0xE72E), FONTSIZE);
+
+    update();
 }
 
 bool AccessPointWidget::active() const

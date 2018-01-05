@@ -20,7 +20,8 @@ class AccessPointWidget : public QFrame
     Q_PROPERTY(bool active READ active DESIGNABLE true)
 
 public:
-    explicit AccessPointWidget(const AccessPoint &ap);
+    explicit AccessPointWidget(QFrame *parent = nullptr);
+    void updateAP(const AccessPoint &ap);
 
     bool active() const;
     void setActiveState(const NetworkDevice::NetworkState state);

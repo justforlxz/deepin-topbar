@@ -62,6 +62,7 @@ private:
     QMap<AccessPointWidget*, AccessPoint> m_oldApList;
     QAction *m_joinOther;
     QAction *m_preferences;
+    QAction *m_separator;
 };
 }
 }

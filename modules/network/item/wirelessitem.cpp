@@ -70,6 +70,7 @@ void WirelessItem::init()
 
     connect(this, &WirelessItem::activeAPChanged, m_updateAPTimer, static_cast<void (QTimer::*)()>(&QTimer::start));
 
+    m_separator = new QAction(this);
     m_joinOther = new QAction(tr("Join Other Network..."), this);
     m_preferences = new QAction(tr("Open Network Preferences..."), this);
 
@@ -79,6 +80,12 @@ void WirelessItem::init()
         if (action == m_preferences)
             QProcess::startDetached("dbus-send --print-reply --dest=com.deepin.dde.ControlCenter /com/deepin/dde/ControlCenter com.deepin.dde.ControlCenter.ShowModule \"string:network\"");
     });
+
+    m_separator->setSeparator(true);
+
+    m_menu->addAction(m_separator);
+    m_menu->addAction(m_joinOther);
+    m_menu->addAction(m_preferences);
 
     loadAPList();
     onActiveAPChanged();
@@ -231,62 +238,56 @@ void WirelessItem::updateAPList()
         // sort ap list by strength
         std::sort(m_apList.begin(), m_apList.end(), std::greater<AccessPoint>());
 
-        for (const AccessPoint &ap : m_apList) {
-            if (m_oldApList.values().contains(ap)) {
-                if (ap == m_activeAP)
-                    m_oldApList.key(ap)->setActiveState(m_device.state());
-                continue;
+        if (m_apList.size() > m_menuLists.size()) {
+            const int i = m_apList.size() - m_menuLists.size();
+            for (int index = 0; index != i; index++) {
+                AccessPointWidget *apw = new AccessPointWidget;
+                DActionLabel *action = new DActionLabel(apw);
+
+                m_menuLists[action] = apw;
+                m_menu->addAction(action);
+
+                connect(apw, &AccessPointWidget::requestActiveAP, this, &WirelessItem::activateAP, Qt::UniqueConnection);
+                connect(apw, &AccessPointWidget::requestDeactiveAP, this, &WirelessItem::deactiveAP, Qt::UniqueConnection);
             }
+        } else if (m_apList.size() < m_menuLists.size() && !m_menuLists.isEmpty()) {
+            int i = m_menuLists.size() - m_apList.size();
+            for (int index = 0; index != i; index++) {
+                DActionLabel *action = m_menuLists.keys()[index];
+                AccessPointWidget *apw = m_menuLists[action];
 
-            AccessPointWidget *apw = new AccessPointWidget(ap);
+                m_menu->removeAction(action);
+                m_menuLists.remove(action);
 
-            connect(apw, &AccessPointWidget::requestActiveAP, this, &WirelessItem::activateAP, Qt::UniqueConnection);
-            connect(apw, &AccessPointWidget::requestDeactiveAP, this, &WirelessItem::deactiveAP, Qt::UniqueConnection);
-
-            DActionLabel *action = new DActionLabel(apw);
-
-            m_menuLists[action] = apw;
-
-            m_oldApList[apw] = ap;
-
-            m_menu->addAction(action);
-
-            if (ap == m_activeAP) {
-                apw->setActiveState(m_device.state());
-
-                const int i = ap.strength();
-
-                if (i <= 20)
-                    m_wirelessLbl->setIcon(QChar(0xE904), FONTSIZE);
-                else if (i <= 40)
-                    m_wirelessLbl->setIcon(QChar(0xE905), FONTSIZE);
-                else if (i <= 60)
-                    m_wirelessLbl->setIcon(QChar(0xE906), FONTSIZE);
-                else if (i <= 80)
-                    m_wirelessLbl->setIcon(QChar(0xE907), FONTSIZE);
-                else
-                    m_wirelessLbl->setIcon(QChar(0xE908), FONTSIZE);
+                action->deleteLater();
+                apw->deleteLater();
             }
         }
 
-        for (int i(0); i < m_oldApList.size(); i++) {
-            const AccessPoint &ap = m_oldApList.values().takeAt(i);
-
-            if (m_apList.contains(ap))
-                continue;
-
-            AccessPointWidget *apw = m_oldApList.key(ap);
-            DActionLabel *btn = m_menuLists.key(apw);
-
-            m_menuLists.remove(btn);
-            m_menu->removeAction(btn);
-            m_oldApList.remove(apw);
-
-            apw->deleteLater();
-            btn->deleteLater();
+        for (int i = 0; i != m_apList.size(); i++) {
+            AccessPointWidget *apw = m_menuLists.values()[i];
+            const AccessPoint &ap = m_apList[i];
+            apw->updateAP(ap);
+            apw->setActiveState(NetworkDevice::Disconnected);
         }
 
-        m_menu->addSeparator();
+        AccessPointWidget *apw = m_menuLists.values()[m_apList.indexOf(m_activeAP)];
+        apw->setActiveState(m_device.state());
+
+        const int i = m_activeAP.strength();
+
+        if (i <= 20)
+            m_wirelessLbl->setIcon(QChar(0xE904), FONTSIZE);
+        else if (i <= 40)
+            m_wirelessLbl->setIcon(QChar(0xE905), FONTSIZE);
+        else if (i <= 60)
+            m_wirelessLbl->setIcon(QChar(0xE906), FONTSIZE);
+        else if (i <= 80)
+            m_wirelessLbl->setIcon(QChar(0xE907), FONTSIZE);
+        else
+            m_wirelessLbl->setIcon(QChar(0xE908), FONTSIZE);
+
+        m_menu->addAction(m_separator);
         m_menu->addAction(m_joinOther);
         m_menu->addAction(m_preferences);
     }
