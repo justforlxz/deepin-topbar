@@ -26,4 +26,7 @@ icon.files = deepin-topbar.svg
 gsetting.path = $${PREFIX}/share/glib-2.0/schemas
 gsetting.files = com.deepin.dde.topbar.gschema.xml
 
+polkit.path = $${PREFIX}/share/polkit-1/actions
+polkit.files = com.deepin.dde.topbar.polkit.service
+
 INSTALLS += desktop service autostart qm_files icon gsetting
