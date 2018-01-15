@@ -260,33 +260,36 @@ void WirelessItem::updateAPList()
         // sort ap list by strength
         std::sort(m_apList.begin(), m_apList.end(), std::greater<AccessPoint>());
 
-        if (m_apList.size() > m_apwLists.size()) {
-            const int i = m_apList.size() - m_apwLists.size();
-            for (int index = 0; index != i; index++) {
-                AccessPointWidget *apw = new AccessPointWidget;
-                DActionLabel *action = new DActionLabel(apw);
+        do {
+            if (m_apList.size() > m_apwLists.size()) {
+                const int i = m_apList.size() - m_apwLists.size();
+                for (int index = 0; index != i; index++) {
+                    AccessPointWidget *apw = new AccessPointWidget;
+                    DActionLabel *action = new DActionLabel(apw);
 
-                m_apwLists << apw;
-                m_acList << action;
-                m_menu->addAction(action);
+                    m_apwLists << apw;
+                    m_acList << action;
+                    m_menu->addAction(action);
 
-                connect(apw, &AccessPointWidget::requestActiveAP, this, &WirelessItem::activateAP, Qt::UniqueConnection);
-                connect(apw, &AccessPointWidget::requestDeactiveAP, this, &WirelessItem::deactiveAP, Qt::UniqueConnection);
+                    connect(apw, &AccessPointWidget::requestActiveAP, this, &WirelessItem::activateAP, Qt::UniqueConnection);
+                    connect(apw, &AccessPointWidget::requestDeactiveAP, this, &WirelessItem::deactiveAP, Qt::UniqueConnection);
+                }
+            } else if (m_apList.size() < m_apwLists.size() && !m_apwLists.isEmpty()) {
+                int i = m_apwLists.size() - m_apList.size();
+                for (int index = 0; index != i; index++) {
+                    DActionLabel *action = m_acList.last();
+                    AccessPointWidget *apw = m_apwLists.last();
+
+                    m_menu->removeAction(action);
+
+                    m_apwLists.removeLast();
+                    m_acList.removeLast();
+
+                    action->deleteLater();
+                    apw->deleteLater();
+                }
             }
-        } else if (m_apList.size() < m_apwLists.size() && !m_apwLists.isEmpty()) {
-            int i = m_apwLists.size() - m_apList.size();
-            for (int index = 0; index != i; index++) {
-                DActionLabel *action = m_acList[index];
-                AccessPointWidget *apw = m_apwLists[index];
-
-                m_menu->removeAction(action);
-                m_apwLists.removeOne(apw);
-                m_acList.removeOne(action);
-
-                action->deleteLater();
-                apw->deleteLater();
-            }
-        }
+        } while(m_apList.size() != m_apwLists.size());
 
         for (int i = 0; i != m_apList.size(); i++) {
             AccessPointWidget *apw = m_apwLists[i];

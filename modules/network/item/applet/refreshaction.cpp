@@ -13,5 +13,5 @@ RefreshAction::RefreshAction(QWidget *parent)
 
 void RefreshAction::setIsRefresh(const bool refresh)
 {
-    setText(tr("List state: %1").arg(refresh ? tr("Refreshing") : tr("No refresh")));
+    setText(tr("List state: %1").arg(refresh ? tr("Refreshing...") : tr("No refresh")));
 }
