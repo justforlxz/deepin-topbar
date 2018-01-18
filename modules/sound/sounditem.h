@@ -2,11 +2,15 @@
 #define SOUNDITEM_H
 
 #include "item/contentmodule.h"
-
+#include "dbusinterface.h"
+#include "dbusmediaplayer2.h"
 #include <QMenu>
 #include <QWidget>
 
+using DBusMPRIS = DBusMediaPlayer2;
+
 class DBusSink;
+class QLabel;
 
 namespace dtb {
 
@@ -18,6 +22,7 @@ class DWidgetAction;
 namespace sound {
 class SoundApplet;
 class SinkInputWidget;
+class MediaControl;
 class SoundItem : public ContentModule
 {
     Q_OBJECT
@@ -37,8 +42,18 @@ private slots:
     void clearAllInput();
     void addNewInput(SinkInputWidget *w);
 
+    void initMpris();
+    void removeMPRISPath(const QString &path);
+    void loadMPRISPath(const QString &path);
+    void onNameOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner);
 private:
+    QLabel *m_mprisTitle;
     widgets::FontLabel *m_fontLabel;
+    DBusMediaPlayer2 *m_mprisInter;
+    DBusInterface *m_dbusInter;
+    MediaControl *m_mediaControl;
+    QString m_lastPath;
+    QStringList m_mprisPaths;
     SoundApplet *m_applet;
     DBusSink *m_sinkInter;
     QMenu *m_menu;

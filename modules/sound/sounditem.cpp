@@ -5,13 +5,14 @@
 #include "componments/volumeslider.h"
 #include "dwidgetaction.h"
 #include "sinkinputwidget.h"
-
+#include "componments/mediacontrol.h"
 #include "utils/global.h"
 
 #include <QPainter>
 #include <QIcon>
 #include <QMouseEvent>
 #include <QVBoxLayout>
+#include <QLabel>
 
 // menu actions
 #define MUTE    "mute"
@@ -23,22 +24,30 @@ using namespace dtb::widgets;
 
 SoundItem::SoundItem(QWidget *parent)
     : ContentModule(parent)
+    , m_mprisTitle(new QLabel)
     , m_fontLabel(new FontLabel)
+    , m_mprisInter(nullptr)
+    , m_mediaControl(nullptr)
     , m_applet(new SoundApplet(this))
     , m_sinkInter(nullptr)
     , m_menu(new QMenu)
 {
-    QVBoxLayout *layout = new QVBoxLayout;
+    QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
-    layout->setSpacing(0);
+    layout->setSpacing(3);
     layout->setContentsMargins(3, 0, 3, 0);
-    layout->addWidget(m_fontLabel, 0, Qt::AlignHCenter);
+    layout->addWidget(m_mprisTitle, 0, Qt::AlignCenter);
+    layout->addWidget(m_fontLabel, 0, Qt::AlignCenter);
 
     setLayout(layout);
+
+    m_mprisTitle->setVisible(false);
 
     connect(m_applet, static_cast<void (SoundApplet::*)(DBusSink*) const>(&SoundApplet::defaultSinkChanged), this, &SoundItem::sinkChanged);
 
     refershIcon();
+
+    initMpris();
 
     // new actions
 
@@ -144,4 +153,89 @@ void SoundItem::addNewInput(SinkInputWidget *w)
     DWidgetAction *action = new DWidgetAction(w);
     m_menu->insertAction(m_separator, action);
     m_inputMap[action] = w;
+}
+
+void SoundItem::initMpris() {
+    m_dbusInter = new DBusInterface("org.freedesktop.DBus", "/org/freedesktop/DBus", QDBusConnection::sessionBus(), this);
+
+    connect(m_dbusInter, &DBusInterface::NameOwnerChanged, this, &SoundItem::onNameOwnerChanged);
+
+    for (const auto &name : m_dbusInter->ListNames().value())
+        onNameOwnerChanged(name, QString(), name);
+}
+
+
+void SoundItem::onNameOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner) {
+    Q_UNUSED(oldOwner);
+
+    if (!name.startsWith("org.mpris.MediaPlayer2."))
+        return;
+
+    if (newOwner.isEmpty())
+        removeMPRISPath(name);
+    else
+        loadMPRISPath(name);
+}
+
+void SoundItem::loadMPRISPath(const QString &path) {
+    m_lastPath = path;
+
+    // save paths
+    if (!m_mprisPaths.contains(path))
+        m_mprisPaths.append(path);
+
+    if (m_mprisInter)
+        m_mprisInter->deleteLater();
+
+    m_mprisInter = new DBusMPRIS(path, "/org/mpris/MediaPlayer2", QDBusConnection::sessionBus(), this);
+
+    if (!m_mediaControl) {
+        m_mediaControl = new MediaControl;
+    }
+
+    m_menu->addAction(m_mediaControl);
+
+    connect(m_mediaControl, &MediaControl::requestLast, m_mprisInter, &DBusMediaPlayer2::Next, Qt::UniqueConnection);
+    connect(m_mediaControl, &MediaControl::requestPrevious, m_mprisInter, &DBusMediaPlayer2::Previous, Qt::UniqueConnection);
+    connect(m_mediaControl, &MediaControl::requestPause, m_mprisInter, &DBusMediaPlayer2::PlayPause, Qt::UniqueConnection);
+
+    connect(m_mprisInter, &DBusMediaPlayer2::MetadataChanged, this, [=]{
+        m_mprisTitle->setText(m_mprisInter->metadata().value("xesam:title").toString() + " ");
+    });
+
+    connect(m_mprisInter, &DBusMediaPlayer2::PlaybackStatusChanged, this, [=]{
+        if (m_mprisInter->playbackStatus() == "Playing") {
+            m_mediaControl->setPlayState(MediaControl::Play);
+        }
+        if (m_mprisInter->playbackStatus() == "Stopped") {
+            m_mediaControl->setPlayState(MediaControl::Stop);
+        }
+        if (m_mprisInter->playbackStatus() == "Paused")
+            m_mediaControl->setPlayState(MediaControl::Pause);
+
+        m_mprisInter->MetadataChanged();
+    });
+
+    m_mprisInter->MetadataChanged();
+    m_mprisInter->PlaybackStatusChanged();
+
+    m_mprisTitle->setVisible(true);
+}
+
+void SoundItem::removeMPRISPath(const QString &path) {
+    m_mprisPaths.removeOne(path);
+
+    if (m_lastPath != path)
+        return;
+
+    if (!m_mprisInter)
+        return;
+
+    if (!m_mprisPaths.isEmpty())
+        return loadMPRISPath(m_mprisPaths.last());
+
+    m_mprisInter->deleteLater();
+    m_mprisInter = nullptr;
+
+    m_mprisTitle->setVisible(false);
 }

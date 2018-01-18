@@ -132,7 +132,7 @@ void MainPanel::loadModules()
 
     loadModule(new systemtray::SystemTrayPlugin);
 
-    loadModule(new media::MediaControlPlugin);
+//    loadModule(new media::MediaControlPlugin);
 
     loadModule(new sound::SoundPlugin);
 

@@ -1,6 +1,6 @@
 #include(account/account.pri)
 include(indicator/indicator.pri)
-include(mediacontrol/mediacontrol.pri)
+#include(mediacontrol/mediacontrol.pri)
 include(network/network.pri)
 include(notify/notify.pri)
 include(power/power.pri)
