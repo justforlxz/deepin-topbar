@@ -128,6 +128,8 @@ void MainPanel::loadModules()
     //Stretch
     m_mainLayout->addStretch();
 
+    loadModule(new systeminfo::SystemInfoPlugin);
+
     loadModule(new systemtray::SystemTrayPlugin);
 
     loadModule(new media::MediaControlPlugin);
@@ -137,8 +139,6 @@ void MainPanel::loadModules()
     loadModule(new power::PowerPlugin);
 
     loadModule(new network::NetworkPlugin);
-
-    loadModule(new systeminfo::SystemInfoPlugin);
 
     loadModule(new datetime::DateTimePlugin);
 

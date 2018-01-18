@@ -15,8 +15,6 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent)
 {
     setObjectName("SystemInfoWidget");
 
-    setFixedWidth(80);
-
     m_tx = new QLabel;
     m_tx->setFixedHeight(12);
     m_tx->setText(converSpeed(0));
@@ -43,7 +41,7 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent)
     downlayout->addWidget(down, 0, Qt::AlignVCenter | Qt::AlignLeft);
     downlayout->addWidget(m_rx, 0, Qt::AlignVCenter | Qt::AlignRight);
 
-    QVBoxLayout *mainlayout = new QVBoxLayout;
+    QHBoxLayout *mainlayout = new QHBoxLayout;
     mainlayout->setMargin(0);
     mainlayout->setSpacing(2);
     mainlayout->setContentsMargins(3, 0, 3, 0);
@@ -65,9 +63,6 @@ void SystemInfoWidget::setModel(SystemInfoModel *model)
 
 const QString SystemInfoWidget::converSpeed(const int value)
 {
-    if (!value)
-        return "--/--";
-
     QString speed;
 
     for (;;) {
