@@ -28,6 +28,7 @@ public:
 private slots:
     void loadModules();
     void loadModule(PluginsItemInterface * const module);
+    void reload();
 
 protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;

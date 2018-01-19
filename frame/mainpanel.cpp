@@ -20,7 +20,8 @@
 
 using namespace dtb;
 
-MainPanel::MainPanel(QWidget *parent) : QWidget(parent)
+MainPanel::MainPanel(QWidget *parent)
+    : QWidget(parent)
 {
     initUI();
     initConnect();
@@ -148,6 +149,33 @@ void MainPanel::loadModule(PluginsItemInterface * const module)
 {
     // init
     module->init(this);
+}
+
+void MainPanel::reload()
+{
+    for (int i = 0; i != m_moduleMap.size(); i++) {
+        PluginsItemInterface *inter = m_moduleMap.keys().at(i);
+
+        QMap<QString, PluginsItem*> map = m_moduleMap[inter];
+        QMap<QString, PluginsItem*>::const_iterator list = map.begin();
+
+        while (list != map.end()) {
+            list.value()->deleteLater();
+        }
+
+        delete inter;
+    }
+
+    m_moduleMap.clear();
+
+    QLayoutItem* item;
+    while ( ( item = m_mainLayout->takeAt( 0 ) ) != NULL )
+    {
+        delete item->widget();
+        delete item;
+    }
+
+    loadModules();
 }
 
 void MainPanel::paintEvent(QPaintEvent *event)
