@@ -147,12 +147,26 @@ void MainPanel::loadModules()
 
 void MainPanel::loadModule(PluginsItemInterface * const module)
 {
+    if (m_blackList.contains(module->pluginName())) {
+        delete module;
+        return;
+    }
+
     // init
     module->init(this);
 }
 
 void MainPanel::reload()
 {
+    const QJsonObject &json = loadConfig("frame");
+    const QJsonArray array = json["blacklist"].toArray();
+
+    m_blackList.clear();
+
+    foreach (const QJsonValue & value, array) {
+        m_blackList << value.toString();
+    }
+
     for (int i = 0; i != m_moduleMap.size(); i++) {
         PluginsItemInterface *inter = m_moduleMap.keys().at(i);
 

@@ -39,6 +39,7 @@ private:
     QGSettings *m_gsettings;
     bool m_isLight;
     DefaultColor m_defaultColor;
+    QStringList m_blackList;
 };
 }
 
