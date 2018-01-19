@@ -26,7 +26,7 @@ MainPanel::MainPanel(QWidget *parent)
     initUI();
     initConnect();
 
-    loadModules();
+    reload();
 }
 
 void MainPanel::initUI()

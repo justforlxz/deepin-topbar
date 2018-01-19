@@ -24,6 +24,16 @@
 #define TOPHEIGHT 26
 #define FONTSIZE 13
 
+static const QStringList Module_list = {"systeminfo",
+                                        "system-tray",
+                                        "sound",
+                                        "power",
+                                        "network",
+                                        "datetime",
+                                        "search",
+                                        "notify"
+                                       };
+
 class Global : public QObject
 {
     Q_OBJECT
