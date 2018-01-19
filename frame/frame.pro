@@ -23,7 +23,8 @@ HEADERS  += \
     $$PWD/utils/itempopupwindow.h \
     $$PWD/utils/event_monitor.h \
     item/contentmodule.h \
-    utils/global.h
+    utils/global.h \
+    settingswindow.h
 
 SOURCES += \
     $$PWD/main.cpp\
@@ -35,7 +36,8 @@ SOURCES += \
     $$PWD/utils/itempopupwindow.cpp \
     $$PWD/utils/event_monitor.cpp \
     item/contentmodule.cpp \
-    utils/global.cpp
+    utils/global.cpp \
+    settingswindow.cpp
 
 headers.files += ../interfaces/pluginsiteminterface.h \
                  ../interfaces/pluginproxyinterface.h
