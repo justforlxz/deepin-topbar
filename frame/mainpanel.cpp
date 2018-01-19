@@ -1,7 +1,6 @@
 #include "mainpanel.h"
 #include "../modules/account/accountplugin.h"
 #include "../modules/indicator/indicatorplugin.h"
-#include "../modules/mediacontrol/mediacontrolplugin.h"
 #include "../modules/network/networkplugin.h"
 #include "../modules/power/powerplugin.h"
 #include "../modules/sound/soundplugin.h"
@@ -131,8 +130,6 @@ void MainPanel::loadModules()
     loadModule(new systeminfo::SystemInfoPlugin);
 
     loadModule(new systemtray::SystemTrayPlugin);
-
-//    loadModule(new media::MediaControlPlugin);
 
     loadModule(new sound::SoundPlugin);
 
