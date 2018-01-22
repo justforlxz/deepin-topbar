@@ -82,7 +82,7 @@ void WiredItem::deviceStateChanged(const NetworkDevice &device)
 
 void WiredItem::onDelayTimeOut()
 {
-    setVisible(m_networkManager->deviceEnabled(m_devicePath));
+    setVisible(m_connected && m_networkManager->deviceEnabled(m_devicePath));
 
     m_menu->clear();
 
