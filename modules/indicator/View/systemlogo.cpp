@@ -146,7 +146,7 @@ void SystemLogo::handleAction(const int &action)
         QProcess::startDetached("dbus-send --print-reply --dest=com.deepin.dde.ControlCenter /com/deepin/dde/ControlCenter com.deepin.dde.ControlCenter.ShowModule \"string:systeminfo\"");
         break;
     case Preference:
-        QProcess::startDetached("dbus-send --print-reply --dest=com.deepin.dde.ControlCenter /com/deepin/dde/ControlCenter com.deepin.dde.ControlCenter.Show");
+        QProcess::startDetached("qdbus --literal com.deepin.dde.topbar /com/deepin/dde/topbar com.deepin.dde.topbar.ShowSetting");
         break;
     case Appstore:
         QProcess::startDetached("/usr/bin/deepin-appstore");
