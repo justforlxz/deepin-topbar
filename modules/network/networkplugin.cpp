@@ -10,12 +10,6 @@ NetworkPlugin::NetworkPlugin()
     m_networkManager = NetworkManager::instance(this);
 }
 
-NetworkPlugin::~NetworkPlugin()
-{
-    m_networkManager->deleteLater();
-    m_networkManager = nullptr;
-}
-
 const QString NetworkPlugin::pluginName() const
 {
     return "Network";

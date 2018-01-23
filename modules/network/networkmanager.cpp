@@ -6,6 +6,11 @@ using namespace dtb::network;
 
 NetworkManager *NetworkManager::INSTANCE = nullptr;
 
+NetworkManager::~NetworkManager()
+{
+    INSTANCE = nullptr;
+}
+
 NetworkManager *NetworkManager::instance(QObject *parent)
 {
     if (!INSTANCE)

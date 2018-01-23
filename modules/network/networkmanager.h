@@ -27,6 +27,7 @@ public:
     };
 
 public:
+    ~NetworkManager();
     static NetworkManager *instance(QObject *parent = nullptr);
 
     void init();
