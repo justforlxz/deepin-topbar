@@ -18,6 +18,9 @@
 #include <QPen>
 #include <QKeyEvent>
 #include <QEvent>
+#include <DSettingsDialog>
+
+DWIDGET_USE_NAMESPACE
 
 using namespace dtb;
 
@@ -47,7 +50,7 @@ void MainPanel::initUI()
 
 void MainPanel::initConnect()
 {
-    connect(m_settings, &Settings::valueChanged, this, &MainPanel::reload);
+
 }
 
 void MainPanel::addItem(PluginsItemInterface * const module, const QString &itemKey)
@@ -150,7 +153,7 @@ void MainPanel::loadModules()
 
 void MainPanel::loadModule(PluginsItemInterface * const module)
 {
-    if (!Settings::InStance().settings()->value(QString("base.Module.%1").arg(module->pluginName())).toBool()) {
+    if (!m_settings->settings()->value(QString("base.Module.%1").arg(module->pluginName())).toBool()) {
         delete module;
         return;
     }
@@ -165,10 +168,9 @@ void MainPanel::reload()
         PluginsItemInterface *inter = m_moduleMap.keys().at(i);
 
         QMap<QString, PluginsItem*> map = m_moduleMap[inter];
-        QMap<QString, PluginsItem*>::const_iterator list = map.begin();
 
-        while (list != map.end()) {
-            list.value()->deleteLater();
+        for (PluginsItem * item : map.values()) {
+            item->deleteLater();
         }
 
         delete inter;
@@ -206,4 +208,19 @@ void MainPanel::setDefaultColor(const DefaultColor &defaultColor)
         inter->setDefaultColor(m_defaultColor);
 
     update();
+}
+
+void MainPanel::showSettingDialog()
+{
+    DSettingsDialog *dialog = new DSettingsDialog;
+
+    dialog->updateSettings(m_settings->settings());
+
+    dialog->exec();
+
+    dialog->deleteLater();
+
+    m_settings->settings()->sync();
+
+    QTimer::singleShot(1, this, &MainPanel::reload);
 }

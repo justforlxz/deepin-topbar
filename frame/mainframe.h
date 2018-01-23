@@ -17,10 +17,12 @@ DWIDGET_USE_NAMESPACE
 class MainFrame : public QFrame
 {
     Q_OBJECT
-
 public:
     explicit MainFrame(QWidget *parent = 0);
     ~MainFrame();
+
+public slots:
+    void showSetting();
 
 private slots:
     void screenChanged();

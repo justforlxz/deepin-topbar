@@ -12,7 +12,7 @@ qm_files.path = $${PREFIX}/share/deepin-topbar/translations/
 qm_files.files = translations/*.qm
 
 service.path = $${PREFIX}/share/dbus-1/services
-service.files = com.deepin.deepin.Topbar.service
+service.files = com.deepin.dde.topbar.service
 
 desktop.path = $${PREFIX}/share/applications/
 desktop.files = deepin-topbar.desktop

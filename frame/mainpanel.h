@@ -10,7 +10,7 @@
 
 namespace dtb {
 class Settings;
-
+class MainFrame;
 class MainPanel : public QWidget, public PluginProxyInterface
 {
     Q_OBJECT
@@ -26,6 +26,8 @@ public:
     const QJsonObject loadConfig(const QString &itemKey) Q_DECL_OVERRIDE;
 
     void setDefaultColor(const DefaultColor &defaultColor);
+
+    void showSettingDialog();
 
 private slots:
     void loadModules();

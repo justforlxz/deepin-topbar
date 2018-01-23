@@ -18,6 +18,7 @@ class NetworkPlugin : public QObject, public PluginsItemInterface
     Q_OBJECT
 public:
     NetworkPlugin();
+    ~NetworkPlugin();
 
     const QString pluginName() const Q_DECL_OVERRIDE;
     void init(PluginProxyInterface *proxyInter) Q_DECL_OVERRIDE;

@@ -1,4 +1,6 @@
 #include "mainframe.h"
+#include "dbusservice.h"
+
 #include <DApplication>
 
 DWIDGET_USE_NAMESPACE
@@ -18,6 +20,12 @@ int main(int argc, char *argv[])
         a.installTranslator(&translator);
 
         MainFrame *mainFrame = new MainFrame;
+
+        DBusService *dbus = new DBusService(mainFrame);
+
+        QDBusConnection::sessionBus().registerService("com.deepin.dde.topbar");
+        QDBusConnection::sessionBus().registerObject("/com/deepin/dde/topbar", "com.deepin.dde.topbar", mainFrame);
+
         mainFrame->show();
 
         return a.exec();

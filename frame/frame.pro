@@ -25,7 +25,7 @@ HEADERS  += \
     item/contentmodule.h \
     utils/global.h \
     settings.h \
-    settingsdialog.h
+    dbusservice.h
 
 SOURCES += \
     $$PWD/main.cpp\
@@ -39,7 +39,7 @@ SOURCES += \
     item/contentmodule.cpp \
     utils/global.cpp \
     settings.cpp \
-    settingsdialog.cpp
+    dbusservice.cpp
 
 headers.files += ../interfaces/pluginsiteminterface.h \
                  ../interfaces/pluginproxyinterface.h

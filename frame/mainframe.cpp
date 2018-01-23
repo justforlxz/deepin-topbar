@@ -75,6 +75,11 @@ void MainFrame::setTheme(const QString &key)
     }
 }
 
+void MainFrame::showSetting()
+{
+    QTimer::singleShot(1, m_mainPanel, &dtb::MainPanel::showSettingDialog);
+}
+
 void MainFrame::screenChanged()
 {
     QRect screen = m_desktopWidget->screenGeometry(m_desktopWidget->primaryScreen());
