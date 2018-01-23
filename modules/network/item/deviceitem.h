@@ -29,7 +29,7 @@ protected:
 protected:
     const QString m_devicePath;
     NetworkManager *m_networkManager;
-    QMenu *m_menu;
+    QPointer<QMenu> m_menu;
 };
 }
 }
