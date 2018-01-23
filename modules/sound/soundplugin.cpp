@@ -10,7 +10,7 @@ SoundPlugin::SoundPlugin()
 
 const QString SoundPlugin::pluginName() const
 {
-    return "sound";
+    return "Sound";
 }
 
 void SoundPlugin::init(PluginProxyInterface *proxyInter)

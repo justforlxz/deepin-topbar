@@ -13,7 +13,7 @@ PowerPlugin::~PowerPlugin() {
 }
 
 const QString PowerPlugin::pluginName() const {
-    return QString("power");
+    return QString("Power");
 }
 
 void PowerPlugin::init(PluginProxyInterface *proxyInter) {

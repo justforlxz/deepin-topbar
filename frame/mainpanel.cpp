@@ -12,6 +12,7 @@
 
 #include "item/pluginsitem.h"
 #include "utils/global.h"
+#include "settings.h"
 
 #include <QPainter>
 #include <QPen>
@@ -22,6 +23,7 @@ using namespace dtb;
 
 MainPanel::MainPanel(QWidget *parent)
     : QWidget(parent)
+    , m_settings(&Settings::InStance())
 {
     initUI();
     initConnect();
@@ -45,6 +47,7 @@ void MainPanel::initUI()
 
 void MainPanel::initConnect()
 {
+    connect(m_settings, &Settings::valueChanged, this, &MainPanel::reload);
 }
 
 void MainPanel::addItem(PluginsItemInterface * const module, const QString &itemKey)
@@ -147,7 +150,7 @@ void MainPanel::loadModules()
 
 void MainPanel::loadModule(PluginsItemInterface * const module)
 {
-    if (m_blackList.contains(module->pluginName())) {
+    if (!Settings::InStance().settings()->value(QString("base.Module.%1").arg(module->pluginName())).toBool()) {
         delete module;
         return;
     }
@@ -158,15 +161,6 @@ void MainPanel::loadModule(PluginsItemInterface * const module)
 
 void MainPanel::reload()
 {
-    const QJsonObject &json = loadConfig("frame");
-    const QJsonArray array = json["blacklist"].toArray();
-
-    m_blackList.clear();
-
-    foreach (const QJsonValue & value, array) {
-        m_blackList << value.toString();
-    }
-
     for (int i = 0; i != m_moduleMap.size(); i++) {
         PluginsItemInterface *inter = m_moduleMap.keys().at(i);
 

@@ -12,7 +12,7 @@ NetworkPlugin::NetworkPlugin()
 
 const QString NetworkPlugin::pluginName() const
 {
-    return "network";
+    return "Network";
 }
 
 void NetworkPlugin::init(PluginProxyInterface *proxyInter)

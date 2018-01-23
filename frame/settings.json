@@ -1,0 +1,81 @@
+{
+    "groups": [
+        {
+            "key": "base",
+            "name": "Basic",
+            "groups": [
+                {
+                    "key": "Module",
+                    "name": "Module visible",
+                    "options": [
+                        {
+                            "key": "Indicator",
+                            "name": "Indicator",
+                            "hide": false,
+                            "reset": false,
+                            "type": "checkbox",
+                            "default": true
+                        }, {
+                            "key": "Network",
+                            "name": "Network",
+                            "hide": false,
+                            "reset": false,
+                            "type": "checkbox",
+                            "default": true
+                        }, {
+                            "key": "Notify",
+                            "name": "Notify",
+                            "hide": false,
+                            "reset": false,
+                            "type": "checkbox",
+                            "default": true
+                        }, {
+                            "key": "Power",
+                            "name": "Power",
+                            "hide": false,
+                            "reset": false,
+                            "type": "checkbox",
+                            "default": true
+                        }, {
+                            "key": "Search",
+                            "name": "Search",
+                            "hide": false,
+                            "reset": false,
+                            "type": "checkbox",
+                            "default": true
+                        }, {
+                            "key": "Sound",
+                            "name": "Sound",
+                            "hide": false,
+                            "reset": false,
+                            "type": "checkbox",
+                            "default": true
+                        }, {
+                            "key": "System-tray",
+                            "name": "System-tray",
+                            "hide": false,
+                            "reset": false,
+                            "type": "checkbox",
+                            "default": true
+                        }, {
+                            "key": "SystemInfo",
+                            "name": "System Info",
+                            "hide": false,
+                            "reset": false,
+                            "type": "checkbox",
+                            "default": true
+                        }, {
+                            "key": "Time",
+                            "name": "Time",
+                            "hide": false,
+                            "reset": false,
+                            "type": "checkbox",
+                            "default": true
+                        }
+
+                    ]
+                }
+            ]
+        }
+    ]
+}

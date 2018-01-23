@@ -31,7 +31,7 @@ SearchModule::SearchModule(QObject *parent)
 
 const QString SearchModule::pluginName() const
 {
-    return QString("search");
+    return QString("Search");
 }
 
 void SearchModule::init(PluginProxyInterface *proxyInter)

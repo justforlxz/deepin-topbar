@@ -11,6 +11,7 @@ int main(int argc, char *argv[])
 
     if (a.setSingleInstance("deepin-topbar")) {
         a.setApplicationName("deepin-topbar");
+        a.setOrganizationName("deepin");
 
         QTranslator translator;
         translator.load("/usr/share/deepin-topbar/translations/deepin-topbar_" + QLocale::system().name());

@@ -12,7 +12,7 @@ IndicatorPlugin::IndicatorPlugin(QObject *parent)
 
 const QString IndicatorPlugin::pluginName() const
 {
-    return QString("indicator");
+    return QString("Indicator");
 }
 
 void IndicatorPlugin::init(PluginProxyInterface *proxyInter)

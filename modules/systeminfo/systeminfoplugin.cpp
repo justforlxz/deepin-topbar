@@ -15,7 +15,7 @@ SystemInfoPlugin::SystemInfoPlugin()
 
 const QString SystemInfoPlugin::pluginName() const
 {
-    return "systeminfo";
+    return "SystemInfo";
 }
 
 void SystemInfoPlugin::init(PluginProxyInterface *proxyInter)

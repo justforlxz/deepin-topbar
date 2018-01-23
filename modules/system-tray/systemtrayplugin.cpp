@@ -28,7 +28,7 @@ SystemTrayPlugin::SystemTrayPlugin(QObject *parent)
 
 const QString SystemTrayPlugin::pluginName() const
 {
-    return "system-tray";
+    return "System-tray";
 }
 
 void SystemTrayPlugin::init(PluginProxyInterface *proxyInter)

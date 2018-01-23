@@ -24,7 +24,8 @@ HEADERS  += \
     $$PWD/utils/event_monitor.h \
     item/contentmodule.h \
     utils/global.h \
-    settingswindow.h
+    settings.h \
+    settingsdialog.h
 
 SOURCES += \
     $$PWD/main.cpp\
@@ -37,7 +38,8 @@ SOURCES += \
     $$PWD/utils/event_monitor.cpp \
     item/contentmodule.cpp \
     utils/global.cpp \
-    settingswindow.cpp
+    settings.cpp \
+    settingsdialog.cpp
 
 headers.files += ../interfaces/pluginsiteminterface.h \
                  ../interfaces/pluginproxyinterface.h
@@ -45,3 +47,6 @@ headers.path = $${PREFIX}/include/deepin-topbar
 
 target.path = $${PREFIX}/bin/
 INSTALLS += target headers
+
+RESOURCES += \
+    deepin-topbar.qrc

@@ -9,6 +9,8 @@
 #include <QGSettings>
 
 namespace dtb {
+class Settings;
+
 class MainPanel : public QWidget, public PluginProxyInterface
 {
     Q_OBJECT
@@ -40,6 +42,7 @@ private:
     bool m_isLight;
     DefaultColor m_defaultColor;
     QStringList m_blackList;
+    Settings *m_settings;
 };
 }
 

@@ -17,7 +17,7 @@ DateTimePlugin::~DateTimePlugin() {
 }
 
 const QString DateTimePlugin::pluginName() const {
-    return QString("datetime");
+    return QString("Time");
 }
 
 void DateTimePlugin::init(PluginProxyInterface *proxyInter) {

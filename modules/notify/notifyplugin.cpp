@@ -13,7 +13,7 @@ NotifyPlugin::NotifyPlugin()
 
 const QString NotifyPlugin::pluginName() const
 {
-    return "notify";
+    return "Notify";
 }
 
 void NotifyPlugin::init(PluginProxyInterface *proxyInter)
