@@ -38,6 +38,7 @@ void MainFrame::init()
     m_blurEffectWidget = new DBlurEffectWidget(this);
     m_blurEffectWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
     m_blurEffectWidget->setWindowFlags(Qt::WindowDoesNotAcceptFocus);
+    m_blurEffectWidget->setMaskColor(DBlurEffectWidget::LightColor);
 
     m_handle = new DPlatformWindowHandle(this);
     m_handle->setBorderWidth(0);
