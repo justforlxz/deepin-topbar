@@ -22,8 +22,6 @@ public:
     void init(PluginProxyInterface *proxyInter);
 
     QWidget *itemWidget(const QString &itemKey);
-    QWidget *itemTipsWidget(const QString &itemKey);
-    QWidget *itemPopupApplet(const QString &itemKey);
 
     bool itemAllowContainer(const QString &itemKey);
     bool itemIsInContainer(const QString &itemKey);

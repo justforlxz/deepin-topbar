@@ -13,17 +13,9 @@ SystemTrayPlugin::SystemTrayPlugin(QObject *parent)
     : QObject(parent),
       m_trayInter(new DBusTrayManager(this)),
       m_trayApplet(new TrayApplet),
-      m_tipsLabel(new QLabel),
-
       m_containerSettings(new QSettings("deepin", "dde-dock-tray"))
 {
     m_trayApplet->setObjectName("sys-tray");
-
-    m_tipsLabel->setObjectName("sys-tray");
-    m_tipsLabel->setText(tr("System Tray"));
-    m_tipsLabel->setVisible(false);
-    m_tipsLabel->setStyleSheet("color:white;"
-                               "padding: 0 3px;");
 }
 
 const QString SystemTrayPlugin::pluginName() const
@@ -50,20 +42,6 @@ QWidget *SystemTrayPlugin::itemWidget(const QString &itemKey)
     Q_UNUSED(itemKey);
 
     return m_trayApplet;
-}
-
-QWidget *SystemTrayPlugin::itemTipsWidget(const QString &itemKey)
-{
-    Q_UNUSED(itemKey);
-
-    return m_tipsLabel;
-}
-
-QWidget *SystemTrayPlugin::itemPopupApplet(const QString &itemKey)
-{
-    Q_UNUSED(itemKey);
-
-    return nullptr;
 }
 
 bool SystemTrayPlugin::itemAllowContainer(const QString &itemKey)
