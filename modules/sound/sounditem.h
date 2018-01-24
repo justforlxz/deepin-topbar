@@ -54,6 +54,7 @@ private:
     MediaControl *m_mediaControl;
     QString m_lastPath;
     QStringList m_mprisPaths;
+    widgets::DWidgetAction *m_appletAction;
     SoundApplet *m_applet;
     DBusSink *m_sinkInter;
     QMenu *m_menu;

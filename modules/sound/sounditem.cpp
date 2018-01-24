@@ -47,6 +47,8 @@ SoundItem::SoundItem(QWidget *parent)
 
     refershIcon();
 
+    m_appletAction = new DWidgetAction(m_applet);
+
     initMpris();
 
     // new actions
@@ -56,9 +58,7 @@ SoundItem::SoundItem(QWidget *parent)
     m_separator = new QAction(this);
     m_separator->setSeparator(true);
 
-    DWidgetAction *applet = new DWidgetAction(m_applet);
-
-    m_menu->addAction(applet);
+    m_menu->addAction(m_appletAction);
 
     m_menu->addSeparator();
 
@@ -193,7 +193,7 @@ void SoundItem::loadMPRISPath(const QString &path) {
         m_mediaControl = new MediaControl;
     }
 
-    m_menu->addAction(m_mediaControl);
+    m_menu->insertAction(m_appletAction, m_mediaControl);
 
     connect(m_mediaControl, &MediaControl::requestLast, m_mprisInter, &DBusMediaPlayer2::Next, Qt::UniqueConnection);
     connect(m_mediaControl, &MediaControl::requestPrevious, m_mprisInter, &DBusMediaPlayer2::Previous, Qt::UniqueConnection);
