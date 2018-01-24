@@ -8,7 +8,6 @@
 #include <xcb/xcb.h>
 #include <xcb/xcb_ewmh.h>
 #include <QtX11Extras/QX11Info>
-#include <QGSettings>
 
 DWIDGET_USE_NAMESPACE
 
@@ -21,10 +20,6 @@ MainFrame::MainFrame(QWidget *parent): QFrame(parent)
     initAnimation();
     initConnect();
     screenChanged();
-
-    m_gsettings = new QGSettings("com.deepin.dde.topbar", "/com/deepin/dde/topbar/", this);
-    connect(m_gsettings, &QGSettings::changed, this, &MainFrame::setTheme);
-    setTheme("lightTheme");
 }
 
 MainFrame::~MainFrame()
@@ -68,11 +63,11 @@ void MainFrame::initAnimation()
 
 void MainFrame::setTheme(const QString &key)
 {
-    if (key == "lightTheme") {
-        const bool isLight = m_gsettings->get("light-theme").toBool();
-        m_blurEffectWidget->setMaskColor(isLight ? DBlurEffectWidget::LightColor : DBlurEffectWidget::DarkColor);
-        m_mainPanel->setDefaultColor(isLight ? dtb::MainPanel::Light : dtb::MainPanel::Dark);
-    }
+//    if (key == "lightTheme") {
+//        const bool isLight = m_gsettings->get("light-theme").toBool();
+//        m_blurEffectWidget->setMaskColor(isLight ? DBlurEffectWidget::LightColor : DBlurEffectWidget::DarkColor);
+//        m_mainPanel->setDefaultColor(isLight ? dtb::MainPanel::Light : dtb::MainPanel::Dark);
+//    }
 }
 
 void MainFrame::showSetting()

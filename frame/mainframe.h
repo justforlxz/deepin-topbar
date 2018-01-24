@@ -38,7 +38,6 @@ private:
     dtb::MainPanel *m_mainPanel;
     DBlurEffectWidget *m_blurEffectWidget;
     DPlatformWindowHandle *m_handle;
-    QGSettings *m_gsettings;
     QPropertyAnimation *m_launchAni;
 };
 

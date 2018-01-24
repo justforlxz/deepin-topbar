@@ -9,10 +9,18 @@ TARGET = deepin-topbar
 TEMPLATE = app
 CONFIG         += c++11 link_pkgconfig
 DESTDIR         = $$_PRO_FILE_PWD_/../
-PKGCONFIG += xcb-ewmh dtkcore dtkwidget \
-             dframeworkdbus x11 xcb-util \
-             xtst xext gsettings-qt xcb-image \
-             xcb-icccm xcb-composite gsettings-qt
+PKGCONFIG += xcb-ewmh \
+             dtkcore \
+             dtkwidget \
+             dframeworkdbus \
+             gsettings-qt \
+             x11 \
+             xcb-util \
+             xtst \
+             xext \
+             xcb-image \
+             xcb-icccm \
+             xcb-composite
 
 HEADERS  += \
     $$PWD/mainframe.h \
