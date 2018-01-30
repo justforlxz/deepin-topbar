@@ -11,6 +11,7 @@ WirelessItem::WirelessItem(const QString &path)
     : DeviceItem(path)
     , m_wirelessLbl(new FontLabel)
     , m_isConnected(false)
+    , m_activeAP(AccessPoint())
 {
     QMetaObject::invokeMethod(this, "init", Qt::QueuedConnection);
 }
@@ -298,21 +299,24 @@ void WirelessItem::updateAPList()
             apw->setActiveState(NetworkDevice::Disconnected);
         }
 
-        AccessPointWidget *apw = m_apwLists[m_apList.indexOf(m_activeAP)];
-        apw->setActiveState(m_device.state());
+        if (m_activeAP.strength()) {
+            AccessPointWidget *apw = m_apwLists[m_apList.indexOf(m_activeAP)];
+            apw->setActiveState(m_device.state());
 
-        const int i = m_activeAP.strength();
+            const int i = m_activeAP.strength();
 
-        if (i <= 20)
-            m_wirelessLbl->setIcon(QChar(0xE904), FONTSIZE);
-        else if (i <= 40)
-            m_wirelessLbl->setIcon(QChar(0xE905), FONTSIZE);
-        else if (i <= 60)
-            m_wirelessLbl->setIcon(QChar(0xE906), FONTSIZE);
-        else if (i <= 80)
-            m_wirelessLbl->setIcon(QChar(0xE907), FONTSIZE);
-        else
-            m_wirelessLbl->setIcon(QChar(0xE908), FONTSIZE);
+            if (i <= 20)
+                m_wirelessLbl->setIcon(QChar(0xE904), FONTSIZE);
+            else if (i <= 40)
+                m_wirelessLbl->setIcon(QChar(0xE905), FONTSIZE);
+            else if (i <= 60)
+                m_wirelessLbl->setIcon(QChar(0xE906), FONTSIZE);
+            else if (i <= 80)
+                m_wirelessLbl->setIcon(QChar(0xE907), FONTSIZE);
+            else
+                m_wirelessLbl->setIcon(QChar(0xE908), FONTSIZE);
+
+        }
 
         m_menu->addAction(m_separator);
         m_menu->addAction(m_joinOther);
