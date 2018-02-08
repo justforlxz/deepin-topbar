@@ -20,10 +20,10 @@
 #define NOTIFYMODEL_H
 
 #include <QAbstractListModel>
-#include <org_freedesktop_notifications.h>
+#include <com_deepin_dde_notification.h>
 #include <QDir>
 
-using org::freedesktop::Notifications;
+using Notification = com::deepin::dde::Notification;
 
 static const QStringList Directory = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
 static const QString CacheFolder = Directory.first() + "/.cache/deepin/deepin-notifications/";
@@ -71,7 +71,7 @@ private:
     QString checkDate(const QString &value);
 
 private:
-    Notifications* m_notifyDBus;
+    Notification* m_notifyDBus;
     QJsonArray m_dataJsonArray;
     int m_checkIndex;
     QList<NotifyItem*> m_itemList;

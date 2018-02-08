@@ -4,7 +4,6 @@
 #include <QFrame>
 #include <QLabel>
 #include <dimagebutton.h>
-#include <QWidgetAction>
 
 DWIDGET_USE_NAMESPACE
 
@@ -14,7 +13,7 @@ class FontLabel;
 }
 
 namespace sound {
-class MediaControl : public QWidgetAction
+class MediaControl : public QFrame
 {
     Q_OBJECT
 public:
@@ -46,7 +45,6 @@ private:
     widgets::FontLabel *m_previousBtn;
     widgets::FontLabel *m_pauseBtn;
     PlayState m_playState;
-    QWidget *m_content;
 };
 }
 }

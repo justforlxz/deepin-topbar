@@ -27,7 +27,7 @@ SoundItem::SoundItem(QWidget *parent)
     , m_mprisTitle(new QLabel)
     , m_fontLabel(new FontLabel)
     , m_mprisInter(nullptr)
-    , m_mediaControl(nullptr)
+    , m_mediaControl(new MediaControl)
     , m_applet(new SoundApplet(this))
     , m_sinkInter(nullptr)
     , m_menu(new QMenu)
@@ -37,19 +37,19 @@ SoundItem::SoundItem(QWidget *parent)
     layout->setSpacing(3);
     layout->setContentsMargins(3, 0, 3, 0);
     layout->addWidget(m_mprisTitle, 0, Qt::AlignCenter);
+    layout->addWidget(m_mediaControl, 0, Qt::AlignCenter);
     layout->addWidget(m_fontLabel, 0, Qt::AlignCenter);
 
     setLayout(layout);
 
     m_mprisTitle->setVisible(false);
+    m_mediaControl->setVisible(false);
 
     connect(m_applet, static_cast<void (SoundApplet::*)(DBusSink*) const>(&SoundApplet::defaultSinkChanged), this, &SoundItem::sinkChanged);
 
     refershIcon();
 
     m_appletAction = new DWidgetAction(m_applet);
-
-    initMpris();
 
     // new actions
 
@@ -74,6 +74,8 @@ SoundItem::SoundItem(QWidget *parent)
 
     connect(m_applet, &SoundApplet::addNew, this, &SoundItem::addNewInput);
     connect(m_applet, &SoundApplet::removeAll, this, &SoundItem::clearAllInput);
+
+    initMpris();
 }
 
 QMenu* SoundItem::menu() const
@@ -164,12 +166,13 @@ void SoundItem::initMpris() {
         onNameOwnerChanged(name, QString(), name);
 }
 
-
 void SoundItem::onNameOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner) {
     Q_UNUSED(oldOwner);
 
     if (!name.startsWith("org.mpris.MediaPlayer2."))
         return;
+
+    qDebug() << name << oldOwner << newOwner;
 
     if (newOwner.isEmpty())
         removeMPRISPath(name);
@@ -189,11 +192,7 @@ void SoundItem::loadMPRISPath(const QString &path) {
 
     m_mprisInter = new DBusMPRIS(path, "/org/mpris/MediaPlayer2", QDBusConnection::sessionBus(), this);
 
-    if (!m_mediaControl) {
-        m_mediaControl = new MediaControl;
-    }
-
-    m_menu->insertAction(m_appletAction, m_mediaControl);
+    m_mediaControl->setVisible(true);
 
     connect(m_mediaControl, &MediaControl::requestLast, m_mprisInter, &DBusMediaPlayer2::Next, Qt::UniqueConnection);
     connect(m_mediaControl, &MediaControl::requestPrevious, m_mprisInter, &DBusMediaPlayer2::Previous, Qt::UniqueConnection);
@@ -236,6 +235,8 @@ void SoundItem::removeMPRISPath(const QString &path) {
 
     m_mprisInter->deleteLater();
     m_mprisInter = nullptr;
+
+    m_mediaControl->setVisible(false);
 
     m_mprisTitle->setVisible(false);
 }

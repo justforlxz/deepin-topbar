@@ -26,13 +26,13 @@ using namespace dtb::notify;
 
 NotifyModel::NotifyModel(QObject *parent) : QAbstractListModel(parent)
 {
-    m_notifyDBus = new Notifications("org.freedesktop.Notifications",
-                                     "/org/freedesktop/Notifications",
+    m_notifyDBus = new Notification("com.deepin.dde.Notification",
+                                     "/com/deepin/dde/Notification",
                                      QDBusConnection::sessionBus(), this);
 
     m_notifyDBus->setSync(false);
 
-    connect(m_notifyDBus, &Notifications::RecordAdded, this, &NotifyModel::onNotifyAdded);
+    connect(m_notifyDBus, &Notification::RecordAdded, this, &NotifyModel::onNotifyAdded);
 
     QDBusPendingCallWatcher *notifyWatcher = new QDBusPendingCallWatcher(m_notifyDBus->GetAllRecords(), this);
     connect(notifyWatcher, &QDBusPendingCallWatcher::finished, this, &NotifyModel::onNotifyGetAllFinished);

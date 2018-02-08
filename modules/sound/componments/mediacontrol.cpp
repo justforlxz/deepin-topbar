@@ -10,8 +10,7 @@ using namespace dtb::sound;
 using namespace dtb::widgets;
 
 MediaControl::MediaControl(QWidget *parent)
-    : QWidgetAction(parent)
-    , m_content(new QWidget)
+    : QFrame(parent)
 {
     m_lastBtn = new FontLabel;
     m_lastBtn->setIcon(QChar(0xE893), 18);
@@ -32,14 +31,9 @@ MediaControl::MediaControl(QWidget *parent)
     layout->addWidget(m_pauseBtn, 0, Qt::AlignCenter | Qt::AlignVCenter);
     layout->addWidget(m_lastBtn, 0, Qt::AlignRight | Qt::AlignVCenter);
 
-    m_content->setLayout(layout);
-}
+    setPlayState(Pause);
 
-QWidget *MediaControl::createWidget(QWidget *parent)
-{
-    m_content->setParent(parent);
-
-    return m_content;
+    setLayout(layout);
 }
 
 void MediaControl::setPlayState(MediaControl::PlayState state) {

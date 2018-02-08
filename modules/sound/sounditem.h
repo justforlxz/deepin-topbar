@@ -51,7 +51,7 @@ private:
     widgets::FontLabel *m_fontLabel;
     DBusMediaPlayer2 *m_mprisInter;
     DBusInterface *m_dbusInter;
-    MediaControl *m_mediaControl;
+    QPointer<MediaControl> m_mediaControl;
     QString m_lastPath;
     QStringList m_mprisPaths;
     widgets::DWidgetAction *m_appletAction;
