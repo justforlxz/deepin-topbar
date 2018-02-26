@@ -82,7 +82,7 @@ void MainFrame::screenChanged()
     resize(screen.width(), TOPHEIGHT);
     m_mainPanel->resize(screen.width(), TOPHEIGHT);
     m_blurEffectWidget->resize(screen.width(), TOPHEIGHT);
-    move(screen.x(), -TOPHEIGHT);
+    move(screen.x(), screen.y() - TOPHEIGHT);
     m_mainPanel->move(0, 0);
     m_blurEffectWidget->move(0, 0);
 
@@ -106,13 +106,13 @@ void MainFrame::screenChanged()
     memset(&strut_partial, 0, sizeof(xcb_ewmh_wm_strut_partial_t));
 
     strut_partial.top = TOPHEIGHT * devicePixelRatioF();
-    strut_partial.top_start_x = x();
-    strut_partial.top_end_x = x() + width() - 1;
+    strut_partial.top_start_x = screen.x();
+    strut_partial.top_end_x = screen.x() + width() - 1;
 
     xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, winId(), strut_partial);
 
-    m_launchAni->setStartValue(QPoint(screen.x(), -TOPHEIGHT));
-    m_launchAni->setEndValue(QPoint(screen.x(), 0));
+    m_launchAni->setStartValue(QPoint(screen.x(), screen.y() - TOPHEIGHT));
+    m_launchAni->setEndValue(QPoint(screen.x(), screen.y()));
 
     QTimer::singleShot(400, this, [=] {
         m_launchAni->start();
