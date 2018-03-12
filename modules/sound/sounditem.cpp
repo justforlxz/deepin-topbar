@@ -27,7 +27,7 @@ SoundItem::SoundItem(QWidget *parent)
     , m_mprisTitle(new QLabel)
     , m_fontLabel(new FontLabel)
     , m_mprisInter(nullptr)
-    , m_mediaControl(new MediaControl)
+//    , m_mediaControl(new MediaControl)
     , m_applet(new SoundApplet(this))
     , m_sinkInter(nullptr)
     , m_menu(new QMenu)
@@ -37,13 +37,13 @@ SoundItem::SoundItem(QWidget *parent)
     layout->setSpacing(3);
     layout->setContentsMargins(3, 0, 3, 0);
     layout->addWidget(m_mprisTitle, 0, Qt::AlignCenter);
-    layout->addWidget(m_mediaControl, 0, Qt::AlignCenter);
+//    layout->addWidget(m_mediaControl, 0, Qt::AlignCenter);
     layout->addWidget(m_fontLabel, 0, Qt::AlignCenter);
 
     setLayout(layout);
 
     m_mprisTitle->setVisible(false);
-    m_mediaControl->setVisible(false);
+//    m_mediaControl->setVisible(false);
 
     connect(m_applet, static_cast<void (SoundApplet::*)(DBusSink*) const>(&SoundApplet::defaultSinkChanged), this, &SoundItem::sinkChanged);
 
@@ -192,25 +192,25 @@ void SoundItem::loadMPRISPath(const QString &path) {
 
     m_mprisInter = new DBusMPRIS(path, "/org/mpris/MediaPlayer2", QDBusConnection::sessionBus(), this);
 
-    m_mediaControl->setVisible(true);
+//    m_mediaControl->setVisible(true);
 
-    connect(m_mediaControl, &MediaControl::requestLast, m_mprisInter, &DBusMediaPlayer2::Next, Qt::UniqueConnection);
-    connect(m_mediaControl, &MediaControl::requestPrevious, m_mprisInter, &DBusMediaPlayer2::Previous, Qt::UniqueConnection);
-    connect(m_mediaControl, &MediaControl::requestPause, m_mprisInter, &DBusMediaPlayer2::PlayPause, Qt::UniqueConnection);
+//    connect(m_mediaControl, &MediaControl::requestLast, m_mprisInter, &DBusMediaPlayer2::Next, Qt::UniqueConnection);
+//    connect(m_mediaControl, &MediaControl::requestPrevious, m_mprisInter, &DBusMediaPlayer2::Previous, Qt::UniqueConnection);
+//    connect(m_mediaControl, &MediaControl::requestPause, m_mprisInter, &DBusMediaPlayer2::PlayPause, Qt::UniqueConnection);
 
     connect(m_mprisInter, &DBusMediaPlayer2::MetadataChanged, this, [=]{
         m_mprisTitle->setText(m_mprisInter->metadata().value("xesam:title").toString() + " ");
     });
 
     connect(m_mprisInter, &DBusMediaPlayer2::PlaybackStatusChanged, this, [=]{
-        if (m_mprisInter->playbackStatus() == "Playing") {
-            m_mediaControl->setPlayState(MediaControl::Play);
-        }
-        if (m_mprisInter->playbackStatus() == "Stopped") {
-            m_mediaControl->setPlayState(MediaControl::Stop);
-        }
-        if (m_mprisInter->playbackStatus() == "Paused")
-            m_mediaControl->setPlayState(MediaControl::Pause);
+//        if (m_mprisInter->playbackStatus() == "Playing") {
+//            m_mediaControl->setPlayState(MediaControl::Play);
+//        }
+//        if (m_mprisInter->playbackStatus() == "Stopped") {
+//            m_mediaControl->setPlayState(MediaControl::Stop);
+//        }
+//        if (m_mprisInter->playbackStatus() == "Paused")
+//            m_mediaControl->setPlayState(MediaControl::Pause);
 
         m_mprisInter->MetadataChanged();
     });
@@ -236,7 +236,7 @@ void SoundItem::removeMPRISPath(const QString &path) {
     m_mprisInter->deleteLater();
     m_mprisInter = nullptr;
 
-    m_mediaControl->setVisible(false);
+//    m_mediaControl->setVisible(false);
 
     m_mprisTitle->setVisible(false);
 }
