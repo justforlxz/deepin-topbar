@@ -14,7 +14,7 @@ I'll release messages on my twitter and google plus.
 
 ### Build dependencies
 
-* qmake (>= 5.3)
+* Qt5 (>= 5.6)
 * [deepin-tool-kit](https://github.com/linuxdeepin/deepin-tool-kit) (developer package)
 * [dde-qt-dbus-factory](https://github.com/linuxdeepin/dde-qt-dbus-factory)
 (developer package)
