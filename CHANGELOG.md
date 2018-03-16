@@ -1,4 +1,35 @@
 <a name=""></a>
+##  0.4.0 (2018-03-16)
+
+
+#### Bug Fixes
+
+*   pos error when many screen ([7432bea8](https://github.com/kirigayakazushin/deepin-topbar/commit/7432bea8d4202091c077fe8e9d9fd40bbc5645f7))
+* **frame:**
+  *  not play animation when screen changed ([ffe1c837](https://github.com/kirigayakazushin/deepin-topbar/commit/ffe1c83724a4d2e87f860f641e0f43c0253ae534))
+  *  strut error ([b11b6f19](https://github.com/kirigayakazushin/deepin-topbar/commit/b11b6f1954c5dc0a4f78faf760caa603f3c762cb))
+* **network:**
+  *  crash ([15b767ce](https://github.com/kirigayakazushin/deepin-topbar/commit/15b767ce8a8427175cc9279a38dd0850d35d240d))
+  *  A breakdown caused by an error access list ([b017b214](https://github.com/kirigayakazushin/deepin-topbar/commit/b017b2143c97250b8c87a726dec7d198fc1132ff))
+* **search:**  albert not run ([ba517b48](https://github.com/kirigayakazushin/deepin-topbar/commit/ba517b4888218ada1dec6981edf6e545dbbbeaa9))
+
+#### Features
+
+*   add settings dialog ([f6e27466](https://github.com/kirigayakazushin/deepin-topbar/commit/f6e274668aa38fa4c2ceb8847d20fcbdd162332c))
+*   - add switch button - use reload ([3c0b1e87](https://github.com/kirigayakazushin/deepin-topbar/commit/3c0b1e87cb260fb6169ef1a310495eb75abe04c2))
+*   add load blacklist ([687c7e52](https://github.com/kirigayakazushin/deepin-topbar/commit/687c7e5221a5d2cfa7e08ebb3bdded55de5debcb))
+*   support reload modules ([64960883](https://github.com/kirigayakazushin/deepin-topbar/commit/649608836d2e8bb7a2d6f1089dcd11e75e1e8d84))
+*   add settings window ([6e9a39dd](https://github.com/kirigayakazushin/deepin-topbar/commit/6e9a39dd53f40b795b8e167142f934274b872a90))
+*   Support authorization operation ([959a3d4c](https://github.com/kirigayakazushin/deepin-topbar/commit/959a3d4c02d8ec98823f2e5aa5881239835abcf5))
+* **frame:**  add startup animation ([68cbc79f](https://github.com/kirigayakazushin/deepin-topbar/commit/68cbc79f9167032b2231075e44e5969998932b72))
+* **indicator:**
+  *  add position widget ([2bf35173](https://github.com/kirigayakazushin/deepin-topbar/commit/2bf35173bd527337aefafac797249b50bee1d545))
+  *  add position menu ([4bcc350e](https://github.com/kirigayakazushin/deepin-topbar/commit/4bcc350ec06eb018e239f41ab74e3daac3b2eb54))
+* **network:**  add refresh tip action ([5c790e52](https://github.com/kirigayakazushin/deepin-topbar/commit/5c790e52403ad4781e136fa5ba0feb08c9d6c4e9))
+
+
+
+<a name=""></a>
 ##  0.3.5 (2017-11-22)
 
 
