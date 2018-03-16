@@ -11,14 +11,14 @@
                         {
                             "key": "Indicator",
                             "name": "Indicator",
-                            "hide": false,
+                            "hide": true,
                             "reset": false,
                             "type": "checkbox",
                             "default": true
                         }, {
                             "key": "Network",
                             "name": "Network",
-                            "hide": false,
+                            "hide": true,
                             "reset": false,
                             "type": "checkbox",
                             "default": true

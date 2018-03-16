@@ -142,7 +142,9 @@ void MainPanel::loadModules()
 
     loadModule(new power::PowerPlugin);
 
+#ifdef QT_DEBUG
     loadModule(new network::NetworkPlugin);
+#endif
 
     loadModule(new datetime::DateTimePlugin);
 
