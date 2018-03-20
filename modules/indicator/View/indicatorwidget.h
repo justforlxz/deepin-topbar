@@ -20,6 +20,9 @@ public:
     ~IndicatorWidget();
     void initUI();
 
+signals:
+    void requestBackgroundChanged(const QColor &color);
+
 public slots:
     void forceQuit();
 

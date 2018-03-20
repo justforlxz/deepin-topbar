@@ -33,6 +33,9 @@ void IndicatorPlugin::init(PluginProxyInterface *proxyInter)
     m_worker->moveToThread(qApp->thread());
 
     connect(m_logo, &SystemLogo::requestForceQuit, m_centralWidget, &IndicatorWidget::forceQuit);
+    connect(m_centralWidget, &IndicatorWidget::requestBackgroundChanged, this, [=] (const QColor &color){
+        proxyInter->setBackground(color);
+    });
 
     m_proxyInter->addItem(this, "Logo");
     m_proxyInter->addItem(this, "Indicator");

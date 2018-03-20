@@ -18,6 +18,7 @@ namespace power {
 PowerWidget::PowerWidget(QWidget *parent)
     : ContentModule(parent)
 {
+    setStyleSheet("QLabel {color: #d3d3d3;}");
     m_powerActionWidget = new PowerWidgetAction;
 
     m_batteryIcon = new FontLabel;

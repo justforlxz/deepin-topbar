@@ -23,7 +23,10 @@ const QString DateTimePlugin::pluginName() const {
 void DateTimePlugin::init(PluginProxyInterface *proxyInter) {
     m_proxyInter = proxyInter;
 
-    m_proxyInter->addItem(this, "");
+    m_proxyInter->addItem(this, pluginName());
+    QTimer::singleShot(1, this, [=] {
+        m_proxyInter->moveToCenter(this, pluginName());
+    });
 
     const QJsonObject obj = m_proxyInter->loadConfig(pluginName());
 

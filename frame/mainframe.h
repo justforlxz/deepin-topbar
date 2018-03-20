@@ -31,7 +31,6 @@ private:
     void init();
     void initConnect();
     void initAnimation();
-    void setTheme(const QString &key);
 
 private:
     QDesktopWidget *m_desktopWidget;
@@ -39,6 +38,8 @@ private:
     DBlurEffectWidget *m_blurEffectWidget;
     DPlatformWindowHandle *m_handle;
     QPropertyAnimation *m_launchAni;
+    QPropertyAnimation *m_hideWithLauncher;
+    QPropertyAnimation *m_showWithLauncher;
 };
 
 #endif // MAINFRAME_H

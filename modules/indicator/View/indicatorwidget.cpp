@@ -45,6 +45,7 @@ IndicatorWidget::~IndicatorWidget()
 void IndicatorWidget::initUI()
 {
     setObjectName("Indiactor");
+    setStyleSheet("QLabel {color: #d3d3d3;}");
 
     setWindowFlags(Qt::WindowDoesNotAcceptFocus);
     setAttribute(Qt::WA_TranslucentBackground);
@@ -112,6 +113,7 @@ void IndicatorWidget::refreshActiveWindow()
         if (entry->active()) {
             m_entry->setText(entry->name());
             m_entry->setVisible(true);
+//            emit requestBackgroundChanged(QColor(0, 0, 0, 255));
             return;
         }
     }

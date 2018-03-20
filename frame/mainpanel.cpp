@@ -27,6 +27,8 @@ using namespace dtb;
 MainPanel::MainPanel(QWidget *parent)
     : QWidget(parent)
     , m_settings(&Settings::InStance())
+    , m_backgroundAni(new QVariantAnimation(this))
+    , m_backgroundColor(QColor(0, 0, 0, 0))
 {
     initUI();
     initConnect();
@@ -46,11 +48,15 @@ void MainPanel::initUI()
     m_mainLayout->setContentsMargins(5, 0, 5, 1);
 
     setLayout(m_mainLayout);
+
+    m_backgroundAni->setDuration(500);
 }
 
 void MainPanel::initConnect()
 {
-
+    connect(m_backgroundAni, &QVariantAnimation::valueChanged, this, [=] (const QVariant &value){
+        onBackgroundChanged(value.value<QColor>());
+    });
 }
 
 void MainPanel::addItem(PluginsItemInterface * const module, const QString &itemKey)
@@ -190,16 +196,20 @@ void MainPanel::reload()
     loadModules();
 }
 
+void MainPanel::onBackgroundChanged(const QColor &color)
+{
+    m_backgroundColor = color;
+
+    update();
+}
+
 void MainPanel::paintEvent(QPaintEvent *event)
 {
     QWidget::paintEvent(event);
 
     QPainter painter(this);
-    QPen pen(painter.pen());
-    pen.setBrush(QColor(0, 0, 0, .7 * 255));
-    pen.setWidth(2);
-    painter.setPen(pen);
-    painter.drawLine(QPoint(0, TOPHEIGHT), QPoint(width(), TOPHEIGHT));
+
+    painter.fillRect(rect(), m_backgroundColor);
 }
 
 void MainPanel::setDefaultColor(const DefaultColor &defaultColor)
@@ -210,6 +220,27 @@ void MainPanel::setDefaultColor(const DefaultColor &defaultColor)
         inter->setDefaultColor(m_defaultColor);
 
     update();
+}
+
+void MainPanel::setBackground(const QColor &color)
+{
+    m_backgroundAni->stop();
+
+    m_backgroundAni->setStartValue(m_backgroundColor);
+    m_backgroundAni->setEndValue(color);
+
+    m_backgroundAni->start();
+}
+
+void MainPanel::moveToCenter(PluginsItemInterface * const module, const QString &itemKey)
+{
+    QWidget *w = m_moduleMap[module][itemKey];
+
+    Q_ASSERT(w);
+
+    m_mainLayout->removeWidget(w);
+    w->raise();
+    w->move(rect().center() - w->rect().center());
 }
 
 void MainPanel::showSettingDialog()

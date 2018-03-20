@@ -1,5 +1,5 @@
 #Entry QLabel {
     font-size: 13.5pt;
     font-weight: 500;
-    color: white;
+    color: #D3D3D3;
 }

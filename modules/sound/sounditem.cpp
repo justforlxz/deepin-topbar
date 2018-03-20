@@ -32,6 +32,7 @@ SoundItem::SoundItem(QWidget *parent)
     , m_sinkInter(nullptr)
     , m_menu(new QMenu)
 {
+    setStyleSheet("QLabel {color: #d3d3d3;}");
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(3);

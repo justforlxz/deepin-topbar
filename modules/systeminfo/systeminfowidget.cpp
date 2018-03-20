@@ -14,6 +14,7 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent)
     : ContentModule(parent)
 {
     setObjectName("SystemInfoWidget");
+    setStyleSheet("QLabel {color: #d3d3d3;}");
 
     m_tx = new QLabel;
     m_tx->setFixedHeight(12);

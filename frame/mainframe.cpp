@@ -8,18 +8,81 @@
 #include <xcb/xcb.h>
 #include <xcb/xcb_ewmh.h>
 #include <QtX11Extras/QX11Info>
+#include <DPlatformWindowHandle>
+#include <DForeignWindow>
 
 DWIDGET_USE_NAMESPACE
 
+#define DEFINE_CONST_CHAR(Name) const char _##Name[] = "_d_" #Name
+
+// functions
+DEFINE_CONST_CHAR(getWindows);
+DEFINE_CONST_CHAR(connectWindowListChanged);
+
+static bool connectWindowListChanged(QObject *object, std::function<void ()> slot)
+{
+    QFunctionPointer connectWindowListChanged = Q_NULLPTR;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    connectWindowListChanged = qApp->platformFunction(_connectWindowListChanged);
+#endif
+
+    return connectWindowListChanged && reinterpret_cast<bool(*)(QObject *object, std::function<void ()>)>(connectWindowListChanged)(object, slot);
+}
+
 MainFrame::MainFrame(QWidget *parent): QFrame(parent)
 {
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus | Qt::WindowStaysOnBottomHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
     setAttribute(Qt::WA_TranslucentBackground);
 
     init();
     initAnimation();
     initConnect();
     screenChanged();
+
+    connectWindowListChanged(this, [this] {
+        QFunctionPointer wmClientList = Q_NULLPTR;
+
+    #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+        wmClientList = qApp->platformFunction(_getWindows);
+    #endif
+
+        if (wmClientList) {
+            bool isMaxWindow = false;
+            for (WId wid : reinterpret_cast<QVector<quint32>(*)()>(wmClientList)()) {
+                if (DForeignWindow *w = DForeignWindow::fromWinId(wid)) {
+
+                    if (w->windowState() == Qt::WindowMaximized) {
+                        isMaxWindow = true;
+                    }
+
+                    if (w->wmClass() == "dde-launcher") {
+                        if (m_mainPanel->pos() != QPoint(m_mainPanel->x(), -30)) {
+                            m_hideWithLauncher->start();
+                        }
+                        return;
+                    }
+
+                    if (w->windowState() == Qt::WindowFullScreen) {
+                        if (m_mainPanel->pos() != QPoint(m_mainPanel->x(), -30)) {
+                            m_hideWithLauncher->start();
+                        }
+                        return;
+                    }
+                }
+            }
+
+            if (isMaxWindow) {
+                m_mainPanel->setBackground(QColor(0, 0, 0, 255));
+            } else {
+                m_mainPanel->setBackground(QColor(0, 0, 0, 0));
+            }
+        }
+
+        // if launcher hide
+        if (m_mainPanel->pos() == QPoint(m_mainPanel->x(), -30))
+            m_showWithLauncher->start();
+    });
 }
 
 MainFrame::~MainFrame()
@@ -27,7 +90,7 @@ MainFrame::~MainFrame()
     m_desktopWidget->deleteLater();
 }
 
-/*
+    /*
      Think zccrs, Perfect protection against launcher. It won't stop launcher at last.
      */
 
@@ -38,15 +101,21 @@ void MainFrame::init()
     m_blurEffectWidget = new DBlurEffectWidget(this);
     m_blurEffectWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
     m_blurEffectWidget->setWindowFlags(Qt::WindowDoesNotAcceptFocus);
-    m_blurEffectWidget->setMaskColor(DBlurEffectWidget::LightColor);
-
-    m_handle = new DPlatformWindowHandle(this);
-    m_handle->setBorderWidth(0);
-    m_handle->setWindowRadius(0);
-    m_handle->setEnableSystemMove(true);
-    m_handle->setEnableSystemResize(false);
+    m_blurEffectWidget->setMaskColor(DBlurEffectWidget::DarkColor);
 
     m_mainPanel = new dtb::MainPanel(this);
+
+    m_showWithLauncher =new QPropertyAnimation(m_mainPanel, "pos", m_mainPanel);
+    m_showWithLauncher->setDuration(300);
+    m_showWithLauncher->setStartValue(QPoint(m_mainPanel->x(), -m_mainPanel->height()));
+    m_showWithLauncher->setEndValue(QPoint(m_mainPanel->x(), 0));
+    m_showWithLauncher->setEasingCurve(QEasingCurve::InOutCubic);
+
+    m_hideWithLauncher =new QPropertyAnimation(m_mainPanel, "pos", m_mainPanel);
+    m_hideWithLauncher->setDuration(300);
+    m_hideWithLauncher->setStartValue(QPoint(m_mainPanel->x(), 0));
+    m_hideWithLauncher->setEndValue(QPoint(m_mainPanel->x(), -m_mainPanel->height()));
+    m_hideWithLauncher->setEasingCurve(QEasingCurve::InOutCubic);
 }
 
 void MainFrame::initConnect()
@@ -60,15 +129,16 @@ void MainFrame::initAnimation()
     m_launchAni = new QPropertyAnimation(this, "pos", this);
     m_launchAni->setDuration(1000);
     m_launchAni->setEasingCurve(QEasingCurve::OutBounce);
-}
 
-void MainFrame::setTheme(const QString &key)
-{
-//    if (key == "lightTheme") {
-//        const bool isLight = m_gsettings->get("light-theme").toBool();
-//        m_blurEffectWidget->setMaskColor(isLight ? DBlurEffectWidget::LightColor : DBlurEffectWidget::DarkColor);
-//        m_mainPanel->setDefaultColor(isLight ? dtb::MainPanel::Light : dtb::MainPanel::Dark);
-//    }
+    connect(m_showWithLauncher, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
+        m_blurEffectWidget->move(value.toPoint());
+        m_blurEffectWidget->update();
+    });
+
+    connect(m_hideWithLauncher, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
+        m_blurEffectWidget->move(value.toPoint());
+        m_blurEffectWidget->update();
+    });
 }
 
 void MainFrame::showSetting()
@@ -90,9 +160,8 @@ void MainFrame::screenChanged()
     xcb_intern_atom_cookie_t *cookie = xcb_ewmh_init_atoms(QX11Info::connection(), &m_ewmh_connection);
     xcb_ewmh_init_atoms_replies(&m_ewmh_connection, cookie, NULL);
 
-    xcb_atom_t atoms[2];
+    xcb_atom_t atoms[1];
     atoms[0] = m_ewmh_connection._NET_WM_WINDOW_TYPE_DOCK;
-    atoms[1] = m_ewmh_connection._NET_WM_STATE_BELOW;
     xcb_ewmh_set_wm_window_type(&m_ewmh_connection, winId(), 1, atoms);
 
     xcb_ewmh_wm_strut_partial_t strutPartial;

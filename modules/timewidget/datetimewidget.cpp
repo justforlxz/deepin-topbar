@@ -8,6 +8,8 @@ namespace DateTime {
 DateTimeWidget::DateTimeWidget(QWidget *parent)
     : ContentModule(parent)
 {
+    setStyleSheet("QLabel {color: #d3d3d3;}");
+
     m_dateTime = new QDateTime;
     QTimer *timer = new QTimer(this);
     timer->setInterval(1000);

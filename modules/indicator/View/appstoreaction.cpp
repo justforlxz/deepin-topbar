@@ -55,7 +55,7 @@ AppstoreAction::AppstoreAction(QWidget *parent)
 
     setLayout(layout);
 
-    setStyleSheet("QLabel {color: black;}");
+    setStyleSheet("QLabel {color: #d3d3d3;}");
 }
 
 void AppstoreAction::setModel(IndicatorModel *model)
