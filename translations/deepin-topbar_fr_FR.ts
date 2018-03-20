@@ -99,7 +99,7 @@
     <message>
         <location filename="../modules/network/item/wireditem.cpp" line="27"/>
         <source>Open Network Preferences...</source>
-        <translation>ネットワーク設定を開く</translation>
+        <translation>Préférence réseauく</translation>
     </message>
 </context>
 <context>
@@ -107,17 +107,17 @@
     <message>
         <location filename="../modules/network/item/wirelessitem.cpp" line="89"/>
         <source>Join Other Network...</source>
-        <translation>他のネットワークに参加する</translation>
+        <translation>Connecter un nouveau réseau</translation>
     </message>
     <message>
         <location filename="../modules/network/item/wirelessitem.cpp" line="90"/>
         <source>Open Network Preferences...</source>
-        <translation>ネットワーク設定を開く</translation>
+        <translation>Préférences réseau</translation>
     </message>
     <message>
         <location filename="../modules/network/item/wirelessitem.cpp" line="348"/>
         <source>Password required to connect to &lt;font color=&quot;#faca57&quot;&gt;%1&lt;/font&gt;</source>
-        <translation>&lt;font color=&quot;#faca57&quot;&gt;%1&lt;/font&gt;に接続するためのパスワードが必要です </translation>
+        <translation>Mot de passe requis pour &lt;font color=&quot;#faca57&quot;&gt;%1&lt;/font&gt;</translation>
     </message>
 </context>
 <context>
