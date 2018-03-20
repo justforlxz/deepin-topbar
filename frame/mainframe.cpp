@@ -10,6 +10,7 @@
 #include <QtX11Extras/QX11Info>
 #include <DPlatformWindowHandle>
 #include <DForeignWindow>
+#include <QTimer>
 
 DWIDGET_USE_NAMESPACE
 
@@ -40,48 +41,15 @@ MainFrame::MainFrame(QWidget *parent): QFrame(parent)
     initConnect();
     screenChanged();
 
-    connectWindowListChanged(this, [this] {
-        QFunctionPointer wmClientList = Q_NULLPTR;
+    QTimer *timer = new QTimer(this);
+    timer->setInterval(1000);
+    connect(timer, &QTimer::timeout, this, &MainFrame::updateWindowListInfo);
+    timer->start();
 
-    #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-        wmClientList = qApp->platformFunction(_getWindows);
-    #endif
+    m_infoUpdating = false;
 
-        if (wmClientList) {
-            bool isMaxWindow = false;
-            for (WId wid : reinterpret_cast<QVector<quint32>(*)()>(wmClientList)()) {
-                if (DForeignWindow *w = DForeignWindow::fromWinId(wid)) {
-
-                    if (w->windowState() == Qt::WindowMaximized) {
-                        isMaxWindow = true;
-                    }
-
-                    if (w->wmClass() == "dde-launcher") {
-                        if (m_mainPanel->pos() != QPoint(m_mainPanel->x(), -30)) {
-                            m_hideWithLauncher->start();
-                        }
-                        return;
-                    }
-
-                    if (w->windowState() == Qt::WindowFullScreen) {
-                        if (m_mainPanel->pos() != QPoint(m_mainPanel->x(), -30)) {
-                            m_hideWithLauncher->start();
-                        }
-                        return;
-                    }
-                }
-            }
-
-            if (isMaxWindow) {
-                m_mainPanel->setBackground(QColor(0, 0, 0, 255));
-            } else {
-                m_mainPanel->setBackground(QColor(0, 0, 0, 0));
-            }
-        }
-
-        // if launcher hide
-        if (m_mainPanel->pos() == QPoint(m_mainPanel->x(), -30))
-            m_showWithLauncher->start();
+    connectWindowListChanged(this, [=] {
+        onWindowListChanged();
     });
 }
 
@@ -186,4 +154,101 @@ void MainFrame::screenChanged()
     QTimer::singleShot(400, this, [=] {
         m_launchAni->start();
     });
+}
+
+void MainFrame::onWindowListChanged()
+{
+    if (m_infoUpdating) {
+        return;
+    }
+
+    m_infoUpdating = true;
+
+    QFunctionPointer wmClientList = Q_NULLPTR;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    wmClientList = qApp->platformFunction(_getWindows);
+#endif
+
+    if (wmClientList) {
+        QList<WId> newList;
+        // create new DForeignWindow
+        for (WId wid : reinterpret_cast<QVector<quint32>(*)()>(wmClientList)()) {
+            newList << wid;
+            if (!m_windowList.keys().contains(wid)) {
+                DForeignWindow *w = DForeignWindow::fromWinId(wid);
+                if (!w) {
+                    continue;
+                }
+                m_windowList[wid] = w;
+            }
+        }
+        // remove old DForeignWindow
+        for (int i = 0; i != m_windowList.size(); i++) {
+            WId wid = m_windowList.keys()[i];
+            DForeignWindow *w = m_windowList.values()[i];
+            if (!newList.contains(wid)) {
+                w->deleteLater();
+                m_windowList.remove(wid);
+            }
+        }
+
+        m_infoUpdating = false;
+
+        updateWindowListInfo();
+    }
+}
+
+void MainFrame::updateWindowListInfo()
+{
+    if (m_infoUpdating) {
+        return;
+    }
+
+    // update info
+
+    m_infoUpdating= true;
+    bool isMaxWindow = false;
+
+    QMapIterator<WId, DForeignWindow*> map(m_windowList);
+    while (map.hasNext()) {
+        map.next();
+        DForeignWindow *w = map.value();
+        if (w->windowState() == Qt::WindowMaximized ||
+                (w->wmClass() != "dde-desktop" &&
+                 w->wmClass() != "deepin-topbar" &&
+                 w->position().y() <= 50 &&
+                 w->windowState() != Qt::WindowMinimized)) {
+
+            isMaxWindow = true;
+        }
+
+        if (w->wmClass() == "dde-launcher") {
+            if (m_mainPanel->pos() != QPoint(m_mainPanel->x(), -30)) {
+                m_hideWithLauncher->start();
+            }
+            m_infoUpdating = false;
+            return;
+        }
+
+        if (w->windowState() == Qt::WindowFullScreen) {
+            if (m_mainPanel->pos() != QPoint(m_mainPanel->x(), -30)) {
+                m_hideWithLauncher->start();
+            }
+            m_infoUpdating = false;
+            return;
+        }
+    }
+
+    if (isMaxWindow) {
+        m_mainPanel->setBackground(QColor(0, 0, 0, 255));
+    } else {
+        m_mainPanel->setBackground(QColor(0, 0, 0, 0));
+    }
+
+    // if launcher hide
+    if (m_mainPanel->pos() == QPoint(m_mainPanel->x(), -30))
+        m_showWithLauncher->start();
+
+    m_infoUpdating = false;
 }

@@ -9,6 +9,7 @@
 #include <QPropertyAnimation>
 #include <DPlatformWindowHandle>
 #include <QPropertyAnimation>
+#include <DForeignWindow>
 
 #include "mainpanel.h"
 
@@ -26,6 +27,8 @@ public slots:
 
 private slots:
     void screenChanged();
+    void onWindowListChanged();
+    void updateWindowListInfo();
 
 private:
     void init();
@@ -40,6 +43,8 @@ private:
     QPropertyAnimation *m_launchAni;
     QPropertyAnimation *m_hideWithLauncher;
     QPropertyAnimation *m_showWithLauncher;
+    QMap<WId,DForeignWindow*> m_windowList;
+    bool m_infoUpdating;
 };
 
 #endif // MAINFRAME_H
