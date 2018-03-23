@@ -31,11 +31,9 @@ static bool connectWindowListChanged(QObject *object, std::function<void ()> slo
     return connectWindowListChanged && reinterpret_cast<bool(*)(QObject *object, std::function<void ()>)>(connectWindowListChanged)(object, slot);
 }
 
-MainFrame::MainFrame(QWidget *parent): QFrame(parent)
+MainFrame::MainFrame(QWidget *parent)
+    : DBlurEffectWidget(parent)
 {
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
-    setAttribute(Qt::WA_TranslucentBackground);
-
     init();
     initAnimation();
     initConnect();
@@ -61,10 +59,10 @@ void MainFrame::init()
 {
     m_desktopWidget = QApplication::desktop();
 
-    m_blurEffectWidget = new DBlurEffectWidget(this);
-    m_blurEffectWidget->setBlendMode(DBlurEffectWidget::BehindWindowBlend);
-    m_blurEffectWidget->setWindowFlags(Qt::WindowDoesNotAcceptFocus);
-    m_blurEffectWidget->setMaskColor(DBlurEffectWidget::DarkColor);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
+    setBlendMode(DBlurEffectWidget::BehindWindowBlend);
+    setAttribute(Qt::WA_TranslucentBackground);
+    setMaskColor(DBlurEffectWidget::DarkColor);
 
     m_mainPanel = new dtb::MainPanel(this);
 
@@ -94,13 +92,13 @@ void MainFrame::initAnimation()
     m_launchAni->setEasingCurve(QEasingCurve::OutBounce);
 
     connect(m_showWithLauncher, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
-        m_blurEffectWidget->move(value.toPoint());
-        m_blurEffectWidget->update();
+        move(value.toPoint());
+        update();
     });
 
     connect(m_hideWithLauncher, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
-        m_blurEffectWidget->move(value.toPoint());
-        m_blurEffectWidget->update();
+        move(value.toPoint());
+        update();
     });
 }
 
@@ -114,10 +112,10 @@ void MainFrame::screenChanged()
     QRect screen = m_desktopWidget->screenGeometry(m_desktopWidget->primaryScreen());
     resize(screen.width(), TOPHEIGHT);
     m_mainPanel->resize(screen.width(), TOPHEIGHT);
-    m_blurEffectWidget->resize(screen.width(), TOPHEIGHT);
+    resize(screen.width(), TOPHEIGHT);
     move(screen.x(), screen.y() - TOPHEIGHT);
     m_mainPanel->move(0, 0);
-    m_blurEffectWidget->move(0, 0);
+    move(0, 0);
 
     xcb_ewmh_connection_t m_ewmh_connection;
     xcb_intern_atom_cookie_t *cookie = xcb_ewmh_init_atoms(QX11Info::connection(), &m_ewmh_connection);
@@ -170,9 +168,10 @@ void MainFrame::onWindowListChanged()
                     continue;
                 }
 
-                connect(w, &DForeignWindow::windowStateChanged, this, &MainFrame::onWindowStateChanged);
-
 #ifdef QT_DEBUG
+                if (w->wmClass() != "deepin-topbar") {
+                    connect(w, &DForeignWindow::windowStateChanged, this, &MainFrame::onWindowStateChanged);
+                }
                 w->windowStateChanged(w->windowState());
 #else
                 w->windowStateChanged(Qt::WindowNoState);

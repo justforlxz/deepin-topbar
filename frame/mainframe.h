@@ -15,7 +15,7 @@
 
 DWIDGET_USE_NAMESPACE
 
-class MainFrame : public QFrame
+class MainFrame : public DBlurEffectWidget
 {
     Q_OBJECT
 public:
@@ -39,7 +39,6 @@ private:
 private:
     QDesktopWidget *m_desktopWidget;
     dtb::MainPanel *m_mainPanel;
-    DBlurEffectWidget *m_blurEffectWidget;
     DPlatformWindowHandle *m_handle;
     QPropertyAnimation *m_launchAni;
     QPropertyAnimation *m_hideWithLauncher;
