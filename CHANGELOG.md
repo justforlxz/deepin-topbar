@@ -1,3 +1,14 @@
+<a name="0.4.2"></a>
+### 0.4.2 (2018-03-23)
+
+
+#### Bug Fixes
+
+*   add force quit window ([50b4062d](https://github.com/kirigayakazushin/deepin-topbar/commit/50b4062d174f1c68b493eb07b138619220ea59ba))
+*   appstore icon style ([84c3aea8](https://github.com/kirigayakazushin/deepin-topbar/commit/84c3aea82af5cc35e11f16c478ab92d65d1daf74))
+
+
+
 <a name=""></a>
 ##  0.4.0 (2018-03-16)
 
