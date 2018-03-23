@@ -17,15 +17,15 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent)
     setStyleSheet("QLabel {color: #d3d3d3;}");
 
     m_tx = new QLabel;
-    m_tx->setFixedHeight(12);
+    m_tx->setFixedHeight(16);
     m_tx->setText(converSpeed(0));
 
     m_rx = new QLabel;
-    m_rx->setFixedHeight(12);
+    m_rx->setFixedHeight(16);
     m_rx->setText(converSpeed(0));
 
     FontLabel *up = new FontLabel;
-    up->setIcon(QChar(0xE935), 12);
+    up->setIcon(QChar(0xE935), 16);
 
     QHBoxLayout *uploadlayout = new QHBoxLayout;
     uploadlayout->setMargin(0);
@@ -34,7 +34,7 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent)
     uploadlayout->addWidget(m_tx, 0, Qt::AlignVCenter | Qt::AlignRight);
 
     FontLabel *down = new FontLabel;
-    down->setIcon(QChar(0xE936), 12);
+    down->setIcon(QChar(0xE936), 16);
 
     QHBoxLayout *downlayout = new QHBoxLayout;
     downlayout->setMargin(0);
