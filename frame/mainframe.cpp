@@ -115,7 +115,6 @@ void MainFrame::screenChanged()
     resize(screen.width(), TOPHEIGHT);
     move(screen.x(), screen.y() - TOPHEIGHT);
     m_mainPanel->move(0, 0);
-    move(0, 0);
 
     xcb_ewmh_connection_t m_ewmh_connection;
     xcb_intern_atom_cookie_t *cookie = xcb_ewmh_init_atoms(QX11Info::connection(), &m_ewmh_connection);
@@ -161,7 +160,12 @@ void MainFrame::onWindowListChanged()
         QList<WId> newList;
         // create new DForeignWindow
         for (WId wid : reinterpret_cast<QVector<quint32>(*)()>(wmClientList)()) {
+            if (wid == this->topLevelWidget()->internalWinId()) {
+                continue;
+            }
+
             newList << wid;
+
             if (!m_windowList.keys().contains(wid)) {
                 DForeignWindow *w = DForeignWindow::fromWinId(wid);
                 if (!w) {
@@ -169,13 +173,12 @@ void MainFrame::onWindowListChanged()
                 }
 
 #ifdef QT_DEBUG
-                if (w->wmClass() != "deepin-topbar") {
-                    connect(w, &DForeignWindow::windowStateChanged, this, &MainFrame::onWindowStateChanged);
-                }
+                connect(w, &DForeignWindow::windowStateChanged, this, &MainFrame::onWindowStateChanged);
                 w->windowStateChanged(w->windowState());
 #else
                 w->windowStateChanged(Qt::WindowNoState);
 #endif
+
                 m_windowList[wid] = w;
                 m_windowIdList << wid;
             }
