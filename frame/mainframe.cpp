@@ -182,17 +182,15 @@ void MainFrame::onWindowListChanged()
             }
         }
         // remove old DForeignWindow
-        const int windowListSize = m_windowIdList.size();
-        for (int i = 0; i != windowListSize; ++i) {
-            WId wid = m_windowIdList[i];
-            DForeignWindow *w = m_windowList[wid];
-            if (!newList.contains(wid)) {
-                w->deleteLater();
-                m_windowList.remove(wid);
-                m_windowIdList.removeAt(i);
-                if (m_maxWindowList.contains(wid)) {
-                    m_maxWindowList.removeOne(wid);
+        QMapIterator<WId,DForeignWindow*> map(m_windowList);
+        while (map.hasNext()) {
+            map.next();
+            if (!newList.contains(map.key())) {
+                map.value()->deleteLater();
+                if (m_maxWindowList.contains(map.key())) {
+                    m_maxWindowList.removeOne(map.key());
                 }
+                m_windowList.remove(map.key());
             }
         }
     }
