@@ -28,7 +28,8 @@ public slots:
 private slots:
     void screenChanged();
     void onWindowListChanged();
-    void updateWindowListInfo();
+//    void updateWindowListInfo();
+    void onWindowStateChanged(Qt::WindowState windowState);
 
 private:
     void init();
@@ -44,7 +45,8 @@ private:
     QPropertyAnimation *m_hideWithLauncher;
     QPropertyAnimation *m_showWithLauncher;
     QMap<WId,DForeignWindow*> m_windowList;
-    bool m_infoUpdating;
+    QList<WId> m_windowIdList;
+    QList<WId> m_maxWindowList;
 };
 
 #endif // MAINFRAME_H
