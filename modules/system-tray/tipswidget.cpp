@@ -1,5 +1,5 @@
 #include "tipswidget.h"
-#include "traywidget.h"
+#include "xwindowtraywidget.h"
 
 TrayApplet::TrayApplet(QWidget *parent)
     : ContentModule(parent),
@@ -22,14 +22,15 @@ void TrayApplet::clear()
     }
 }
 
-void TrayApplet::addWidget(TrayWidget *widget)
+void TrayApplet::addWidget(XWindowTrayWidget *widget)
 {
+    widget->setParent(this);
     widget->setVisible(true);
     m_mainLayout->addWidget(widget, 0, Qt::AlignCenter);
 }
 
-void TrayApplet::addWidgets(QList<TrayWidget *> widgets)
+void TrayApplet::addWidgets(QList<XWindowTrayWidget *> widgets)
 {
-    for (TrayWidget *w : widgets)
+    for (XWindowTrayWidget *w : widgets)
         addWidget(w);
 }
