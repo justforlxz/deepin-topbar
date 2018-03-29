@@ -6,7 +6,7 @@
 #include <QWidget>
 #include <QBoxLayout>
 
-class TrayWidget;
+class XWindowTrayWidget;
 class TrayApplet : public ContentModule
 {
     Q_OBJECT
@@ -15,8 +15,8 @@ public:
     explicit TrayApplet(QWidget *parent = 0);
 
     void clear();
-    void addWidget(TrayWidget * widget);
-    void addWidgets(QList<TrayWidget *> widgets);
+    void addWidget(XWindowTrayWidget * widget);
+    void addWidgets(QList<XWindowTrayWidget *> widgets);
 
 private:
     QBoxLayout *m_mainLayout;

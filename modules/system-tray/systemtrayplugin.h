@@ -2,9 +2,9 @@
 #define SYSTEMTRAYPLUGIN_H
 
 #include "pluginsiteminterface.h"
-#include "traywidget.h"
 #include "tipswidget.h"
 #include "dbus/dbustraymanager.h"
+#include "xwindowtraywidget.h"
 
 #include <QSettings>
 #include <QLabel>
@@ -43,7 +43,7 @@ private slots:
 
 private:
     DBusTrayManager *m_trayInter;
-    QMap<quint32, TrayWidget *> m_trayList;
+    QMap<quint32, XWindowTrayWidget *> m_trayList;
 
     TrayApplet *m_trayApplet;
     QLabel *m_tipsLabel;
