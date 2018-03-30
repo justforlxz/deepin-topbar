@@ -86,7 +86,7 @@
     <message>
         <location filename="../modules/network/item/applet/refreshaction.cpp" line="16"/>
         <source>Refreshing...</source>
-        <translation>Menyegarkan...</translation>
+        <translation>Penyegaran...</translation>
     </message>
     <message>
         <location filename="../modules/network/item/applet/refreshaction.cpp" line="16"/>
