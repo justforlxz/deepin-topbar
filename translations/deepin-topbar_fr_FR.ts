@@ -81,7 +81,7 @@
     <message>
         <location filename="../modules/network/item/applet/refreshaction.cpp" line="16"/>
         <source>List state: %1</source>
-        <translation>最終状態：%1</translation>
+        <translation>État final：%1</translation>
     </message>
     <message>
         <location filename="../modules/network/item/applet/refreshaction.cpp" line="16"/>
@@ -91,7 +91,7 @@
     <message>
         <location filename="../modules/network/item/applet/refreshaction.cpp" line="16"/>
         <source>No refresh</source>
-        <translation>更新なし</translation>
+        <translation>Actualisation impossible</translation>
     </message>
 </context>
 <context>
