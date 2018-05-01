@@ -1,25 +1,25 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es_ES" version="1.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru_RU" version="1.0">
 <context>
     <name>dtb::datetime::DateTimePlugin</name>
     <message>
         <location filename="../modules/timewidget/datetimeplugin.cpp" line="49"/>
         <source>24 Hour Time</source>
-        <translation>Horarios de 24 horas</translation>
+        <translation>Время в 24 часа</translation>
     </message>
     <message>
         <location filename="../modules/timewidget/datetimeplugin.cpp" line="53"/>
         <source>12 Hour Time</source>
-        <translation>Horarios de 12 horas</translation>
+        <translation>Время в 12 часа</translation>
     </message>
     <message>
         <location filename="../modules/timewidget/datetimeplugin.cpp" line="69"/>
         <source>Time Format</source>
-        <translation>Formato de Hora</translation>
+        <translation>Формат времени</translation>
     </message>
     <message>
         <location filename="../modules/timewidget/datetimeplugin.cpp" line="74"/>
         <source>Time Settings</source>
-        <translation>Ajustes de hora</translation>
+        <translation>Настройки времени</translation>
     </message>
 </context>
 <context>
@@ -27,7 +27,7 @@
     <message numerus="yes">
         <location filename="../modules/indicator/View/appstoreaction.cpp" line="108"/>
         <source>%n update(s)</source>
-        <translation><numerusform>%n actualización(es)</numerusform></translation>
+        <translation><numerusform>%n обновление(обновления)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -35,7 +35,7 @@
     <message>
         <location filename="../modules/indicator/View/positionwidget.cpp" line="35"/>
         <source>Position</source>
-        <translation>Posición</translation>
+        <translation>Должность</translation>
     </message>
 </context>
 <context>
@@ -43,37 +43,37 @@
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="67"/>
         <source>About</source>
-        <translation>Acerca de</translation>
+        <translation>Около</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="79"/>
         <source>Preference setting</source>
-        <translation>Configuración de preferencias</translation>
+        <translation>Настройка настроек</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="82"/>
         <source>Force quit</source>
-        <translation>Forzar la salida</translation>
+        <translation>Вывод силы</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="83"/>
         <source>Sleep</source>
-        <translation>Suspender</translation>
+        <translation>приостановить</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="84"/>
         <source>Restart</source>
-        <translation>Reiniciar</translation>
+        <translation>Перезапуск</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="85"/>
         <source>Power off</source>
-        <translation>Apagar</translation>
+        <translation>Выключение</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="86"/>
         <source>Logout for %1</source>
-        <translation>Salir de %1</translation>
+        <translation>выход %1</translation>
     </message>
 </context>
 <context>
@@ -81,17 +81,17 @@
     <message>
         <location filename="../modules/network/item/applet/refreshaction.cpp" line="16"/>
         <source>List state: %1</source>
-        <translation>Estado de lista: %1</translation>
+        <translation>Состояние списка: %1</translation>
     </message>
     <message>
         <location filename="../modules/network/item/applet/refreshaction.cpp" line="16"/>
         <source>Refreshing...</source>
-        <translation>Refrescar...</translation>
+        <translation>освежающий...</translation>
     </message>
     <message>
         <location filename="../modules/network/item/applet/refreshaction.cpp" line="16"/>
         <source>No refresh</source>
-        <translation>Sin Refrescar</translation>
+        <translation>Нет обновления</translation>
     </message>
 </context>
 <context>
@@ -99,7 +99,7 @@
     <message>
         <location filename="../modules/network/item/wireditem.cpp" line="27"/>
         <source>Open Network Preferences...</source>
-        <translation>Abrir preferencias de red...</translation>
+        <translation>Открыть сетевые настройки...</translation>
     </message>
 </context>
 <context>
@@ -107,17 +107,17 @@
     <message>
         <location filename="../modules/network/item/wirelessitem.cpp" line="89"/>
         <source>Join Other Network...</source>
-        <translation>Unirse a otra red...</translation>
+        <translation>Присоединиться к другой сети...</translation>
     </message>
     <message>
         <location filename="../modules/network/item/wirelessitem.cpp" line="90"/>
         <source>Open Network Preferences...</source>
-        <translation>Abrir preferencias de red...</translation>
+        <translation>Открыть сетевые настройки...</translation>
     </message>
     <message>
         <location filename="../modules/network/item/wirelessitem.cpp" line="348"/>
         <source>Password required to connect to &lt;font color=&quot;#faca57&quot;&gt;%1&lt;/font&gt;</source>
-        <translation>Requiere contraseña para conectarse &lt;font color=&quot;#faca57&quot;&gt;%1&lt;/font&gt;</translation>
+        <translation>Пароль, необходимый для подключения к &lt;font color=&quot;#faca57&quot;&gt;%1&lt;/font&gt;</translation>
     </message>
 </context>
 <context>
@@ -125,17 +125,17 @@
     <message>
         <location filename="../modules/notify/notifymodel.cpp" line="180"/>
         <source>Yesterday</source>
-        <translation>Ayer</translation>
+        <translation>Вчера</translation>
     </message>
     <message>
         <location filename="../modules/notify/notifymodel.cpp" line="183"/>
         <source>The day before yesterday</source>
-        <translation>Antes de ayer</translation>
+        <translation>Позавчера</translation>
     </message>
     <message numerus="yes">
         <location filename="../modules/notify/notifymodel.cpp" line="189"/>
         <source>%n day(s) ago</source>
-        <translation><numerusform>%n día(s) atrás</numerusform></translation>
+        <translation><numerusform>%n день(дни) назад</numerusform></translation>
     </message>
 </context>
 <context>
@@ -143,27 +143,27 @@
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="49"/>
         <source>Power source:</source>
-        <translation>Fuente de alimentación:</translation>
+        <translation>Источник питания:</translation>
     </message>
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="49"/>
         <source>Battery</source>
-        <translation>Batería</translation>
+        <translation>аккумулятор</translation>
     </message>
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="49"/>
         <source>Direct current</source>
-        <translation>Corriente continua</translation>
+        <translation>Прямой ток</translation>
     </message>
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="135"/>
         <source>Show percentage</source>
-        <translation>Mostrar porcentaje</translation>
+        <translation>Показать процент</translation>
     </message>
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="136"/>
         <source>Open Energy saver preferences</source>
-        <translation>Abrit preferencias de ahorro de energía</translation>
+        <translation>Настройки предпочтений Открытая энергия</translation>
     </message>
 </context>
 <context>
@@ -171,12 +171,12 @@
     <message>
         <location filename="../modules/sound/soundapplet.cpp" line="41"/>
         <source>Device</source>
-        <translation>Dispositivo</translation>
+        <translation>устройство</translation>
     </message>
     <message>
         <location filename="../modules/sound/soundapplet.cpp" line="61"/>
         <source>Application</source>
-        <translation>Aplicación</translation>
+        <translation>приложение</translation>
     </message>
 </context>
 <context>
@@ -184,7 +184,7 @@
     <message>
         <location filename="../modules/sound/sounditem.cpp" line="56"/>
         <source>Advanced Settings</source>
-        <translation>Ajustes avanzados</translation>
+        <translation>Расширенные настройки</translation>
     </message>
 </context>
 </TS>
