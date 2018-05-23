@@ -1,25 +1,25 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ja_JP" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="es_ES" version="1.0">
 <context>
     <name>dtb::datetime::DateTimePlugin</name>
     <message>
         <location filename="../modules/timewidget/datetimeplugin.cpp" line="49"/>
         <source>24 Hour Time</source>
-        <translation>24 heures</translation>
+        <translation>Horarios de 24 horas</translation>
     </message>
     <message>
         <location filename="../modules/timewidget/datetimeplugin.cpp" line="53"/>
         <source>12 Hour Time</source>
-        <translation>12 heures</translation>
+        <translation>Horarios de 12 horas</translation>
     </message>
     <message>
         <location filename="../modules/timewidget/datetimeplugin.cpp" line="69"/>
         <source>Time Format</source>
-        <translation>Format de l'heure</translation>
+        <translation>Formato de Hora</translation>
     </message>
     <message>
         <location filename="../modules/timewidget/datetimeplugin.cpp" line="74"/>
         <source>Time Settings</source>
-        <translation>Réglage</translation>
+        <translation>Ajustes de hora</translation>
     </message>
 </context>
 <context>
@@ -27,7 +27,7 @@
     <message numerus="yes">
         <location filename="../modules/indicator/View/appstoreaction.cpp" line="108"/>
         <source>%n update(s)</source>
-        <translation><numerusform>%n Mises à jours</numerusform></translation>
+        <translation><numerusform>%n actualización(es)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -35,7 +35,7 @@
     <message>
         <location filename="../modules/indicator/View/positionwidget.cpp" line="35"/>
         <source>Position</source>
-        <translation>Position</translation>
+        <translation>Posición</translation>
     </message>
 </context>
 <context>
@@ -43,37 +43,37 @@
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="67"/>
         <source>About</source>
-        <translation>À propos</translation>
+        <translation>Acerca de</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="79"/>
         <source>Preference setting</source>
-        <translation>Paramètres</translation>
+        <translation>Configuración de preferencias</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="82"/>
         <source>Force quit</source>
-        <translation>Forcer à quitter</translation>
+        <translation>Forzar la salida</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="83"/>
         <source>Sleep</source>
-        <translation>Mettre en veille</translation>
+        <translation>Suspender</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="84"/>
         <source>Restart</source>
-        <translation>Redémarer</translation>
+        <translation>Reiniciar</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="85"/>
         <source>Power off</source>
-        <translation>Éteindre</translation>
+        <translation>Apagar</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="86"/>
         <source>Logout for %1</source>
-        <translation>Déconnecter %1</translation>
+        <translation>Salir de %1</translation>
     </message>
 </context>
 <context>
@@ -81,17 +81,17 @@
     <message>
         <location filename="../modules/network/item/applet/refreshaction.cpp" line="16"/>
         <source>List state: %1</source>
-        <translation>État final：%1</translation>
+        <translation>Estado de lista: %1</translation>
     </message>
     <message>
         <location filename="../modules/network/item/applet/refreshaction.cpp" line="16"/>
         <source>Refreshing...</source>
-        <translation>Actualisation...</translation>
+        <translation>Refrescar...</translation>
     </message>
     <message>
         <location filename="../modules/network/item/applet/refreshaction.cpp" line="16"/>
         <source>No refresh</source>
-        <translation>Actualisation impossible</translation>
+        <translation>Sin Refrescar</translation>
     </message>
 </context>
 <context>
@@ -99,7 +99,7 @@
     <message>
         <location filename="../modules/network/item/wireditem.cpp" line="27"/>
         <source>Open Network Preferences...</source>
-        <translation>Préférence réseauく</translation>
+        <translation>Abrir preferencias de red...</translation>
     </message>
 </context>
 <context>
@@ -107,17 +107,17 @@
     <message>
         <location filename="../modules/network/item/wirelessitem.cpp" line="89"/>
         <source>Join Other Network...</source>
-        <translation>Connecter un nouveau réseau</translation>
+        <translation>Unirse a otra red...</translation>
     </message>
     <message>
         <location filename="../modules/network/item/wirelessitem.cpp" line="90"/>
         <source>Open Network Preferences...</source>
-        <translation>Préférences réseau</translation>
+        <translation>Abrir preferencias de red...</translation>
     </message>
     <message>
         <location filename="../modules/network/item/wirelessitem.cpp" line="348"/>
         <source>Password required to connect to &lt;font color=&quot;#faca57&quot;&gt;%1&lt;/font&gt;</source>
-        <translation>Mot de passe requis pour &lt;font color=&quot;#faca57&quot;&gt;%1&lt;/font&gt;</translation>
+        <translation>Requiere contraseña para conectarse &lt;font color=&quot;#faca57&quot;&gt;%1&lt;/font&gt;</translation>
     </message>
 </context>
 <context>
@@ -125,17 +125,17 @@
     <message>
         <location filename="../modules/notify/notifymodel.cpp" line="180"/>
         <source>Yesterday</source>
-        <translation>Hier</translation>
+        <translation>Ayer</translation>
     </message>
     <message>
         <location filename="../modules/notify/notifymodel.cpp" line="183"/>
         <source>The day before yesterday</source>
-        <translation>Avant hier</translation>
+        <translation>Antes de ayer</translation>
     </message>
     <message numerus="yes">
         <location filename="../modules/notify/notifymodel.cpp" line="189"/>
         <source>%n day(s) ago</source>
-        <translation><numerusform>Il y a %n jours</numerusform></translation>
+        <translation><numerusform>%n día(s) atrás</numerusform></translation>
     </message>
 </context>
 <context>
@@ -143,27 +143,27 @@
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="49"/>
         <source>Power source:</source>
-        <translation>Alimentation：</translation>
+        <translation>Fuente de alimentación:</translation>
     </message>
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="49"/>
         <source>Battery</source>
-        <translation>Batterie</translation>
+        <translation>Batería</translation>
     </message>
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="49"/>
         <source>Direct current</source>
-        <translation>Sur secteur</translation>
+        <translation>Corriente continua</translation>
     </message>
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="135"/>
         <source>Show percentage</source>
-        <translation>Afficher pourcentage</translation>
+        <translation>Mostrar porcentaje</translation>
     </message>
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="136"/>
         <source>Open Energy saver preferences</source>
-        <translation>Préférences d'alimentation</translation>
+        <translation>Abrit preferencias de ahorro de energía</translation>
     </message>
 </context>
 <context>
@@ -171,12 +171,12 @@
     <message>
         <location filename="../modules/sound/soundapplet.cpp" line="41"/>
         <source>Device</source>
-        <translation>Périphérique</translation>
+        <translation>Dispositivo</translation>
     </message>
     <message>
         <location filename="../modules/sound/soundapplet.cpp" line="61"/>
         <source>Application</source>
-        <translation>Application</translation>
+        <translation>Aplicación</translation>
     </message>
 </context>
 <context>
@@ -184,7 +184,7 @@
     <message>
         <location filename="../modules/sound/sounditem.cpp" line="56"/>
         <source>Advanced Settings</source>
-        <translation>Paramètres avancés</translation>
+        <translation>Ajustes avanzados</translation>
     </message>
 </context>
 </TS>

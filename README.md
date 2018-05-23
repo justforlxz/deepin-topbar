@@ -6,7 +6,7 @@ This is a project that I have a whim to help improve my ability to write code.
 
 I'll release messages on my twitter and google plus.
 
-[Twitter @kirigayakazshin](https://twitter.com/haruyukilxz)
+[Twitter @haruyukilxz](https://twitter.com/haruyukilxz)
 
 [Google+](https://plus.google.com/+kirigayakazushin)
 
