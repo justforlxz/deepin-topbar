@@ -172,12 +172,8 @@ void MainFrame::onWindowListChanged()
                     continue;
                 }
 
-#ifdef QT_DEBUG
                 connect(w, &DForeignWindow::windowStateChanged, this, &MainFrame::onWindowStateChanged);
                 w->windowStateChanged(w->windowState());
-#else
-                w->windowStateChanged(Qt::WindowNoState);
-#endif
 
                 m_windowList[wid] = w;
                 m_windowIdList << wid;
