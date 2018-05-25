@@ -6,7 +6,7 @@ This is a project that I have a whim to help improve my ability to write code.
 
 I'll release messages on my twitter and google plus.
 
-[Twitter @kirigayakazshin](https://twitter.com/kirigayakazshin)
+[Twitter @haruyukilxz](https://twitter.com/haruyukilxz)
 
 [Google+](https://plus.google.com/+kirigayakazushin)
 
@@ -50,14 +50,10 @@ I'll release messages on my twitter and google plus.
 
 ## Partial Preview
 
-<p align="center"><img src="https://s18.postimg.org/zd035of55/dde-menu.png"></p>
-<p align="center"><img src="https://s18.postimg.org/a892rt59l/network.png"></p>
-<p align="center"><img src="https://s18.postimg.org/qj96o5kc9/power.png"></p>
-<p align="center"><img src="https://s18.postimg.org/9iqafempl/sound.png"></p>
-<p align="center"><img src="https://s18.postimg.org/sntjpa3zd/date.png"></p>
-<p align="center"><img src="https://s18.postimg.org/83opqvvyx/search.png"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/12298476/40405507-6f0b97c0-5e8f-11e8-913c-f093b3f5005f.png"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/12298476/40405509-6f5d3288-5e8f-11e8-95f2-4acd2f6545eb.gif"></p>
 
-If you use Deepin, just add my ppa. see [here](https://blog.mkacg.com/2017/07/20/topbar-PPA/)
+If you use Deepin, just add my ppa. see [here](https://blog.ilxz.me/topbar-ppa/)
 
 If you use Arch, you can install deepin-topbar with aur.
 

@@ -23,27 +23,27 @@ PKGCONFIG += xcb-ewmh \
              xcb-composite
 
 HEADERS  += \
-    $$PWD/mainframe.h \
-    $$PWD/item/pluginsitem.h \
-    $$PWD/mainpanel.h \
-    $$PWD/item/item.h \
-    $$PWD/item/stretchitem.h \
-    $$PWD/utils/itempopupwindow.h \
-    $$PWD/utils/event_monitor.h \
+    mainframe.h \
+    item/pluginsitem.h \
+    mainpanel.h \
+    item/item.h \
+    item/stretchitem.h \
+    utils/itempopupwindow.h \
+    utils/event_monitor.h \
     item/contentmodule.h \
     utils/global.h \
     settings.h \
     dbusservice.h
 
 SOURCES += \
-    $$PWD/main.cpp\
-    $$PWD/mainframe.cpp \
-    $$PWD/item/pluginsitem.cpp \
-    $$PWD/mainpanel.cpp \
-    $$PWD/item/item.cpp \
-    $$PWD/item/stretchitem.cpp \
-    $$PWD/utils/itempopupwindow.cpp \
-    $$PWD/utils/event_monitor.cpp \
+    main.cpp\
+    mainframe.cpp \
+    item/pluginsitem.cpp \
+    mainpanel.cpp \
+    item/item.cpp \
+    item/stretchitem.cpp \
+    utils/itempopupwindow.cpp \
+    utils/event_monitor.cpp \
     item/contentmodule.cpp \
     utils/global.cpp \
     settings.cpp \

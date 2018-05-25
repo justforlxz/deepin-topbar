@@ -132,7 +132,7 @@ void SystemTrayPlugin::trayAdded(const quint32 winId)
 
     getWindowClass(winId);
 
-    TrayWidget *trayWidget = new TrayWidget(winId);
+    XWindowTrayWidget *trayWidget = new XWindowTrayWidget(winId);
 
     m_trayList[winId] = trayWidget;
 
@@ -144,7 +144,7 @@ void SystemTrayPlugin::trayRemoved(const quint32 winId)
     if (!m_trayList.contains(winId))
         return;
 
-    TrayWidget *widget = m_trayList[winId];
+    XWindowTrayWidget *widget = m_trayList[winId];
 
     m_trayList.remove(winId);
     widget->deleteLater();
