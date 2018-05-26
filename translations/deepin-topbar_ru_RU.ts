@@ -4,12 +4,12 @@
     <message>
         <location filename="../modules/timewidget/datetimeplugin.cpp" line="49"/>
         <source>24 Hour Time</source>
-        <translation>Время в 24 часа</translation>
+        <translation>24-часовой формат</translation>
     </message>
     <message>
         <location filename="../modules/timewidget/datetimeplugin.cpp" line="53"/>
         <source>12 Hour Time</source>
-        <translation>Время в 12 часа</translation>
+        <translation>12-часовой формат</translation>
     </message>
     <message>
         <location filename="../modules/timewidget/datetimeplugin.cpp" line="69"/>
@@ -27,7 +27,7 @@
     <message numerus="yes">
         <location filename="../modules/indicator/View/appstoreaction.cpp" line="108"/>
         <source>%n update(s)</source>
-        <translation><numerusform>%n обновление(обновления)</numerusform></translation>
+        <translation><numerusform>%n обновление(я)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -35,7 +35,7 @@
     <message>
         <location filename="../modules/indicator/View/positionwidget.cpp" line="35"/>
         <source>Position</source>
-        <translation>Должность</translation>
+        <translation>Позиция</translation>
     </message>
 </context>
 <context>
@@ -43,22 +43,22 @@
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="67"/>
         <source>About</source>
-        <translation>Около</translation>
+        <translation>О системе</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="79"/>
         <source>Preference setting</source>
-        <translation>Настройка настроек</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="82"/>
         <source>Force quit</source>
-        <translation>Вывод силы</translation>
+        <translation>Завершить принудительно</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="83"/>
         <source>Sleep</source>
-        <translation>приостановить</translation>
+        <translation>Спящий режим</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="84"/>
@@ -73,7 +73,7 @@
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="86"/>
         <source>Logout for %1</source>
-        <translation>выход %1</translation>
+        <translation>Выход для %1</translation>
     </message>
 </context>
 <context>
@@ -86,12 +86,12 @@
     <message>
         <location filename="../modules/network/item/applet/refreshaction.cpp" line="16"/>
         <source>Refreshing...</source>
-        <translation>освежающий...</translation>
+        <translation>Обновление...</translation>
     </message>
     <message>
         <location filename="../modules/network/item/applet/refreshaction.cpp" line="16"/>
         <source>No refresh</source>
-        <translation>Нет обновления</translation>
+        <translation>Нет обновлений</translation>
     </message>
 </context>
 <context>
@@ -99,7 +99,7 @@
     <message>
         <location filename="../modules/network/item/wireditem.cpp" line="27"/>
         <source>Open Network Preferences...</source>
-        <translation>Открыть сетевые настройки...</translation>
+        <translation>Открыть настройки сети...</translation>
     </message>
 </context>
 <context>
@@ -112,12 +112,12 @@
     <message>
         <location filename="../modules/network/item/wirelessitem.cpp" line="90"/>
         <source>Open Network Preferences...</source>
-        <translation>Открыть сетевые настройки...</translation>
+        <translation>Открыть настройки сети...</translation>
     </message>
     <message>
         <location filename="../modules/network/item/wirelessitem.cpp" line="348"/>
         <source>Password required to connect to &lt;font color=&quot;#faca57&quot;&gt;%1&lt;/font&gt;</source>
-        <translation>Пароль, необходимый для подключения к &lt;font color=&quot;#faca57&quot;&gt;%1&lt;/font&gt;</translation>
+        <translation>Пароль необходим для подключения к &lt;font color=&quot;#faca57&quot;&gt;%1&lt;/font&gt;</translation>
     </message>
 </context>
 <context>
@@ -148,12 +148,12 @@
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="49"/>
         <source>Battery</source>
-        <translation>аккумулятор</translation>
+        <translation>Аккумулятор</translation>
     </message>
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="49"/>
         <source>Direct current</source>
-        <translation>Прямой ток</translation>
+        <translation>От сети</translation>
     </message>
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="135"/>
@@ -163,7 +163,7 @@
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="136"/>
         <source>Open Energy saver preferences</source>
-        <translation>Настройки предпочтений Открытая энергия</translation>
+        <translation>Открыть настройки экономии энергии</translation>
     </message>
 </context>
 <context>
@@ -171,12 +171,12 @@
     <message>
         <location filename="../modules/sound/soundapplet.cpp" line="41"/>
         <source>Device</source>
-        <translation>устройство</translation>
+        <translation>Устройство</translation>
     </message>
     <message>
         <location filename="../modules/sound/soundapplet.cpp" line="61"/>
         <source>Application</source>
-        <translation>приложение</translation>
+        <translation>Приложение</translation>
     </message>
 </context>
 <context>
@@ -184,7 +184,7 @@
     <message>
         <location filename="../modules/sound/sounditem.cpp" line="56"/>
         <source>Advanced Settings</source>
-        <translation>Расширенные настройки</translation>
+        <translation>Дополнительно</translation>
     </message>
 </context>
 </TS>
