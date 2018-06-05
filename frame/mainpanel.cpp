@@ -156,7 +156,9 @@ void MainPanel::loadModules()
 
     loadModule(new search::SearchModule);
 
+#ifdef QT_DEBUG
     loadModule(new notify::NotifyPlugin);
+#endif
 }
 
 void MainPanel::loadModule(PluginsItemInterface * const module)

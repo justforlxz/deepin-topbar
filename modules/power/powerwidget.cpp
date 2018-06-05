@@ -55,7 +55,7 @@ void PowerWidget::updateBatteryIcon() {
 
     if (data.isEmpty()) {
         m_battery->hide();
-        m_batteryIcon->setPixmap(DHiDPIHelper::loadNxPixmap("qrc:/Icons/battery-charging.svg"));
+        m_batteryIcon->setPixmap(DHiDPIHelper::loadNxPixmap(":/Icons/full-battery.svg"));
         return;
     }
 
