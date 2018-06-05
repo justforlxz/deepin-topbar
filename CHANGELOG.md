@@ -1,3 +1,17 @@
+<a name="0.4.3"></a>
+### 0.4.3 (2018-06-05)
+
+
+#### Features
+
+* **power:**
+  *  update new size svg ([252f62b3](https://github.com/kirigayakazushin/deepin-topbar/commit/252f62b340f8854c5f724cbad5939a61fc1788e4))
+  *  upload new svg ([3d0201cf](https://github.com/kirigayakazushin/deepin-topbar/commit/3d0201cf7a2a00a9baa32ea0f1eeaee2d60c6c1d))
+* **sound:**  upload new sound svg ([61c77bce](https://github.com/kirigayakazushin/deepin-topbar/commit/61c77bcebdf10848b7f9e05344753ce0701b48f0))
+* **systeminfo:**  upload new svg ([78061d8e](https://github.com/kirigayakazushin/deepin-topbar/commit/78061d8e04306c54e064ca83b1f595e7d5345bfc))
+
+
+
 <a name="0.4.2"></a>
 ### 0.4.2 (2018-03-23)
 
