@@ -1,31 +1,33 @@
 #include "systeminfowidget.h"
 #include "systeminfomodel.h"
-#include "fontlabel.h"
 
 #include <QHBoxLayout>
 #include <QPainter>
 #include <QDebug>
+#include <DHiDPIHelper>
+
+DWIDGET_USE_NAMESPACE
 
 using namespace dtb;
-using namespace dtb::widgets;
 using namespace dtb::systeminfo;
 
 SystemInfoWidget::SystemInfoWidget(QWidget *parent)
     : ContentModule(parent)
 {
     setObjectName("SystemInfoWidget");
-    setStyleSheet("QLabel {color: #d3d3d3;}");
+    setStyleSheet("QLabel {color: #d3d3d3; font-size: 9px;}");
+    setFixedWidth(60);
 
     m_tx = new QLabel;
-    m_tx->setFixedHeight(16);
+    m_tx->setFixedHeight(10);
     m_tx->setText(converSpeed(0));
 
     m_rx = new QLabel;
-    m_rx->setFixedHeight(16);
+    m_rx->setFixedHeight(10);
     m_rx->setText(converSpeed(0));
 
-    FontLabel *up = new FontLabel;
-    up->setIcon(QChar(0xE935), 16);
+    QLabel *up = new QLabel;
+    up->setPixmap(DHiDPIHelper::loadNxPixmap(":/right_top.svg").scaled(QSize(10, 10) * devicePixelRatioF(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
 
     QHBoxLayout *uploadlayout = new QHBoxLayout;
     uploadlayout->setMargin(0);
@@ -33,8 +35,8 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent)
     uploadlayout->addWidget(up, 0, Qt::AlignVCenter | Qt::AlignLeft);
     uploadlayout->addWidget(m_tx, 0, Qt::AlignVCenter | Qt::AlignRight);
 
-    FontLabel *down = new FontLabel;
-    down->setIcon(QChar(0xE936), 16);
+    QLabel *down = new QLabel;
+    down->setPixmap(DHiDPIHelper::loadNxPixmap(":/left_down.svg").scaled(QSize(10, 10) * devicePixelRatioF(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
 
     QHBoxLayout *downlayout = new QHBoxLayout;
     downlayout->setMargin(0);
@@ -42,10 +44,10 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent)
     downlayout->addWidget(down, 0, Qt::AlignVCenter | Qt::AlignLeft);
     downlayout->addWidget(m_rx, 0, Qt::AlignVCenter | Qt::AlignRight);
 
-    QHBoxLayout *mainlayout = new QHBoxLayout;
+    QVBoxLayout *mainlayout = new QVBoxLayout;
     mainlayout->setMargin(0);
-    mainlayout->setSpacing(2);
-    mainlayout->setContentsMargins(3, 0, 3, 0);
+    mainlayout->setSpacing(0);
+    mainlayout->setContentsMargins(3, 2, 3, 2);
     mainlayout->addLayout(uploadlayout);
     mainlayout->addLayout(downlayout);
 

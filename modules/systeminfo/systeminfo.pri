@@ -11,3 +11,6 @@ HEADERS += \
     $$PWD/systeminfopopupwidget.h \
     $$PWD/systeminfothread.h \
     $$PWD/systeminfomodel.h
+
+RESOURCES += \
+    $$PWD/resources/systeminfo.qrc

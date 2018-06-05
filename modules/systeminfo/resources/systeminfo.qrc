@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>left_down.svg</file>
+        <file>right_top.svg</file>
+    </qresource>
+</RCC>
