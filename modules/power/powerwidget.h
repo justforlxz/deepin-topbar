@@ -36,7 +36,7 @@ private:
 
 private:
     PowerWidgetAction *m_powerActionWidget;
-    widgets::FontLabel *m_batteryIcon;
+    QLabel *m_batteryIcon;
     QLabel *m_battery;
     DBusPower* m_powerInter;
     QMenu *m_menu;
