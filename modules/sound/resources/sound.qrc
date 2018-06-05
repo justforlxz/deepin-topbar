@@ -2,6 +2,11 @@
     <qresource prefix="/image">
         <file>image/slider_bg.png</file>
         <file>image/slider_round.png</file>
+        <file>image/full.svg</file>
+        <file>image/half.svg</file>
+        <file>image/low.svg</file>
+        <file>image/mute.svg</file>
+        <file>image/empty.svg</file>
     </qresource>
     <qresource prefix="/icons"/>
 </RCC>

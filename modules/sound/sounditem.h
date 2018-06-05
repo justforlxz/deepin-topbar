@@ -15,7 +15,6 @@ class QLabel;
 namespace dtb {
 
 namespace widgets {
-class FontLabel;
 class DWidgetAction;
 }
 
@@ -48,7 +47,7 @@ private slots:
     void onNameOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner);
 private:
     QLabel *m_mprisTitle;
-    widgets::FontLabel *m_fontLabel;
+    QLabel *m_fontLabel;
     DBusMediaPlayer2 *m_mprisInter;
     DBusInterface *m_dbusInter;
     QPointer<MediaControl> m_mediaControl;

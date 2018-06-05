@@ -1,7 +1,6 @@
 #include "sounditem.h"
 #include "soundapplet.h"
 #include "dbussink.h"
-#include "fontlabel.h"
 #include "componments/volumeslider.h"
 #include "dwidgetaction.h"
 #include "sinkinputwidget.h"
@@ -13,6 +12,9 @@
 #include <QMouseEvent>
 #include <QVBoxLayout>
 #include <QLabel>
+#include <DHiDPIHelper>
+
+DWIDGET_USE_NAMESPACE
 
 // menu actions
 #define MUTE    "mute"
@@ -25,7 +27,7 @@ using namespace dtb::widgets;
 SoundItem::SoundItem(QWidget *parent)
     : ContentModule(parent)
     , m_mprisTitle(new QLabel)
-    , m_fontLabel(new FontLabel)
+    , m_fontLabel(new QLabel)
     , m_mprisInter(nullptr)
 //    , m_mediaControl(new MediaControl)
     , m_applet(new SoundApplet(this))
@@ -101,19 +103,23 @@ void SoundItem::refershIcon()
     const double volume = m_applet->volumeValue();
     const bool mute = m_sinkInter->mute();
 
+    QPixmap pixmap;
+
     if (mute) {
-        m_fontLabel->setIcon(QChar(0xE198), 14);
-        return;
+        pixmap = DHiDPIHelper::loadNxPixmap(":/image/image/mute.svg");
+    }
+    else {
+        if (volume / 1000.0f >= 0.7f)
+            pixmap = DHiDPIHelper::loadNxPixmap(":/image/image/full.svg");
+        else if (volume / 1000.0f >= 0.4f)
+            pixmap = DHiDPIHelper::loadNxPixmap(":/image/image/half.svg");
+        else if (volume / 1000.0f >= 0.2f)
+            pixmap = DHiDPIHelper::loadNxPixmap(":/image/image/low.svg");
+        else
+            pixmap = DHiDPIHelper::loadNxPixmap(":/image/image/empty.svg");
     }
 
-    if (volume >= 1000)
-        m_fontLabel->setIcon(QChar(0xE995), 14);
-    else if (volume / 1000.0f >= 0.4f)
-        m_fontLabel->setIcon(QChar(0xE994), 14);
-    else if (volume / 1000.0f >= 0.2f)
-        m_fontLabel->setIcon(QChar(0xE993), 14);
-    else
-        m_fontLabel->setIcon(QChar(0xE992), 14);
+    m_fontLabel->setPixmap(pixmap);
 }
 
 void SoundItem::sinkChanged(DBusSink *sink)
