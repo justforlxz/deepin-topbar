@@ -13,16 +13,15 @@
    id="Capa_1"
    x="0px"
    y="0px"
-   width="32px"
-   height="32px"
-   viewBox="0 0 32 32"
-   style="enable-background:new 0 0 32 32;"
+   width="24"
+   height="12"
+   viewBox="0 0 24 12"
    xml:space="preserve"
    sodipodi:docname="low-battery.svg"
    inkscape:version="0.92.2 2405546, 2018-03-11"><metadata
    id="metadata4330"><rdf:RDF><cc:Work
        rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
    id="defs4328" /><sodipodi:namedview
    pagecolor="#ffffff"
    bordercolor="#666666"
@@ -32,75 +31,93 @@
    guidetolerance="10"
    inkscape:pageopacity="0"
    inkscape:pageshadow="2"
-   inkscape:window-width="640"
-   inkscape:window-height="480"
+   inkscape:window-width="1920"
+   inkscape:window-height="968"
    id="namedview4326"
    showgrid="false"
    inkscape:zoom="7.375"
    inkscape:cx="16"
    inkscape:cy="16"
-   inkscape:window-x="709"
-   inkscape:window-y="256"
-   inkscape:window-maximized="0"
+   inkscape:window-x="0"
+   inkscape:window-y="26"
+   inkscape:window-maximized="1"
    inkscape:current-layer="g4293" />
 <g
-   id="g4293">
+   id="g4293"
+   transform="translate(0,-20)">
 	<g
    id="Low_x5F_Charged_x5F_Battery"
-   style="fill:#ffffff">
+   style="fill:#ffffff"
+   transform="matrix(0.75,0,0,0.75,0,14)">
 		<g
    id="g4290"
    style="fill:#ffffff">
 			<path
-   d="M30,11h-2c0-1.654-1.346-3-3-3H3c-1.654,0-3,1.346-3,3v10c0,1.654,1.346,3,3,3h22c1.654,0,3-1.346,3-3h2     c1.104,0,2-0.896,2-2v-6C32,11.897,31.104,11,30,11z M26,21c0,0.552-0.448,1-1,1H3c-0.552,0-1-0.448-1-1V11c0-0.552,0.448-1,1-1     h22c0.552,0,1,0.448,1,1V21z M30,19h-2v-6h2V19z M7.447,12.895C7.201,12.402,6.55,12,6,12H5c-0.55,0-1,0.45-1,1v6     c0,0.55,0.45,1,1,1h5c0.55,0,0.799-0.402,0.553-0.895L7.447,12.895z"
+   d="M 30,11 H 28 C 28,9.346 26.654,8 25,8 H 3 C 1.346,8 0,9.346 0,11 v 10 c 0,1.654 1.346,3 3,3 h 22 c 1.654,0 3,-1.346 3,-3 h 2 c 1.104,0 2,-0.896 2,-2 v -6 c 0,-1.103 -0.896,-2 -2,-2 z m -4,10 c 0,0.552 -0.448,1 -1,1 H 3 C 2.448,22 2,21.552 2,21 V 11 c 0,-0.552 0.448,-1 1,-1 h 22 c 0.552,0 1,0.448 1,1 z m 4,-2 h -2 v -6 h 2 z M 7.447,12.895 C 7.201,12.402 6.55,12 6,12 H 5 c -0.55,0 -1,0.45 -1,1 v 6 c 0,0.55 0.45,1 1,1 h 5 c 0.55,0 0.799,-0.402 0.553,-0.895 z"
    id="path4288"
-   style="fill:#ffffff" />
+   style="fill:#ffffff"
+   inkscape:connector-curvature="0" />
 		</g>
 	</g>
 </g>
 <g
-   id="g4295">
+   id="g4295"
+   transform="translate(0,-20)">
 </g>
 <g
-   id="g4297">
+   id="g4297"
+   transform="translate(0,-20)">
 </g>
 <g
-   id="g4299">
+   id="g4299"
+   transform="translate(0,-20)">
 </g>
 <g
-   id="g4301">
+   id="g4301"
+   transform="translate(0,-20)">
 </g>
 <g
-   id="g4303">
+   id="g4303"
+   transform="translate(0,-20)">
 </g>
 <g
-   id="g4305">
+   id="g4305"
+   transform="translate(0,-20)">
 </g>
 <g
-   id="g4307">
+   id="g4307"
+   transform="translate(0,-20)">
 </g>
 <g
-   id="g4309">
+   id="g4309"
+   transform="translate(0,-20)">
 </g>
 <g
-   id="g4311">
+   id="g4311"
+   transform="translate(0,-20)">
 </g>
 <g
-   id="g4313">
+   id="g4313"
+   transform="translate(0,-20)">
 </g>
 <g
-   id="g4315">
+   id="g4315"
+   transform="translate(0,-20)">
 </g>
 <g
-   id="g4317">
+   id="g4317"
+   transform="translate(0,-20)">
 </g>
 <g
-   id="g4319">
+   id="g4319"
+   transform="translate(0,-20)">
 </g>
 <g
-   id="g4321">
+   id="g4321"
+   transform="translate(0,-20)">
 </g>
 <g
-   id="g4323">
+   id="g4323"
+   transform="translate(0,-20)">
 </g>
 </svg>
