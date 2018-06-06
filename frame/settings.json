@@ -74,6 +74,19 @@
                         }
 
                     ]
+                },
+                {
+                    "key": "base_setting",
+                    "name": "Base Setting",
+                    "options": [
+                        {
+                            "key": "enable_dock",
+                            "name": "Enable Dock tray",
+                            "reset": false,
+                            "type": "checkbox",
+                            "default": true
+                        }
+                    ]
                 }
             ]
         }
