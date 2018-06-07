@@ -1,3 +1,17 @@
+<a name="0.4.4"></a>
+### 0.4.4 (2018-06-07)
+
+
+#### Features
+
+* **tray:**  support hide dock tray ([8ec197c5](https://github.com/kirigayakazushin/deepin-topbar/commit/8ec197c5beb25f39a3784a77c6f7889a3fc91e8e))
+
+#### Bug Fixes
+
+* **power:**  direct power icon missing ([bbe82965](https://github.com/kirigayakazushin/deepin-topbar/commit/bbe82965820bb0d41e9089cd3d37043b2f0494bc))
+
+
+
 <a name="0.4.3"></a>
 ### 0.4.3 (2018-06-05)
 
