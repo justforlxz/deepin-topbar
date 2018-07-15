@@ -1,7 +1,5 @@
 <RCC>
-    <qresource prefix="/indicator">
-        <file>icons/dde.svg</file>
-    </qresource>
+    <qresource prefix="/indicator"/>
     <qresource prefix="/light">
         <file>theme/light/IndicatorWidget.theme</file>
         <file>theme/light/SystemLogo.theme</file>

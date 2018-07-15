@@ -49,7 +49,7 @@ SystemLogo::SystemLogo(QWidget *parent)
 
     QLabel *logoLbl = new QLabel;
 
-    QPixmap pixmap = QIcon::fromTheme("deepin-logo").pixmap(TOPHEIGHT - 5, TOPHEIGHT - 5, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+    QPixmap pixmap = QIcon::fromTheme("deepin-logo").pixmap(TOPHEIGHT - 5, TOPHEIGHT - 5);
     pixmap.setDevicePixelRatio(devicePixelRatioF());
 
     logoLbl->setPixmap(pixmap);
