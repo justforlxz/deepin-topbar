@@ -20,7 +20,7 @@ desktop.files = deepin-topbar.desktop
 autostart.path = /etc/xdg/autostart/
 autostart.files = deepin-topbar-autostart.desktop
 
-icon.path = $${PREFIX}/share/deepin-topbar/icons
+icon.path = $$PREFIX/share/icons/hicolor/scalable/apps
 icon.files = deepin-topbar.svg
 
 polkit.path = $${PREFIX}/share/polkit-1/actions
