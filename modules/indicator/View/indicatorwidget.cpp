@@ -45,7 +45,7 @@ IndicatorWidget::~IndicatorWidget()
 void IndicatorWidget::initUI()
 {
     setObjectName("Indiactor");
-    setStyleSheet("QLabel {color: #d3d3d3; font-size: 14px; font-weight: 500;}");
+    setStyleSheet("QLabel {color: #d3d3d3; font-size: 16px; font-weight: 550;}");
 
     setWindowFlags(Qt::WindowDoesNotAcceptFocus);
     setAttribute(Qt::WA_TranslucentBackground);
