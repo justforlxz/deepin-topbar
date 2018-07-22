@@ -48,7 +48,7 @@
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="79"/>
         <source>Preference setting</source>
-        <translation>Configuración de preferencias</translation>
+        <translation>Ajustes</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="82"/>
