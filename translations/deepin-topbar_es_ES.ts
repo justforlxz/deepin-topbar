@@ -73,7 +73,7 @@
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="86"/>
         <source>Logout for %1</source>
-        <translation>Salir de %1</translation>
+        <translation>Cerrar sesión de %1</translation>
     </message>
 </context>
 <context>
