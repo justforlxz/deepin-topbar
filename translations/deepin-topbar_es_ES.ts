@@ -25,7 +25,7 @@
 <context>
     <name>dtb::indicator::AppstoreAction</name>
     <message numerus="yes">
-        <location filename="../modules/indicator/View/appstoreaction.cpp" line="108"/>
+        <location filename="../modules/indicator/View/storeaction.cpp" line="108"/>
         <source>%n update(s)</source>
         <translation><numerusform>%n actualización(es)</numerusform></translation>
     </message>
@@ -43,12 +43,12 @@
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="67"/>
         <source>About</source>
-        <translation>Acerca de</translation>
+        <translation>Acerca de Deepin</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="79"/>
         <source>Preference setting</source>
-        <translation>Configuración de preferencias</translation>
+        <translation>Ajustes</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="82"/>
@@ -73,7 +73,7 @@
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="86"/>
         <source>Logout for %1</source>
-        <translation>Salir de %1</translation>
+        <translation>Cerrar sesión de %1</translation>
     </message>
 </context>
 <context>
@@ -99,7 +99,7 @@
     <message>
         <location filename="../modules/network/item/wireditem.cpp" line="27"/>
         <source>Open Network Preferences...</source>
-        <translation>Abrir preferencias de red...</translation>
+        <translation>Preferencias de red...</translation>
     </message>
 </context>
 <context>
@@ -112,7 +112,7 @@
     <message>
         <location filename="../modules/network/item/wirelessitem.cpp" line="90"/>
         <source>Open Network Preferences...</source>
-        <translation>Abrir preferencias de red...</translation>
+        <translation>Preferencias de red...</translation>
     </message>
     <message>
         <location filename="../modules/network/item/wirelessitem.cpp" line="348"/>
@@ -163,7 +163,7 @@
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="136"/>
         <source>Open Energy saver preferences</source>
-        <translation>Abrit preferencias de ahorro de energía</translation>
+        <translation>Administracion de energía</translation>
     </message>
 </context>
 <context>
