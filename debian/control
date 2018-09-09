@@ -2,16 +2,32 @@ Source: deepin-topbar
 Section: base
 Priority: optional
 Maintainer: kirigaya <kirigaya@mkacg.com>
-Build-Depends: debhelper (>= 9),pkg-config, dpkg-dev,
- qt5-qmake, qtbase5-dev, libdtkbase-dev, libdtkwidget-dev,
- libdtkcore-dev, libxcb-ewmh-dev, libxcb-util0-dev,
- libdframeworkdbus-dev ,libgsettings-qt-dev ,libxcb-image0-dev,
- libxcb-icccm4-dev, libxcb-composite0-dev, libqt5svg5-dev, libxtst-dev,
+Build-Depends:
+ debhelper (>= 9),
+ pkg-config,
+ dpkg-dev,
+ qt5-qmake,
+ qtbase5-dev,
+ libdtkbase-dev,
+ libdtkwidget-dev,
+ libdtkcore-dev,
+ libdtkcore-dev-bin,
+ libxcb-ewmh-dev,
+ libxcb-util0-dev,
+ libdframeworkdbus-dev,
+ libgsettings-qt-dev,
+ libxcb-image0-dev,
+ libxcb-icccm4-dev,
+ libxcb-composite0-dev,
+ libqt5svg5-dev,
+ libxtst-dev,
  libgsettings-qt-dev
 Standards-Version: 0.1-1
 Homepage: http://blog.mkacg.com
 
 Package: deepin-topbar
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends}
 Description: topbar for deepin.

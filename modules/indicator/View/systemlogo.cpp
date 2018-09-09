@@ -72,20 +72,29 @@ SystemLogo::SystemLogo(QWidget *parent)
     preLayout->addSpacing(27);
     preLayout->addWidget(new QLabel(tr("Preference setting")));
 
+#ifdef ENABLE_APPSTORE
     m_appstore = new AppstoreAction;
+#endif
+
     QAction *forceQuit = new QAction(tr("Force quit"), this);
     QAction *sleep = new QAction(tr("Sleep"), this);
     QAction *restart = new QAction(tr("Restart"), this);
     QAction *shutdown = new QAction(tr("Power off"), this);
     QAction *logout = new QAction(tr("Logout for %1").arg(QString(qgetenv("USER"))), this);
 
+#ifdef ENABLE_APPSTORE
     DActionLabel *app = new DActionLabel(m_appstore);
+#endif
     DActionLabel *pre = new DActionLabel(m_preference);
 
     m_menu->addAction(about);
     m_menu->addSeparator();
     m_menu->addAction(pre);
+
+#ifdef ENABLE_APPSTORE
     m_menu->addAction(app);
+#endif
+
     m_menu->addSeparator();
     m_menu->addAction(forceQuit);
     m_menu->addSeparator();
@@ -99,7 +108,9 @@ SystemLogo::SystemLogo(QWidget *parent)
 
     connect(about, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
     connect(pre, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
+#ifdef ENABLE_APPSTORE
     connect(app, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
+#endif
     connect(forceQuit, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
     connect(sleep, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
     connect(restart, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
@@ -108,7 +119,11 @@ SystemLogo::SystemLogo(QWidget *parent)
 
     signalMapper->setMapping(about, About);
     signalMapper->setMapping(pre, Preference);
+
+#ifdef ENABLE_APPSTORE
     signalMapper->setMapping(app, Appstore);
+#endif
+
     signalMapper->setMapping(forceQuit, ForceQuit);
     signalMapper->setMapping(sleep, "Suspend");
     signalMapper->setMapping(restart, "Restart");

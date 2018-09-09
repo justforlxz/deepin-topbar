@@ -3,6 +3,8 @@ include(../widgets/widgets.pri)
 include(../modules/modules.pri)
 include(../dbus/dbus.pri)
 
+load(dtk_qmake)
+
 QT       += core gui x11extras widgets dbus concurrent svg
 
 TARGET = deepin-topbar
@@ -58,3 +60,7 @@ INSTALLS += target headers
 
 RESOURCES += \
     deepin-topbar.qrc
+
+deepin {
+    DEFINES += ENABLE_APPSTORE
+}
