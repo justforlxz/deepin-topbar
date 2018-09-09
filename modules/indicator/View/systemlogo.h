@@ -26,7 +26,9 @@
 
 namespace dtb {
 namespace indicator {
+#ifdef ENABLE_APPSTORE
 class IndicatorModel;
+#endif
 class SystemLogo : public ContentModule
 {
     Q_OBJECT
@@ -58,7 +60,9 @@ private:
 private:
     QMenu *m_menu;
     IndicatorModel *m_model;
+#ifdef ENABLE_APPSTORE
     AppstoreAction *m_appstore;
+#endif
     QWidget *m_preference;
 };
 }

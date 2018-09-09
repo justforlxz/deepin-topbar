@@ -1,3 +1,13 @@
+<a name="0.4.6"></a>
+### 0.4.6 (2018-09-09)
+
+
+#### Bug Fixes
+
+*   crash for arch ([ad95626d](https://github.com/kirigayakazushin/deepin-topbar/commit/ad95626de6c41b485c00f19db6dfb6b2872669c5))
+
+
+
 <a name="0.4.5"></a>
 ### 0.4.5 (2018-09-09)
 

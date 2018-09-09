@@ -145,7 +145,9 @@ void SystemLogo::setModel(IndicatorModel *model)
 {
     m_model = model;
 
+#ifdef ENABLE_APPSTORE
     m_appstore->setModel(model);
+#endif
 }
 
 void SystemLogo::handleAction(const int &action)
