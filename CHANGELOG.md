@@ -1,3 +1,17 @@
+<a name="0.4.5"></a>
+### 0.4.5 (2018-09-09)
+
+
+#### Features
+
+*   update font size ([c49cc9d1](https://github.com/kirigayakazushin/deepin-topbar/commit/c49cc9d10f95fce645ba4b71bb4ed9ca649c9350))
+*   check network dbus isvalid ([1d2b8262](https://github.com/kirigayakazushin/deepin-topbar/commit/1d2b8262ecc12a4dc2520aa3c364fc5e27394504))
+*   only enable deepin appstore notify for deepin ([c1147108](https://github.com/kirigayakazushin/deepin-topbar/commit/c114710870f9deaa03f9b6172a0594aeb042843a))
+*   change font size and weight ([84112ae7](https://github.com/kirigayakazushin/deepin-topbar/commit/84112ae703ad1fafd47a021a8b6a4350ccd863ce))
+*   use locale logo ([86812f0f](https://github.com/kirigayakazushin/deepin-topbar/commit/86812f0f1e8acb76a9f837b4834fa302bb9cb3c7))
+
+
+
 <a name="0.4.4"></a>
 ### 0.4.4 (2018-06-07)
 
