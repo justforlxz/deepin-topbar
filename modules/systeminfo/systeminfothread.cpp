@@ -137,6 +137,7 @@ void SysteminfoThread::onConnectChanged(const QDBusObjectPath &path)
 
 void SysteminfoThread::onGetDeviceName(const QVariant &device)
 {
+//    ip r | grep default | sed 's/.*dev \([^ ]*\).*/\1/'
     const QString &name = device.toString();
 
     if (name.isEmpty())

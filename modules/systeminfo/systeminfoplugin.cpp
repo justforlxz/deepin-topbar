@@ -2,6 +2,8 @@
 #include "systeminfothread.h"
 #include "systeminfomodel.h"
 
+#include <QDBusInterface>
+
 using namespace dtb;
 using namespace dtb::systeminfo;
 
@@ -22,9 +24,15 @@ void SystemInfoPlugin::init(PluginProxyInterface *proxyInter)
 {
     m_proxyInter = proxyInter;
 
-    m_proxyInter->addItem(this, "");
+    QDBusInterface dbusInter("org.freedesktop.NetworkManager",
+                             "/org/freedesktop/NetworkManager",
+                             "org.freedesktop.NetworkManager",
+                             QDBusConnection::systemBus(), this);
 
-    m_systemWorker->start();
+    if (dbusInter.isValid()) {
+        m_proxyInter->addItem(this, "");
+        m_systemWorker->start();
+    }
 }
 
 QWidget *SystemInfoPlugin::itemWidget(const QString &itemKey)
