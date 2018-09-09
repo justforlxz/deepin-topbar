@@ -1,8 +1,0 @@
-[Desktop Entry]
-Comment=Deepin Desktop Environment Topbar
-Exec=/usr/bin/deepin-topbar
-Icon=/usr/share/deepin-topbar/icons/deepin-topbar
-Name=Topbar
-StartupNotify=false
-Terminal=false
-Type=Application

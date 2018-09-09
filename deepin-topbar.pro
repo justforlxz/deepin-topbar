@@ -17,13 +17,10 @@ service.files = com.deepin.dde.topbar.service
 desktop.path = $${PREFIX}/share/applications/
 desktop.files = deepin-topbar.desktop
 
-autostart.path = /etc/xdg/autostart/
-autostart.files = deepin-topbar-autostart.desktop
-
 icon.path = $$PREFIX/share/icons/hicolor/scalable/apps
 icon.files = deepin-topbar.svg
 
 polkit.path = $${PREFIX}/share/polkit-1/actions
 polkit.files = com.deepin.dde.topbar.polkit.service
 
-INSTALLS += desktop service autostart qm_files icon
+INSTALLS += desktop service qm_files icon
