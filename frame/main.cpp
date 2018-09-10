@@ -22,6 +22,7 @@ int main(int argc, char *argv[])
         MainFrame *mainFrame = new MainFrame;
 
         DBusService *dbus = new DBusService(mainFrame);
+        Q_UNUSED(dbus);
 
         QDBusConnection::sessionBus().registerService("com.deepin.dde.topbar");
         QDBusConnection::sessionBus().registerObject("/com/deepin/dde/topbar", "com.deepin.dde.topbar", mainFrame);

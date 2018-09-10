@@ -14,7 +14,7 @@ public:
     ~PluginsItem();
 
     const QString name() const Q_DECL_OVERRIDE;
-    QMenu* contextMenu() const Q_DECL_OVERRIDE;
+    QWidget* contextMenu() const Q_DECL_OVERRIDE;
     void detachPluginWidget();
 
 private:
@@ -24,17 +24,15 @@ signals:
     void requestRefershWindowVisible() const;
 
 protected:
-    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
+    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 
 protected slots:
-    void showContextMenu();
+    void showTips();
 
 private:
     PluginsItemInterface * m_pluginInter;
     QWidget *m_centralWidget;
     QString m_itemKey;
-    bool m_isPressed;
 };
 }
 

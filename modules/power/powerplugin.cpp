@@ -28,7 +28,7 @@ QWidget *PowerPlugin::itemWidget(const QString &itemKey) {
     return m_centralWidget;
 }
 
-QMenu *PowerPlugin::itemContextMenu(const QString &itemKey)
+QWidget *PowerPlugin::itemContextMenu(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 

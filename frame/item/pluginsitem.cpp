@@ -12,12 +12,11 @@
 
 using namespace dtb;
 
-PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString &itemKey, QWidget *parent) :
-    Item(parent),
-    m_pluginInter(pluginInter),
-    m_centralWidget(pluginInter->itemWidget(itemKey)),
-    m_itemKey(itemKey),
-    m_isPressed(false)
+PluginsItem::PluginsItem(PluginsItemInterface * const pluginInter, const QString &itemKey, QWidget *parent)
+    : Item(parent)
+    , m_pluginInter(pluginInter)
+    , m_centralWidget(pluginInter->itemWidget(itemKey))
+    , m_itemKey(itemKey)
 {
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->setMargin(0);
@@ -41,24 +40,14 @@ PluginsItemInterface *PluginsItem::itemInter()
     return m_pluginInter;
 }
 
-void PluginsItem::mousePressEvent(QMouseEvent *event)
+void PluginsItem::mouseReleaseEvent(QMouseEvent *event)
 {
-    Item::mousePressEvent(event);
+    Item::mouseReleaseEvent(event);
 
-    showContextMenu();
+    showTips();
 }
 
-void PluginsItem::paintEvent(QPaintEvent *event)
-{
-    Item::paintEvent(event);
-
-    if (m_isPressed) {
-        QPainter painter(this);
-        painter.fillRect(rect(), QColor("#1E90FF"));
-    }
-}
-
-QMenu *PluginsItem::contextMenu() const
+QWidget *PluginsItem::contextMenu() const
 {
     return m_pluginInter->itemContextMenu(m_itemKey);
 }
@@ -70,21 +59,13 @@ void PluginsItem::detachPluginWidget()
         widget->setParent(nullptr);
 }
 
-void PluginsItem::showContextMenu()
+void PluginsItem::showTips()
 {
-    QMenu* menu = contextMenu();
-    if (!menu)
-        return;
+    QWidget *w = contextMenu();
+    if (!w) return;
 
-    m_isPressed = true;
-
-    update();
-
-    connect(menu, &QMenu::aboutToHide, this, [=] {
-        m_isPressed = false;
-        update();
-    }, Qt::UniqueConnection);
-
-    menu->exec(mapToGlobal(QPoint(pos().x(), height()) - pos()));
+    PopupWindow->setContent(w);
+    QPoint p(mapToGlobal(QPoint(pos().x() + width() / 2, height()) - pos()));
+    PopupWindow->show(p.x(), p.y());
 }
 

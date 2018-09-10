@@ -8,8 +8,7 @@ std::unique_ptr<ItemPopupWindow> Item::PopupWindow(nullptr);
 Item::Item(QWidget *parent)
     : QWidget(parent)
 {
-    if (!PopupWindow.get())
-    {
+    if (!PopupWindow.get()) {
         ItemPopupWindow *arrowRectangle = new ItemPopupWindow(nullptr);
         PopupWindow.reset(arrowRectangle);
     }
@@ -20,7 +19,7 @@ PluginsItemInterface *Item::itemInter()
     return nullptr;
 }
 
-QMenu *Item::contextMenu() const
+QWidget *Item::contextMenu() const
 {
-    return new QMenu();
+    return nullptr;
 }

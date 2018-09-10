@@ -30,7 +30,6 @@ HEADERS  += \
     mainpanel.h \
     item/item.h \
     item/stretchitem.h \
-    utils/itempopupwindow.h \
     utils/event_monitor.h \
     item/contentmodule.h \
     utils/global.h \
@@ -44,7 +43,6 @@ SOURCES += \
     mainpanel.cpp \
     item/item.cpp \
     item/stretchitem.cpp \
-    utils/itempopupwindow.cpp \
     utils/event_monitor.cpp \
     item/contentmodule.cpp \
     utils/global.cpp \

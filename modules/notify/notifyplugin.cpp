@@ -30,7 +30,7 @@ QWidget *NotifyPlugin::itemWidget(const QString &itemKey)
     return m_notify;
 }
 
-QMenu *NotifyPlugin::itemContextMenu(const QString &itemKey)
+QWidget *NotifyPlugin::itemContextMenu(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 

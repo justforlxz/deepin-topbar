@@ -29,7 +29,7 @@ QWidget *SoundPlugin::itemWidget(const QString &itemKey)
     return m_soundItem;
 }
 
-QMenu *SoundPlugin::itemContextMenu(const QString &itemKey)
+QWidget *SoundPlugin::itemContextMenu(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 

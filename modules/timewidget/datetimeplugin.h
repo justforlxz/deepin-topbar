@@ -40,7 +40,7 @@ public:
 
     QWidget *itemWidget(const QString &itemKey) override;
 
-    QMenu* itemContextMenu(const QString &itemKey) Q_DECL_OVERRIDE;
+    QWidget* itemContextMenu(const QString &itemKey) Q_DECL_OVERRIDE;
 
     void setDefaultColor(PluginProxyInterface::DefaultColor color) Q_DECL_OVERRIDE;
 

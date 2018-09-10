@@ -6,7 +6,8 @@ HEADERS += \
     $$PWD/dwidgetaction.h \
     $$PWD/dactionbutton.h \
     $$PWD/dactionlabel.h \
-    $$PWD/switchbutton.h
+    $$PWD/switchbutton.h \
+    $$PWD/itempopupwindow.h
 
 SOURCES += \
     $$PWD/switchitem.cpp \
@@ -14,7 +15,8 @@ SOURCES += \
     $$PWD/dwidgetaction.cpp \
     $$PWD/dactionbutton.cpp \
     $$PWD/dactionlabel.cpp \
-    $$PWD/switchbutton.cpp
+    $$PWD/switchbutton.cpp \
+    $$PWD/itempopupwindow.cpp
 
 INCLUDEPATH += $$PWD
 

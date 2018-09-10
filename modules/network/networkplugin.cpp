@@ -37,6 +37,11 @@ QWidget *NetworkPlugin::itemWidget(const QString &itemKey)
     return m_network;
 }
 
+QWidget *NetworkPlugin::itemContextMenu(const QString &itemKey)
+{
+    return nullptr;
+}
+
 void NetworkPlugin::setDefaultColor(PluginProxyInterface::DefaultColor color)
 {
 
