@@ -20,6 +20,10 @@ void PowerPlugin::init(PluginProxyInterface *proxyInter) {
     m_proxyInter = proxyInter;
 
     m_proxyInter->addItem(this, "");
+
+    connect(m_centralWidget, &PowerWidget::requestHidePopupWindow, this, [=] {
+        m_proxyInter->hidePopupWindow();
+    });
 }
 
 QWidget *PowerPlugin::itemWidget(const QString &itemKey) {

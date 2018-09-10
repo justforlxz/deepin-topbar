@@ -31,6 +31,9 @@ public:
 
     QMenu *menu() const;
 
+signals:
+    void requestHidePopupWindow();
+
 protected:
     void wheelEvent(QWheelEvent *e) Q_DECL_OVERRIDE;
 

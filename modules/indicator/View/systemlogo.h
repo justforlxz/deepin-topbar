@@ -41,6 +41,7 @@ public:
 
 signals:
     void requestForceQuit();
+    void requestHidePopupWindow();
 
 private slots:
     void handleAction(const int &action);

@@ -168,6 +168,8 @@ void SystemLogo::handleAction(const int &action)
     default:
         break;
     }
+
+    emit requestHidePopupWindow();
 }
 
 void SystemLogo::handleShutdownAction(const QString &action)

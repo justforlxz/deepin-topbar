@@ -140,6 +140,8 @@ void SoundItem::handleAction(const int &action)
     default:
         break;
     }
+
+    emit requestHidePopupWindow();
 }
 
 void SoundItem::clearAllInput()

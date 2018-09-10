@@ -37,6 +37,10 @@ void IndicatorPlugin::init(PluginProxyInterface *proxyInter)
         proxyInter->setBackground(color);
     });
 
+    connect(m_logo, &SystemLogo::requestHidePopupWindow, this, [=] {
+        proxyInter->hidePopupWindow();
+    });
+
     m_proxyInter->addItem(this, "Logo");
     m_proxyInter->addItem(this, "Indicator");
 //    m_proxyInter->addItem(this, "Position");

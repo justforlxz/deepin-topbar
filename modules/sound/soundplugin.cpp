@@ -20,6 +20,10 @@ void SoundPlugin::init(PluginProxyInterface *proxyInter)
     m_proxyInter = proxyInter;
 
     m_proxyInter->addItem(this, "");
+
+    connect(m_soundItem, &SoundItem::requestHidePopupWindow, this, [=] {
+        m_proxyInter->hidePopupWindow();
+    });
 }
 
 QWidget *SoundPlugin::itemWidget(const QString &itemKey)

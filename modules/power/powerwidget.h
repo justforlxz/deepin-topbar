@@ -27,6 +27,9 @@ public:
 
     inline QMenu *menu() { return m_menu;}
 
+signals:
+    void requestHidePopupWindow();
+
 public slots:
     void updateBatteryIcon();
     void onActionHandle(const QString &action);

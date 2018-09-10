@@ -92,9 +92,10 @@ void PowerWidget::updateBatteryIcon() {
 void PowerWidget::onActionHandle(const QString &action)
 {
     if (action == "percentage") {
-
         return;
     }
+
+    emit requestHidePopupWindow();
 
     if (action == "preference") {
         QProcess::startDetached("dbus-send --print-reply --dest=com.deepin.dde.ControlCenter /com/deepin/dde/ControlCenter com.deepin.dde.ControlCenter.ShowModule \"string:power\"");
