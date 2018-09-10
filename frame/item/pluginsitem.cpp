@@ -64,6 +64,11 @@ void PluginsItem::showTips()
     QWidget *w = contextMenu();
     if (!w) return;
 
+    if (PopupWindow->getContent()) {
+        PopupWindow->getContent()->setParent(nullptr);
+        PopupWindow->getContent()->hide();
+    }
+
     PopupWindow->setContent(w);
     QPoint p(mapToGlobal(QPoint(pos().x() + width() / 2, height()) - pos()));
     PopupWindow->show(p.x(), p.y());

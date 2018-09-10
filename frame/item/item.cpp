@@ -23,3 +23,10 @@ QWidget *Item::contextMenu() const
 {
     return nullptr;
 }
+
+void Item::hidePopupWindow()
+{
+    if (PopupWindow.get()) {
+        PopupWindow->hide();
+    }
+}

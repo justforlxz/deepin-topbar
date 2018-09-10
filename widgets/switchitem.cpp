@@ -1,17 +1,18 @@
 #include "switchitem.h"
 #include <QHBoxLayout>
 
-namespace topbar {
+namespace dtb {
 namespace widgets {
 SwitchItem::SwitchItem(QWidget *parent) : QWidget(parent) {
-    setWindowFlags(Qt::FramelessWindowHint);
-
+    setAttribute(Qt::WA_TranslucentBackground);
+    setFixedHeight(30);
     m_text = new QLabel;
     m_switch = new DSwitchButton;
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(0);
+    layout->setContentsMargins(10, 0, 10, 0);
 
     layout->addWidget(m_text);
     layout->addStretch();

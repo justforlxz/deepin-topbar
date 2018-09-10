@@ -15,6 +15,7 @@ public:
     virtual const QString name() const {return QString();}
     virtual PluginsItemInterface *itemInter();
     virtual QWidget* contextMenu() const;
+    void hidePopupWindow();
 
 protected:
     static std::unique_ptr<ItemPopupWindow> PopupWindow;

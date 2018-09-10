@@ -104,7 +104,7 @@ void PowerWidget::onActionHandle(const QString &action)
 
 void PowerWidget::initMenu()
 {
-    m_menu = new QMenu;
+    m_menu = new QMenu(this);
 
     m_sourceAction = new QAction(this);
     QAction *percentage = new QAction(tr("Show percentage"), this);

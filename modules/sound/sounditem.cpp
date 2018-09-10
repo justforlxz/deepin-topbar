@@ -32,7 +32,7 @@ SoundItem::SoundItem(QWidget *parent)
 //    , m_mediaControl(new MediaControl)
     , m_applet(new SoundApplet(this))
     , m_sinkInter(nullptr)
-    , m_menu(new QMenu)
+    , m_menu(new QMenu(this))
 {
     setStyleSheet("QLabel {color: #d3d3d3;}");
     QHBoxLayout *layout = new QHBoxLayout;

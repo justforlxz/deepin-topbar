@@ -10,7 +10,7 @@
 #include <QFile>
 #include <QProcess>
 
-using namespace topbar::widgets;
+using namespace dtb::widgets;
 
 namespace dtb {
 namespace power {

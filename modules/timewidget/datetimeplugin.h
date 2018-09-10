@@ -7,6 +7,9 @@
 #include <QLabel>
 
 namespace dtb {
+namespace widgets {
+class SwitchItem;
+}
 namespace datetime {
 
 class DateTimePlugin : public QObject, public PluginsItemInterface
@@ -52,6 +55,8 @@ private:
     PluginProxyInterface *m_proxyInter;
     Plugin::DateTime::DateTimeWidget *m_centralWidget;
     MenuModel m_settings;
+    QMenu *m_menu;
+    widgets::SwitchItem *m_switchItem;
 };
 }
 }

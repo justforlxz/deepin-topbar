@@ -28,6 +28,7 @@ public:
     void setDefaultColor(const DefaultColor &defaultColor);
     void setBackground(const QColor &color) Q_DECL_OVERRIDE;
     void moveToCenter(PluginsItemInterface * const module, const QString &itemKey) Q_DECL_OVERRIDE;
+    void hidePopupWindow() Q_DECL_OVERRIDE;
     void showSettingDialog();
 
 private slots:

@@ -251,6 +251,19 @@ void MainPanel::moveToCenter(PluginsItemInterface * const module, const QString 
     w->move(rect().center() - w->rect().center());
 }
 
+void MainPanel::hidePopupWindow()
+{
+    for (int i = 0; i != m_moduleMap.size(); i++) {
+        PluginsItemInterface *inter = m_moduleMap.keys().at(i);
+
+        QMap<QString, PluginsItem*> map = m_moduleMap[inter];
+
+        for (PluginsItem * item : map.values()) {
+            item->hidePopupWindow();
+        }
+    }
+}
+
 void MainPanel::showSettingDialog()
 {
     DSettingsDialog *dialog = new DSettingsDialog;

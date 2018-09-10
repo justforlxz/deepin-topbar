@@ -15,6 +15,9 @@ public:
 
     void show(int x, int y);
 
+protected:
+    void hideEvent(QHideEvent *event) Q_DECL_OVERRIDE;
+
 private:
     DRegionMonitor *m_regionMonitor;
 };

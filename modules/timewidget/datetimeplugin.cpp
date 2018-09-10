@@ -1,4 +1,6 @@
 #include "datetimeplugin.h"
+#include "../widgets/dwidgetaction.h"
+#include "../widgets/switchitem.h"
 
 #include <QActionGroup>
 #include <QApplication>
@@ -6,6 +8,7 @@
 
 using namespace dtb;
 using namespace dtb::datetime;
+using namespace dtb::widgets;
 
 DateTimePlugin::DateTimePlugin(QWidget *parent)
     : QObject(parent) {
@@ -24,6 +27,27 @@ void DateTimePlugin::init(PluginProxyInterface *proxyInter) {
     m_proxyInter = proxyInter;
 
     m_proxyInter->addItem(this, pluginName());
+    m_menu = new QMenu(m_centralWidget);
+    m_switchItem = new SwitchItem;
+    DWidgetAction *switchFormat = new DWidgetAction(m_switchItem);
+    m_switchItem->setText(tr("24 Hour Time"));
+
+    m_menu->addAction(switchFormat);
+    m_menu->addSeparator();
+
+    QAction *timeSetting = new QAction(tr("Time Settings"), this);
+    timeSetting->setData("timeSetting");
+    m_menu->addAction(timeSetting);
+
+    connect(m_switchItem, &SwitchItem::clicked, this, [=] (const bool state) {
+         m_settings.is24 = state;
+         m_centralWidget->set24HourFormat(m_settings.is24);
+         m_centralWidget->setFormat(m_settings.format);
+         saveConfig();
+    });
+
+    connect(m_menu, &QMenu::triggered, this, &DateTimePlugin::invokedMenuItem);
+
     QTimer::singleShot(1, this, [=] {
         m_proxyInter->moveToCenter(this, pluginName());
     });
@@ -46,42 +70,14 @@ QWidget *DateTimePlugin::itemContextMenu(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    QMenu *menu = new QMenu;
+    if (m_settings.is24) {
+        m_switchItem->setCheck(true);
+    }
+    else {
+        m_switchItem->setCheck(false);
+    }
 
-    QAction *is24 = new QAction(this);
-    is24->setText(tr("24 Hour Time"));
-    is24->setData("is24");
-
-    QAction *is12 = new QAction(this);
-    is12->setText(tr("12 Hour Time"));
-    is12->setData("is12");
-
-    QActionGroup *formatGrp = new QActionGroup(this);
-    formatGrp->addAction(is12);
-    formatGrp->addAction(is24);
-    formatGrp->setExclusive(true);
-
-    is12->setCheckable(true);
-    is24->setCheckable(true);
-
-    if (m_settings.is24)
-        is24->setChecked(true);
-    else
-        is12->setChecked(true);
-
-    QMenu *timeMenu = new QMenu(tr("Time Format"));
-    timeMenu->addAction(is12);
-    timeMenu->addAction(is24);
-    menu->addMenu(timeMenu);
-
-    QAction *timeSetting = new QAction(tr("Time Settings"), this);
-    timeSetting->setData("timeSetting");
-    menu->addAction(timeSetting );
-
-    connect(menu, &QMenu::aboutToHide, menu, &QMenu::deleteLater);
-    connect(menu, &QMenu::triggered, this, &DateTimePlugin::invokedMenuItem);
-
-    return menu;
+    return m_menu;
 }
 
 void DateTimePlugin::setDefaultColor(PluginProxyInterface::DefaultColor color)
@@ -93,17 +89,10 @@ void DateTimePlugin::invokedMenuItem(QAction *action)
 {
     const QString &value = action->data().toString();
 
-    if (value == "is24" || value == "is12")
-        m_settings.is24 = value == "is24";
-
-    m_centralWidget->set24HourFormat(m_settings.is24);
-
-    m_centralWidget->setFormat(m_settings.format);
-
     if (value == "timeSetting")
         QProcess::startDetached("dbus-send --print-reply --dest=com.deepin.dde.ControlCenter /com/deepin/dde/ControlCenter com.deepin.dde.ControlCenter.ShowModule \"string:datetime\"");
 
-    action->deleteLater();
+    m_proxyInter->hidePopupWindow();
 
     saveConfig();
 }

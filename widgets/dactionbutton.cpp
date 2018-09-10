@@ -29,6 +29,7 @@ DActionButton::DActionButton(QWidget *parent)
     , m_layout(new QHBoxLayout)
     , m_isEnter(false)
 {
+    setAttribute(Qt::WA_TranslucentBackground);
     setFixedHeight(30);
 
     m_layout->setMargin(0);

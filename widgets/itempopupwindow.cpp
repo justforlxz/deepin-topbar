@@ -5,11 +5,9 @@ ItemPopupWindow::ItemPopupWindow(QWidget *parent)
     , m_regionMonitor(new DRegionMonitor(this))
 {
     connect(m_regionMonitor, &DRegionMonitor::buttonRelease, this, [=] (const QPoint &p, const int flag){
-        if (flag == 1 && !geometry().contains(mapFromGlobal(p))) {
+        if (flag == 1 && !geometry().contains(p)) {
             hide();
             m_regionMonitor->unregisterRegion();
-            QWidget *w = getContent();
-            if (w) w->setParent(nullptr);
         }
     }, Qt::QueuedConnection);
 }
@@ -20,4 +18,12 @@ void ItemPopupWindow::show(int x, int y)
     QTimer::singleShot(0, this, [=] {
         m_regionMonitor->registerRegion();
     });
+}
+
+void ItemPopupWindow::hideEvent(QHideEvent *event)
+{
+    DArrowRectangle::hideEvent(event);
+    if (m_regionMonitor->registered()) {
+        m_regionMonitor->unregisterRegion();
+    }
 }
