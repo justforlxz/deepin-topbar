@@ -1,4 +1,4 @@
-Source: deepin-topbar
+Source: dde-topbar
 Section: base
 Priority: optional
 Maintainer: kirigaya <kirigaya@mkacg.com>
@@ -23,11 +23,13 @@ Build-Depends:
  libxtst-dev,
  libgsettings-qt-dev
 Standards-Version: 0.1-1
-Homepage: http://blog.mkacg.com
+Homepage: https://github.com/haruyukilxz/deepin-topbar
 
-Package: deepin-topbar
+Package: dde-topbar
 Architecture: any
 Depends:
  ${shlibs:Depends},
  ${misc:Depends}
+Conflicts: deepin-topbar
+Replaces: deepin-topbar
 Description: topbar for deepin.
