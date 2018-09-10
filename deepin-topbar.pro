@@ -19,6 +19,7 @@ desktop.files = deepin-topbar.desktop
 
 icon.path = $$PREFIX/share/icons/hicolor/scalable/apps
 icon.files = deepin-topbar.svg
+icon.files += deepin-logo.svg
 
 polkit.path = $${PREFIX}/share/polkit-1/actions
 polkit.files = com.deepin.dde.topbar.polkit.service

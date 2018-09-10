@@ -1,3 +1,13 @@
+<a name="0.4.7"></a>
+### 0.4.7 (2018-09-10)
+
+
+#### Bug Fixes
+
+*   mission logo svg ([3745fc00](https://github.com/kirigayakazushin/deepin-topbar/commit/3745fc00c5e8b5a4d708c99e2ea6eb7570c3c101))
+
+
+
 <a name="0.4.6"></a>
 ### 0.4.6 (2018-09-09)
 
