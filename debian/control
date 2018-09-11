@@ -11,7 +11,7 @@ Build-Depends:
  libdtkbase-dev,
  libdtkwidget-dev,
  libdtkcore-dev,
- libdtkcore-dev-bin,
+ libdtkcore-bin,
  libxcb-ewmh-dev,
  libxcb-util0-dev,
  libdframeworkdbus-dev,

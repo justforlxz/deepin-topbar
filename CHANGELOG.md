@@ -1,3 +1,13 @@
+<a name="0.4.10"></a>
+### 0.4.10 (2018-09-11)
+
+
+#### Bug Fixes
+
+*   error build depend ([dae42c68](https://github.com/kirigayakazushin/deepin-topbar/commit/dae42c6859f7e8c9add402eadd80a5711073b947))
+
+
+
 <a name="0.4.9"></a>
 ### 0.4.9 (2018-09-11)
 
