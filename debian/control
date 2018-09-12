@@ -7,6 +7,7 @@ Build-Depends:
  pkg-config,
  dpkg-dev,
  qt5-qmake,
+ qt5-default,
  qtbase5-dev,
  libdtkbase-dev,
  libdtkwidget-dev,
