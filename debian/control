@@ -1,4 +1,4 @@
-Source: dde-topbar
+Source: deepin-topbar
 Section: base
 Priority: optional
 Maintainer: kirigaya <kirigaya@mkacg.com>
@@ -28,11 +28,11 @@ Build-Depends:
 Standards-Version: 0.1-1
 Homepage: https://github.com/haruyukilxz/deepin-topbar
 
-Package: dde-topbar
+Package: deepin-topbar
 Architecture: any
 Depends:
  ${shlibs:Depends},
  ${misc:Depends}
-Conflicts: deepin-topbar
-Replaces: deepin-topbar
+Conflicts: dde-topbar
+Replaces: dde-topbar
 Description: topbar for deepin.
