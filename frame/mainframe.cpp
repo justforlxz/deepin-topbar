@@ -117,7 +117,7 @@ void MainFrame::showSetting()
 
 void MainFrame::setDocked(bool value)
 {
-    XcbMisc::instance()->set_window_type(winId(), value ? XcbMisc::Desktop : XcbMisc::Normal);
+    XcbMisc::instance()->set_window_type(winId(), value ? XcbMisc::Dock : XcbMisc::Normal);
 }
 
 void MainFrame::clearScreenGeometry()
