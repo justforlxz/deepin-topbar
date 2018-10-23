@@ -1,4 +1,6 @@
 #include "systemtrayplugin.h"
+#include "sni/statusnotifierwatcher.h"
+#include "snitraywidget.h"
 
 #include <QWindow>
 #include <QWidget>
@@ -33,7 +35,18 @@ void SystemTrayPlugin::init(PluginProxyInterface *proxyInter)
 
     m_proxyInter = proxyInter;
 
+    m_sniWatcher = new StatusNotifierWatcher(this);
+
+    QDBusConnection dbusConn = QDBusConnection::sessionBus();
+    const QString &host = QString("org.kde.StatusNotifierHost-") + QString::number(qApp->applicationPid());
+    dbusConn.registerService(host);
+    dbusConn.registerObject("/StatusNotifierHost", this);
+    m_sniWatcher->RegisterStatusNotifierHost(host);
+
     m_proxyInter->addItem(this, "system-tray");
+
+    connect(m_sniWatcher, &StatusNotifierWatcher::StatusNotifierItemRegistered, this, &SystemTrayPlugin::sniItemsChanged);
+    connect(m_sniWatcher, &StatusNotifierWatcher::StatusNotifierItemUnregistered, this, &SystemTrayPlugin::sniItemsChanged);
 
     connect(m_trayInter, &DBusTrayManager::TrayIconsChanged, this, &SystemTrayPlugin::trayListChanged);
     connect(m_trayInter, &DBusTrayManager::Changed, this, &SystemTrayPlugin::trayChanged);
@@ -41,6 +54,7 @@ void SystemTrayPlugin::init(PluginProxyInterface *proxyInter)
     m_trayInter->Manage();
 
     QTimer::singleShot(1, this, &SystemTrayPlugin::trayListChanged);
+    QTimer::singleShot(2, this, &SystemTrayPlugin::sniItemsChanged);
 }
 
 QWidget *SystemTrayPlugin::itemWidget(const QString &itemKey)
@@ -121,47 +135,93 @@ void SystemTrayPlugin::trayListChanged()
     QTimer::singleShot(800, &loop, &QEventLoop::quit);
     loop.exec();
 
-    QList<quint32> trayList = m_trayInter->trayIcons();
+    QList<quint32> winidList = m_trayInter->trayIcons();
+    QStringList trayList;
+
+    for (auto winid : winidList) {
+        trayList << XWindowTrayWidget::toTrayWidgetId(winid);
+    }
 
     for (auto tray : m_trayList.keys())
-        if (!trayList.contains(tray))
+        if (!trayList.contains(tray) && XWindowTrayWidget::isWinIdKey(tray))
             trayRemoved(tray);
 
     for (auto tray : trayList)
         trayAdded(tray);
 }
 
-void SystemTrayPlugin::trayAdded(const quint32 winId)
+void SystemTrayPlugin::trayAdded(const QString &itemKey)
 {
-    if (m_trayList.contains(winId))
+    if (m_trayList.contains(itemKey)) {
         return;
+    }
 
-    getWindowClass(winId);
+    AbstractTrayWidget *trayWidget = nullptr;
 
-    XWindowTrayWidget *trayWidget = new XWindowTrayWidget(winId);
+    if (XWindowTrayWidget::isWinIdKey(itemKey)) {
+        auto winId = XWindowTrayWidget::toWinId(itemKey);
+        getWindowClass(winId);
+        trayWidget = new XWindowTrayWidget(winId);
+    }
+    else if (SNITrayWidget::isSNIKey(itemKey)) {
+        const QString &sniServicePath = SNITrayWidget::toSNIServicePath(itemKey);
+        trayWidget = new SNITrayWidget(sniServicePath);
+        connect(trayWidget, &AbstractTrayWidget::iconChanged, this, &SystemTrayPlugin::sniItemIconChanged);
+    }
 
-    m_trayList[winId] = trayWidget;
-
-    m_trayApplet->addWidget(trayWidget);
+    if (trayWidget) {
+        m_trayList[itemKey] = trayWidget;
+        m_trayApplet->addWidget(trayWidget);
+    }
 }
 
-void SystemTrayPlugin::trayRemoved(const quint32 winId)
+void SystemTrayPlugin::trayRemoved(const QString &itemKey)
 {
-    if (!m_trayList.contains(winId))
+    if (!m_trayList.contains(itemKey))
         return;
 
-    XWindowTrayWidget *widget = m_trayList[winId];
+    AbstractTrayWidget *widget = m_trayList[itemKey];
 
-    m_trayList.remove(winId);
+    m_trayList.remove(itemKey);
+    m_trayApplet->trayWidgetRemoved(widget);
     widget->deleteLater();
 
     updateTipsContent();
 }
 
-void SystemTrayPlugin::trayChanged(const quint32 winId)
+void SystemTrayPlugin::trayChanged(quint32 winId)
 {
-    if (!m_trayList.contains(winId))
+    const QString &itemKey = XWindowTrayWidget::toTrayWidgetId(winId);
+    if (!m_trayList.contains(itemKey))
         return;
 
-    m_trayList[winId]->updateIcon();
+    m_trayList[itemKey]->updateIcon();
+}
+
+void SystemTrayPlugin::sniItemsChanged()
+{
+    const QStringList &itemServicePaths = m_sniWatcher->RegisteredStatusNotifierItems();
+    QStringList sinTrayKeyList;
+
+    for (auto item : itemServicePaths) {
+        sinTrayKeyList << SNITrayWidget::toSNIKey(item);
+    }
+
+    for (auto itemKey : m_trayList.keys()) {
+        if (!sinTrayKeyList.contains(itemKey) && SNITrayWidget::isSNIKey(itemKey)) {
+            trayRemoved(itemKey);
+        }
+    }
+
+    for (auto tray : sinTrayKeyList) {
+        trayAdded(tray);
+    }
+}
+
+void SystemTrayPlugin::sniItemIconChanged()
+{
+    AbstractTrayWidget *trayWidget = static_cast<AbstractTrayWidget *>(sender());
+    if (!m_trayList.values().contains(trayWidget)) {
+        return;
+    }
 }

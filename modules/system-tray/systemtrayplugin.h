@@ -9,6 +9,8 @@
 #include <QSettings>
 #include <QLabel>
 
+class StatusNotifierWatcher;
+
 namespace dtb {
 namespace systemtray {
 
@@ -36,18 +38,20 @@ private:
 
 private slots:
     void trayListChanged();
-    void trayAdded(const quint32 winId);
-    void trayRemoved(const quint32 winId);
-    void trayChanged(const quint32 winId);
+    void trayAdded(const QString &itemKey);
+    void trayRemoved(const QString &itemKey);
+    void trayChanged(quint32 winId);
 //    void switchToMode(const Dock::DisplayMode mode);
+    void sniItemsChanged();
+    void sniItemIconChanged();
 
 private:
     DBusTrayManager *m_trayInter;
-    QMap<quint32, XWindowTrayWidget *> m_trayList;
+    QMap<QString, AbstractTrayWidget *> m_trayList;
 
     TrayApplet *m_trayApplet;
     QLabel *m_tipsLabel;
-
+    StatusNotifierWatcher *m_sniWatcher;
     QSettings *m_containerSettings;
 };
 }

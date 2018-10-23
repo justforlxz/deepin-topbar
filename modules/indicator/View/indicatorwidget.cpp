@@ -8,7 +8,7 @@
 #include <QFutureWatcher>
 #include <QtConcurrent>
 #include <QDBusConnection>
-#include "../themeappicon.h"
+#include "utils/themeappicon.h"
 
 namespace dtb {
 namespace indicator {

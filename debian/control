@@ -24,7 +24,8 @@ Build-Depends:
  libxcb-composite0-dev,
  libqt5svg5-dev,
  libxtst-dev,
- libgsettings-qt-dev
+ libgsettings-qt-dev,
+ libdbusmenu-qt5-dev
 Standards-Version: 0.1-1
 Homepage: https://github.com/haruyukilxz/deepin-topbar
 

@@ -22,7 +22,8 @@ PKGCONFIG += xcb-ewmh \
              xext \
              xcb-image \
              xcb-icccm \
-             xcb-composite
+             xcb-composite \
+             dbusmenu-qt5
 
 HEADERS  += \
     mainframe.h \
@@ -34,7 +35,8 @@ HEADERS  += \
     item/contentmodule.h \
     utils/global.h \
     settings.h \
-    dbusservice.h
+    dbusservice.h \
+    utils/themeappicon.h
 
 SOURCES += \
     main.cpp\
@@ -47,7 +49,8 @@ SOURCES += \
     item/contentmodule.cpp \
     utils/global.cpp \
     settings.cpp \
-    dbusservice.cpp
+    dbusservice.cpp \
+    utils/themeappicon.cpp
 
 headers.files += ../interfaces/pluginsiteminterface.h \
                  ../interfaces/pluginproxyinterface.h
