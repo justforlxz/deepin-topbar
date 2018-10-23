@@ -5,12 +5,12 @@
 #include <QScreen>
 #include <QApplication>
 #include <QRect>
-#include <xcb/xcb.h>
-#include <xcb/xcb_ewmh.h>
 #include <QtX11Extras/QX11Info>
 #include <DPlatformWindowHandle>
 #include <DForeignWindow>
 #include <QTimer>
+#include <dbusdock.h>
+#include "utils/xcb_misc.h"
 
 DWIDGET_USE_NAMESPACE
 
@@ -48,6 +48,7 @@ MainFrame::MainFrame(QWidget *parent)
 
 MainFrame::~MainFrame()
 {
+    m_dockInter->deleteLater();
     m_desktopWidget->deleteLater();
 }
 
@@ -77,12 +78,19 @@ void MainFrame::init()
     m_hideWithLauncher->setStartValue(QPoint(m_mainPanel->x(), 0));
     m_hideWithLauncher->setEndValue(QPoint(m_mainPanel->x(), -m_mainPanel->height()));
     m_hideWithLauncher->setEasingCurve(QEasingCurve::InOutCubic);
+
+    m_dockInter = new DBusDock("com.deepin.dde.daemon.Dock","/com/deepin/dde/daemon/Dock" , QDBusConnection::sessionBus(),this);
 }
 
 void MainFrame::initConnect()
 {
     connect(m_desktopWidget, &QDesktopWidget::resized, this, &MainFrame::screenChanged);
     connect(m_desktopWidget, &QDesktopWidget::primaryScreenChanged, this, &MainFrame::screenChanged);
+
+    connect(m_dockInter, &DBusDock::DisplayModeChanged, this, &MainFrame::delayedScreenChanged);
+    connect(m_dockInter, &DBusDock::HideModeChanged, this, &MainFrame::delayedScreenChanged);
+    connect(m_dockInter, &DBusDock::PositionChanged, this, &MainFrame::delayedScreenChanged);
+    connect(m_dockInter, &DBusDock::IconSizeChanged, this, &MainFrame::delayedScreenChanged);
 }
 
 void MainFrame::initAnimation()
@@ -107,45 +115,57 @@ void MainFrame::showSetting()
     QTimer::singleShot(1, m_mainPanel, &dtb::MainPanel::showSettingDialog);
 }
 
-void MainFrame::screenChanged()
+void MainFrame::setDocked(bool value)
 {
-    QRect screen = m_desktopWidget->screenGeometry(m_desktopWidget->primaryScreen());
+    XcbMisc::instance()->set_window_type(winId(), value ? XcbMisc::Desktop : XcbMisc::Normal);
+}
+
+void MainFrame::clearScreenGeometry()
+{
+    XcbMisc::instance()->set_strut_partial(winId(), XcbMisc::OrientationTop, 0, 0, 0);
+}
+
+void MainFrame::reserveScreenGeometry(int top, int startX, int endX)
+{
+    XcbMisc::instance()->set_strut_partial(winId(), XcbMisc::OrientationTop, top, startX, endX);
+}
+
+void MainFrame::delayedScreenChanged()
+{
+    setDocked(false);
+    clearScreenGeometry();
+
+    // delay is required so that screen
+    // available geometry is updated
+    // after dock size/position update
+    QTimer::singleShot(1000, [this](){ resizeWindow(false); });    
+}
+
+void MainFrame::resizeWindow(bool hidden)
+{
+    QRect screen = m_desktopWidget->availableGeometry(m_desktopWidget->primaryScreen());
+
     resize(screen.width(), TOPHEIGHT);
     m_mainPanel->resize(screen.width(), TOPHEIGHT);
     resize(screen.width(), TOPHEIGHT);
-    move(screen.x(), screen.y() - TOPHEIGHT);
+    move(screen.x(), screen.y() - (hidden ? TOPHEIGHT : 0));
     m_mainPanel->move(0, 0);
 
-    xcb_ewmh_connection_t m_ewmh_connection;
-    xcb_intern_atom_cookie_t *cookie = xcb_ewmh_init_atoms(QX11Info::connection(), &m_ewmh_connection);
-    xcb_ewmh_init_atoms_replies(&m_ewmh_connection, cookie, NULL);
+    setDocked(true);
+    reserveScreenGeometry((screen.y() + TOPHEIGHT) * devicePixelRatioF(), screen.x(), screen.x() + width() - 1);
 
-    xcb_atom_t atoms[1];
-    atoms[0] = m_ewmh_connection._NET_WM_WINDOW_TYPE_DOCK;
-    xcb_ewmh_set_wm_window_type(&m_ewmh_connection, winId(), 1, atoms);
 
-    xcb_ewmh_wm_strut_partial_t strutPartial;
-    memset(&strutPartial, 0, sizeof(xcb_ewmh_wm_strut_partial_t));
-
-    // clear strut partial
-    xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, winId(), strutPartial);
-
-    // set strct partial
-    xcb_ewmh_wm_strut_partial_t strut_partial;
-    memset(&strut_partial, 0, sizeof(xcb_ewmh_wm_strut_partial_t));
-
-    strut_partial.top = TOPHEIGHT * devicePixelRatioF();
-    strut_partial.top_start_x = screen.x();
-    strut_partial.top_end_x = screen.x() + width() - 1;
-
-    xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, winId(), strut_partial);
-
-    m_launchAni->setStartValue(QPoint(screen.x(), screen.y() - TOPHEIGHT));
-    m_launchAni->setEndValue(QPoint(screen.x(), screen.y()));
+    m_launchAni->setStartValue(QPoint(x(), y()));
+    m_launchAni->setEndValue(QPoint(x(), y() + (hidden ? TOPHEIGHT : 0)));
 
     QTimer::singleShot(400, this, [=] {
         m_launchAni->start();
     });
+}
+
+void MainFrame::screenChanged()
+{
+    resizeWindow(true);
 }
 
 void MainFrame::onWindowListChanged()
