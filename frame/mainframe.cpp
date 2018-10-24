@@ -10,6 +10,7 @@
 #include <DForeignWindow>
 #include <QTimer>
 #include <dbusdock.h>
+#include "utils/deepin_dock.h"
 #include "utils/xcb_misc.h"
 
 DWIDGET_USE_NAMESPACE
@@ -87,7 +88,7 @@ void MainFrame::initConnect()
     connect(m_desktopWidget, &QDesktopWidget::resized, this, &MainFrame::screenChanged);
     connect(m_desktopWidget, &QDesktopWidget::primaryScreenChanged, this, &MainFrame::screenChanged);
 
-    connect(m_dockInter, &DBusDock::DisplayModeChanged, this, &MainFrame::delayedScreenChanged);
+    connect(m_dockInter, &DBusDock::DisplayModeChanged, this, &MainFrame::doubleDelayedScreenChanged);
     connect(m_dockInter, &DBusDock::HideModeChanged, this, &MainFrame::delayedScreenChanged);
     connect(m_dockInter, &DBusDock::PositionChanged, this, &MainFrame::delayedScreenChanged);
     connect(m_dockInter, &DBusDock::IconSizeChanged, this, &MainFrame::delayedScreenChanged);
@@ -130,21 +131,82 @@ void MainFrame::reserveScreenGeometry(int top, int startX, int endX)
     XcbMisc::instance()->set_strut_partial(winId(), XcbMisc::OrientationTop, top, startX, endX);
 }
 
+void MainFrame::doubleDelayedScreenChanged()
+{
+    // this function is for double update topbar
+    // in case, deepin dock is updating for a long time
+    // if topbar is correctly updated in first screenChanged
+    // second one will not be noticable
+    delayedScreenChanged();
+    QTimer::singleShot(7500, this, &MainFrame::delayedScreenChanged);
+}
+
+/*
+ *  this function checks if screen geometry changed
+ *  if so, it recalculate window size
+ *  it is a bit tricky tho, for two reasons
+ *   - we cannot check instantly if screenGeometry has changed,
+ *     because just after signal receive, screen available has not yet updated
+ *     so we need to wait a bit, before we can say whether screengeometry changed or not
+ *   - if we say it has changed, we need another delay, otherwise getScreenGeometry will return
+ *     screen geometry INCLUDING top bar. The workaround is to exclude topbar from reserved space
+ *     and wait some time, before we resize topbar and reserve the space again  
+ */
 void MainFrame::delayedScreenChanged()
 {
-    setDocked(false);
-    clearScreenGeometry();
+    if (isInDelayedScreenChanged)
+    {
+        // check again after some time
+        QTimer::singleShot(2500, this, &MainFrame::delayedScreenChanged);
+        return;
+    }
+
+    isInDelayedScreenChanged = true;
 
     // delay is required so that screen
     // available geometry is updated
     // after dock size/position update
-    QTimer::singleShot(1000, [this](){ resizeWindow(false); });    
+    QTimer::singleShot(1000, [this]()
+    {
+        QRect screenGeometry = getScreenGeometry();
+
+        if (screenGeometry == previousScreenRect)
+        {
+            isInDelayedScreenChanged = false;
+            return; // no need to update - result will be the same
+        }
+
+        setDocked(false);
+        clearScreenGeometry();
+
+        // delay is required so that screen
+        // available geometry is updated
+        // after clearScreenGeometry();
+        QTimer::singleShot(500, [this](){ isInDelayedScreenChanged = false; resizeWindow(false); });
+    });    
+}
+
+QRect MainFrame::getScreenGeometry()
+{
+    Dock::DockMode isDocked = Dock::DockMode(m_dockInter->displayMode());
+    Dock::Position position = Dock::Position(m_dockInter->position());
+
+    auto screen = m_desktopWidget->primaryScreen();
+
+    if (isDocked == Dock::DockMode::Fashion && (position == Dock::Position::Left || position == Dock::Position::Right))
+        return m_desktopWidget->screenGeometry(screen);
+
+    return m_desktopWidget->availableGeometry(screen);
 }
 
 void MainFrame::resizeWindow(bool hidden)
 {
-    QRect screen = m_desktopWidget->availableGeometry(m_desktopWidget->primaryScreen());
+    if (isInDelayedScreenChanged) // eventually, resizeWindow will be called again
+        return;
 
+    QRect screen = getScreenGeometry();
+
+    setFixedSize(screen.width(), TOPHEIGHT);
     resize(screen.width(), TOPHEIGHT);
     m_mainPanel->resize(screen.width(), TOPHEIGHT);
     resize(screen.width(), TOPHEIGHT);
@@ -154,12 +216,12 @@ void MainFrame::resizeWindow(bool hidden)
     setDocked(true);
     reserveScreenGeometry((screen.y() + TOPHEIGHT) * devicePixelRatioF(), screen.x(), screen.x() + width() - 1);
 
-
     m_launchAni->setStartValue(QPoint(x(), y()));
     m_launchAni->setEndValue(QPoint(x(), y() + (hidden ? TOPHEIGHT : 0)));
 
     QTimer::singleShot(400, this, [=] {
         m_launchAni->start();
+        previousScreenRect = getScreenGeometry(); // we are not taking `screen` value, as it has been already changed by us
     });
 }
 

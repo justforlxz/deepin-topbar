@@ -33,6 +33,7 @@ private slots:
 //    void updateWindowListInfo();
     void onWindowStateChanged(Qt::WindowState windowState);
     void delayedScreenChanged();
+    void doubleDelayedScreenChanged();
 
 private:
     void init();
@@ -43,6 +44,7 @@ private:
     void reserveScreenGeometry(int top, int startX, int endX);
     void clearScreenGeometry();
     void resizeWindow(bool hidden);
+    QRect getScreenGeometry();
 
 private:
     QDesktopWidget *m_desktopWidget;
@@ -56,6 +58,9 @@ private:
     QList<WId> m_maxWindowList;
 
     DBusDock *m_dockInter;
+
+    bool isInDelayedScreenChanged;
+    QRect previousScreenRect;
 };
 
 #endif // MAINFRAME_H

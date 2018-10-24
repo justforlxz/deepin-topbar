@@ -33,6 +33,7 @@ HEADERS  += \
     utils/itempopupwindow.h \
     utils/event_monitor.h \
     utils/xcb_misc.h \
+    utils/deepin_dock.h \
     item/contentmodule.h \
     utils/global.h \
     settings.h \
