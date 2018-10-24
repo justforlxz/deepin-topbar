@@ -26,7 +26,9 @@ using namespace dtb::widgets;
 
 SoundItem::SoundItem(QWidget *parent)
     : ContentModule(parent)
+    , m_tickScrollArea(new QScrollArea(this))
     , m_mprisTitle(new QLabel)
+    , m_tickEffect(new DTickEffect(m_mprisTitle, m_mprisTitle))
     , m_fontLabel(new QLabel)
     , m_mprisInter(nullptr)
 //    , m_mediaControl(new MediaControl)
@@ -35,11 +37,28 @@ SoundItem::SoundItem(QWidget *parent)
     , m_menu(new QMenu(this))
 {
     setStyleSheet("QLabel {color: #d3d3d3;}");
+
+    m_tickScrollArea->setWidget(m_mprisTitle);
+    m_tickScrollArea->setObjectName("scrollarea");
+    m_tickScrollArea->setWidgetResizable(true);
+    m_tickScrollArea->setFocusPolicy(Qt::NoFocus);
+    m_tickScrollArea->setFrameStyle(QFrame::NoFrame);
+    m_tickScrollArea->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
+    m_tickScrollArea->setContentsMargins(0, 0, 0, 0);
+    m_tickScrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_tickScrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_tickScrollArea->setStyleSheet("background-color:transparent;");
+    m_tickScrollArea->hide();
+
+    m_tickEffect->setDirection(DTickEffect::RightToLeft);
+    m_tickEffect->setDuration(3000);
+
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
     layout->setSpacing(3);
     layout->setContentsMargins(3, 0, 3, 0);
-    layout->addWidget(m_mprisTitle, 0, Qt::AlignCenter);
+    layout->addWidget(m_tickScrollArea, 0, Qt::AlignCenter);
+    layout->addSpacing(20);
 //    layout->addWidget(m_mediaControl, 0, Qt::AlignCenter);
     layout->addWidget(m_fontLabel, 0, Qt::AlignCenter);
 
@@ -208,7 +227,19 @@ void SoundItem::loadMPRISPath(const QString &path) {
 //    connect(m_mediaControl, &MediaControl::requestPause, m_mprisInter, &DBusMediaPlayer2::PlayPause, Qt::UniqueConnection);
 
     connect(m_mprisInter, &DBusMediaPlayer2::MetadataChanged, this, [=]{
-        m_mprisTitle->setText(m_mprisInter->metadata().value("xesam:title").toString() + " ");
+        const QString title { m_mprisInter->metadata().value("xesam:title").toString()};
+        if (title == m_mprisTitle->text()) return;
+
+        m_mprisTitle->setText(title);
+        const int width { fontMetrics().width(title) + 10 };
+        m_mprisTitle->setFixedWidth(width);
+        m_tickScrollArea->setFixedWidth(std::min(std::min(200, width), 200));
+
+        m_tickEffect->deleteLater();
+        m_tickEffect = new DTickEffect(m_mprisTitle, m_mprisTitle);
+        m_tickEffect->setDirection(DTickEffect::RightToLeft);
+        m_tickEffect->setDuration(3000);
+        m_tickEffect->play();
     });
 
     connect(m_mprisInter, &DBusMediaPlayer2::PlaybackStatusChanged, this, [=]{
@@ -228,6 +259,8 @@ void SoundItem::loadMPRISPath(const QString &path) {
     m_mprisInter->PlaybackStatusChanged();
 
     m_mprisTitle->setVisible(true);
+    m_tickScrollArea->show();
+    m_tickEffect->play();
 }
 
 void SoundItem::removeMPRISPath(const QString &path) {
@@ -248,4 +281,6 @@ void SoundItem::removeMPRISPath(const QString &path) {
 //    m_mediaControl->setVisible(false);
 
     m_mprisTitle->setVisible(false);
+    m_tickScrollArea->hide();
+    m_tickEffect->stop();
 }

@@ -6,6 +6,10 @@
 #include "dbusmediaplayer2.h"
 #include <QMenu>
 #include <QWidget>
+#include <QScrollArea>
+#include <dtickeffect.h>
+
+DWIDGET_USE_NAMESPACE
 
 using DBusMPRIS = DBusMediaPlayer2;
 
@@ -49,7 +53,9 @@ private slots:
     void loadMPRISPath(const QString &path);
     void onNameOwnerChanged(const QString &name, const QString &oldOwner, const QString &newOwner);
 private:
+    QScrollArea *m_tickScrollArea;
     QLabel *m_mprisTitle;
+    DTickEffect *m_tickEffect;
     QLabel *m_fontLabel;
     DBusMediaPlayer2 *m_mprisInter;
     DBusInterface *m_dbusInter;
