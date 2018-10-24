@@ -13,6 +13,8 @@
 
 #include "mainpanel.h"
 
+class DBusDock;
+
 DWIDGET_USE_NAMESPACE
 
 class MainFrame : public DBlurEffectWidget
@@ -30,11 +32,17 @@ private slots:
     void onWindowListChanged();
 //    void updateWindowListInfo();
     void onWindowStateChanged(Qt::WindowState windowState);
+    void delayedScreenChanged();
 
 private:
     void init();
     void initConnect();
     void initAnimation();
+
+    void setDocked(bool value);
+    void reserveScreenGeometry(int top, int startX, int endX);
+    void clearScreenGeometry();
+    void resizeWindow(bool hidden);
 
 private:
     QDesktopWidget *m_desktopWidget;
@@ -46,6 +54,8 @@ private:
     QMap<WId,DForeignWindow*> m_windowList;
     QList<WId> m_windowIdList;
     QList<WId> m_maxWindowList;
+
+    DBusDock *m_dockInter;
 };
 
 #endif // MAINFRAME_H
