@@ -23,7 +23,8 @@ PKGCONFIG += xcb-ewmh \
              xcb-image \
              xcb-icccm \
              xcb-composite \
-             dbusmenu-qt5
+             dbusmenu-qt5 \
+             dde-network-utils
 
 HEADERS  += \
     mainframe.h \

@@ -1,18 +1,20 @@
-#ifndef networkPLUGIN_H
-#define networkPLUGIN_H
+#ifndef NETWORKPLUGIN_H
+#define NETWORKPLUGIN_H
 
 #include "../interfaces/pluginsiteminterface.h"
-#include "networkwidget.h"
-#include "networkmanager.h"
-#include "item/deviceitem.h"
-#include "item/wireditem.h"
-#include "item/wirelessitem.h"
 
+#include "networklistview.h"
+#include "networkcontrolpanel.h"
+
+#include <QLabel>
+#include <NetworkWorker>
+#include <NetworkModel>
+#include <NetworkDevice>
 #include <QObject>
 
 namespace dtb {
 namespace network {
-
+class NetworkListModel;
 class NetworkPlugin : public QObject, public PluginsItemInterface
 {
     Q_OBJECT
@@ -28,17 +30,20 @@ public:
     void setDefaultColor(PluginProxyInterface::DefaultColor color) Q_DECL_OVERRIDE;
 
 private slots:
-    void deviceAdded(const NetworkDevice &device);
-    void deviceRemoved(const NetworkDevice &device);
+    void refreshWiredItemVisible();
+    void onDeviceListChanged(const QList<dde::network::NetworkDevice *> devices);
 
 private:
     PluginProxyInterface *m_proxyInter;
-    NetworkWidget *m_network;
-    NetworkManager *m_networkManager;
-    QList<DeviceItem *> m_deviceItemList;
-    QTimer *m_refershTimer;
+    QTimer *m_delayRefreshTimer;
+    dde::network::NetworkModel *m_networkModel;
+    dde::network::NetworkWorker *m_networkWorker;
+    QMap<QString, dde::network::NetworkDevice *> m_itemsMap;
+    QLabel *m_networkWidget;
+    NetworkListModel *m_listModel;
+    NetworkControlPanel *m_controlPanel;
 };
 }
 }
 
-#endif // networkPLUGIN_H
+#endif // NETWORKPLUGIN_H

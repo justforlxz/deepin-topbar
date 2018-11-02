@@ -1,13 +1,24 @@
 #include "networkplugin.h"
+#include "networklistmodel.h"
+
+#include <DHiDPIHelper>
 
 using namespace dtb;
 using namespace dtb::network;
+using namespace dde;
+using namespace dde::network;
+
+DWIDGET_USE_NAMESPACE
 
 NetworkPlugin::NetworkPlugin()
 {
-    m_network = new NetworkWidget;
-    m_refershTimer = new QTimer(this);
-    m_networkManager = NetworkManager::instance(this);
+    m_networkWidget = new QLabel("网络");
+    m_controlPanel = new NetworkControlPanel;
+    m_delayRefreshTimer = new QTimer(this);
+    m_networkModel = new NetworkModel;
+    m_networkWorker = new NetworkWorker(m_networkModel);
+    m_listModel = new NetworkListModel;
+    m_controlPanel->setModel(m_listModel);
 }
 
 const QString NetworkPlugin::pluginName() const
@@ -19,62 +30,78 @@ void NetworkPlugin::init(PluginProxyInterface *proxyInter)
 {
     m_proxyInter = proxyInter;
 
-    m_refershTimer->setInterval(100);
-    m_refershTimer->setSingleShot(true);
+    m_delayRefreshTimer->setSingleShot(true);
+    m_delayRefreshTimer->setInterval(2000);
 
-    connect(m_networkManager, &NetworkManager::deviceAdded, this, &NetworkPlugin::deviceAdded);
-    connect(m_networkManager, &NetworkManager::deviceRemoved, this, &NetworkPlugin::deviceRemoved);
+    connect(m_delayRefreshTimer, &QTimer::timeout, this, &NetworkPlugin::refreshWiredItemVisible);
+    connect(m_networkModel, &NetworkModel::deviceListChanged, this, &NetworkPlugin::onDeviceListChanged);
 
-    m_networkManager->init();
-
+    m_networkWorker->active();
     m_proxyInter->addItem(this, "network");
+
+    onDeviceListChanged(m_networkModel->devices());
 }
 
 QWidget *NetworkPlugin::itemWidget(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return m_network;
+    return m_networkWidget;
 }
 
 QWidget *NetworkPlugin::itemContextMenu(const QString &itemKey)
 {
-    return nullptr;
+    Q_UNUSED(itemKey);
+
+    return m_controlPanel;
 }
 
 void NetworkPlugin::setDefaultColor(PluginProxyInterface::DefaultColor color)
 {
+    Q_UNUSED(color);
+}
+
+void NetworkPlugin::refreshWiredItemVisible()
+{
 
 }
 
-void NetworkPlugin::deviceAdded(const NetworkDevice &device)
+void NetworkPlugin::onDeviceListChanged(const QList<NetworkDevice *> devices)
 {
-    DeviceItem *item = nullptr;
-    switch (device.type())
-    {
-    case NetworkDevice::Wired:      item = new WiredItem(device.path());        break;
-    case NetworkDevice::Wireless:   item = new WirelessItem(device.path());     break;
-    default:;
+    QList<QString> mPaths = m_itemsMap.keys();
+    QList<QString> newPaths;
+
+    for (auto device : devices) {
+        const QString &path = device->path();
+        newPaths << path;
+        // new device
+        if (!mPaths.contains(path)) {
+            mPaths << path;
+            m_itemsMap.insert(path, device);
+            connect(device, &NetworkDevice::enableChanged, m_delayRefreshTimer, static_cast<void (QTimer:: *)()>(&QTimer::start));
+        }
     }
 
-    if (!item)
-        return;
+    for (auto mPath : mPaths) {
+        // removed device
+        if (!newPaths.contains(mPath)) {
+            m_itemsMap.take(mPath)->deleteLater();
+            break;
+        }
+    }
 
-    m_deviceItemList.append(item);
+//    int wirelessItemCount = wirelessItems.size();
+//    for (int i = 0; i < wirelessItemCount; ++i) {
+//        QTimer::singleShot(1, [=] {
+//            wirelessItems.at(i)->setDeviceInfo(wirelessItemCount == 1 ? -1 : i + 1);
+//        });
+//    }
 
-    m_network->addItem(item);
-}
+    m_listModel->setDeviceList(m_itemsMap);
 
-void NetworkPlugin::deviceRemoved(const NetworkDevice &device)
-{
-    const auto item = std::find_if(m_deviceItemList.begin(), m_deviceItemList.end(),
-                                   [&] (DeviceItem *dev) {return device == dev->path();});
+    if (!m_itemsMap.isEmpty()) {
 
-    if (item == m_deviceItemList.cend())
-        return;
+    }
 
-    m_network->remove(*item);
-
-    (*item)->deleteLater();
-    m_deviceItemList.erase(item);
+    m_delayRefreshTimer->start();
 }
