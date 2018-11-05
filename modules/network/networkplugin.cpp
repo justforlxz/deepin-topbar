@@ -53,6 +53,8 @@ QWidget *NetworkPlugin::itemContextMenu(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
+    m_networkWorker->requestWirelessScan();
+
     return m_controlPanel;
 }
 

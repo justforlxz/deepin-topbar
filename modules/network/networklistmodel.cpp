@@ -42,6 +42,13 @@ void NetworkListModel::setDeviceList(const QMap<QString, dde::network::NetworkDe
     // refresh all info
 }
 
+void NetworkListModel::setHoverIndex(const QModelIndex &index)
+{
+    m_hoverIndex = index;
+
+    emit dataChanged(index, index);
+}
+
 int NetworkListModel::rowCount(const QModelIndex &parent) const
 {
     if (!m_currentWirelessDevice) {
@@ -64,6 +71,12 @@ QVariant NetworkListModel::data(const QModelIndex &index, int role) const
     case SizeRole:
         return QSize(400, 50);
         break;
+    case HoverRole:
+        return index == m_hoverIndex;
+    case IconRole:
+        return icon(index);
+    case SecurityRole:
+        return isSecurity(index);
     default:
         break;
     }
@@ -121,4 +134,28 @@ void NetworkListModel::APPropertiesChanged(const QJsonObject &apInfo)
     const QModelIndex i = index(m_apMap[dev].indexOf(ap));
 
     emit dataChanged(i, i);
+}
+
+bool NetworkListModel::isSecurity(const QModelIndex &index) const
+{
+    return m_apMap[m_currentWirelessDevice][index.row()].secured();
+}
+
+const QString NetworkListModel::icon(const QModelIndex &index) const
+{
+    const int strenght = m_apMap[m_currentWirelessDevice][index.row()].strength() / 10;
+
+    int value = 0;
+    for (int i = 0; i != 11; i++) {
+        if (strenght < i) {
+            value = i;
+            break;
+        }
+    }
+
+    if ((value % 2) != 0) {
+        value -= 1;
+    }
+
+    return QString(":/wireless/resources/wireless/wireless-%1.svg").arg(value);
 }
