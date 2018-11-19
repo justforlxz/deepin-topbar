@@ -1,3 +1,13 @@
+<a name="0.5.1"></a>
+### 0.5.1 (2018-11-19)
+
+
+#### Features
+
+*   disable system-tray when dock tray enabled ([c3cd8ecf](https://github.com/kirigayakazushin/deepin-topbar/commit/c3cd8ecf41503241c2ca27d475b2c3ece10f8cc4))
+
+
+
 <a name="0.4.11"></a>
 ### 0.4.11 (2018-09-12)
 
