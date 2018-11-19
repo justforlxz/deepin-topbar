@@ -25,6 +25,12 @@ const QString SystemTrayPlugin::pluginName() const
 
 void SystemTrayPlugin::init(PluginProxyInterface *proxyInter)
 {
+    QSettings settings("deepin", "dde-dock");
+    settings.beginGroup("system-tray");
+    if (settings.value("enable", true).toBool()) {
+        return;
+    }
+
     m_proxyInter = proxyInter;
 
     m_proxyInter->addItem(this, "system-tray");
