@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es_ES" version="1.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="pl_PL" version="1.0">
 <context>
     <name>dtb::datetime::DateTimePlugin</name>
     <message>
