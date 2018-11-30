@@ -282,7 +282,6 @@ target_include_directories(${BIN_NAME} PUBLIC
                                         ${QGSettings_INCLUDE_DIRS}
                                         ${DDE-Network-Utils_INCLUDE_DIRS}
                                         ${XCB_LIBS_INCLUDE_DIRS}
-                                        ${ALL_FILES}
                                         ${PROJECT_BINARY_DIR}
 )
 
