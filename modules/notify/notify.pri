@@ -1,11 +1,13 @@
 SOURCES += \
     $$PWD/notifyplugin.cpp \
     $$PWD/notifywidget.cpp \
-    $$PWD/notifypopupwidget.cpp\
-    $$PWD/notifylistview.cpp
+    $$PWD/notifypopupwidget.cpp \
+    $$PWD/notifyitem.cpp \
+    $$PWD/notifyhandle.cpp
 
 HEADERS += \
     $$PWD/notifyplugin.h \
     $$PWD/notifywidget.h \
     $$PWD/notifypopupwidget.h \
-    $$PWD/notifylistview.h
+    $$PWD/notifyitem.h \
+    $$PWD/notifyhandle.h
