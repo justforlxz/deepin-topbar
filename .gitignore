@@ -37,3 +37,5 @@ plugins/*/moc*
 
 moc_*
 qrc_*
+build/
+.vscode/
