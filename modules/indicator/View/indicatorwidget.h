@@ -4,11 +4,12 @@
 #include "item/contentmodule.h"
 #include "entry.h"
 #include <QWidget>
-#include <dbusdock.h>
 #include <dbusdockentry.h>
 #include <com_deepin_daemon_systeminfo.h>
+#include <com_deepin_dde_daemon_dock.h>
 
 using systeminfo = com::deepin::daemon::SystemInfo;
+using DockInter = com::deepin::dde::daemon::Dock;
 
 namespace dtb {
 namespace indicator {
@@ -33,7 +34,7 @@ private slots:
     void refreshActiveWindow();
 
 private:
-    DBusDock *m_dockInter;
+    DockInter *m_dockInter;
     QList<DBusDockEntry *> m_entryList;
     Entry *m_entry;
     DBusDockEntry *m_activeWindow;

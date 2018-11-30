@@ -32,7 +32,6 @@ HEADERS  += \
     item/stretchitem.h \
     utils/itempopupwindow.h \
     utils/event_monitor.h \
-    utils/xcb_misc.h \
     item/contentmodule.h \
     utils/global.h \
     settings.h \
@@ -47,7 +46,6 @@ SOURCES += \
     item/stretchitem.cpp \
     utils/itempopupwindow.cpp \
     utils/event_monitor.cpp \
-    utils/xcb_misc.cpp \
     item/contentmodule.cpp \
     utils/global.cpp \
     settings.cpp \

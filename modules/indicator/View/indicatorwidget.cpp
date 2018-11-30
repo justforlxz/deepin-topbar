@@ -29,10 +29,10 @@ IndicatorWidget::IndicatorWidget(QWidget *parent)
         m_systemVersion = version;
     });
     
-    m_dockInter = new DBusDock("com.deepin.dde.daemon.Dock","/com/deepin/dde/daemon/Dock" , QDBusConnection::sessionBus(),this);
+    m_dockInter = new DockInter("com.deepin.dde.daemon.Dock","/com/deepin/dde/daemon/Dock" , QDBusConnection::sessionBus(),this);
 
-    connect(m_dockInter, &DBusDock::EntryAdded, this, &IndicatorWidget::addEntry);
-    connect(m_dockInter, &DBusDock::EntryRemoved, this, &IndicatorWidget::removeEntry);
+    connect(m_dockInter, &DockInter::EntryAdded, this, &IndicatorWidget::addEntry);
+    connect(m_dockInter, &DockInter::EntryRemoved, this, &IndicatorWidget::removeEntry);
 
     getAllEntry();
 }
