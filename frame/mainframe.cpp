@@ -99,6 +99,7 @@ void MainFrame::initConnect()
     connect(m_dockInter, &DockInter::HideModeChanged, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
     connect(m_dockInter, &DockInter::PositionChanged, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
     connect(m_dockInter, &DockInter::IconSizeChanged, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
+    connect(m_dockInter, &DockInter::FrontendWindowRectChanged, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
 }
 
 void MainFrame::initAnimation()
@@ -167,7 +168,7 @@ void MainFrame::screenChanged()
         strut_partial.top_start_x = primaryRect.x();
         strut_partial.top_end_x = primaryRect.x() + primaryRect.width();
 
-        if (dockRect.topRight().y() + TOPHEIGHT >= primaryRect.height()) {
+        if (dockRect.bottomRight().y() + TOPHEIGHT >= primaryRect.height()) {
             m_mainPanel->resize(primaryRect.width() - dockRect.topRight().x(), TOPHEIGHT);
             m_mainPanel->move(0, 0);
             setFixedSize(primaryRect.width() - dockRect.topRight().x(), TOPHEIGHT);
@@ -185,9 +186,9 @@ void MainFrame::screenChanged()
         strut_partial.top_start_x = primaryRect.x();
         strut_partial.top_end_x = primaryRect.x() + primaryRect.width();
 
-        if (dockRect.topRight().y() + TOPHEIGHT >= primaryRect.height()) {
-            setFixedSize(primaryRect.width() - dockRect.topRight().x(), TOPHEIGHT);
-            m_mainPanel->resize(primaryRect.width() - dockRect.topRight().x(), TOPHEIGHT);
+        if (dockRect.bottomRight().y() + TOPHEIGHT >= primaryRect.height()) {
+            setFixedSize(dockRect.topLeft().x(), TOPHEIGHT);
+            m_mainPanel->resize(dockRect.topLeft().x(), TOPHEIGHT);
         }
         else {
             setFixedSize(primaryRect.width(), TOPHEIGHT);
@@ -198,11 +199,11 @@ void MainFrame::screenChanged()
         m_mainPanel->move(0, 0);
         break;
     case DOCK_POS_TOP:
-        strut_partial.top = TOPHEIGHT * devicePixelRatioF() + dockRect.topRight().y();
+        strut_partial.top = TOPHEIGHT * devicePixelRatioF() + dockRect.bottomRight().y();
         strut_partial.top_start_x = primaryRect.x();
         strut_partial.top_end_x = primaryRect.x() + primaryRect.width();
 
-        move(primaryRect.x(), primaryRect.y() + dockRect.topRight().y());
+        move(primaryRect.x(), primaryRect.y() + dockRect.bottomRight().y());
         setFixedSize(primaryRect.width(), TOPHEIGHT);
         m_mainPanel->resize(primaryRect.width(), TOPHEIGHT);
         m_mainPanel->move(0, 0);
