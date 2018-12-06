@@ -39,3 +39,4 @@ moc_*
 qrc_*
 build/
 .vscode/
+*.user
