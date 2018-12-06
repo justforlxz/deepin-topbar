@@ -259,12 +259,8 @@ set(QRC_FILES
 
 # Find the library
 find_package(PkgConfig REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Concurrent REQUIRED)
-find_package(Qt5X11Extras REQUIRED)
-find_package(Qt5DBus REQUIRED)
 find_package(DtkWidget REQUIRED)
-find_package(Qt5Svg REQUIRED)
+find_package(Qt5 COMPONENTS Core Gui DBus Svg X11Extras Concurrent REQUIRED)
 
 pkg_check_modules(XCB_LIBS REQUIRED xcb-ewmh xcb xcb-image xcb-composite xtst xcb-icccm dbusmenu-qt5)
 pkg_check_modules(XCB_EWMH REQUIRED xcb-ewmh x11 xext)
@@ -287,16 +283,17 @@ target_include_directories(${BIN_NAME} PUBLIC
 
 target_link_libraries(${BIN_NAME} PRIVATE
         ${DFrameworkDBus_LIBRARIES}
-        ${DtkWidget_LIBRARIES}
-        ${Qt5Widgets_LIBRARIES}
-        ${Qt5Concurrent_LIBRARIES}
-        ${Qt5X11Extras_LIBRARIES}
-        ${Qt5DBus_LIBRARIES}
         ${QGSettings_LIBRARIES}
-        ${Qt5Svg_LIBRARIES}
         ${DDE-Network-Utils_LIBRARIES}
         ${XCB_LIBS_LIBRARIES}
         ${XCB_EWMH_LIBRARIES}
+        ${DtkWidget_LIBRARIES}
+        Qt5::Core
+        Qt5::Gui
+        Qt5::Svg
+        Qt5::DBus
+        Qt5::X11Extras
+        Qt5::Concurrent
 )
 
 # bin

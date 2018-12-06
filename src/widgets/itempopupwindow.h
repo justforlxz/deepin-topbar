@@ -13,7 +13,7 @@ class ItemPopupWindow : public DArrowRectangle
 public:
     explicit ItemPopupWindow(QWidget *parent = nullptr);
 
-    void show(int x, int y);
+    void show(int x, int y) override;
 
 protected:
     void hideEvent(QHideEvent *event) Q_DECL_OVERRIDE;

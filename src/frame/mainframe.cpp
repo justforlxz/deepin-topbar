@@ -11,6 +11,7 @@
 #include <DPlatformWindowHandle>
 #include <DForeignWindow>
 #include <QTimer>
+#include <DWindowManagerHelper>
 
 DWIDGET_USE_NAMESPACE
 
@@ -19,33 +20,12 @@ DWIDGET_USE_NAMESPACE
 #define DOCK_POS_BOTTOM 2
 #define DOCK_POS_LEFT 3
 
-#define DEFINE_CONST_CHAR(Name) const char _##Name[] = "_d_" #Name
-
-// functions
-DEFINE_CONST_CHAR(getWindows);
-DEFINE_CONST_CHAR(connectWindowListChanged);
-
-static bool connectWindowListChanged(QObject *object, std::function<void ()> slot)
-{
-    QFunctionPointer connectWindowListChanged = Q_NULLPTR;
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-    connectWindowListChanged = qApp->platformFunction(_connectWindowListChanged);
-#endif
-
-    return connectWindowListChanged && reinterpret_cast<bool(*)(QObject *object, std::function<void ()>)>(connectWindowListChanged)(object, slot);
-}
-
 MainFrame::MainFrame(QWidget *parent)
     : DBlurEffectWidget(parent)
 {
     init();
     initAnimation();
     initConnect();
-
-    connectWindowListChanged(this, [=] {
-        onWindowListChanged();
-    });
 
     QTimer::singleShot(0, this, &MainFrame::screenChanged);
     QTimer::singleShot(0, this, &MainFrame::onWindowListChanged);
@@ -100,6 +80,8 @@ void MainFrame::initConnect()
     connect(m_dockInter, &DockInter::PositionChanged, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
     connect(m_dockInter, &DockInter::IconSizeChanged, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
     connect(m_dockInter, &DockInter::FrontendWindowRectChanged, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
+
+    connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::windowListChanged, this, &MainFrame::onWindowListChanged);
 }
 
 void MainFrame::initAnimation()
@@ -224,47 +206,13 @@ void MainFrame::screenChanged()
 
 void MainFrame::onWindowListChanged()
 {
-    QFunctionPointer wmClientList = Q_NULLPTR;
+    QList<DForeignWindow*> windowList = DWindowManagerHelper::instance()->currentWorkspaceWindows();
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-    wmClientList = qApp->platformFunction(_getWindows);
-#endif
+    for (DForeignWindow * window : windowList) {
+        if (window->winId() == this->window()->winId()) continue;
 
-    if (wmClientList) {
-        QList<WId> newList;
-        // create new DForeignWindow
-        for (WId wid : reinterpret_cast<QVector<quint32>(*)()>(wmClientList)()) {
-            if (wid == this->topLevelWidget()->internalWinId()) {
-                continue;
-            }
-
-            newList << wid;
-
-            if (!m_windowList.keys().contains(wid)) {
-                DForeignWindow *w = DForeignWindow::fromWinId(wid);
-                if (!w) {
-                    continue;
-                }
-
-                connect(w, &DForeignWindow::windowStateChanged, this, &MainFrame::onWindowStateChanged);
-                w->windowStateChanged(w->windowState());
-
-                m_windowList[wid] = w;
-                m_windowIdList << wid;
-            }
-        }
-        // remove old DForeignWindow
-        QMapIterator<WId,DForeignWindow*> map(m_windowList);
-        while (map.hasNext()) {
-            map.next();
-            if (!newList.contains(map.key())) {
-                map.value()->deleteLater();
-                if (m_maxWindowList.contains(map.key())) {
-                    m_maxWindowList.removeOne(map.key());
-                }
-                m_windowList.remove(map.key());
-            }
-        }
+        connect(window, &DForeignWindow::windowStateChanged, this, &MainFrame::onWindowStateChanged, Qt::ConnectionType::UniqueConnection);
+        window->windowStateChanged(window->windowState());
     }
 }
 
