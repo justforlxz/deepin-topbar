@@ -26,16 +26,21 @@ MainFrame::MainFrame(QWidget *parent)
     init();
     initAnimation();
     initConnect();
+    screenChanged();
 
-    QTimer::singleShot(0, this, &MainFrame::screenChanged);
-    QTimer::singleShot(0, this, &MainFrame::onWindowListChanged);
+    const QPoint self_point = geometry().topLeft();
+    move(QPoint(self_point.x(), self_point.y() - TOPHEIGHT));
 
-    m_launchAni->setStartValue(QPoint(geometry().x(), geometry().y() - TOPHEIGHT));
-    m_launchAni->setEndValue(geometry().topLeft());
+    QTimer::singleShot(100, this, [=] {
+        m_launchAni->setStartValue(geometry().topLeft());
+        m_launchAni->setEndValue(self_point);
+        m_launchAni->start();
+    });
 
-    // QTimer::singleShot(400, this, [=] {
-    //     m_launchAni->start();
-    // });
+    QTimer::singleShot(2000, this, [=] {
+        connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::windowListChanged, this, &MainFrame::onWindowListChanged, Qt::QueuedConnection);
+        onWindowListChanged();
+    });  // will draw exceptions
 }
 
 MainFrame::~MainFrame()
@@ -87,8 +92,6 @@ void MainFrame::initConnect()
     connect(m_dockInter, &DockInter::PositionChanged, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
     connect(m_dockInter, &DockInter::IconSizeChanged, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
     connect(m_dockInter, &DockInter::FrontendWindowRectChanged, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
-
-    connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::windowListChanged, this, &MainFrame::onWindowListChanged, Qt::QueuedConnection);
 }
 
 void MainFrame::initAnimation()
@@ -211,7 +214,8 @@ void MainFrame::onWindowListChanged()
     for (DForeignWindow * window : windowList) {
         if (window->winId() == this->window()->winId()) continue;
 
-        connect(window, &DForeignWindow::windowStateChanged, this, &MainFrame::onWindowStateChanged, Qt::ConnectionType::UniqueConnection);
+        connect(window, &DForeignWindow::windowStateChanged, this, &MainFrame::onWindowStateChanged, Qt::ConnectionType::QueuedConnection);
+
         emit window->windowStateChanged(window->windowState());
     }
 }

@@ -56,7 +56,7 @@ void MainPanel::initConnect()
 {
     connect(m_backgroundAni, &QVariantAnimation::valueChanged, this, [=] (const QVariant &value){
         onBackgroundChanged(value.value<QColor>());
-    });
+    }, Qt::ConnectionType::QueuedConnection);
     connect(m_settings, &Settings::valueChanged, this, [=] (const QString &key, const QVariant &value) {
         if (key == "base.base_setting.enable_dock") {
             QSettings setting("deepin", "dde-dock-tray");
