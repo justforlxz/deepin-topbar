@@ -48,10 +48,6 @@ void DateTimePlugin::init(PluginProxyInterface *proxyInter) {
 
     connect(m_menu, &QMenu::triggered, this, &DateTimePlugin::invokedMenuItem);
 
-    QTimer::singleShot(1, this, [=] {
-        m_proxyInter->moveToCenter(this, pluginName());
-    });
-
     const QJsonObject obj = m_proxyInter->loadConfig(pluginName());
 
     m_settings.setModel(obj);

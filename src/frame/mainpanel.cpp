@@ -240,17 +240,6 @@ void MainPanel::setBackground(const QColor &color)
     m_backgroundAni->start();
 }
 
-void MainPanel::moveToCenter(PluginsItemInterface * const module, const QString &itemKey)
-{
-    QWidget *w = m_moduleMap[module][itemKey];
-
-    Q_ASSERT(w);
-
-    m_mainLayout->removeWidget(w);
-    w->raise();
-    w->move(rect().center() - w->rect().center());
-}
-
 void MainPanel::hidePopupWindow()
 {
     for (int i = 0; i != m_moduleMap.size(); i++) {

@@ -25,8 +25,6 @@ public:
 
     virtual void setBackground(const QColor &color) = 0;
 
-    virtual void moveToCenter(PluginsItemInterface * const module, const QString &itemKey) = 0;
-
     virtual void hidePopupWindow() = 0;
 };
 

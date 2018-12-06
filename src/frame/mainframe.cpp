@@ -29,6 +29,13 @@ MainFrame::MainFrame(QWidget *parent)
 
     QTimer::singleShot(0, this, &MainFrame::screenChanged);
     QTimer::singleShot(0, this, &MainFrame::onWindowListChanged);
+
+    m_launchAni->setStartValue(QPoint(geometry().x(), geometry().y() - TOPHEIGHT));
+    m_launchAni->setEndValue(geometry().topLeft());
+
+    // QTimer::singleShot(400, this, [=] {
+    //     m_launchAni->start();
+    // });
 }
 
 MainFrame::~MainFrame()
@@ -81,7 +88,7 @@ void MainFrame::initConnect()
     connect(m_dockInter, &DockInter::IconSizeChanged, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
     connect(m_dockInter, &DockInter::FrontendWindowRectChanged, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
 
-    connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::windowListChanged, this, &MainFrame::onWindowListChanged);
+    connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::windowListChanged, this, &MainFrame::onWindowListChanged, Qt::QueuedConnection);
 }
 
 void MainFrame::initAnimation()
@@ -195,13 +202,6 @@ void MainFrame::screenChanged()
     }
 
     xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, winId(), strut_partial);
-
-//    m_launchAni->setStartValue(QPoint(primaryRect.x(), primaryRect.y() - TOPHEIGHT));
-//    m_launchAni->setEndValue(QPoint(primaryRect.x(), primaryRect.y()));
-
-//    QTimer::singleShot(400, this, [=] {
-//        m_launchAni->start();
-//    });
 }
 
 void MainFrame::onWindowListChanged()
@@ -212,7 +212,7 @@ void MainFrame::onWindowListChanged()
         if (window->winId() == this->window()->winId()) continue;
 
         connect(window, &DForeignWindow::windowStateChanged, this, &MainFrame::onWindowStateChanged, Qt::ConnectionType::UniqueConnection);
-        window->windowStateChanged(window->windowState());
+        emit window->windowStateChanged(window->windowState());
     }
 }
 
