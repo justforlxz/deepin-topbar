@@ -4,11 +4,9 @@ This is a project that I have a whim to help improve my ability to write code.
 
 ## How to get my message and software updates?
 
-I'll release messages on my twitter and google plus.
+I'll release messages on my twitter.
 
-[Twitter @haruyukilxz](https://twitter.com/haruyukilxz)
-
-[Google+](https://plus.google.com/+kirigayakazushin)
+[Twitter @justforlxz](https://twitter.com/justforlxz)
 
 ## Dependencies
 
@@ -16,16 +14,16 @@ I'll release messages on my twitter and google plus.
 
 * Qt5 (>= 5.6)
 * [deepin-tool-kit](https://github.com/linuxdeepin/deepin-tool-kit) (developer package)
-* [dde-qt-dbus-factory](https://github.com/linuxdeepin/dde-qt-dbus-factory)
-(developer package)
-* [deepin-qt5integration](https://github.com/linuxdeepin/deepin-qt5integration)
-(developer package)
+* [dde-qt-dbus-factory](https://github.com/linuxdeepin/dde-qt-dbus-factory) (developer package)
+* [deepin-qt5integration](https://github.com/linuxdeepin/deepin-qt5integration) (developer package)
+* [dde-network-utils](https://github.com/linuxdeepin/libdde-network-utils-dev) (developer package)
 * xcb-ewmh (developer package)
 * xcb-util (developer package)
 * xtst (developer package)
 * xcb-image (developer package)
 * xcb-icccm (developer package)
 * xcb-composite (developer package)
+* cmake (build package)
 
 ### Runtime dependencies
 
@@ -34,6 +32,7 @@ I'll release messages on my twitter and google plus.
 * [dde-daemon](https://github.com/linuxdeepin/dde-daemon)
 * [dde-qt-dbus-factory](https://github.com/linuxdeepin/dde-qt-dbus-factory)
 * [deepin-qt5integration](https://github.com/linuxdeepin/deepin-qt5integration)
+* [dde-network-utils](https://github.com/linuxdeepin/libdde-network-utils-dev)
 * linux-cpupower
 * Qt5 (>= 5.6)
   * Qt5-DBus
@@ -53,9 +52,9 @@ I'll release messages on my twitter and google plus.
 <p align="center"><img src="https://user-images.githubusercontent.com/12298476/40405507-6f0b97c0-5e8f-11e8-913c-f093b3f5005f.png"></p>
 <p align="center"><img src="https://user-images.githubusercontent.com/12298476/40405509-6f5d3288-5e8f-11e8-95f2-4acd2f6545eb.gif"></p>
 
-If you use Deepin, just add my ppa. see [here](https://blog.ilxz.me/topbar-ppa/)
+If you use Deepin, just install from appstore.
 
-If you use Arch, you can install deepin-topbar with aur.
+If you use Arch, you can install deepin-topbar in Community repo.
 
 ## Installation
 
@@ -68,7 +67,7 @@ If you use Arch, you can install deepin-topbar with aur.
 $ cd deepin-topbar
 $ mkdir Build
 $ cd Build
-$ qmake ..
+$ cmake ../
 $ make
 ```
 
