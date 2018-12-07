@@ -146,7 +146,7 @@ void MainFrame::screenChanged()
 
     switch (m_dockInter->position()) {
     case DOCK_POS_BOTTOM:
-        strut_partial.top = TOPHEIGHT;
+        strut_partial.top = TOPHEIGHT * devicePixelRatioF();
         strut_partial.top_start_x = primaryRect.x();
         strut_partial.top_end_x = primaryRect.x() + primaryRect.width();
 
@@ -156,7 +156,7 @@ void MainFrame::screenChanged()
         m_mainPanel->move(0, 0);
         break;
     case DOCK_POS_LEFT:
-        strut_partial.top = TOPHEIGHT;
+        strut_partial.top = TOPHEIGHT * devicePixelRatioF();
         strut_partial.top_start_x = primaryRect.x();
         strut_partial.top_end_x = primaryRect.x() + primaryRect.width();
 
@@ -174,13 +174,13 @@ void MainFrame::screenChanged()
         }
         break;
     case DOCK_POS_RIGHT:
-        strut_partial.top = TOPHEIGHT;
+        strut_partial.top = TOPHEIGHT * devicePixelRatioF();
         strut_partial.top_start_x = primaryRect.x();
         strut_partial.top_end_x = primaryRect.x() + primaryRect.width();
 
-        if (dockRect.bottomRight().y() + TOPHEIGHT >= primaryRect.height()) {
-            setFixedSize(primaryRect.width() - dockRect.width(), TOPHEIGHT);
-            m_mainPanel->resize(primaryRect.width() - dockRect.width(), TOPHEIGHT);
+        if (dockRect.height() / devicePixelRatioF() + TOPHEIGHT >= primaryRect.height()) {
+            setFixedSize(dockRect.topLeft().x() / devicePixelRatioF(), TOPHEIGHT);
+            m_mainPanel->resize(dockRect.topLeft().x() / devicePixelRatioF(), TOPHEIGHT);
         }
         else {
             setFixedSize(primaryRect.width(), TOPHEIGHT);
@@ -191,7 +191,7 @@ void MainFrame::screenChanged()
         m_mainPanel->move(0, 0);
         break;
     case DOCK_POS_TOP:
-        strut_partial.top = TOPHEIGHT + dockRect.bottomRight().y() / devicePixelRatioF();
+        strut_partial.top = TOPHEIGHT * devicePixelRatioF() + dockRect.height() / devicePixelRatioF();
         strut_partial.top_start_x = primaryRect.x();
         strut_partial.top_end_x = primaryRect.x() + primaryRect.width();
 
