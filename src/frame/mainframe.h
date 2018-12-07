@@ -45,8 +45,8 @@ private:
     dtb::MainPanel *m_mainPanel;
     DPlatformWindowHandle *m_handle;
     QPropertyAnimation *m_launchAni;
-    QPropertyAnimation *m_hideWithLauncher;
-    QPropertyAnimation *m_showWithLauncher;
+//    QPropertyAnimation *m_hideWithLauncher;
+//    QPropertyAnimation *m_showWithLauncher;
     DockInter *m_dockInter;
 
     QMap<WId,DForeignWindow*> m_windowList;

@@ -8,14 +8,17 @@
 
 #include <xcb/xcb_icccm.h>
 
+#define SNI_WATCHER_SERVICE "org.kde.StatusNotifierWatcher"
+#define SNI_WATCHER_PATH "/StatusNotifierWatcher"
+
 using namespace dtb;
 using namespace dtb::systemtray;
+using org::kde::StatusNotifierWatcher;
 
 SystemTrayPlugin::SystemTrayPlugin(QObject *parent)
-    : QObject(parent),
-      m_trayInter(new DBusTrayManager(this)),
-      m_trayApplet(new TrayApplet),
-      m_containerSettings(new QSettings("deepin", "dde-dock-tray"))
+    : QObject(parent)
+    , m_trayInter(new DBusTrayManager(this))
+    , m_trayApplet(new TrayApplet)
 {
     m_trayApplet->setObjectName("sys-tray");
 }
@@ -28,24 +31,25 @@ const QString SystemTrayPlugin::pluginName() const
 void SystemTrayPlugin::init(PluginProxyInterface *proxyInter)
 {
     QSettings settings("deepin", "dde-dock");
-    settings.beginGroup("system-tray");
+    settings.beginGroup("tray");
     if (settings.value("enable", true).toBool()) {
         return;
     }
 
     m_proxyInter = proxyInter;
 
-    if (m_containerSettings->value("enable", false).toBool()) {
-        return;
-    }
-
-    m_sniWatcher = new StatusNotifierWatcher(this);
-
+    // registor dock as SNI Host on dbus
     QDBusConnection dbusConn = QDBusConnection::sessionBus();
-    const QString &host = QString("org.kde.StatusNotifierHost-") + QString::number(qApp->applicationPid());
-    dbusConn.registerService(host);
+    m_sniHostService = QString("org.kde.StatusNotifierHost-") + QString::number(qApp->applicationPid());
+    dbusConn.registerService(m_sniHostService);
     dbusConn.registerObject("/StatusNotifierHost", this);
-    m_sniWatcher->RegisterStatusNotifierHost(host);
+
+    m_sniWatcher = new StatusNotifierWatcher(SNI_WATCHER_SERVICE, SNI_WATCHER_PATH, QDBusConnection::sessionBus(), this);
+    if (m_sniWatcher->isValid()) {
+        m_sniWatcher->RegisterStatusNotifierHost(m_sniHostService);
+    } else {
+        qDebug() << "Tray:" << SNI_WATCHER_SERVICE << "SNI watcher daemon is not exist for now!";
+    }
 
     m_proxyInter->addItem(this, "system-tray");
 
@@ -75,25 +79,11 @@ bool SystemTrayPlugin::itemAllowContainer(const QString &itemKey)
     return true;
 }
 
-bool SystemTrayPlugin::itemIsInContainer(const QString &itemKey)
-{
-    const QString widKey = getWindowClass(itemKey.toInt());
-    if (widKey.isEmpty())
-        return false;
-
-    return m_containerSettings->value(widKey, false).toBool();
-}
-
 int SystemTrayPlugin::itemSortKey(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
     return 0;
-}
-
-void SystemTrayPlugin::setItemIsInContainer(const QString &itemKey, const bool container)
-{
-    m_containerSettings->setValue(getWindowClass(itemKey.toInt()), container);
 }
 
 void SystemTrayPlugin::setDefaultColor(PluginProxyInterface::DefaultColor color)
@@ -204,7 +194,7 @@ void SystemTrayPlugin::trayChanged(quint32 winId)
 
 void SystemTrayPlugin::sniItemsChanged()
 {
-    const QStringList &itemServicePaths = m_sniWatcher->RegisteredStatusNotifierItems();
+    const QStringList &itemServicePaths = m_sniWatcher->registeredStatusNotifierItems();
     QStringList sinTrayKeyList;
 
     for (auto item : itemServicePaths) {

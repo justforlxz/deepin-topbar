@@ -38,8 +38,8 @@ MainFrame::MainFrame(QWidget *parent)
     });
 
     QTimer::singleShot(2000, this, [=] {
-        connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::windowListChanged, this, &MainFrame::onWindowListChanged, Qt::QueuedConnection);
-        onWindowListChanged();
+        // connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::windowListChanged, this, &MainFrame::onWindowListChanged, Qt::QueuedConnection);
+        // onWindowListChanged();
     });  // will draw exceptions
 }
 
@@ -64,17 +64,17 @@ void MainFrame::init()
 
     m_mainPanel = new dtb::MainPanel(this);
 
-    m_showWithLauncher =new QPropertyAnimation(m_mainPanel, "pos", m_mainPanel);
-    m_showWithLauncher->setDuration(300);
-    m_showWithLauncher->setStartValue(QPoint(m_mainPanel->x(), -m_mainPanel->height()));
-    m_showWithLauncher->setEndValue(QPoint(m_mainPanel->x(), 0));
-    m_showWithLauncher->setEasingCurve(QEasingCurve::InOutCubic);
+//    m_showWithLauncher =new QPropertyAnimation(m_mainPanel, "pos", m_mainPanel);
+//    m_showWithLauncher->setDuration(300);
+//    m_showWithLauncher->setStartValue(QPoint(m_mainPanel->x(), -m_mainPanel->height()));
+//    m_showWithLauncher->setEndValue(QPoint(m_mainPanel->x(), 0));
+//    m_showWithLauncher->setEasingCurve(QEasingCurve::InOutCubic);
 
-    m_hideWithLauncher =new QPropertyAnimation(m_mainPanel, "pos", m_mainPanel);
-    m_hideWithLauncher->setDuration(300);
-    m_hideWithLauncher->setStartValue(QPoint(m_mainPanel->x(), 0));
-    m_hideWithLauncher->setEndValue(QPoint(m_mainPanel->x(), -m_mainPanel->height()));
-    m_hideWithLauncher->setEasingCurve(QEasingCurve::InOutCubic);
+//    m_hideWithLauncher =new QPropertyAnimation(m_mainPanel, "pos", m_mainPanel);
+//    m_hideWithLauncher->setDuration(300);
+//    m_hideWithLauncher->setStartValue(QPoint(m_mainPanel->x(), 0));
+//    m_hideWithLauncher->setEndValue(QPoint(m_mainPanel->x(), -m_mainPanel->height()));
+//    m_hideWithLauncher->setEasingCurve(QEasingCurve::InOutCubic);
 
     m_dockInter = new DockInter("com.deepin.dde.daemon.Dock",
                                 "/com/deepin/dde/daemon/Dock",
@@ -100,15 +100,15 @@ void MainFrame::initAnimation()
     m_launchAni->setDuration(1000);
     m_launchAni->setEasingCurve(QEasingCurve::OutBounce);
 
-    connect(m_showWithLauncher, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
-        move(value.toPoint());
-        update();
-    });
+//    connect(m_showWithLauncher, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
+//        move(value.toPoint());
+//        update();
+//    });
 
-    connect(m_hideWithLauncher, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
-        move(value.toPoint());
-        update();
-    });
+//    connect(m_hideWithLauncher, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
+//        move(value.toPoint());
+//        update();
+//    });
 }
 
 void MainFrame::showSetting()
@@ -219,60 +219,6 @@ void MainFrame::onWindowListChanged()
         emit window->windowStateChanged(window->windowState());
     }
 }
-
-//void MainFrame::updateWindowListInfo()
-//{
-//    if (m_infoUpdating) {
-//        return;
-//    }
-
-//    // update info
-
-//    m_infoUpdating= true;
-//    bool isMaxWindow = false;
-
-//    QMapIterator<WId, DForeignWindow*> map(m_windowList);
-//    while (map.hasNext()) {
-//        map.next();
-//        DForeignWindow *w = map.value();
-
-//        if (w->windowState() == Qt::WindowMaximized ||
-//                (w->wmClass() != "dde-desktop" &&
-//                 w->wmClass() != "deepin-topbar" &&
-//                 w->position().y() <= 100 &&
-//                 w->windowState() != Qt::WindowMinimized)) {
-
-//            isMaxWindow = true;
-//        }
-
-//        if (w->wmClass() == "dde-launcher") {
-//            if (m_mainPanel->pos() != QPoint(m_mainPanel->x(), -30)) {
-//                m_hideWithLauncher->start();
-//            }
-//            m_infoUpdating = false;
-//            return;
-//        }
-
-//        if (w->windowState() == Qt::WindowFullScreen) {
-//            if (m_mainPanel->pos() != QPoint(m_mainPanel->x(), -30)) {
-//                m_hideWithLauncher->start();
-//            }
-//            m_infoUpdating = false;
-//            return;
-//        }
-//    }
-
-//    if (isMaxWindow) {
-//        m_mainPanel->setBackground(QColor(0, 0, 0, 255));
-//    } else {
-//    }
-
-//    // if launcher hide
-//    if (m_mainPanel->pos() == QPoint(m_mainPanel->x(), -30))
-//        m_showWithLauncher->start();
-
-//    m_infoUpdating = false;
-//}
 
 void MainFrame::onWindowStateChanged(Qt::WindowState windowState)
 {

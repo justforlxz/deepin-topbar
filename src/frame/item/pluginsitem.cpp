@@ -73,4 +73,3 @@ void PluginsItem::showTips()
     QPoint p(mapToGlobal(QPoint(pos().x() + width() / 2, height()) - pos()));
     PopupWindow->show(p.x(), p.y());
 }
-

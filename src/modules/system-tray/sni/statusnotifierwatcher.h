@@ -22,49 +22,67 @@
 #ifndef STATUSNOTIFIERWATCHER_H
 #define STATUSNOTIFIERWATCHER_H
 
-#include <QDBusContext>
-#include <QObject>
-#include <QStringList>
-#include <QSet>
+#include <QtCore/QObject>
+#include <QtCore/QByteArray>
+#include <QtCore/QList>
+#include <QtCore/QMap>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
+#include <QtCore/QVariant>
+#include <QtDBus/QtDBus>
 
-class QDBusServiceWatcher;
-
-class StatusNotifierWatcher : public QObject, protected QDBusContext
+/*
+ * Proxy class for interface org.kde.StatusNotifierWatcher
+ */
+class StatusNotifierWatcherInterface: public QDBusAbstractInterface
 {
     Q_OBJECT
-
-    Q_PROPERTY(QStringList RegisteredStatusNotifierItems READ RegisteredStatusNotifierItems)
-    Q_PROPERTY(bool IsStatusNotifierHostRegistered READ IsStatusNotifierHostRegistered)
-    Q_PROPERTY(int ProtocolVersion READ ProtocolVersion)
+public:
+    static inline const char *staticInterfaceName()
+    { return "org.kde.StatusNotifierWatcher"; }
 
 public:
-    StatusNotifierWatcher(QObject *parent);
-    ~StatusNotifierWatcher();
+    StatusNotifierWatcherInterface(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = nullptr);
 
-    QStringList RegisteredStatusNotifierItems() const;
+    ~StatusNotifierWatcherInterface();
 
-    bool IsStatusNotifierHostRegistered() const;
+    Q_PROPERTY(bool IsStatusNotifierHostRegistered READ isStatusNotifierHostRegistered)
+    inline bool isStatusNotifierHostRegistered() const
+    { return qvariant_cast< bool >(property("IsStatusNotifierHostRegistered")); }
 
-    int ProtocolVersion() const;
+    Q_PROPERTY(int ProtocolVersion READ protocolVersion)
+    inline int protocolVersion() const
+    { return qvariant_cast< int >(property("ProtocolVersion")); }
 
-public Q_SLOTS:
-    void RegisterStatusNotifierItem(const QString &service);
+    Q_PROPERTY(QStringList RegisteredStatusNotifierItems READ registeredStatusNotifierItems)
+    inline QStringList registeredStatusNotifierItems() const
+    { return qvariant_cast< QStringList >(property("RegisteredStatusNotifierItems")); }
 
-    void RegisterStatusNotifierHost(const QString &service);
+public Q_SLOTS: // METHODS
+    inline QDBusPendingReply<> RegisterStatusNotifierHost(const QString &service)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(service);
+        return asyncCallWithArgumentList(QStringLiteral("RegisterStatusNotifierHost"), argumentList);
+    }
 
-protected Q_SLOTS:
-    void serviceUnregistered(const QString& name);
+    inline QDBusPendingReply<> RegisterStatusNotifierItem(const QString &service)
+    {
+        QList<QVariant> argumentList;
+        argumentList << QVariant::fromValue(service);
+        return asyncCallWithArgumentList(QStringLiteral("RegisterStatusNotifierItem"), argumentList);
+    }
 
-Q_SIGNALS:
-    void StatusNotifierItemRegistered(const QString &service);
-    //TODO: decide if this makes sense, the systray itself could notice the vanishing of items, but looks complete putting it here
-    void StatusNotifierItemUnregistered(const QString &service);
+Q_SIGNALS: // SIGNALS
     void StatusNotifierHostRegistered();
     void StatusNotifierHostUnregistered();
-
-private:
-    QDBusServiceWatcher *m_serviceWatcher = nullptr;
-    QStringList m_registeredServices;
-    QSet<QString> m_statusNotifierHostServices;
+    void StatusNotifierItemRegistered(const QString &in0);
+    void StatusNotifierItemUnregistered(const QString &in0);
 };
+
+namespace org {
+  namespace kde {
+    typedef ::StatusNotifierWatcherInterface StatusNotifierWatcher;
+  }
+}
 #endif

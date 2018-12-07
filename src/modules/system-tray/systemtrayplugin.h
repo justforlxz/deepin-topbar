@@ -5,11 +5,10 @@
 #include "tipswidget.h"
 #include "dbus/dbustraymanager.h"
 #include "xwindowtraywidget.h"
+#include "sni/statusnotifierwatcher.h"
 
 #include <QSettings>
 #include <QLabel>
-
-class StatusNotifierWatcher;
 
 namespace dtb {
 namespace systemtray {
@@ -26,9 +25,7 @@ public:
     QWidget *itemWidget(const QString &itemKey);
 
     bool itemAllowContainer(const QString &itemKey);
-    bool itemIsInContainer(const QString &itemKey);
     int itemSortKey(const QString &itemKey);
-    void setItemIsInContainer(const QString &itemKey, const bool container);
 
     void setDefaultColor(PluginProxyInterface::DefaultColor color);
 
@@ -51,8 +48,8 @@ private:
 
     TrayApplet *m_trayApplet;
     QLabel *m_tipsLabel;
-    StatusNotifierWatcher *m_sniWatcher;
-    QSettings *m_containerSettings;
+    org::kde::StatusNotifierWatcher *m_sniWatcher;
+    QString m_sniHostService;
 };
 }
 }

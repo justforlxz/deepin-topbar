@@ -64,6 +64,7 @@ private:
     void paintEvent(QPaintEvent *e) Q_DECL_OVERRIDE;
     QPair<QString, QString> serviceAndPath(const QString &servicePath);
     QPixmap newIconPixmap(IconType iconType);
+    void showContextMenu(int x, int y);
 
 private:
     StatusNotifierItem *m_sniInter;
