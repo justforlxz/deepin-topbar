@@ -30,8 +30,8 @@ IndicatorWidget::IndicatorWidget(QWidget *parent)
 
     m_dockInter = new DockInter("com.deepin.dde.daemon.Dock","/com/deepin/dde/daemon/Dock" , QDBusConnection::sessionBus(),this);
 
-    connect(m_dockInter, &DockInter::EntryAdded, this, &IndicatorWidget::addEntry);
-    connect(m_dockInter, &DockInter::EntryRemoved, this, &IndicatorWidget::removeEntry);
+    connect(m_dockInter, &DockInter::EntryAdded, this, &IndicatorWidget::addEntry, Qt::ConnectionType::QueuedConnection);
+    connect(m_dockInter, &DockInter::EntryRemoved, this, &IndicatorWidget::removeEntry, Qt::ConnectionType::QueuedConnection);
 
     getAllEntry();
 }
@@ -93,12 +93,11 @@ void IndicatorWidget::addEntry(const QDBusObjectPath &entryPath, const int index
 
 void IndicatorWidget::removeEntry(const QString &entryID)
 {
-    for (int i = 0; i != m_entryList.count(); i++) {
-        if (m_entryList.at(i)->id() == entryID) {
-            DockEntry *entry = m_entryList.at(i);
-            m_entryList.removeAt(i);
-            entry->disconnect();
-            entry->deleteLater();
+    for (auto it = m_entryList.begin(); it != m_entryList.end(); ++it) {
+        if ((*it)->id() == entryID) {
+            // (*it)->disconnect(); // I don't konw why crash
+            (*it)->deleteLater();
+            m_entryList.erase(it);
             break;
         }
     }
