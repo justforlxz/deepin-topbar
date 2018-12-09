@@ -59,7 +59,8 @@ void MainPanel::initConnect()
     }, Qt::ConnectionType::QueuedConnection);
     connect(m_settings, &Settings::valueChanged, this, [=] (const QString &key, const QVariant &value) {
         if (key == "base.base_setting.enable_dock") {
-            QSettings setting("deepin", "dde-dock-tray");
+            QSettings setting("deepin", "dde-dock");
+            setting.beginGroup("tray");
             setting.setValue("enable", value.toBool());
         }
     });

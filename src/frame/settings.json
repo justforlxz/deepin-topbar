@@ -11,6 +11,7 @@
                         {
                             "key": "Indicator",
                             "name": "Indicator",
+                            "text": "Indicator",
                             "hide": true,
                             "reset": false,
                             "type": "checkbox",
@@ -18,6 +19,7 @@
                         }, {
                             "key": "Network",
                             "name": "Network",
+                            "text": "Network",
                             "hide": true,
                             "reset": false,
                             "type": "checkbox",
@@ -25,6 +27,7 @@
                         }, {
                             "key": "Notify",
                             "name": "Notify",
+                            "text": "Notify",
                             "hide": false,
                             "reset": false,
                             "type": "checkbox",
@@ -32,6 +35,7 @@
                         }, {
                             "key": "Power",
                             "name": "Power",
+                            "text": "Power",
                             "hide": false,
                             "reset": false,
                             "type": "checkbox",
@@ -39,6 +43,7 @@
                         }, {
                             "key": "Search",
                             "name": "Search",
+                            "text": "Search",
                             "hide": false,
                             "reset": false,
                             "type": "checkbox",
@@ -46,6 +51,7 @@
                         }, {
                             "key": "Sound",
                             "name": "Sound",
+                            "text": "Sound",
                             "hide": false,
                             "reset": false,
                             "type": "checkbox",
@@ -53,6 +59,7 @@
                         }, {
                             "key": "System-tray",
                             "name": "System-tray",
+                            "text": "System-tray",
                             "hide": false,
                             "reset": false,
                             "type": "checkbox",
@@ -60,6 +67,7 @@
                         }, {
                             "key": "SystemInfo",
                             "name": "System Info",
+                            "text": "System Info",
                             "hide": false,
                             "reset": false,
                             "type": "checkbox",
@@ -67,6 +75,7 @@
                         }, {
                             "key": "Time",
                             "name": "Time",
+                            "text": "Time",
                             "hide": false,
                             "reset": false,
                             "type": "checkbox",
@@ -82,6 +91,7 @@
                         {
                             "key": "enable_dock",
                             "name": "Enable Dock tray",
+                            "text": "Enable Dock tray",
                             "reset": false,
                             "type": "checkbox",
                             "default": true
