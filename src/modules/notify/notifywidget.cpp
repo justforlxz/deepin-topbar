@@ -31,10 +31,11 @@ NotifyWidget::NotifyWidget(QWidget *parent) : QWidget(parent)
     m_notifyModel = new NotifyModel;
     m_notifyDelegate = new NotifyDelegate;
     m_noNotify = new QLabel(tr("No system notifications"));
+    m_noNotify->setStyleSheet("color: white;");
 
     m_clearAllButton->setText(tr("Clear all"));
     m_clearAllButton->setAlignment(Qt::AlignCenter);
-    m_clearAllButton->setStyleSheet("background-color: rgba(255, 255, 255, 7.65); padding: 4px 0;");
+    m_clearAllButton->setStyleSheet("background-color: rgba(255, 255, 255, 7.65); color: white; padding: 4px 0;");
     m_clearAllButton->setContentsMargins(1, 1, -1, -1);
 
     m_notifyView->setModel(m_notifyModel);
@@ -52,7 +53,7 @@ NotifyWidget::NotifyWidget(QWidget *parent) : QWidget(parent)
     mainVBLayout->setMargin(0);
     mainVBLayout->setContentsMargins(0, 0, 0, 0);
 
-    setStyleSheet("background-color: rgba(255, 255, 255, 7.65);");
+    setStyleSheet("background-color: rgba(255, 255, 255, 7.65); color: white;");
     setContentsMargins(0, 0, 0, 0);
     setLayout(mainVBLayout);
 

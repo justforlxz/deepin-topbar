@@ -159,13 +159,11 @@ void MainPanel::loadModules()
     loadModule(new network::NetworkPlugin);
 #endif
 
+    loadModule(new notify::NotifyPlugin);
+
     loadModule(new datetime::DateTimePlugin);
 
     loadModule(new search::SearchModule);
-
-#ifdef QT_DEBUG
-    loadModule(new notify::NotifyPlugin);
-#endif
 }
 
 void MainPanel::loadModule(PluginsItemInterface * const module)
