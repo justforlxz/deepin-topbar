@@ -1,7 +1,10 @@
 /*
- * Copyright (C) 2017 ~ 2017 Deepin Technology Co., Ltd.
+ * Copyright (C) 2011 ~ 2018 Deepin Technology Co., Ltd.
  *
- * Author:     kirigaya <kirigaya@mkacg.com>
+ * Author:     listenerri <190771752ri@gmail.com>
+ *
+ * Maintainer: listenerri <190771752ri@gmail.com>
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -19,21 +22,32 @@
 #ifndef NOTIFYDELEGATE_H
 #define NOTIFYDELEGATE_H
 
-#include <QAbstractItemDelegate>
+#include <QStyledItemDelegate>
+#include <QStandardPaths>
 
-namespace dtb {
-namespace notify {
-class NotifyDelegate : public QAbstractItemDelegate
+static const QSize IconSize = QSize(48, 48);
+static const QStringList Directory = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+static const QString CacheFolder = Directory.first() + "/.cache/deepin/deepin-notifications/";
+
+class NotifyDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
+
 public:
-    explicit NotifyDelegate(QObject *parent = nullptr);
+    NotifyDelegate(QObject *parent = Q_NULLPTR);
 
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+Q_SIGNALS:
+    void removeBtnClicked() const;
 
+public:
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const Q_DECL_OVERRIDE;
+    QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const Q_DECL_OVERRIDE;
+    void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const Q_DECL_OVERRIDE;
+
+private:
+    QPixmap notifyPixmap(const QString &name, QPaintDevice *device) const;
+    QString notifyTime(const QString &t) const;
+    const QPair<QString, bool> holdTextInRect(const QFontMetrics &fm, const QString &text, const QRect &rect) const;
 };
-}
-}
 
 #endif // NOTIFYDELEGATE_H

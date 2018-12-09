@@ -19,38 +19,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NOTIFYWIDGET_H
-#define NOTIFYWIDGET_H
+#ifndef NOTIFYVIEW_H
+#define NOTIFYVIEW_H
 
-#include "notifymodel.h"
-#include "notifydelegate.h"
-#include "notifyview.h"
+#include <QListView>
 
-#include <dimagebutton.h>
-#include <QWidget>
-#include <QLabel>
-
-DWIDGET_USE_NAMESPACE
-
-class NotifyWidget : public QWidget
+class NotifyView : public QListView
 {
     Q_OBJECT
+
 public:
-    explicit NotifyWidget(QWidget *parent = nullptr);
+    NotifyView(QWidget *parent = Q_NULLPTR);
+
+    const QModelIndex &currentHoverIndex() const;
+
+Q_SIGNALS:
+    void currentHoverChanged(const QModelIndex &previous, const QModelIndex &current);
+
+protected:
+    void enterEvent(QEvent *event) Q_DECL_OVERRIDE;
+    void leaveEvent(QEvent *event) Q_DECL_OVERRIDE;
 
 private Q_SLOTS:
-    void showRemoveAnim(const QModelIndex &index);
-    void showClearAllAnim();
-    void onNotifyClearStateChanged(bool isClear);
-    void onRemoveBtnClicked();
-    void onRemoveAnimFinished(const QModelIndex &index);
+    void onCurrentHoverChanged(const QModelIndex &previous, const QModelIndex &current);
+    void onItemEntered(const QModelIndex &index);
 
 private:
-    DImageButton *m_clearAllButton;
-    NotifyView *m_notifyView;
-    NotifyModel *m_notifyModel;
-    NotifyDelegate *m_notifyDelegate;
-    QLabel *m_noNotify;
+    QModelIndex m_indexPrevious;
+    QModelIndex m_indexCurrent;
 };
 
-#endif // NOTIFYWIDGET_H
+#endif // NOTIFYVIEW_H

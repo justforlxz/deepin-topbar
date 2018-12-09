@@ -1,7 +1,10 @@
 /*
- * Copyright (C) 2017 ~ 2017 Deepin Technology Co., Ltd.
+ * Copyright (C) 2011 ~ 2018 Deepin Technology Co., Ltd.
  *
- * Author:     kirigaya <kirigaya@mkacg.com>
+ * Author:     listenerri <190771752ri@gmail.com>
+ *
+ * Maintainer: listenerri <190771752ri@gmail.com>
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -18,60 +21,82 @@
 
 #include "notifymodel.h"
 
-#include <QJsonObject>
-#include <QDate>
-
-using namespace dtb;
-using namespace dtb::notify;
-
 NotifyModel::NotifyModel(QObject *parent) : QAbstractListModel(parent)
 {
-    m_notifyDBus = new Notification("com.deepin.dde.Notification",
-                                     "/com/deepin/dde/Notification",
-                                     QDBusConnection::sessionBus(), this);
+    m_dbus = new Notification("com.deepin.dde.Notification", "/com/deepin/dde/Notification", QDBusConnection::sessionBus(), this);
+    m_dbus->setSync(false);
 
-    m_notifyDBus->setSync(false);
+    m_removeIndex = QModelIndex();
+    m_hoverIndex = QModelIndex();
 
-    connect(m_notifyDBus, &Notification::RecordAdded, this, &NotifyModel::onNotifyAdded);
+    m_currentXOffset = 0;
+    m_maxXOffset = 0;
+    m_animTimerID = 0;
+    m_isClearAll = false;
 
-    QDBusPendingCallWatcher *notifyWatcher = new QDBusPendingCallWatcher(m_notifyDBus->GetAllRecords(), this);
+    QDBusPendingReply<QString> notify = m_dbus->GetAllRecords();
+    QDBusPendingCallWatcher *notifyWatcher = new QDBusPendingCallWatcher(notify, this);
     connect(notifyWatcher, &QDBusPendingCallWatcher::finished, this, &NotifyModel::onNotifyGetAllFinished);
+
+    connect(m_dbus, &Notification::RecordAdded, this, &NotifyModel::addNotify);
 }
 
 int NotifyModel::rowCount(const QModelIndex &parent) const
 {
-    Q_UNUSED(parent);
+    Q_UNUSED(parent)
 
-    return m_itemList.size();
+    // FIXME: Need to use an extra piece of data to update the hover
+    const int size = m_dataJsonArray.size();
+
+    return size + 1;
 }
 
 QVariant NotifyModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid())
+    if (!index.isValid() && m_dataJsonArray.size() <= 0 && index.row() > m_dataJsonArray.size()) {
         return QVariant();
+    }
 
-    if (rowCount(QModelIndex()) <= index.row())
-        return QVariant();
-
-    const NotifyItem *item = indexof(index.row());
-
-    if (!item)
-        return QVariant();
+    QJsonObject notifyObject = m_dataJsonArray.at(m_dataJsonArray.size() - 1 - index.row()).toObject();
 
     switch (role) {
-    case Qt::SizeHintRole: return QSize(360, 80);
-    case ItemNameRole:
-        return item->name;
-    case ItemBodyRole:
-        return item->body;
-    case ItemIconRole:
-        return item->icon;
-    case ItemIdRole:
-        return item->id;
-    case ItemTimeRole:
-        return item->time;
-    case ItemHoveredRole:
-        return m_currentIndex == index;
+    case NotifyIdRole:
+        return notifyObject.value("id").toString();
+        break;
+    case NotifyNameRole:
+        return notifyObject.value("name").toString();
+        break;
+    case NotifySummaryRole:
+        return notifyObject.value("summary").toString();
+        break;
+    case NotifyBodyRole:
+        return notifyObject.value("body").toString();
+        break;
+    case NotifyIconRole:
+        return notifyObject.value("icon").toString();
+        break;
+    case NotifyTimeRole:
+        return notifyObject.value("time").toString();
+        break;
+    case Qt::SizeHintRole:
+        if (index.row() == m_dataJsonArray.size()) {
+            return QSize(0, 10);
+        }
+        return QSize(0, 80);
+        break;
+    case NotifyRemoveRole: {
+        if (m_isClearAll || m_removeIndex == index) {
+            return true;
+        }
+        return false;
+        break;
+    }
+    case NotifyXOffsetRole:
+        return m_currentXOffset;
+        break;
+    case NotifyHoverRole:
+        return m_hoverIndex == index;
+        break;
     default:
         break;
     }
@@ -79,19 +104,21 @@ QVariant NotifyModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-const NotifyItem* NotifyModel::indexof(const int index) const
+Qt::ItemFlags NotifyModel::flags(const QModelIndex &index) const
 {
-    const int size = m_itemList.size() - 1;
-
-    //Reverse
-    return size <= 0 ? nullptr : m_itemList[size - index];
+    if (index.isValid()) {
+        return QAbstractListModel::flags(index) | Qt::ItemIsEditable;
+    }
+    return QAbstractListModel::flags(index);
 }
 
-void NotifyModel::setCurrentHovered(const QModelIndex &index)
+void NotifyModel::clearAllNotify()
 {
-    m_currentIndex = index;
-
-    emit dataChanged(m_currentIndex, m_currentIndex);
+    m_dbus->ClearRecords();
+    beginResetModel();
+    m_dataJsonArray = {};
+    endResetModel();
+    Q_EMIT notifyClearStateChanged(true);
 }
 
 void NotifyModel::onNotifyGetAllFinished(QDBusPendingCallWatcher *w)
@@ -100,103 +127,89 @@ void NotifyModel::onNotifyGetAllFinished(QDBusPendingCallWatcher *w)
 
     QJsonDocument jsonDocument = QJsonDocument::fromJson(reply.value().toLocal8Bit().data());
 
+    beginResetModel();
     m_dataJsonArray = jsonDocument.array();
+    endResetModel();
 
-    m_checkIndex = m_dataJsonArray.size();
-
-    if (m_dataJsonArray.size()) {
-
-        for (int i(0); i != m_dataJsonArray.size(); ++i) {
-
-            NotifyItem * item = new NotifyItem;
-            m_itemList << item;
-
-            const QJsonObject &obj = m_dataJsonArray[i].toObject();
-
-            item->name = obj["summary"].toString();
-            item->body = obj["body"].toString();
-            item->icon = obj["icon"].toString();
-            item->id   = obj["id"].toString();
-            item->time = checkDate(obj["id"].toString());
-        }
-
-        emit layoutChanged();
+    if (m_dataJsonArray.isEmpty()) {
+        Q_EMIT notifyClearStateChanged(true);
     }
 
     w->deleteLater();
 }
 
-void NotifyModel::onNotifyAdded(const QString &value)
+void NotifyModel::addNotify(const QString &s)
 {
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(value.toLocal8Bit().data());
-
-    NotifyItem * item = new NotifyItem;
-    m_itemList << item;
-
-    const QJsonObject &obj = jsonDocument.object();
-
-    item->name = obj["summary"].toString();
-    item->body = obj["body"].toString();
-    item->icon = obj["icon"].toString();
-    item->id   = obj["id"].toString();
-    item->time = checkDate(obj["id"].toString());
-
-    // update
-
-}
-
-QString NotifyModel::checkDate(const QString &value)
-{
-    const QDateTime date = QDateTime::fromMSecsSinceEpoch(value.toLongLong());
-
-    QString result;
-
-    if (QDateTime::currentMSecsSinceEpoch() > value.toLongLong()) {
-
-        const QString hour = date.toString("hh:mm");
-
-        const uint year = date.date().year();
-        uint now = QDateTime::currentDateTime().date().year();
-
-        if (now > year)
-            result = date.toString("yyyy/MM/dd hh:mm");
-        else {
-            const uint notify_day = date.date().day();
-            now = QDateTime::currentDateTime().date().day();
-
-            const uint month = date.date().month();
-            const uint now_month = QDateTime::currentDateTime().date().month();
-
-            if (now_month == month) {
-
-                //contrast day
-                const uint time = now - notify_day;
-
-                switch (time) {
-                case 0:
-                    result = hour;
-                    break;
-                case 1:
-                    result = tr("Yesterday") + " " + hour;
-                    break;
-                case 2:
-                    result = tr("The day before yesterday") + " " + hour;
-                    break;
-                default:
-                    if (time > 7) {
-                        result = date.toString("MM/dd hh:mm");
-                    } else {
-                        result = tr("%n day(s) ago", "", time) + " " + hour;
-                    }
-                    break;
-                }
-            } else {
-                result = date.toString("MM/dd hh:mm");
-            }
-        }
-    } else {
-        result = date.toString("yyyy/MM/dd hh:mm");
+    if (m_dataJsonArray.isEmpty()) {
+        Q_EMIT notifyClearStateChanged(false);
     }
 
-    return result;
+    m_dataJsonArray.append(QJsonDocument::fromJson(s.toLocal8Bit().data()).object());
+    const QModelIndex mindex = index(0);
+    Q_EMIT dataChanged(mindex, mindex);
+}
+
+void NotifyModel::showClearAllAnim(int maxXOffset)
+{
+    m_isClearAll = true;
+    m_maxXOffset = maxXOffset;
+    if (m_animTimerID == 0) {
+        m_animTimerID = startTimer(10);
+    }
+}
+
+void NotifyModel::showRemoveAnim(const QModelIndex &removeIndex, int maxXOffset)
+{
+    m_removeIndex = removeIndex;
+    m_maxXOffset = maxXOffset;
+    if (m_animTimerID == 0) {
+        m_animTimerID = startTimer(10);
+    }
+}
+
+void NotifyModel::setHoverIndex(const QModelIndex &index)
+{
+    m_hoverIndex = index;
+    Q_EMIT dataChanged(m_hoverIndex, m_hoverIndex);
+}
+
+void NotifyModel::timerEvent(QTimerEvent *event)
+{
+    Q_UNUSED(event)
+
+    if (m_currentXOffset < m_maxXOffset) {
+        m_currentXOffset += 20;
+        if (m_isClearAll) {
+            Q_EMIT layoutChanged();
+        } else {
+            Q_EMIT dataChanged(m_removeIndex, m_removeIndex);
+        }
+        return;
+    }
+
+    if (m_animTimerID != 0) {
+        killTimer(m_animTimerID);
+    }
+
+    if (m_isClearAll) {
+        Q_EMIT clearAllAnimFinished();
+    } else {
+        Q_EMIT removeAnimFinished(m_removeIndex);
+    }
+    m_isClearAll = false;
+    m_animTimerID = 0;
+    m_currentXOffset = 0;
+    m_removeIndex = QModelIndex();
+}
+
+void NotifyModel::removeNotify(const QModelIndex &index)
+{
+    QJsonObject notifyObject = m_dataJsonArray.at(m_dataJsonArray.size() - 1 - index.row()).toObject();
+    m_dbus->RemoveRecord(notifyObject.value("id").toString());
+    m_dataJsonArray.removeAt(m_dataJsonArray.size() - 1 - index.row());
+    Q_EMIT dataChanged(index, index);
+
+    if (m_dataJsonArray.size() == 0) {
+        Q_EMIT notifyClearStateChanged(true);
+    }
 }

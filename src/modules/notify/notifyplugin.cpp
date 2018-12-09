@@ -1,10 +1,7 @@
 #include "notifyplugin.h"
-#include "notifypopupwidget.h"
 #include "notifywidget.h"
 
-#include <com_deepin_dde_notification.h>
-
-using NotifyInter = com::deepin::dde::Notification;
+#include <QApplication>
 
 using namespace dtb;
 using namespace dtb::notify;
@@ -12,10 +9,7 @@ using namespace dtb::notify;
 NotifyPlugin::NotifyPlugin()
 {
     m_notify = new NotifyWidget;
-    m_popupWidget = new NotifyPopupWidget;
-    NotifyInter * notifyInter = new NotifyInter("com.deepin.dde.Notification", "/com/deepin/dde/Notifications", QDBusConnection::sessionBus(), this);
-
-
+    m_notify->setFixedSize(360, 720 / qApp->devicePixelRatio());
 }
 
 const QString NotifyPlugin::pluginName() const
@@ -34,17 +28,17 @@ QWidget *NotifyPlugin::itemWidget(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return m_notify;
+    return new QLabel("notify");
 }
 
 QWidget *NotifyPlugin::itemContextMenu(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return m_popupWidget;
+    return m_notify;
 }
 
 void NotifyPlugin::setDefaultColor(PluginProxyInterface::DefaultColor color)
 {
-
+    Q_UNUSED(color);
 }

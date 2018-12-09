@@ -5,11 +5,10 @@
 
 #include <QObject>
 
+class NotifyWidget;
+
 namespace dtb {
 namespace notify {
-
-class NotifyPopupWidget;
-class NotifyWidget;
 
 class NotifyPlugin : public QObject, public PluginsItemInterface
 {
@@ -27,7 +26,6 @@ public:
 
 private:
     PluginProxyInterface *m_proxyInter;
-    NotifyPopupWidget *m_popupWidget;
     NotifyWidget *m_notify;
 };
 }

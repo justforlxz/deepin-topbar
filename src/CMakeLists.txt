@@ -129,20 +129,16 @@ set(NETWORK_FILES
 )
 
 set(NOTIFY_FILES
+./modules/notify/notifyplugin.h
+./modules/notify/notifyplugin.cpp
 ./modules/notify/notifydelegate.cpp
 ./modules/notify/notifydelegate.h
 ./modules/notify/notifymodel.cpp
 ./modules/notify/notifymodel.h
-./modules/notify/notifypopupwidget.cpp
+./modules/notify/notifyview.cpp
+./modules/notify/notifyview.h
 ./modules/notify/notifywidget.cpp
 ./modules/notify/notifywidget.h
-./modules/notify/notifyplugin.h
-./modules/notify/notifypopupwidget.h
-./modules/notify/notifyitem.h
-./modules/notify/notifyitem.cpp
-./modules/notify/notifyplugin.cpp
-./modules/notify/notifyhandle.cpp
-./modules/notify/notifyhandle.h
 )
 
 set(POWER_FILES
@@ -248,13 +244,14 @@ set(ALL_FILES
 
 set(QRC_FILES
 ./frame/deepin-topbar.qrc
+./widgets/widgets.qrc
 ./modules/indicator/indicator.qrc
 ./modules/network/network.qrc
 ./modules/power/power.qrc
 ./modules/sound/resources/sound.qrc
 ./modules/system-tray/system-tray.qrc
 ./modules/systeminfo/resources/systeminfo.qrc
-./widgets/widgets.qrc
+./modules/notify/notify.qrc
 )
 
 # Find the library

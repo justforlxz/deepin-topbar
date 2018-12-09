@@ -1,7 +1,10 @@
 /*
- * Copyright (C) 2017 ~ 2017 Deepin Technology Co., Ltd.
+ * Copyright (C) 2011 ~ 2018 Deepin Technology Co., Ltd.
  *
- * Author:     kirigaya <kirigaya@mkacg.com>
+ * Author:     listenerri <190771752ri@gmail.com>
+ *
+ * Maintainer: listenerri <190771752ri@gmail.com>
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -21,63 +24,63 @@
 
 #include <QAbstractListModel>
 #include <com_deepin_dde_notification.h>
-#include <QDir>
 
 using Notification = com::deepin::dde::Notification;
-
-static const QStringList Directory = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-static const QString CacheFolder = Directory.first() + "/.cache/deepin/deepin-notifications/";
-
-namespace dtb {
-namespace notify {
-
-struct NotifyItem {
-    QString name;
-    QString body;
-    QString icon;
-    QString id;
-    QString time;
-};
 
 class NotifyModel : public QAbstractListModel
 {
     Q_OBJECT
-public:
-    explicit NotifyModel(QObject *parent = nullptr);
 
-    enum NotifyRole {
-        UnusedRole = Qt::UserRole,
-        ItemHoveredRole,
-        ItemNameRole,
-        ItemBodyRole,
-        ItemIconRole,
-        ItemIdRole,
-        ItemTimeRole
+public:
+    enum NotifyDataRole{
+        NotifyIdRole = Qt::UserRole + 1,
+        NotifyNameRole = Qt::UserRole + 2,
+        NotifySummaryRole = Qt::UserRole + 3,
+        NotifyBodyRole = Qt::UserRole + 4,
+        NotifyIconRole = Qt::UserRole + 5,
+        NotifyTimeRole = Qt::UserRole + 6,
+        NotifyRemoveRole = Qt::UserRole + 7,
+        NotifyXOffsetRole = Qt::UserRole + 8,
+        NotifyHoverRole = Qt::UserRole + 9
     };
 
-    int rowCount(const QModelIndex &parent) const;
-    QVariant data(const QModelIndex &index, int role) const;
+    NotifyModel(QObject *parent = Q_NULLPTR);
 
-    const NotifyItem *indexof(const int index) const;
+public:
+    int rowCount(const QModelIndex &parent) const Q_DECL_OVERRIDE;
+    QVariant data(const QModelIndex &index, int role) const Q_DECL_OVERRIDE;
+    Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
 
-public slots:
-    void setCurrentHovered(const QModelIndex &index);
+public Q_SLOTS:
+    void clearAllNotify();
+    void removeNotify(const QModelIndex &index);
+    void showClearAllAnim(int maxXOffset);
+    void showRemoveAnim(const QModelIndex &removeIndex, int maxXOffset);
+    void setHoverIndex(const QModelIndex &index);
 
-private slots:
+Q_SIGNALS:
+    void removeAnimFinished(const QModelIndex &index);
+    void clearAllAnimFinished();
+    void notifyClearStateChanged(bool isClear);
+
+protected:
+    void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
+
+private Q_SLOTS:
     void onNotifyGetAllFinished(QDBusPendingCallWatcher *w);
-    void onNotifyAdded(const QString &value);
+    void addNotify(const QString &s);
 
 private:
-    QString checkDate(const QString &value);
+    Notification *m_dbus;
 
-private:
-    Notification* m_notifyDBus;
     QJsonArray m_dataJsonArray;
-    int m_checkIndex;
-    QList<NotifyItem*> m_itemList;
-    QModelIndex m_currentIndex;
+    QModelIndex m_removeIndex;
+    QModelIndex m_hoverIndex;
+
+    int m_currentXOffset;
+    int m_maxXOffset;
+    int m_animTimerID;
+    bool m_isClearAll;
 };
-}
-}
 
 #endif // NOTIFYMODEL_H
