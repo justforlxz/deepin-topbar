@@ -13,11 +13,11 @@ MediaControl::MediaControl(QWidget *parent)
     : QFrame(parent)
 {
     m_lastBtn = new FontLabel;
-    m_lastBtn->setIcon(QChar(0xE893), 18);
+    m_lastBtn->setIcon(QChar(0xE893), 14);
     m_lastBtn->installEventFilter(this);
 
     m_previousBtn = new FontLabel;
-    m_previousBtn->setIcon(QChar(0xE892), 18);
+    m_previousBtn->setIcon(QChar(0xE892), 14);
     m_previousBtn->installEventFilter(this);
 
     m_pauseBtn = new FontLabel;
@@ -41,13 +41,13 @@ void MediaControl::setPlayState(MediaControl::PlayState state) {
 
     switch (state) {
     case Play: {
-        m_pauseBtn->setIcon(QChar(0xE769), 18);
+        m_pauseBtn->setIcon(QChar(0xE769), 14);
         break;
     }
     case Stop:
         break;
     case Pause: {
-        m_pauseBtn->setIcon(QChar(0xE768), 18);
+        m_pauseBtn->setIcon(QChar(0xE768), 14);
         break;
     }
     case Last:
@@ -67,7 +67,7 @@ bool MediaControl::eventFilter(QObject *watched, QEvent *event)
         }
 
         if (event->type() == QMouseEvent::Leave) {
-            m_lastBtn->setStyleSheet("color: rgb(67, 67, 62);");
+            m_lastBtn->setStyleSheet("color: white;");
         }
 
         if (event->type() == QMouseEvent::MouseButtonPress) {
@@ -75,7 +75,7 @@ bool MediaControl::eventFilter(QObject *watched, QEvent *event)
         }
 
         if (event->type() == QMouseEvent::MouseButtonRelease) {
-            m_lastBtn->setStyleSheet("color: rgb(67, 67, 62);");
+            m_lastBtn->setStyleSheet("color: white;");
             emit requestLast();
         }
     }
@@ -86,7 +86,7 @@ bool MediaControl::eventFilter(QObject *watched, QEvent *event)
         }
 
         if (event->type() == QMouseEvent::Leave) {
-            m_previousBtn->setStyleSheet("color: rgb(67, 67, 62);");
+            m_previousBtn->setStyleSheet("color: white;");
         }
 
         if (event->type() == QMouseEvent::MouseButtonPress) {
@@ -94,7 +94,7 @@ bool MediaControl::eventFilter(QObject *watched, QEvent *event)
         }
 
         if (event->type() == QMouseEvent::MouseButtonRelease) {
-            m_previousBtn->setStyleSheet("color: rgb(67, 67, 62);");
+            m_previousBtn->setStyleSheet("color: white;");
             emit requestPrevious();
         }
     }
@@ -105,7 +105,7 @@ bool MediaControl::eventFilter(QObject *watched, QEvent *event)
         }
 
         if (event->type() == QMouseEvent::Leave) {
-            m_pauseBtn->setStyleSheet("color: rgb(67, 67, 62);");
+            m_pauseBtn->setStyleSheet("color: white;");
         }
 
         if (event->type() == QMouseEvent::MouseButtonPress) {
@@ -113,7 +113,7 @@ bool MediaControl::eventFilter(QObject *watched, QEvent *event)
         }
 
         if (event->type() == QMouseEvent::MouseButtonRelease) {
-            m_pauseBtn->setStyleSheet("color: rgb(67, 67, 62);");
+            m_pauseBtn->setStyleSheet("color: white;");
             emit requestPause();
         }
     }

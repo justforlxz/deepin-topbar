@@ -37,7 +37,7 @@ QWidget *SoundPlugin::itemContextMenu(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return m_soundItem->menu();
+    return m_soundItem->isSoundItem(QCursor::pos()) ? m_soundItem->menu() : nullptr;
 }
 
 void SoundPlugin::setDefaultColor(PluginProxyInterface::DefaultColor color)

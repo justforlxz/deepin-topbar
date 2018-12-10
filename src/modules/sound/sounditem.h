@@ -34,6 +34,7 @@ public:
     explicit SoundItem(QWidget *parent = 0);
 
     QMenu *menu() const;
+    bool isSoundItem(const QPoint &cursor) const;
 
 signals:
     void requestHidePopupWindow();

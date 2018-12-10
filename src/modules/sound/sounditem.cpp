@@ -31,7 +31,7 @@ SoundItem::SoundItem(QWidget *parent)
     , m_tickEffect(new DTickEffect(m_mprisTitle, m_mprisTitle))
     , m_fontLabel(new QLabel)
     , m_mprisInter(nullptr)
-//    , m_mediaControl(new MediaControl)
+    , m_mediaControl(new MediaControl)
     , m_applet(new SoundApplet(this))
     , m_sinkInter(nullptr)
     , m_menu(new QMenu(this))
@@ -58,14 +58,13 @@ SoundItem::SoundItem(QWidget *parent)
     layout->setSpacing(3);
     layout->setContentsMargins(3, 0, 3, 0);
     layout->addWidget(m_tickScrollArea, 0, Qt::AlignCenter);
-    layout->addSpacing(20);
-//    layout->addWidget(m_mediaControl, 0, Qt::AlignCenter);
+    layout->addWidget(m_mediaControl, 0, Qt::AlignCenter);
     layout->addWidget(m_fontLabel, 0, Qt::AlignCenter);
 
     setLayout(layout);
 
     m_mprisTitle->setVisible(false);
-//    m_mediaControl->setVisible(false);
+    m_mediaControl->setVisible(false);
 
     connect(m_applet, static_cast<void (SoundApplet::*)(DBusSink*) const>(&SoundApplet::defaultSinkChanged), this, &SoundItem::sinkChanged);
 
@@ -103,6 +102,10 @@ SoundItem::SoundItem(QWidget *parent)
 QMenu* SoundItem::menu() const
 {
     return m_menu;
+}
+
+bool SoundItem::isSoundItem(const QPoint &cursor) const {
+    return m_fontLabel->geometry().contains(mapFromGlobal(cursor));
 }
 
 void SoundItem::wheelEvent(QWheelEvent *e)
@@ -220,37 +223,46 @@ void SoundItem::loadMPRISPath(const QString &path) {
 
     m_mprisInter = new DBusMPRIS(path, "/org/mpris/MediaPlayer2", QDBusConnection::sessionBus(), this);
 
-//    m_mediaControl->setVisible(true);
+   m_mediaControl->setVisible(true);
 
-//    connect(m_mediaControl, &MediaControl::requestLast, m_mprisInter, &DBusMediaPlayer2::Next, Qt::UniqueConnection);
-//    connect(m_mediaControl, &MediaControl::requestPrevious, m_mprisInter, &DBusMediaPlayer2::Previous, Qt::UniqueConnection);
-//    connect(m_mediaControl, &MediaControl::requestPause, m_mprisInter, &DBusMediaPlayer2::PlayPause, Qt::UniqueConnection);
+   connect(m_mediaControl, &MediaControl::requestLast, m_mprisInter, &DBusMediaPlayer2::Next, Qt::UniqueConnection);
+   connect(m_mediaControl, &MediaControl::requestPrevious, m_mprisInter, &DBusMediaPlayer2::Previous, Qt::UniqueConnection);
+   connect(m_mediaControl, &MediaControl::requestPause, m_mprisInter, &DBusMediaPlayer2::PlayPause, Qt::UniqueConnection);
 
     connect(m_mprisInter, &DBusMediaPlayer2::MetadataChanged, this, [=]{
-        const QString title { m_mprisInter->metadata().value("xesam:title").toString()};
-        if (title == m_mprisTitle->text()) return;
+        const auto &   meta        = m_mprisInter->metadata();
+        const QString &title       = meta.value("xesam:title").toString();
+        const QString &artist      = meta.value("xesam:artist").toString();
 
-        m_mprisTitle->setText(title);
-        const int width { fontMetrics().width(title) + 10 };
-        m_mprisTitle->setFixedWidth(width);
-        m_tickScrollArea->setFixedWidth(std::min(std::min(200, width), 200));
+        if (title.isEmpty()) {
+            m_mprisTitle->clear();
+            m_tickEffect->stop();
+        }
+        else {
+            if (artist.isEmpty()) {
+                m_mprisTitle->setText(title);
+            }
+            else {
+                m_mprisTitle->setText(QString(" %1 - %2 ").arg(title).arg(artist));
+            }
+        }
 
-        m_tickEffect->deleteLater();
-        m_tickEffect = new DTickEffect(m_mprisTitle, m_mprisTitle);
-        m_tickEffect->setDirection(DTickEffect::RightToLeft);
-        m_tickEffect->setDuration(3000);
+        const int width { fontMetrics().width(title) };
+        m_tickScrollArea->setFixedWidth(std::min(std::max(width, 100), 200));
+
+        m_mprisTitle->adjustSize();
         m_tickEffect->play();
     });
 
     connect(m_mprisInter, &DBusMediaPlayer2::PlaybackStatusChanged, this, [=]{
-//        if (m_mprisInter->playbackStatus() == "Playing") {
-//            m_mediaControl->setPlayState(MediaControl::Play);
-//        }
-//        if (m_mprisInter->playbackStatus() == "Stopped") {
-//            m_mediaControl->setPlayState(MediaControl::Stop);
-//        }
-//        if (m_mprisInter->playbackStatus() == "Paused")
-//            m_mediaControl->setPlayState(MediaControl::Pause);
+       if (m_mprisInter->playbackStatus() == "Playing") {
+           m_mediaControl->setPlayState(MediaControl::Play);
+       }
+       if (m_mprisInter->playbackStatus() == "Stopped") {
+           m_mediaControl->setPlayState(MediaControl::Stop);
+       }
+       if (m_mprisInter->playbackStatus() == "Paused")
+           m_mediaControl->setPlayState(MediaControl::Pause);
 
         m_mprisInter->MetadataChanged();
     });
@@ -278,7 +290,7 @@ void SoundItem::removeMPRISPath(const QString &path) {
     m_mprisInter->deleteLater();
     m_mprisInter = nullptr;
 
-//    m_mediaControl->setVisible(false);
+   m_mediaControl->setVisible(false);
 
     m_mprisTitle->setVisible(false);
     m_tickScrollArea->hide();
