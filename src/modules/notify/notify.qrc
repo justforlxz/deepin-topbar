@@ -3,5 +3,8 @@
         <file>images/notify_close_hover.svg</file>
         <file>images/notify_close_normal.svg</file>
         <file>images/notify_close_press.svg</file>
+        <file>images/split_press.svg</file>
+        <file>images/split_hover.svg</file>
+        <file>images/split_normal.svg</file>
     </qresource>
 </RCC>

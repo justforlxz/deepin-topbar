@@ -4,6 +4,7 @@
 #include "interfaces/pluginsiteminterface.h"
 
 #include <QObject>
+#include <QLabel>
 
 class NotifyWidget;
 
@@ -27,6 +28,7 @@ public:
 private:
     PluginProxyInterface *m_proxyInter;
     NotifyWidget *m_notify;
+    QLabel *m_notifyBtn;
 };
 }
 }

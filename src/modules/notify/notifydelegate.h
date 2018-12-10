@@ -48,6 +48,9 @@ private:
     QPixmap notifyPixmap(const QString &name, QPaintDevice *device) const;
     QString notifyTime(const QString &t) const;
     const QPair<QString, bool> holdTextInRect(const QFontMetrics &fm, const QString &text, const QRect &rect) const;
+
+private:
+    mutable QList<QPair<QPair<QString, QRect>, QPair<QString, bool>>> m_textCache;
 };
 
 #endif // NOTIFYDELEGATE_H

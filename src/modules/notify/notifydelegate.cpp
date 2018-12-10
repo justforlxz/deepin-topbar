@@ -232,9 +232,22 @@ QString NotifyDelegate::notifyTime(const QString &t) const
 const QPair<QString, bool> NotifyDelegate::holdTextInRect(const QFontMetrics &fm, const QString &text, const QRect &rect) const
 {
     const int textFlag = Qt::AlignTop | Qt::AlignLeft | Qt::TextWordWrap;
+    QPair<QString, QRect> cache(text, rect);
 
-    if (rect.contains(fm.boundingRect(rect, textFlag, text)))
-        return QPair<QString, bool>(text, true);
+    for (auto it = m_textCache.cbegin(); it != m_textCache.cend(); ++it) {
+        if (it->first == cache) {
+            return it->second;
+        }
+    }
+
+    if (rect.contains(fm.boundingRect(rect, textFlag, text))) {
+        QPair<QString, bool> result(text, true);
+        QPair<QPair<QString, QRect>, QPair<QString, bool>> pair;
+        pair.first = cache;
+        pair.second = result;
+        m_textCache << pair;
+        return result;
+    }
 
     QString str(text + "...");
 
@@ -250,5 +263,10 @@ const QPair<QString, bool> NotifyDelegate::holdTextInRect(const QFontMetrics &fm
         str.remove(str.size() - 4, 1);
     }
 
-    return QPair<QString, bool>(str, false);
+    QPair<QString, bool> result(text, false);
+    QPair<QPair<QString, QRect>, QPair<QString, bool>> pair;
+    pair.first = cache;
+    pair.second = result;
+    m_textCache << pair;
+    return result;
 }

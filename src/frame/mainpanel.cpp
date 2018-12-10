@@ -153,17 +153,17 @@ void MainPanel::loadModules()
 
     loadModule(new sound::SoundPlugin);
 
-    loadModule(new power::PowerPlugin);
-
 #ifdef QT_DEBUG
     loadModule(new network::NetworkPlugin);
 #endif
 
-    loadModule(new notify::NotifyPlugin);
+    loadModule(new search::SearchModule);
+
+    loadModule(new power::PowerPlugin);
 
     loadModule(new datetime::DateTimePlugin);
 
-    loadModule(new search::SearchModule);
+    loadModule(new notify::NotifyPlugin);
 }
 
 void MainPanel::loadModule(PluginsItemInterface * const module)
