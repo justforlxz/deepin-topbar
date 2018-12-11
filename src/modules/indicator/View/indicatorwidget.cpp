@@ -49,7 +49,7 @@ void IndicatorWidget::initUI()
     setWindowFlags(Qt::WindowDoesNotAcceptFocus);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    setFixedSize(QSize(200, TOPHEIGHT));
+    setFixedHeight(TOPHEIGHT);
 
     m_entry = new Entry;
 

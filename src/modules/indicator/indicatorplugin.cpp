@@ -41,9 +41,13 @@ void IndicatorPlugin::init(PluginProxyInterface *proxyInter)
         proxyInter->hidePopupWindow();
     });
 
+    connect(m_positionLbl, &PositionWidget::requestHidePopupWindow, this, [=] {
+        proxyInter->hidePopupWindow();
+    });
+
     m_proxyInter->addItem(this, "Logo");
     m_proxyInter->addItem(this, "Indicator");
-//    m_proxyInter->addItem(this, "Position");
+   m_proxyInter->addItem(this, "Position");
 }
 
 QWidget *IndicatorPlugin::itemWidget(const QString &itemKey)
@@ -60,6 +64,8 @@ QWidget *IndicatorPlugin::itemContextMenu(const QString &itemKey)
 {
     if (itemKey == "Logo")
         return m_logo->menu();
+    if (itemKey == "Position")
+        return m_positionLbl->menu();
 
     return nullptr;
 }

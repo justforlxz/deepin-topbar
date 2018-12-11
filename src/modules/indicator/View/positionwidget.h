@@ -21,19 +21,38 @@
 
 #include "frame/item/contentmodule.h"
 
+class QMenu;
+
 namespace dtb {
 namespace indicator {
-class PositionWidget : public ContentModule
-{
+class PositionWidget : public ContentModule {
     Q_OBJECT
 public:
     explicit PositionWidget(QWidget *parent = nullptr);
 
+    enum Action {
+        Home,
+        Desktop,
+        Document,
+        Photo,
+        Video,
+    };
+
+    QMenu *menu()
+    {
+        return m_menu;
+    }
+
 signals:
+    void requestHidePopupWindow();
 
-public slots:
+private:
+    void handleAction(const int &action);
+
+private:
+    QMenu *m_menu;
 };
-}
-}
+}  // namespace indicator
+}  // namespace dtb
 
-#endif // POSITIONWIDGET_H
+#endif  // POSITIONWIDGET_H
