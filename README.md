@@ -67,8 +67,8 @@ I'll release messages on my twitter.
 
 ## Partial Preview
 
-<p align="center"><img src="https://user-images.githubusercontent.com/12298476/40405507-6f0b97c0-5e8f-11e8-913c-f093b3f5005f.png"></p>
-<p align="center"><img src="https://user-images.githubusercontent.com/12298476/40405509-6f5d3288-5e8f-11e8-95f2-4acd2f6545eb.gif"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/12298476/49862366-04af7a00-fe39-11e8-9d46-3c33515db270.gif"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/12298476/49862451-29a3ed00-fe39-11e8-9a4a-6118ef27564d.png"></p>
 
 If you use Deepin, just install from appstore.
 
