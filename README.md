@@ -8,6 +8,24 @@ I'll release messages on my twitter.
 
 [Twitter @justforlxz](https://twitter.com/justforlxz)
 
+## ToDo List
+- [] Network (wireless list)
+- [] Calendar (Only see web ical, no plans to support editting)
+- [] Global Menu (Non-primary)
+- [] quick search (maybe will create new repo)
+- [] system info (e.g. cpu, memory, disk historical graph)
+- [] power save (use dde function)
+
+## Finished
+- [x] Current Window Indicator
+- [x] Position
+- [x] Network Speed
+- [x] system tray
+- [x] Sound and media control
+- [x] power and battery
+- [x] datetime
+- [x] Notify list
+
 ## Dependencies
 
 ### Build dependencies
