@@ -179,8 +179,8 @@ void MainFrame::screenChanged()
         strut_partial.top_end_x = primaryRect.x() + primaryRect.width();
 
         if (dockRect.height() / devicePixelRatioF() + TOPHEIGHT >= primaryRect.height()) {
-            setFixedSize(dockRect.topLeft().x() / devicePixelRatioF(), TOPHEIGHT);
-            m_mainPanel->resize(dockRect.topLeft().x() / devicePixelRatioF(), TOPHEIGHT);
+            setFixedSize((dockRect.topLeft().x() - primaryRect.x()) / devicePixelRatioF(), TOPHEIGHT);
+            m_mainPanel->resize((dockRect.topLeft().x() - primaryRect.x()) / devicePixelRatioF(), TOPHEIGHT);
         }
         else {
             setFixedSize(primaryRect.width(), TOPHEIGHT);
