@@ -1,3 +1,33 @@
+<a name=""></a>
+##  0.6.0 (2018-12-21)
+
+
+#### Features
+
+*   add position menu ([fbd1c3a3](https://github.com/kirigayakazushin/deepin-topbar/commit/fbd1c3a3b08ae089dfe23308f296e2683f603884))
+*   use new window list function ([c22fe561](https://github.com/kirigayakazushin/deepin-topbar/commit/c22fe5610441b86ae6c7dd366bf31ee4c104cc8f))
+*   add notify ([225120ea](https://github.com/kirigayakazushin/deepin-topbar/commit/225120ea49b8fed93cf07fac5d68229711b184b5))
+*   hide popup window ([dadfb6fc](https://github.com/kirigayakazushin/deepin-topbar/commit/dadfb6fcbbaa4413c0cdf8543db7831b1aa17f52))
+*   use new popup window ([ee2a581d](https://github.com/kirigayakazushin/deepin-topbar/commit/ee2a581d4845801532160382046c0f00c4f7e661))
+* **notify:**  copy files from control center ([6d9a0227](https://github.com/kirigayakazushin/deepin-topbar/commit/6d9a0227239aa8be3a51472b5ba96074f0cf502b))
+* **sound:**  add tick animation ([e3893d3b](https://github.com/kirigayakazushin/deepin-topbar/commit/e3893d3bab80a5eb5e2bd10d2ff2b811a0baf652))
+* **system-tray:**  support new tray protocol ([904c764d](https://github.com/kirigayakazushin/deepin-topbar/commit/904c764d7adcc2998b4c885a77bb31a841022cce))
+* **tray:**  update sni files and use dde-session-daemon sni dbus ([a923d657](https://github.com/kirigayakazushin/deepin-topbar/commit/a923d6570b64223b4f83ee9f3eb986437b147137))
+
+#### Bug Fixes
+
+*   size error when dock is right position ([a9aa6914](https://github.com/kirigayakazushin/deepin-topbar/commit/a9aa6914e1ab6894d5eb2256c70894b0cbe43683))
+*   update notify close button svg ([37ec01e1](https://github.com/kirigayakazushin/deepin-topbar/commit/37ec01e1effd8e834cc17eb62d3d98667c05c0d5))
+*   crash because disconnect ([ef87ab8b](https://github.com/kirigayakazushin/deepin-topbar/commit/ef87ab8b306bd715d902198b1f2db2305bac882d))
+*   hidpi ([350f60bc](https://github.com/kirigayakazushin/deepin-topbar/commit/350f60bcc01ab9264486bc5be6917d095e91da35))
+*   draw exception ([a4ed6e36](https://github.com/kirigayakazushin/deepin-topbar/commit/a4ed6e367f3e70d578bb9c68890213db9462845c))
+*   not install to /usr ([1d305e55](https://github.com/kirigayakazushin/deepin-topbar/commit/1d305e55fbd1c42764e62f3321e8b291fd70a4d5))
+*   not adjust when dock geometry changed ([d6bd8202](https://github.com/kirigayakazushin/deepin-topbar/commit/d6bd82024b1ea8a57082af957956a02e6a90ab61))
+* **Notify:**  add cache for text handle ([4f33dcaa](https://github.com/kirigayakazushin/deepin-topbar/commit/4f33dcaa49260d69732df2749c702b082805c90d))
+* **Setting:**  dialog empty text ([2c1518d0](https://github.com/kirigayakazushin/deepin-topbar/commit/2c1518d0a59d6b9fdaa9b1b14174635e404ae840))
+
+
+
 <a name="0.5.1"></a>
 ### 0.5.1 (2018-11-19)
 
