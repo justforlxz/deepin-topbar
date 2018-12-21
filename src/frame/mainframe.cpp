@@ -37,10 +37,12 @@ MainFrame::MainFrame(QWidget *parent)
         m_launchAni->start();
     });
 
-    QTimer::singleShot(2000, this, [=] {
-        // connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::windowListChanged, this, &MainFrame::onWindowListChanged, Qt::QueuedConnection);
-        // onWindowListChanged();
-    });  // will draw exceptions
+#if (DTK_VERSION >= DTK_VERSION_CHECK(2, 0, 9, 10))
+    QTimer::singleShot(1000, this, [=] {
+        connect(DWindowManagerHelper::instance(), &DWindowManagerHelper::windowListChanged, this, &MainFrame::onWindowListChanged, Qt::QueuedConnection);
+        onWindowListChanged();
+    });
+#endif
 }
 
 MainFrame::~MainFrame()
@@ -207,31 +209,56 @@ void MainFrame::screenChanged()
     xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, winId(), strut_partial);
 }
 
+#if (DTK_VERSION >= DTK_VERSION_CHECK(2, 0, 9, 10))
 void MainFrame::onWindowListChanged()
 {
-    QList<DForeignWindow*> windowList = DWindowManagerHelper::instance()->currentWorkspaceWindows();
+    QVector<quint32> windowList = DWindowManagerHelper::instance()->currentWorkspaceWindowIdList();
 
-    for (DForeignWindow * window : windowList) {
-        if (window->winId() == this->window()->winId()) continue;
+    for (WId wid : windowList) {
+        if (wid == this->window()->winId() || m_windowList.keys().contains(wid)) continue;
 
-        connect(window, &DForeignWindow::windowStateChanged, this, &MainFrame::onWindowStateChanged, Qt::ConnectionType::QueuedConnection);
+        DForeignWindow *window = DForeignWindow::fromWinId(wid);
+        if (window->wmClass() == "dde-desktop") {
+            window->deleteLater();
+            continue;
+        }
+
+        m_windowList[wid] = window;
+
+        connect(window, &DForeignWindow::windowStateChanged, this, &MainFrame::onWindowStateChanged);
+        connect(window, &DForeignWindow::yChanged, this, [=] {
+            onWindowPosChanged(window);
+        });
 
         emit window->windowStateChanged(window->windowState());
+        emit window->xChanged(window->x());
+    }
+
+    for (auto it = m_windowList.begin(); it != m_windowList.end();) {
+        if (windowList.contains(it.key())) {
+            ++it;
+        }
+        else {
+            it.value()->deleteLater();
+            it = m_windowList.erase(it);
+        }
     }
 }
+#endif
 
 void MainFrame::onWindowStateChanged(Qt::WindowState windowState)
 {
-    DForeignWindow *w = qobject_cast<DForeignWindow*>(sender());
+    DForeignWindow *w = static_cast<DForeignWindow *>(sender());
     Q_ASSERT(w);
 
     WId wid = w->winId();
 
-    if (windowState == Qt::WindowMaximized) {
+    if (w->windowState() == Qt::WindowMaximized) {
         if (!m_maxWindowList.contains(wid)) {
             m_maxWindowList << wid;
         }
-    } else {
+    }
+    else {
         if (m_maxWindowList.contains(wid)) {
             m_maxWindowList.removeOne(wid);
         }
@@ -239,7 +266,31 @@ void MainFrame::onWindowStateChanged(Qt::WindowState windowState)
 
     if (m_maxWindowList.isEmpty()) {
         m_mainPanel->setBackground(QColor(0, 0, 0, 0));
-    } else {
+    }
+    else {
+        m_mainPanel->setBackground(QColor(0, 0, 0, 255));
+    }
+
+    QTimer::singleShot(100, this, [=] {
+        onWindowPosChanged(w);
+    });
+}
+
+void MainFrame::onWindowPosChanged(DForeignWindow *window)
+{
+    const QRect rect = geometry().adjusted(0, 0, width(), 30);
+
+    if (rect.contains(window->geometry().topLeft())) {
+        m_overlapping << window->winId();
+    }
+    else {
+        m_overlapping.removeOne(window->winId());
+    }
+
+    if (m_overlapping.isEmpty() && m_maxWindowList.isEmpty()) {
+        m_mainPanel->setBackground(QColor(0, 0, 0, 0));
+    }
+    else {
         m_mainPanel->setBackground(QColor(0, 0, 0, 255));
     }
 }

@@ -11,6 +11,7 @@
 #include <QPropertyAnimation>
 #include <DForeignWindow>
 #include <com_deepin_dde_daemon_dock.h>
+#include <memory>
 
 #include "mainpanel.h"
 
@@ -30,8 +31,9 @@ public slots:
 
 private slots:
     void screenChanged();
+#if (DTK_VERSION >= DTK_VERSION_CHECK(2, 0, 9, 10))
     void onWindowListChanged();
-//    void updateWindowListInfo();
+#endif
     void onWindowStateChanged(Qt::WindowState windowState);
     void delayedScreenChanged();
 
@@ -39,6 +41,7 @@ private:
     void init();
     void initConnect();
     void initAnimation();
+    void onWindowPosChanged(DForeignWindow *window);
 
 private:
     QDesktopWidget *m_desktopWidget;
@@ -52,6 +55,7 @@ private:
     QMap<WId,DForeignWindow*> m_windowList;
     QList<WId> m_windowIdList;
     QList<WId> m_maxWindowList;
+    QList<WId> m_overlapping;
 };
 
 #endif // MAINFRAME_H
