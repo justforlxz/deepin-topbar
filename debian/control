@@ -8,7 +8,7 @@ Build-Depends:
  dpkg-dev,
  qttools5-dev-tools,
  expect,
- qt5-qmake,
+ cmake,
  qt5-default,
  qtbase5-dev,
  libdtkbase-dev,
