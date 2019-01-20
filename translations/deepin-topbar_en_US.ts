@@ -31,7 +31,7 @@
     </message>
     <message>
         <location filename="../src/modules/notify/notifywidget.cpp" line="36"/>
-        <source>Clear</source>
+        <source>Clear All</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
