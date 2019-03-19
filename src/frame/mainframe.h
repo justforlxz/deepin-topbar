@@ -42,6 +42,7 @@ private:
     void initConnect();
     void initAnimation();
     void onWindowPosChanged(DForeignWindow *window);
+    void updateBackground();
 
 private:
     QDesktopWidget *m_desktopWidget;

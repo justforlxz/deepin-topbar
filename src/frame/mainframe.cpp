@@ -4,6 +4,7 @@
 
 #include <QScreen>
 #include <QApplication>
+#include <QApplication>
 #include <QRect>
 #include <xcb/xcb.h>
 #include <xcb/xcb_ewmh.h>
@@ -12,6 +13,7 @@
 #include <DForeignWindow>
 #include <QTimer>
 #include <DWindowManagerHelper>
+#include <QScreen>
 
 DWIDGET_USE_NAMESPACE
 
@@ -19,6 +21,11 @@ DWIDGET_USE_NAMESPACE
 #define DOCK_POS_RIGHT 1
 #define DOCK_POS_BOTTOM 2
 #define DOCK_POS_LEFT 3
+
+static const QStringList SKIP_APP {
+    "dde-desktop",
+    "dde-launcher"
+};
 
 MainFrame::MainFrame(QWidget *parent)
     : DBlurEffectWidget(parent)
@@ -218,7 +225,7 @@ void MainFrame::onWindowListChanged()
         if (wid == this->window()->winId() || m_windowList.keys().contains(wid)) continue;
 
         DForeignWindow *window = DForeignWindow::fromWinId(wid);
-        if (window->wmClass() == "dde-desktop") {
+        if (SKIP_APP.contains(window->wmClass())) {
             window->deleteLater();
             continue;
         }
@@ -231,7 +238,7 @@ void MainFrame::onWindowListChanged()
         });
 
         emit window->windowStateChanged(window->windowState());
-        emit window->xChanged(window->x());
+        emit window->yChanged(window->y());
     }
 
     for (auto it = m_windowList.begin(); it != m_windowList.end();) {
@@ -253,7 +260,16 @@ void MainFrame::onWindowStateChanged(Qt::WindowState windowState)
 
     WId wid = w->winId();
 
-    if (w->windowState() == Qt::WindowMaximized) {
+    auto checkWindow = [&] (DForeignWindow* window) -> bool {
+        const qreal ratio { devicePixelRatioF() };
+        const bool isMaxWindow { window->windowState() == Qt::WindowMaximized };
+        const QRect rect { qApp->primaryScreen()->geometry() };
+        const QRect winRect { QRect(window->geometry().topLeft(), window->geometry().size()) };
+
+        return rect.contains(winRect) && isMaxWindow;
+    };
+
+    if (checkWindow(w)) {
         if (!m_maxWindowList.contains(wid)) {
             m_maxWindowList << wid;
         }
@@ -264,30 +280,47 @@ void MainFrame::onWindowStateChanged(Qt::WindowState windowState)
         }
     }
 
-    if (m_maxWindowList.isEmpty()) {
-        m_mainPanel->setBackground(QColor(0, 0, 0, 0));
-    }
-    else {
-        m_mainPanel->setBackground(QColor(0, 0, 0, 255));
-    }
-
-    QTimer::singleShot(100, this, [=] {
-        onWindowPosChanged(w);
-    });
+    updateBackground();
 }
 
 void MainFrame::onWindowPosChanged(DForeignWindow *window)
 {
-    const QRect rect = geometry().adjusted(0, 0, width(), 30);
+    const QRect rect = geometry().adjusted(0, 0, 0, 30);
+    const WId wid = window->winId();
 
     if (rect.contains(window->geometry().topLeft())) {
-        m_overlapping << window->winId();
+        if (!m_overlapping.contains(wid)) {
+            m_overlapping << window->winId();
+        }
     }
     else {
         m_overlapping.removeOne(window->winId());
     }
 
-    if (m_overlapping.isEmpty() && m_maxWindowList.isEmpty()) {
+    updateBackground();
+}
+
+void MainFrame::updateBackground() {
+    QVector<quint32> windowList = DWindowManagerHelper::instance()->currentWorkspaceWindowIdList();
+    for (auto it = m_maxWindowList.begin(); it != m_maxWindowList.end();) {
+        if (!windowList.contains(*it)) {
+            it = m_maxWindowList.erase(it);
+        }
+        else {
+            ++it;
+        }
+    }
+
+    for (auto it = m_overlapping.begin(); it != m_overlapping.end();) {
+        if (!windowList.contains(*it)) {
+            it = m_overlapping.erase(it);
+        }
+        else {
+            ++it;
+        }
+    }
+
+    if (m_maxWindowList.isEmpty() && m_overlapping.isEmpty()) {
         m_mainPanel->setBackground(QColor(0, 0, 0, 0));
     }
     else {
