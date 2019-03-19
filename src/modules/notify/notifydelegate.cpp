@@ -263,7 +263,7 @@ const QPair<QString, bool> NotifyDelegate::holdTextInRect(const QFontMetrics &fm
         str.remove(str.size() - 4, 1);
     }
 
-    QPair<QString, bool> result(text, false);
+    QPair<QString, bool> result(str, false);
     QPair<QPair<QString, QRect>, QPair<QString, bool>> pair;
     pair.first = cache;
     pair.second = result;
