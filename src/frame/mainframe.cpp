@@ -280,7 +280,7 @@ void MainFrame::onWindowStateChanged(Qt::WindowState windowState)
         }
     }
 
-    updateBackground();
+    QTimer::singleShot(100, this, &MainFrame::updateBackground);
 }
 
 void MainFrame::onWindowPosChanged(DForeignWindow *window)
@@ -297,7 +297,7 @@ void MainFrame::onWindowPosChanged(DForeignWindow *window)
         m_overlapping.removeOne(window->winId());
     }
 
-    updateBackground();
+    QTimer::singleShot(100, this, &MainFrame::updateBackground);
 }
 
 void MainFrame::updateBackground() {
