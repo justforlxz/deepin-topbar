@@ -24,7 +24,8 @@ DWIDGET_USE_NAMESPACE
 
 static const QStringList SKIP_APP {
     "dde-desktop",
-    "dde-launcher"
+    "dde-launcher",
+    "dde-osd"
 };
 
 MainFrame::MainFrame(QWidget *parent)
@@ -232,10 +233,10 @@ void MainFrame::onWindowListChanged()
 
         m_windowList[wid] = window;
 
-        connect(window, &DForeignWindow::windowStateChanged, this, &MainFrame::onWindowStateChanged);
+        connect(window, &DForeignWindow::windowStateChanged, this, &MainFrame::onWindowStateChanged, Qt::QueuedConnection);
         connect(window, &DForeignWindow::yChanged, this, [=] {
             onWindowPosChanged(window);
-        });
+        }, Qt::QueuedConnection);
 
         emit window->windowStateChanged(window->windowState());
         emit window->yChanged(window->y());
@@ -280,15 +281,17 @@ void MainFrame::onWindowStateChanged(Qt::WindowState windowState)
         }
     }
 
-    QTimer::singleShot(100, this, &MainFrame::updateBackground);
+    updateBackground();
 }
 
 void MainFrame::onWindowPosChanged(DForeignWindow *window)
 {
-    const QRect rect = geometry().adjusted(0, 0, 0, 30);
-    const WId wid = window->winId();
+    const QRect rect{ geometry().adjusted(0, 0, 0, 25) };
+    const QRect winRect{ window->geometry().topLeft() * devicePixelRatioF(),
+                         window->geometry().size() };
+    const WId   wid{ window->winId() };
 
-    if (rect.contains(window->geometry().topLeft())) {
+    if (rect.contains(winRect.topLeft())) {
         if (!m_overlapping.contains(wid)) {
             m_overlapping << window->winId();
         }
@@ -297,7 +300,7 @@ void MainFrame::onWindowPosChanged(DForeignWindow *window)
         m_overlapping.removeOne(window->winId());
     }
 
-    QTimer::singleShot(100, this, &MainFrame::updateBackground);
+    updateBackground();
 }
 
 void MainFrame::updateBackground() {
