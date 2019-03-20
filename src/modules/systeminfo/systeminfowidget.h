@@ -19,11 +19,14 @@ public:
 
 private:
     const QString converSpeed(const int value);
-
+    const QString formatPercent(int percent);
 private:
     SystemInfoModel *m_model;
     QLabel *m_rx;
     QLabel *m_tx;
+    QLabel *m_cpu;
+    QLabel *m_mem;
+    QLabel *m_swap;
 };
 }
 }

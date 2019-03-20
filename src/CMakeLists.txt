@@ -291,6 +291,7 @@ target_link_libraries(${BIN_NAME} PRIVATE
         Qt5::DBus
         Qt5::X11Extras
         Qt5::Concurrent
+        procps
 )
 
 # bin

@@ -4,6 +4,7 @@
 #include <QDBusConnection>
 #include <QDBusInterface>
 #include <QDebug>
+#include <proc/sysinfo.h>
 
 using namespace dtb;
 using namespace dtb::systeminfo;
@@ -71,8 +72,13 @@ void SysteminfoThread::run()
 
         getCpuTime(currentWorkTime, currentTotalTime);
 
-        m_model->setCputime((currentWorkTime - prevWorkTime) * 100.0 / (currentTotalTime - prevTotalTime));
+        m_model->setCputime(
+                static_cast<int>((currentWorkTime - prevWorkTime) * 100.0 / (currentTotalTime - prevTotalTime)));
 
+        meminfo();
+        auto memoryPercent = (kb_main_total - kb_main_available) * 100.0 / kb_main_total;
+        auto swapPercent = kb_swap_used * 100.0 / kb_swap_total;
+        emit m_model->memChanged(static_cast<int>(memoryPercent), static_cast<int>(swapPercent));
         m_tx->open(QIODevice::ReadOnly | QIODevice::Text);
         m_rx->open(QIODevice::ReadOnly | QIODevice::Text);
 

@@ -16,7 +16,7 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent)
 {
     setObjectName("SystemInfoWidget");
     setStyleSheet("QLabel {color: #d3d3d3; font-size: 9px;}");
-    setFixedWidth(60);
+    setFixedWidth(180);
 
     m_tx = new QLabel;
     m_tx->setFixedHeight(10);
@@ -25,6 +25,18 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent)
     m_rx = new QLabel;
     m_rx->setFixedHeight(10);
     m_rx->setText(converSpeed(0));
+
+    m_cpu = new QLabel();
+    m_cpu->setFixedHeight(20);
+    m_cpu->setText("00%");
+    m_cpu->setStyleSheet("QLabel {font-size: 16px;}");
+
+    m_mem = new QLabel();
+    m_mem->setFixedHeight(20);
+    m_mem->setText("00%");
+    m_mem->setStyleSheet("QLabel {font-size: 16px;}");
+
+
 
     QLabel *up = new QLabel;
     up->setPixmap(DHiDPIHelper::loadNxPixmap(":/right_top.svg").scaled(QSize(10, 10) * devicePixelRatioF(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
@@ -44,14 +56,32 @@ SystemInfoWidget::SystemInfoWidget(QWidget *parent)
     downlayout->addWidget(down, 0, Qt::AlignVCenter | Qt::AlignLeft);
     downlayout->addWidget(m_rx, 0, Qt::AlignVCenter | Qt::AlignRight);
 
-    QVBoxLayout *mainlayout = new QVBoxLayout;
-    mainlayout->setMargin(0);
-    mainlayout->setSpacing(0);
-    mainlayout->setContentsMargins(3, 2, 3, 2);
-    mainlayout->addLayout(uploadlayout);
-    mainlayout->addLayout(downlayout);
+    QVBoxLayout *networklayout = new QVBoxLayout;
+    networklayout->setMargin(0);
+    networklayout->setSpacing(0);
+    networklayout->addLayout(uploadlayout);
+    networklayout->addLayout(downlayout);
 
-    setLayout(mainlayout);
+    QLabel *cpuIcon = new QLabel();
+    cpuIcon->setPixmap(DHiDPIHelper::loadNxPixmap(":/icon_cpu_dark.svg").scaled(QSize(24, 24) * devicePixelRatioF(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
+    QHBoxLayout *cpuLayout = new QHBoxLayout();
+    cpuLayout->addWidget(cpuIcon, 0, Qt::AlignVCenter | Qt::AlignLeft);
+    cpuLayout->addWidget(m_cpu, 0, Qt::AlignVCenter | Qt::AlignLeft);
+
+    QLabel *memIcon = new QLabel();
+    memIcon->setPixmap(DHiDPIHelper::loadNxPixmap(":/icon_memory_dark.svg").scaled(QSize(24, 24) * devicePixelRatioF(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
+    QHBoxLayout *memLayout = new QHBoxLayout();
+    memLayout->addWidget(memIcon, 0, Qt::AlignVCenter | Qt::AlignLeft);
+    memLayout->addWidget(m_mem, 0, Qt::AlignVCenter | Qt::AlignLeft);
+
+    QHBoxLayout *mainLayout = new QHBoxLayout();
+    mainLayout->setMargin(0);
+    mainLayout->setSpacing(0);
+//    mainLayout->setContentsMargins(3, 2, 3, 2);
+    mainLayout->addLayout(memLayout);
+    mainLayout->addLayout(cpuLayout);
+    mainLayout->addLayout(networklayout);
+    setLayout(mainLayout);
 }
 
 void SystemInfoWidget::setModel(SystemInfoModel *model)
@@ -61,6 +91,12 @@ void SystemInfoWidget::setModel(SystemInfoModel *model)
     connect(model, &SystemInfoModel::networkSpeedChanged, this, [=] (const quint64 tx, const quint64 rx) {
         m_tx->setText(converSpeed(tx));
         m_rx->setText(converSpeed(rx));
+    });
+    connect(model, &SystemInfoModel::cputimeChanged, this, [=](int cputime) {
+        m_cpu->setText(formatPercent(cputime));
+    });
+    connect(model, &SystemInfoModel::memChanged, this, [=](int mem, int swap) {
+        m_mem->setText(formatPercent(mem));
     });
 }
 
@@ -88,4 +124,11 @@ const QString SystemInfoWidget::converSpeed(const int value)
     }
 
     return speed;
+}
+
+const QString SystemInfoWidget::formatPercent(int percent) {
+    if (percent < 10){
+        return QString("0%1%").arg(percent);
+    }
+    return QString("%1%").arg(percent);
 }
