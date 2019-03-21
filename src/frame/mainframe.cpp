@@ -37,7 +37,7 @@ MainFrame::MainFrame(QWidget *parent)
     screenChanged();
 
     const QPoint self_point = geometry().topLeft();
-    move(QPoint(self_point.x(), self_point.y() - TOPHEIGHT));
+    move(QPoint(self_point.x() / devicePixelRatioF(), self_point.y() / devicePixelRatioF() - TOPHEIGHT));
 
     QTimer::singleShot(100, this, [=] {
         m_launchAni->setStartValue(geometry().topLeft());
@@ -291,7 +291,7 @@ void MainFrame::onWindowPosChanged(DForeignWindow *window)
                          window->geometry().size() };
     const WId   wid{ window->winId() };
 
-    if (rect.contains(winRect.topLeft())) {
+    if (window->isVisible() && rect.contains(winRect.topLeft())) {
         if (!m_overlapping.contains(wid)) {
             m_overlapping << window->winId();
         }
