@@ -41,6 +41,7 @@ I'll release messages on my twitter.
 * xcb-image (developer package)
 * xcb-icccm (developer package)
 * xcb-composite (developer package)
+* procps (developer package)
 * cmake (build package)
 
 ### Runtime dependencies

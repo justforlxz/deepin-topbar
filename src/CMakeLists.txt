@@ -259,6 +259,7 @@ find_package(PkgConfig REQUIRED)
 find_package(DtkWidget REQUIRED)
 find_package(Qt5 COMPONENTS Core Gui DBus Svg X11Extras Concurrent REQUIRED)
 
+pkg_check_modules(PROCPS REQUIRED libprocps)
 pkg_check_modules(XCB_LIBS REQUIRED xcb-ewmh xcb xcb-image xcb-composite xtst xcb-icccm dbusmenu-qt5)
 pkg_check_modules(XCB_EWMH REQUIRED xcb-ewmh x11 xext)
 pkg_check_modules(DFrameworkDBus REQUIRED dframeworkdbus)
@@ -291,6 +292,7 @@ target_link_libraries(${BIN_NAME} PRIVATE
         Qt5::DBus
         Qt5::X11Extras
         Qt5::Concurrent
+        ${PROCPS_LIBRARIES}
 )
 
 # bin

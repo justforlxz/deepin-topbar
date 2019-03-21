@@ -17,7 +17,7 @@ public:
 signals:
     void networkSpeedChanged(const quint64 tx, const quint64 rx);
     void cputimeChanged(int cputime);
-
+    void memChanged(int mem, int swap);
 private:
     int m_cputime;
 };

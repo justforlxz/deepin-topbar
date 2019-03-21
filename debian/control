@@ -26,7 +26,8 @@ Build-Depends:
  libxtst-dev,
  libgsettings-qt-dev,
  libdbusmenu-qt5-dev,
- libdde-network-utils-dev
+ libdde-network-utils-dev,
+ libprocps-dev
 Standards-Version: 0.1-1
 Homepage: https://github.com/haruyukilxz/deepin-topbar
 
