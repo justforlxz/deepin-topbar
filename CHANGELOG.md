@@ -1,3 +1,20 @@
+<a name="0.6.3"></a>
+### 0.6.3 (2019-03-22)
+
+
+#### Bug Fixes
+
+*   animation pos error when startup ([0d36f3a4](https://github.com/kirigayakazushin/deepin-topbar/commit/0d36f3a4fbe16312482de9fd862954a74c238a48))
+*   missing resources ([4189b750](https://github.com/kirigayakazushin/deepin-topbar/commit/4189b75070df8a987666cbeeeb7d6e8ba170ef3e))
+* **background:**  set interval for update windowlist fix #138 ([81aceebd](https://github.com/kirigayakazushin/deepin-topbar/commit/81aceebd67e197fdf38001463b215542662c051f))
+* **notify:**  cache invalid ([aa732a93](https://github.com/kirigayakazushin/deepin-topbar/commit/aa732a933f688754cb879df32b043359a47ba277))
+
+#### Features
+
+*   system info support cpu and memory ([8fe90c68](https://github.com/kirigayakazushin/deepin-topbar/commit/8fe90c68800b262da476d1ac81381d3bf1ab69f5))
+
+
+
 <a name=""></a>
 ##  0.6.0 (2018-12-21)
 
