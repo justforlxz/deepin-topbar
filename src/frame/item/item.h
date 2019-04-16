@@ -4,6 +4,7 @@
 #include "interfaces/pluginsiteminterface.h"
 #include "widgets/itempopupwindow.h"
 #include <QWidget>
+#include <memory>
 
 namespace dtb {
 class Item : public QWidget
