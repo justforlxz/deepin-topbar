@@ -323,10 +323,10 @@ void MainFrame::updateBackground() {
         }
     }
 
-    if (m_maxWindowList.isEmpty() && m_overlapping.isEmpty()) {
-        m_mainPanel->setBackground(QColor(0, 0, 0, 0));
-    }
-    else {
-        m_mainPanel->setBackground(QColor(0, 0, 0, 255));
-    }
+//    if (m_maxWindowList.isEmpty() && m_overlapping.isEmpty()) {
+//        m_mainPanel->setBackground(QColor(0, 0, 0, 0));
+//    }
+//    else {
+//        m_mainPanel->setBackground(QColor(0, 0, 0, 255));
+//    }
 }
