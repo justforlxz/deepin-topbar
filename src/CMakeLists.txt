@@ -254,6 +254,10 @@ set(QRC_FILES
 ./modules/notify/notify.qrc
 )
 
+if(DEFINED ENABLE_RATOTE)
+    add_definitions(-DENABLE_RATOTE)
+endif()
+
 # Find the library
 find_package(PkgConfig REQUIRED)
 find_package(DtkWidget REQUIRED)

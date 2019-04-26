@@ -40,10 +40,19 @@ MainFrame::MainFrame(QWidget *parent)
     move(QPoint(self_point.x() / devicePixelRatioF(), self_point.y() / devicePixelRatioF() - TOPHEIGHT));
 
     QTimer::singleShot(100, this, [=] {
-        m_launchAni->setStartValue(geometry().topLeft());
-        m_launchAni->setEndValue(self_point);
-        m_launchAni->start();
+#ifdef ENABLE_RATOTE
+        if (isRotated()) {
+#endif
+            show();
+            m_launchAni->setStartValue(geometry().topLeft());
+            m_launchAni->setEndValue(self_point);
+            m_launchAni->start();
+#ifdef ENABLE_RATOTE
+        }
+#endif
     });
+
+    hide();
 
 #if (DTK_VERSION >= DTK_VERSION_CHECK(2, 0, 9, 10))
     QTimer::singleShot(1000, this, [=] {
@@ -96,6 +105,7 @@ void MainFrame::initConnect()
 {
     connect(m_desktopWidget, &QDesktopWidget::resized, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
     connect(m_desktopWidget, &QDesktopWidget::primaryScreenChanged, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
+    connect(m_desktopWidget, &QDesktopWidget::workAreaResized, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
 
     connect(m_dockInter, &DockInter::DisplayModeChanged, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
     connect(m_dockInter, &DockInter::HideModeChanged, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
@@ -128,7 +138,7 @@ void MainFrame::showSetting()
 
 void MainFrame::delayedScreenChanged()
 {
-    QTimer::singleShot(1000, this, &MainFrame::screenChanged);
+    QTimer::singleShot(100, this, &MainFrame::screenChanged);
 }
 
 void MainFrame::screenChanged()
@@ -146,6 +156,13 @@ void MainFrame::screenChanged()
 
     // clear strut partial
     xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, winId(), strutPartial);
+
+#ifdef ENABLE_RATOTE
+    if (!isRotated()) {
+        m_launchAni->stop();
+        return hide();
+    }
+#endif
 
     // set strct partial
     xcb_ewmh_wm_strut_partial_t strut_partial;
@@ -215,6 +232,8 @@ void MainFrame::screenChanged()
     }
 
     xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, winId(), strut_partial);
+
+    show();
 }
 
 #if (DTK_VERSION >= DTK_VERSION_CHECK(2, 0, 9, 10))
@@ -330,3 +349,11 @@ void MainFrame::updateBackground() {
         m_mainPanel->setBackground(QColor(0, 0, 0, 255));
     }
 }
+
+#ifdef ENABLE_RATOTE
+bool MainFrame::isRotated() const
+{
+    const QRect primaryRect = QApplication::primaryScreen()->geometry();
+    return primaryRect.width() < primaryRect.height();
+}
+#endif

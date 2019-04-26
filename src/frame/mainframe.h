@@ -44,6 +44,10 @@ private:
     void onWindowPosChanged(DForeignWindow *window);
     void updateBackground();
 
+#ifdef ENABLE_RATOTE
+    bool isRotated() const;
+#endif
+
 private:
     QDesktopWidget *m_desktopWidget;
     dtb::MainPanel *m_mainPanel;
