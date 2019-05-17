@@ -43,6 +43,7 @@ private:
     void initAnimation();
     void onWindowPosChanged(DForeignWindow *window);
     void updateBackground();
+    void updateBorderPath();
 
 #ifdef ENABLE_RATOTE
     bool isRotated() const;
@@ -56,6 +57,7 @@ private:
 //    QPropertyAnimation *m_hideWithLauncher;
 //    QPropertyAnimation *m_showWithLauncher;
     DockInter *m_dockInter;
+    QWidget *m_structWidget;
 
     QMap<WId,DForeignWindow*> m_windowList;
     QList<WId> m_windowIdList;

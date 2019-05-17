@@ -74,9 +74,13 @@ MainFrame::~MainFrame()
 
 void MainFrame::init()
 {
+    m_structWidget = new QWidget;
+    m_structWidget->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
+    m_structWidget->setAttribute(Qt::WA_TranslucentBackground);
+
     m_desktopWidget = QApplication::desktop();
 
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
+    setWindowFlags(Qt::X11BypassWindowManagerHint);
     setBlendMode(DBlurEffectWidget::BehindWindowBlend);
     setAttribute(Qt::WA_TranslucentBackground);
     setMaskColor(DBlurEffectWidget::DarkColor);
@@ -149,20 +153,23 @@ void MainFrame::screenChanged()
 
     xcb_atom_t atoms[1];
     atoms[0] = m_ewmh_connection._NET_WM_WINDOW_TYPE_DOCK;
-    xcb_ewmh_set_wm_window_type(&m_ewmh_connection, winId(), 1, atoms);
+    xcb_ewmh_set_wm_window_type(&m_ewmh_connection, m_structWidget->winId(), 1, atoms);
 
     xcb_ewmh_wm_strut_partial_t strutPartial;
     memset(&strutPartial, 0, sizeof(xcb_ewmh_wm_strut_partial_t));
 
     // clear strut partial
-    xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, winId(), strutPartial);
+    xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, m_structWidget->winId(), strutPartial);
 
 #ifdef ENABLE_RATOTE
     if (!isRotated()) {
         m_launchAni->stop();
+        m_structWidget->hide();
         return hide();
     }
 #endif
+
+    const int frameHeight = DWindowManagerHelper::instance()->hasComposite() ? FRAMEHEIGHT : TOPHEIGHT;
 
     // set strct partial
     xcb_ewmh_wm_strut_partial_t strut_partial;
@@ -177,7 +184,7 @@ void MainFrame::screenChanged()
         strut_partial.top_start_x = primaryRect.x();
         strut_partial.top_end_x = primaryRect.x() + primaryRect.width();
 
-        setFixedSize(primaryRect.width(), TOPHEIGHT);
+        setFixedSize(primaryRect.width(), frameHeight);
         move(primaryRect.x(), primaryRect.y());
         m_mainPanel->resize(primaryRect.width(), TOPHEIGHT);
         m_mainPanel->move(0, 0);
@@ -190,13 +197,13 @@ void MainFrame::screenChanged()
         if (dockRect.bottomRight().y() / devicePixelRatioF() + TOPHEIGHT >= primaryRect.height()) {
             m_mainPanel->resize(primaryRect.width() - dockRect.topRight().x() / devicePixelRatioF(), TOPHEIGHT);
             m_mainPanel->move(0, 0);
-            setFixedSize(primaryRect.width() - dockRect.topRight().x() / devicePixelRatioF(), TOPHEIGHT);
+            setFixedSize(primaryRect.width() - dockRect.topRight().x() / devicePixelRatioF(), frameHeight);
             move(primaryRect.x() + dockRect.topRight().x() / devicePixelRatioF(), primaryRect.y());
         }
         else {
             m_mainPanel->resize(primaryRect.width(), TOPHEIGHT);
             m_mainPanel->move(0, 0);
-            setFixedSize(primaryRect.width(), TOPHEIGHT);
+            setFixedSize(primaryRect.width(), frameHeight);
             move(primaryRect.x(), primaryRect.y());
         }
         break;
@@ -206,11 +213,11 @@ void MainFrame::screenChanged()
         strut_partial.top_end_x = primaryRect.x() + primaryRect.width();
 
         if (dockRect.height() / devicePixelRatioF() + TOPHEIGHT >= primaryRect.height()) {
-            setFixedSize((dockRect.topLeft().x() - primaryRect.x()) / devicePixelRatioF(), TOPHEIGHT);
+            setFixedSize((dockRect.topLeft().x() - primaryRect.x()) / devicePixelRatioF(), frameHeight);
             m_mainPanel->resize((dockRect.topLeft().x() - primaryRect.x()) / devicePixelRatioF(), TOPHEIGHT);
         }
         else {
-            setFixedSize(primaryRect.width(), TOPHEIGHT);
+            setFixedSize(primaryRect.width(), frameHeight);
             m_mainPanel->resize(primaryRect.width(), TOPHEIGHT);
         }
 
@@ -223,7 +230,7 @@ void MainFrame::screenChanged()
         strut_partial.top_end_x = primaryRect.x() + primaryRect.width();
 
         move(primaryRect.x(), primaryRect.y() + dockRect.bottomRight().y() / devicePixelRatioF());
-        setFixedSize(primaryRect.width(), TOPHEIGHT);
+        setFixedSize(primaryRect.width(), frameHeight);
         m_mainPanel->resize(primaryRect.width(), TOPHEIGHT);
         m_mainPanel->move(0, 0);
         break;
@@ -231,9 +238,14 @@ void MainFrame::screenChanged()
         break;
     }
 
-    xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, winId(), strut_partial);
+    m_structWidget->move(geometry().topLeft());
+    m_structWidget->setFixedSize(m_mainPanel->size());
 
+    xcb_ewmh_set_wm_strut_partial(&m_ewmh_connection, m_structWidget->winId(), strut_partial);
+    m_structWidget->show();
     show();
+
+    updateBorderPath();
 }
 
 #if (DTK_VERSION >= DTK_VERSION_CHECK(2, 0, 9, 10))
@@ -357,3 +369,17 @@ bool MainFrame::isRotated() const
     return primaryRect.width() < primaryRect.height();
 }
 #endif
+
+void MainFrame::updateBorderPath() {
+    QPainterPath basepath;
+    basepath.addRect(rect());
+
+    if (!DWindowManagerHelper::instance()->hasComposite()) {
+        return setMaskPath(basepath);
+    }
+
+    QPainterPath path;
+    QRect rect(m_mainPanel->geometry().bottomLeft(), QSize(width(), FRAMEHEIGHT * 2));
+    path.addRoundedRect(rect, 10, 10);
+    setMaskPath(basepath - path);
+}

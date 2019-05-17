@@ -22,6 +22,7 @@
 #include <QObject>
 
 #define TOPHEIGHT 26
+#define FRAMEHEIGHT 35
 #define FONTSIZE 13
 
 static const QStringList Module_list = {"systeminfo",
