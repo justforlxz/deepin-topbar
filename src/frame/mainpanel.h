@@ -25,8 +25,6 @@ public:
     bool saveConfig(const QString &itemKey, const QJsonObject &json) Q_DECL_OVERRIDE;
     const QJsonObject loadConfig(const QString &itemKey) Q_DECL_OVERRIDE;
 
-    void setDefaultColor(const DefaultColor &defaultColor);
-    void setBackground(const QColor &color) Q_DECL_OVERRIDE;
     void hidePopupWindow() Q_DECL_OVERRIDE;
     void showSettingDialog();
 
@@ -34,10 +32,6 @@ private slots:
     void loadModules();
     void loadModule(PluginsItemInterface * const module);
     void reload();
-    void onBackgroundChanged(const QColor &color);
-
-protected:
-    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
 private:
     QHBoxLayout *m_mainLayout;
@@ -47,8 +41,6 @@ private:
     DefaultColor m_defaultColor;
     QStringList m_blackList;
     Settings *m_settings;
-    QVariantAnimation *m_backgroundAni;
-    QColor m_backgroundColor;
 };
 }
 

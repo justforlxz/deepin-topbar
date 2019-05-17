@@ -30,6 +30,8 @@ static const QStringList SKIP_APP {
 
 MainFrame::MainFrame(QWidget *parent)
     : DBlurEffectWidget(parent)
+    , m_backgroundAni(new QVariantAnimation(this))
+    , m_backgroundColor(QColor(0, 0, 0, 0))
 {
     init();
     initAnimation();
@@ -116,6 +118,10 @@ void MainFrame::initConnect()
     connect(m_dockInter, &DockInter::PositionChanged, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
     connect(m_dockInter, &DockInter::IconSizeChanged, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
     connect(m_dockInter, &DockInter::FrontendWindowRectChanged, this, &MainFrame::delayedScreenChanged, Qt::QueuedConnection);
+
+    connect(m_backgroundAni, &QVariantAnimation::valueChanged, this, [=] (const QVariant &value){
+        onBackgroundChanged(value.value<QColor>());
+    }, Qt::ConnectionType::QueuedConnection);
 }
 
 void MainFrame::initAnimation()
@@ -123,6 +129,8 @@ void MainFrame::initAnimation()
     m_launchAni = new QPropertyAnimation(this, "pos", this);
     m_launchAni->setDuration(1000);
     m_launchAni->setEasingCurve(QEasingCurve::OutBounce);
+
+    m_backgroundAni->setDuration(500);
 
 //    connect(m_showWithLauncher, &QPropertyAnimation::valueChanged, this, [=](const QVariant &value) {
 //        move(value.toPoint());
@@ -138,6 +146,32 @@ void MainFrame::initAnimation()
 void MainFrame::showSetting()
 {
     QTimer::singleShot(1, m_mainPanel, &dtb::MainPanel::showSettingDialog);
+}
+
+void MainFrame::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+
+    painter.fillPath(pathHandle(), m_backgroundColor);
+
+    DBlurEffectWidget::paintEvent(event);
+}
+
+void MainFrame::setBackground(const QColor &color)
+{
+    m_backgroundAni->stop();
+
+    m_backgroundAni->setStartValue(m_backgroundColor);
+    m_backgroundAni->setEndValue(color);
+
+    m_backgroundAni->start();
+}
+
+void MainFrame::onBackgroundChanged(const QColor &color)
+{
+    m_backgroundColor = color;
+
+    update();
 }
 
 void MainFrame::delayedScreenChanged()
@@ -355,10 +389,10 @@ void MainFrame::updateBackground() {
     }
 
     if (m_maxWindowList.isEmpty() && m_overlapping.isEmpty()) {
-        m_mainPanel->setBackground(QColor(0, 0, 0, 0));
+        setBackground(QColor(0, 0, 0, 0));
     }
     else {
-        m_mainPanel->setBackground(QColor(0, 0, 0, 255));
+        setBackground(QColor(0, 0, 0, 255));
     }
 }
 
@@ -370,16 +404,21 @@ bool MainFrame::isRotated() const
 }
 #endif
 
-void MainFrame::updateBorderPath() {
+QPainterPath MainFrame::pathHandle() const {
     QPainterPath basepath;
     basepath.addRect(rect());
 
     if (!DWindowManagerHelper::instance()->hasComposite()) {
-        return setMaskPath(basepath);
+        return basepath;
     }
 
     QPainterPath path;
-    QRect rect(m_mainPanel->geometry().bottomLeft(), QSize(width(), FRAMEHEIGHT * 2));
+    QRect rect(m_mainPanel->geometry().bottomLeft() + QPoint(0, 1), QSize(width(), FRAMEHEIGHT * 2));
     path.addRoundedRect(rect, 10, 10);
-    setMaskPath(basepath - path);
+
+    return (basepath - path);
+}
+
+void MainFrame::updateBorderPath() {
+    setMaskPath(pathHandle());
 }

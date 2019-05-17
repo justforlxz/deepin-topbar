@@ -23,8 +23,6 @@ public:
 
     virtual const QJsonObject loadConfig(const QString &itemKey) { Q_UNUSED(itemKey); return QJsonObject();}
 
-    virtual void setBackground(const QColor &color) = 0;
-
     virtual void hidePopupWindow() = 0;
 };
 

@@ -29,6 +29,9 @@ public:
 public slots:
     void showSetting();
 
+protected:
+    void paintEvent(QPaintEvent *event) override;
+
 private slots:
     void screenChanged();
 #if (DTK_VERSION >= DTK_VERSION_CHECK(2, 0, 9, 10))
@@ -44,6 +47,9 @@ private:
     void onWindowPosChanged(DForeignWindow *window);
     void updateBackground();
     void updateBorderPath();
+    void setBackground(const QColor &color);
+    void onBackgroundChanged(const QColor &color);
+    QPainterPath pathHandle() const;
 
 #ifdef ENABLE_RATOTE
     bool isRotated() const;
@@ -63,6 +69,8 @@ private:
     QList<WId> m_windowIdList;
     QList<WId> m_maxWindowList;
     QList<WId> m_overlapping;
+    QVariantAnimation *m_backgroundAni;
+    QColor m_backgroundColor;
 };
 
 #endif // MAINFRAME_H
