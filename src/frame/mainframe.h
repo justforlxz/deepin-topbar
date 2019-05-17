@@ -67,6 +67,7 @@ private:
     QList<WId> m_maxWindowList;
     QList<WId> m_overlapping;
     QVariantAnimation *m_backgroundAni;
+    QColor m_defaultBgColor;
     QColor m_backgroundColor;
 };
 

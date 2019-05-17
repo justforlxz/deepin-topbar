@@ -31,7 +31,7 @@ static const QStringList SKIP_APP {
 MainFrame::MainFrame(QWidget *parent)
     : DBlurEffectWidget(parent)
     , m_backgroundAni(new QVariantAnimation(this))
-    , m_backgroundColor(maskColor())
+    , m_defaultBgColor(maskColor())
 {
     init();
     initAnimation();
@@ -87,7 +87,7 @@ void MainFrame::init()
     setAttribute(Qt::WA_TranslucentBackground);
     setMaskColor(DBlurEffectWidget::DarkColor);
 
-    m_backgroundColor.setAlpha(maskAlpha());
+    m_defaultBgColor.setAlpha(maskAlpha());
 
     m_mainPanel = new dtb::MainPanel(this);
 
@@ -164,6 +164,9 @@ void MainFrame::onBackgroundChanged(const QColor &color)
 {
     setMaskColor(color);
     setMaskAlpha(color.alpha());
+
+    m_backgroundColor = color;
+
     update();
 }
 
@@ -384,7 +387,7 @@ void MainFrame::updateBackground() {
     }
 
     if (m_maxWindowList.isEmpty() && m_overlapping.isEmpty()) {
-        setBackground(m_backgroundColor);
+        setBackground(m_defaultBgColor);
     }
     else {
         setBackground(QColor(0, 0, 0));
