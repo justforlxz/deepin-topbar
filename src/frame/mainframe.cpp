@@ -31,7 +31,7 @@ static const QStringList SKIP_APP {
 MainFrame::MainFrame(QWidget *parent)
     : DBlurEffectWidget(parent)
     , m_backgroundAni(new QVariantAnimation(this))
-    , m_backgroundColor(QColor(0, 0, 0, 0))
+    , m_backgroundColor(maskColor())
 {
     init();
     initAnimation();
@@ -86,6 +86,8 @@ void MainFrame::init()
     setBlendMode(DBlurEffectWidget::BehindWindowBlend);
     setAttribute(Qt::WA_TranslucentBackground);
     setMaskColor(DBlurEffectWidget::DarkColor);
+
+    m_backgroundColor.setAlpha(maskAlpha());
 
     m_mainPanel = new dtb::MainPanel(this);
 
@@ -148,15 +150,6 @@ void MainFrame::showSetting()
     QTimer::singleShot(1, m_mainPanel, &dtb::MainPanel::showSettingDialog);
 }
 
-void MainFrame::paintEvent(QPaintEvent *event)
-{
-    QPainter painter(this);
-
-    painter.fillPath(pathHandle(), m_backgroundColor);
-
-    DBlurEffectWidget::paintEvent(event);
-}
-
 void MainFrame::setBackground(const QColor &color)
 {
     m_backgroundAni->stop();
@@ -169,8 +162,8 @@ void MainFrame::setBackground(const QColor &color)
 
 void MainFrame::onBackgroundChanged(const QColor &color)
 {
-    m_backgroundColor = color;
-
+    setMaskColor(color);
+    setMaskAlpha(color.alpha());
     update();
 }
 
@@ -288,7 +281,9 @@ void MainFrame::onWindowListChanged()
     QVector<quint32> windowList = DWindowManagerHelper::instance()->currentWorkspaceWindowIdList();
 
     for (WId wid : windowList) {
-        if (wid == this->window()->winId() || m_windowList.keys().contains(wid)) continue;
+        if (wid == this->window()->winId() ||
+            wid == m_structWidget->winId() ||
+            m_windowList.keys().contains(wid)) continue;
 
         DForeignWindow *window = DForeignWindow::fromWinId(wid);
         if (SKIP_APP.contains(window->wmClass())) {
@@ -351,12 +346,12 @@ void MainFrame::onWindowStateChanged(Qt::WindowState windowState)
 
 void MainFrame::onWindowPosChanged(DForeignWindow *window)
 {
-    const QRect rect{ geometry().adjusted(0, 0, 0, 25) };
-    const QRect winRect{ window->geometry().topLeft() * devicePixelRatioF(),
+    const QRect rect{ geometry().adjusted(0, 0, 0, 26) };
+    const QRect winRect{ window->geometry().topLeft(),
                          window->geometry().size() };
     const WId   wid{ window->winId() };
 
-    if (window->isVisible() && rect.contains(winRect.topLeft())) {
+    if (window->windowState() != Qt::WindowState::WindowMinimized && rect.contains(winRect.topLeft())) {
         if (!m_overlapping.contains(wid)) {
             m_overlapping << window->winId();
         }
@@ -389,10 +384,10 @@ void MainFrame::updateBackground() {
     }
 
     if (m_maxWindowList.isEmpty() && m_overlapping.isEmpty()) {
-        setBackground(QColor(0, 0, 0, 0));
+        setBackground(m_backgroundColor);
     }
     else {
-        setBackground(QColor(0, 0, 0, 255));
+        setBackground(QColor(0, 0, 0));
     }
 }
 

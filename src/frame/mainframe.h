@@ -29,9 +29,6 @@ public:
 public slots:
     void showSetting();
 
-protected:
-    void paintEvent(QPaintEvent *event) override;
-
 private slots:
     void screenChanged();
 #if (DTK_VERSION >= DTK_VERSION_CHECK(2, 0, 9, 10))
