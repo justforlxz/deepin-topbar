@@ -344,7 +344,26 @@ void MainFrame::onWindowStateChanged(Qt::WindowState windowState)
         }
     }
 
-    updateBackground();
+    if (w->windowState() == Qt::WindowFullScreen) {
+        if (!m_fullWindowList.contains(wid)) {
+            m_fullWindowList << wid;
+        }
+    }
+    else {
+        if (m_fullWindowList.contains(wid)) {
+            m_fullWindowList.removeOne(wid);
+        }
+    }
+
+    if (m_fullWindowList.isEmpty()) {
+        if (!isVisible()) {
+            show();
+        }
+        updateBackground();
+    }
+    else {
+        hide();
+    }
 }
 
 void MainFrame::onWindowPosChanged(DForeignWindow *window)
