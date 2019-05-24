@@ -1,3 +1,20 @@
+<a name="0.6.5"></a>
+### 0.6.5 (2019-05-24)
+
+
+#### Bug Fixes
+
+*   hide for fullscreen window exist ([4503897c](https://github.com/kirigayakazushin/deepin-topbar/commit/4503897cfc5792fc00eda05b17936cb5dc386878))
+*   background changed so fast ([b92ad033](https://github.com/kirigayakazushin/deepin-topbar/commit/b92ad033f5247f20858aefe47149dde9f64d9045))
+*   not refresh background when use kwin ([08c01c8f](https://github.com/kirigayakazushin/deepin-topbar/commit/08c01c8fe397848f26426531115271aec0b00b53))
+
+#### Features
+
+*   Add a fillet similar to Gnome-shell ([465c8993](https://github.com/kirigayakazushin/deepin-topbar/commit/465c8993019132d004882eb3ac25f406d721e2f1))
+*   Support only displayed on the vertical screen ([35d04f77](https://github.com/kirigayakazushin/deepin-topbar/commit/35d04f7787f448f44c8fd5f1ff3dc1db33876b84))
+
+
+
 <a name="0.6.3"></a>
 ### 0.6.3 (2019-03-22)
 
