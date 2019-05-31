@@ -54,8 +54,6 @@ set(DBUS_FILES
 ./dbus/dbusinterface.h
 ./dbus/dbusmediaplayer2.cpp
 ./dbus/dbusmediaplayer2.h
-./dbus/dbuspower.cpp
-./dbus/dbuspower.h
 ./dbus/dbussink.cpp
 ./dbus/dbussink.h
 ./dbus/dbussinkinput.cpp

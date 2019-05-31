@@ -1,5 +1,4 @@
 #include "powerwidget.h"
-#include "dbus/dbuspower.h"
 #include "powerwidgetaction.h"
 #include "widgets/fontlabel.h"
 #include "widgets/dwidgetaction.h"
@@ -37,21 +36,33 @@ PowerWidget::PowerWidget(QWidget *parent)
 
     setLayout(layout);
 
-    m_powerInter = new DBusPower(this);
+    m_powerInter = new PowerInter("com.deepin.daemon.Power", "/com/deepin/daemon/Power",
+                                  QDBusConnection::sessionBus(), this);
+
+    m_systemPowerInter =
+        new SystemPowerInter("com.deepin.system.Power", "/com/deepin/system/Power",
+                             QDBusConnection::systemBus(), this);
+    m_systemPowerInter->setSync(true, true);
+    m_powerInter->setSync(true, true);
+
+    connect(m_systemPowerInter, &SystemPowerInter::BatteryStatusChanged, this,
+            &PowerWidget::refreshTipsData);
+    connect(m_systemPowerInter, &SystemPowerInter::BatteryTimeToEmptyChanged, this,
+            &PowerWidget::refreshTipsData);
+    connect(m_systemPowerInter, &SystemPowerInter::BatteryTimeToFullChanged, this,
+            &PowerWidget::refreshTipsData);
 
     initMenu();
 
     updateBatteryIcon();
 
-    connect(m_powerInter, &DBusPower::BatteryPercentageChanged, this, &PowerWidget::updateBatteryIcon);
-    connect(m_powerInter, &DBusPower::BatteryStateChanged, this, &PowerWidget::updateBatteryIcon);
-    connect(m_powerInter, &DBusPower::OnBatteryChanged, this, &PowerWidget::updateBatteryIcon);
+    connect(m_powerInter, &PowerInter::BatteryPercentageChanged, this, &PowerWidget::updateBatteryIcon);
+    connect(m_powerInter, &PowerInter::BatteryStateChanged, this, &PowerWidget::updateBatteryIcon);
+    connect(m_powerInter, &PowerInter::OnBatteryChanged, this, &PowerWidget::updateBatteryIcon);
 }
 
 void PowerWidget::updateBatteryIcon() {
-    const BatteryPercentageMap data = m_powerInter->batteryPercentage();
-
-    m_sourceAction->setText(tr("Power source:") + (m_powerInter->onBattery() ? tr("Battery") : tr("Direct current")));
+    const BatteryPercentageInfo data = m_powerInter->batteryPercentage();
 
     if (data.isEmpty()) {
         m_battery->hide();
@@ -86,13 +97,18 @@ void PowerWidget::updateBatteryIcon() {
         }
     }
 
-    m_battery->setText(QString::number(percentage) + "%");
+    refreshTipsData();
 }
 
 void PowerWidget::onActionHandle(const QString &action)
 {
     if (action == "percentage") {
         return;
+    }
+
+    if (action == "lastTime") {
+        emit requestEnableLastTime(!m_showLastTime);
+        m_showLastTime = !m_showLastTime;
     }
 
     emit requestHidePopupWindow();
@@ -108,17 +124,21 @@ void PowerWidget::initMenu()
     m_menu = new QMenu(this);
 
     m_sourceAction = new QAction(this);
-    QAction *percentage = new QAction(tr("Show percentage"), this);
-    QAction *preference = new QAction(tr("Open Energy saver preferences"), this);
+    QAction* percentage = new QAction(tr("Show percentage"), this);
+    QAction* lastTime = new QAction(tr("Show LastTime"), this);
+    QAction* preference = new QAction(tr("Open Energy saver preferences"), this);
 
     m_sourceAction->setEnabled(false);
 
     percentage->setCheckable(true);
     percentage->setChecked(true);
 
+    lastTime->setCheckable(true);
+
     m_menu->addAction(m_sourceAction);
     m_menu->addSeparator();
     m_menu->addAction(percentage);
+    m_menu->addAction(lastTime);
     m_menu->addAction(preference);
 
     QSignalMapper *signalMapper = new QSignalMapper(this);
@@ -127,9 +147,75 @@ void PowerWidget::initMenu()
     connect(preference, &QAction::triggered, signalMapper, static_cast<void (QSignalMapper::*)()>(&QSignalMapper::map));
 
     signalMapper->setMapping(percentage, "percentage");
+    signalMapper->setMapping(lastTime, "lastTime");
     signalMapper->setMapping(preference, "preference");
 
     connect(signalMapper, static_cast<void (QSignalMapper::*)(const QString &)>(&QSignalMapper::mapped), this, &PowerWidget::onActionHandle);
+}
+
+void PowerWidget::setEnableLastTime(const bool enable) {
+    m_showLastTime = enable;
+    updateBatteryIcon();
+}
+
+void PowerWidget::refreshTipsData() {
+    const BatteryPercentageInfo data = m_powerInter->batteryPercentage();
+
+    const uint    percentage   = qMin(100.0, qMax(0.0, data.value("Display")));
+    const QString value        = QString("%1%").arg(std::round(percentage));
+    const int     batteryState = m_powerInter->batteryState()["Display"];
+    const bool    charging     = (batteryState == BatteryState::CHARGING ||
+                           batteryState == BatteryState::FULLY_CHARGED);
+    QString       tips;
+
+    if (!charging) {
+        qulonglong timeToEmpty = m_systemPowerInter->batteryTimeToEmpty();
+        QDateTime  time        = QDateTime::fromTime_t(timeToEmpty).toUTC();
+        uint       hour        = time.toString("hh").toUInt();
+        uint       min         = time.toString("mm").toUInt();
+
+        if (hour == 0) {
+            tips = tr("%1 min remaining").arg(min);
+        }
+        else {
+            tips = tr("%1 hr %2 min remaining").arg(hour).arg(min);
+        }
+    }
+    else {
+        qulonglong timeToFull = m_systemPowerInter->batteryTimeToFull();
+        QDateTime  time       = QDateTime::fromTime_t(timeToFull).toUTC();
+        uint       hour       = time.toString("hh").toUInt();
+        uint       min        = time.toString("mm").toUInt();
+
+        if (hour == 0) {
+            tips = tr("%1 min until full").arg(min);
+        }
+        else {
+            tips = tr("%1 hr %2 min until full").arg(hour).arg(min);
+        }
+    }
+
+    m_battery->setText(
+        QString("%1 %2").arg(charging ? tr("Charging") : tr("Capacity")).arg(value));
+
+    if (!m_powerInter->batteryIsPresent().isEmpty()) {
+        if (batteryState == BatteryState::FULLY_CHARGED || percentage == 100.) {
+            m_sourceAction->setText(QString("%1: %2 (%3)")
+                                        .arg(tr("Power source"))
+                                        .arg(tr("Battery"))
+                                        .arg(tr("Charged")));
+        }
+        else {
+            m_sourceAction->setText(QString("%1: %2 (%3)")
+                                        .arg(tr("Power source"))
+                                        .arg(tr("Battery"))
+                                        .arg(tips));
+        }
+    }
+    else {
+        m_sourceAction->setText(
+            QString("%1: %2").arg(tr("Power source").arg(tr("Direct current"))));
+    }
 }
 }
 }
