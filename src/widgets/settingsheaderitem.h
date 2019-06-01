@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 ~ 2018 Deepin Technology Co., Ltd.
+ * Copyright (C) 2011 ~ 2018 Deepin Technology Co., Ltd.
  *
  * Author:     sbw <sbw@sbw.so>
  *             kirigaya <kirigaya@mkacg.com>
@@ -23,63 +23,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef SETTINGSHEADERITEM_H
+#define SETTINGSHEADERITEM_H
+
 #include "widgets/settingsitem.h"
 
-#include <QStyle>
+#include <QHBoxLayout>
+#include <QLabel>
 
 namespace dtb {
 namespace widgets {
 
-SettingsItem::SettingsItem(QWidget *parent)
-    : QFrame(parent),
-      m_isHead(false),
-      m_isTail(false),
-      m_isErr(false)
+class SettingsHeaderItem : public SettingsItem
 {
-    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-}
+    Q_OBJECT
 
-bool SettingsItem::isHead() const
-{
-    return m_isHead;
-}
+public:
+    explicit SettingsHeaderItem(QWidget *parent = 0);
 
-void SettingsItem::setIsHead(bool head)
-{
-    if (head == m_isHead) return;
-    m_isHead = head;
+    QLabel *textLabel() const { return m_headerText; }
+    QHBoxLayout *layout() const { return m_mainLayout; }
 
-    style()->unpolish(this);
-    style()->polish(this);
-}
+    void setTitle(const QString &title);
+    void setRightWidget(QWidget *widget);
 
-bool SettingsItem::isTail() const
-{
-    return m_isTail;
-}
-
-void SettingsItem::setIsTail(bool tail)
-{
-    if (tail == m_isTail) return;
-    m_isTail = tail;
-
-    style()->unpolish(this);
-    style()->polish(this);
-}
-
-bool SettingsItem::isErr() const
-{
-    return m_isErr;
-}
-
-void SettingsItem::setIsErr(const bool err)
-{
-    if (m_isErr == err) return;
-    m_isErr = err;
-
-    style()->unpolish(this);
-    style()->polish(this);
-}
+private:
+    QHBoxLayout *m_mainLayout;
+    QLabel *m_headerText;
+};
 
 }
 }
+
+#endif // SETTINGSHEADERITEM_H

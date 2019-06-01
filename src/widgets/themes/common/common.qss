@@ -2,7 +2,7 @@ QScrollArea {
     background: transparent;
 }
 
-dcc--widgets--TranslucentFrame {
+dtb--widgets--TranslucentFrame {
     background: transparent;
 }
 
@@ -17,11 +17,11 @@ dcc--widgets--TranslucentFrame {
     color: white;
 }
 
-dcc--widgets--SettingsItem[isHead=true] {
+dtb--widgets--SettingsItem[isHead=true] {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
-dcc--widgets--SettingsItem[isTail=true] {
+dtb--widgets--SettingsItem[isTail=true] {
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
 }
@@ -30,22 +30,22 @@ QLabel#SliderLeftIcon, QLabel#SliderRightIcon {
     margin: 12px 0px 0px 0px;
 }
 
-dcc--widgets--NormalLabel#SettingsHeaderItemTitle {
+dtb--widgets--NormalLabel#SettingsHeaderItemTitle {
     font-weight: 550;
 }
 
-dcc--widgets--NormalLabel#SettingsHeadTitle {
+dtb--widgets--NormalLabel#SettingsHeadTitle {
     font-weight: 550;
 }
 
-dcc--widgets--NextPageWidget:hover {
+dtb--widgets--NextPageWidget:hover {
     background-color: rgba(255, 255, 255, .3);
 }
 
-dcc--widgets--TitledSliderItem:hover {
+dtb--widgets--TitledSliderItem:hover {
     background-color: rgba(255, 255, 255, .3);
 }
 
-dcc--widgets--SwitchWidget:hover {
+dtb--widgets--SwitchWidget:hover {
     background-color: rgba(255, 255, 255, .3);
 }

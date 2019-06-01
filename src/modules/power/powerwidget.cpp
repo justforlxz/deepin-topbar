@@ -1,5 +1,4 @@
 #include "powerwidget.h"
-#include "powerwidgetaction.h"
 #include "widgets/fontlabel.h"
 #include "widgets/dwidgetaction.h"
 #include "frame/utils/global.h"
@@ -21,7 +20,6 @@ PowerWidget::PowerWidget(QWidget *parent)
     : ContentModule(parent)
 {
     setStyleSheet("QLabel {color: #d3d3d3; font-size: 11pt;}");
-    m_powerActionWidget = new PowerWidgetAction;
 
     m_batteryIcon = new QLabel;
     m_battery = new QLabel;

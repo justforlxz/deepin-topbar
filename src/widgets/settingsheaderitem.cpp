@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 ~ 2018 Deepin Technology Co., Ltd.
+ * Copyright (C) 2011 ~ 2018 Deepin Technology Co., Ltd.
  *
  * Author:     sbw <sbw@sbw.so>
  *             kirigaya <kirigaya@mkacg.com>
@@ -23,62 +23,41 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "widgets/settingsitem.h"
+#include "widgets/settingsheaderitem.h"
 
-#include <QStyle>
+#include "widgets/labels/normallabel.h"
 
 namespace dtb {
 namespace widgets {
 
-SettingsItem::SettingsItem(QWidget *parent)
-    : QFrame(parent),
-      m_isHead(false),
-      m_isTail(false),
-      m_isErr(false)
+SettingsHeaderItem::SettingsHeaderItem(QWidget *parent)
+    : SettingsItem(parent),
+      m_mainLayout(new QHBoxLayout),
+      m_headerText(new NormalLabel)
 {
-    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    m_headerText->setObjectName("SettingsHeaderItemTitle");
+
+    m_mainLayout->addSpacing(20);
+    m_mainLayout->addWidget(m_headerText);
+    m_mainLayout->addStretch();
+
+    setFixedHeight(24);
+    m_mainLayout->setSpacing(0);
+    m_mainLayout->setMargin(0);
+
+    setLayout(m_mainLayout);
 }
 
-bool SettingsItem::isHead() const
+void SettingsHeaderItem::setTitle(const QString &title)
 {
-    return m_isHead;
+    m_headerText->setText(title);
 }
 
-void SettingsItem::setIsHead(bool head)
+void SettingsHeaderItem::setRightWidget(QWidget *widget)
 {
-    if (head == m_isHead) return;
-    m_isHead = head;
+    Q_ASSERT(widget);
 
-    style()->unpolish(this);
-    style()->polish(this);
-}
-
-bool SettingsItem::isTail() const
-{
-    return m_isTail;
-}
-
-void SettingsItem::setIsTail(bool tail)
-{
-    if (tail == m_isTail) return;
-    m_isTail = tail;
-
-    style()->unpolish(this);
-    style()->polish(this);
-}
-
-bool SettingsItem::isErr() const
-{
-    return m_isErr;
-}
-
-void SettingsItem::setIsErr(const bool err)
-{
-    if (m_isErr == err) return;
-    m_isErr = err;
-
-    style()->unpolish(this);
-    style()->polish(this);
+    m_mainLayout->addWidget(widget, 0, Qt::AlignRight);
 }
 
 }

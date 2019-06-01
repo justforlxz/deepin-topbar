@@ -72,7 +72,6 @@ int main(int argc, char *argv[])
 
     DApplication::loadDXcbPlugin();
     DApplication a(argc, argv);
-    a.setTheme("light");
 
     if (a.setSingleInstance("deepin-topbar")) {
         a.setApplicationName("deepin-topbar");
@@ -83,6 +82,7 @@ int main(int argc, char *argv[])
                         QLocale::system().name());
         a.installTranslator(&translator);
 
+        a.setTheme("semidark");
         onThemeChange("dark");
 
         MainFrame *mainFrame = new MainFrame;

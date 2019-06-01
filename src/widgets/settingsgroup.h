@@ -37,6 +37,7 @@ namespace dtb {
 namespace widgets {
 
 class SettingsItem;
+class SettingsHeaderItem;
 
 class SettingsGroup : public TranslucentFrame
 {
@@ -46,6 +47,9 @@ public:
     explicit SettingsGroup(QFrame *parent = 0);
     explicit SettingsGroup(const QString &title, QFrame *parent = 0);
     ~SettingsGroup();
+
+    SettingsHeaderItem *headerItem() const { return m_headerItem; }
+    void setHeaderVisible(const bool visible);
 
     SettingsItem* getItem(int index);
     void insertItem(const int index, SettingsItem * item);
@@ -66,6 +70,7 @@ private Q_SLOTS:
 
 private:
     QVBoxLayout *m_layout;
+    SettingsHeaderItem *m_headerItem;
 
     QTimer *m_updateHeightTimer;
     QTimer *m_updateHeadTailTimer;

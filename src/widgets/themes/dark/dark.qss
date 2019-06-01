@@ -1,56 +1,56 @@
-dcc--widgets--NextButton Dtk--Widget--DImageButton {
+dtb--widgets--NextButton Dtk--Widget--DImageButton {
     qproperty-normalPic: url(:/widgets/themes/dark/icons/enter_details_normal.svg);
     qproperty-hoverPic: url(:/widgets/themes/dark/icons/enter_details_hover.svg);
     qproperty-pressPic: url(:/widgets/themes/dark/icons/enter_details_press.svg);
 }
 
-dcc--widgets--EditableNextPageWidget > #NextButton {
+dtb--widgets--EditableNextPageWidget > #NextButton {
     qproperty-normalPic: url(:/widgets/themes/dark/icons/enter_details_normal.svg);
     qproperty-hoverPic: url(:/widgets/themes/dark/icons/enter_details_hover.svg);
     qproperty-pressPic: url(:/widgets/themes/dark/icons/enter_details_press.svg);
 }
 
-dcc--widgets--EditableNextPageWidget > #EditButton {
+dtb--widgets--EditableNextPageWidget > #EditButton {
     qproperty-normalPic: url(:/widgets/themes/dark/icons/edit_normal.png);
     qproperty-hoverPic: url(:/widgets/themes/dark/icons/edit_hover.png);
     qproperty-pressPic: url(:/widgets/themes/dark/icons/edit_press.png);
 }
 
-dcc--widgets--BackButton Dtk--Widget--DImageButton {
+dtb--widgets--BackButton Dtk--Widget--DImageButton {
     qproperty-normalPic: url(:/widgets/themes/dark/icons/back_normal.png);
     qproperty-hoverPic: url(:/widgets/themes/dark/icons/back_hover.png);
     qproperty-pressPic: url(:/widgets/themes/dark/icons/back_press.png);
 }
 
 /* SettingsItem */
-dcc--widgets--SettingsItem {
+dtb--widgets--SettingsItem {
     border: none;
     background-color: rgba(238, 238, 238, .2);
 }
 
-dcc--widgets--SettingsItem[isErr=true] {
+dtb--widgets--SettingsItem[isErr=true] {
     border: 2px solid red;
 }
 
-dcc--widgets--SettingsHead QLabel#Edit {
+dtb--widgets--SettingsHead QLabel#Edit {
     color:#01bdff
 }
 
 /* FileChooseWidget */
-dcc--widgets--FileChooseWidget > Dtk--Widget--DImageButton {
+dtb--widgets--FileChooseWidget > Dtk--Widget--DImageButton {
     qproperty-normalPic: url(:/keyboard/themes/dark/icons/loadfile_normal.svg);
     qproperty-hoverPic: url(:/keyboard/themes/dark/icons/loadfile_hover.svg);
     qproperty-pressPic: url(:/keyboard/themes/dark/icons/loadfile_press.svg);
 }
 
-dcc--widgets--FileChooseWidget > QLineEdit {
+dtb--widgets--FileChooseWidget > QLineEdit {
     background: transparent;
     border: none;
     color: white;
 }
 
 /* OptionItem */
-dcc--widgets--NormalLabel#OptionItemTitle {
+dtb--widgets--NormalLabel#OptionItemTitle {
     color: white;
 }
 
@@ -58,34 +58,34 @@ QLabel#OptionItemSelectedIcon {
     background: url(:/widgets/themes/dark/icons/select.svg);
 }
 
-dcc--widgets--LoadingIndicator {
+dtb--widgets--LoadingIndicator {
     qproperty-theme: "dark";
 }
 
 /**
-dcc--widgets--NextPageWidget{
+dtb--widgets--NextPageWidget{
     background-color: rgba(238, 238, 238, .4);
 }
 
-dcc--widgets--NextPageWidget{
+dtb--widgets--NextPageWidget{
     background-color: rgba(238, 238, 238, .2);
 }
 */
 
-dcc--widgets--HSeparator {
+dtb--widgets--HSeparator {
     background-color: rgba(255, 255, 255, 0.15);
 }
 
-dcc--widgets--VSeparator {
+dtb--widgets--VSeparator {
     background-color: rgba(255, 255, 255, 0.15);
 }
 
 
-dcc--widgets--TipsLabel {
+dtb--widgets--TipsLabel {
     color: rgba(255, 255, 255, 0.8)
 }
 
-dcc--widgets--SearchInput {
+dtb--widgets--SearchInput {
     qproperty-icon: url(:/widgets/themes/dark/icons/search_dark.png);
 }
 
@@ -95,7 +95,7 @@ QLabel#ContentTitle {
     font-weight: 500;
 }
 
-dcc--widgets--DCCSlider {
+dtb--widgets--dtbSlider {
     padding: 0 0 10px 0;
 }
 

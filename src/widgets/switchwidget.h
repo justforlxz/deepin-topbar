@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 ~ 2018 Deepin Technology Co., Ltd.
+ * Copyright (C) 2011 ~ 2018 Deepin Technology Co., Ltd.
  *
  * Author:     sbw <sbw@sbw.so>
  *             kirigaya <kirigaya@mkacg.com>
@@ -23,63 +23,42 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef SWITCHWIDGET_H
+#define SWITCHWIDGET_H
+
 #include "widgets/settingsitem.h"
 
-#include <QStyle>
+#include <dswitchbutton.h>
 
 namespace dtb {
 namespace widgets {
 
-SettingsItem::SettingsItem(QWidget *parent)
-    : QFrame(parent),
-      m_isHead(false),
-      m_isTail(false),
-      m_isErr(false)
+class SwitchWidget : public SettingsItem
 {
-    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-}
+    Q_OBJECT
 
-bool SettingsItem::isHead() const
-{
-    return m_isHead;
-}
+public:
+    explicit SwitchWidget(QFrame *parent = 0);
+    explicit SwitchWidget(const QString &title, QFrame *parent = 0);
+    explicit SwitchWidget(QWidget *widget, QFrame *parent = 0);
 
-void SettingsItem::setIsHead(bool head)
-{
-    if (head == m_isHead) return;
-    m_isHead = head;
+    void setChecked(const bool checked = true);
+    void setTitle(const QString& title);
+    bool checked() const;
 
-    style()->unpolish(this);
-    style()->polish(this);
-}
+Q_SIGNALS:
+    void checkedChanged(const bool checked) const;
+    void clicked();
 
-bool SettingsItem::isTail() const
-{
-    return m_isTail;
-}
+protected:
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
-void SettingsItem::setIsTail(bool tail)
-{
-    if (tail == m_isTail) return;
-    m_isTail = tail;
-
-    style()->unpolish(this);
-    style()->polish(this);
-}
-
-bool SettingsItem::isErr() const
-{
-    return m_isErr;
-}
-
-void SettingsItem::setIsErr(const bool err)
-{
-    if (m_isErr == err) return;
-    m_isErr = err;
-
-    style()->unpolish(this);
-    style()->polish(this);
-}
+private:
+    QWidget *m_leftWidget;
+    Dtk::Widget::DSwitchButton *m_switchBtn;
+};
 
 }
 }
+
+#endif // SWITCHWIDGET_H

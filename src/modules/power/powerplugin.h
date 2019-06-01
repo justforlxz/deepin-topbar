@@ -7,7 +7,7 @@
 
 namespace dtb {
 namespace power {
-
+class PowerPopupWidget;
 class PowerPlugin : public QObject, public PluginsItemInterface
 {
     Q_OBJECT
@@ -27,6 +27,7 @@ public:
 private:
     PluginProxyInterface *m_proxyInter;
     PowerWidget *m_centralWidget;
+    PowerPopupWidget* m_popupWidget;
 };
 }
 }

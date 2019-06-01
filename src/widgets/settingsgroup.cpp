@@ -25,6 +25,7 @@
 
 #include "widgets/settingsgroup.h"
 #include "widgets/settingsitem.h"
+#include "widgets/settingsheaderitem.h"
 
 #include <QVBoxLayout>
 #include <QEvent>
@@ -37,6 +38,7 @@ namespace widgets {
 SettingsGroup::SettingsGroup(QFrame *parent) :
     TranslucentFrame(parent),
     m_layout(new QVBoxLayout),
+    m_headerItem(nullptr),
     m_updateHeightTimer(new QTimer(this)),
     m_updateHeadTailTimer(new QTimer(this))
 {
@@ -58,11 +60,32 @@ SettingsGroup::SettingsGroup(QFrame *parent) :
 SettingsGroup::SettingsGroup(const QString &title, QFrame *parent)
     : SettingsGroup(parent)
 {
+    setHeaderVisible(!title.isEmpty());
     setAccessibleName(title);
+
+    m_headerItem->setTitle(title);
 }
 
 SettingsGroup::~SettingsGroup()
 {
+    if (m_headerItem)
+        m_headerItem->deleteLater();
+}
+
+void SettingsGroup::setHeaderVisible(const bool visible)
+{
+    if (visible)
+    {
+        if (!m_headerItem)
+            m_headerItem = new SettingsHeaderItem;
+        insertItem(0, m_headerItem);
+    } else {
+        if (m_headerItem)
+        {
+            m_headerItem->deleteLater();
+            m_headerItem = nullptr;
+        }
+    }
 }
 
 void SettingsGroup::insertItem(const int index, SettingsItem *item)
@@ -117,7 +140,7 @@ int SettingsGroup::itemCount() const
 
 void SettingsGroup::clear()
 {
-    const int index = 0;
+    const int index = m_headerItem ? 1 : 0;
     const int count = m_layout->count();
 
     for (int i(index); i != count; ++i)

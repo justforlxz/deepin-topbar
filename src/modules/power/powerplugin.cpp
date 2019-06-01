@@ -1,5 +1,5 @@
 #include "powerplugin.h"
-#include "powerwidgetaction.h"
+#include "powerpopupwidget.h"
 
 using namespace dtb;
 using namespace dtb::power;
@@ -19,6 +19,8 @@ const QString PowerPlugin::pluginName() const {
 void PowerPlugin::init(PluginProxyInterface *proxyInter) {
     m_proxyInter = proxyInter;
 
+    m_popupWidget = new PowerPopupWidget;
+
     m_proxyInter->addItem(this, "");
 
     connect(m_centralWidget, &PowerWidget::requestHidePopupWindow, this, [=] {
@@ -36,7 +38,7 @@ QWidget *PowerPlugin::itemContextMenu(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 
-    return m_centralWidget->menu();
+    return m_popupWidget;
 }
 
 void PowerPlugin::setDefaultColor(PluginProxyInterface::DefaultColor color)
