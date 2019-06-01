@@ -1,0 +1,51 @@
+QScrollArea {
+    background: transparent;
+}
+
+dcc--widgets--TranslucentFrame {
+    background: transparent;
+}
+
+#LineEditWidget QLineEdit
+{
+    background: transparent;
+    border: none;
+}
+
+#LineEditWidget QLabel
+{
+    color: white;
+}
+
+dcc--widgets--SettingsItem[isHead=true] {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+dcc--widgets--SettingsItem[isTail=true] {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+QLabel#SliderLeftIcon, QLabel#SliderRightIcon {
+    margin: 12px 0px 0px 0px;
+}
+
+dcc--widgets--NormalLabel#SettingsHeaderItemTitle {
+    font-weight: 550;
+}
+
+dcc--widgets--NormalLabel#SettingsHeadTitle {
+    font-weight: 550;
+}
+
+dcc--widgets--NextPageWidget:hover {
+    background-color: rgba(255, 255, 255, .3);
+}
+
+dcc--widgets--TitledSliderItem:hover {
+    background-color: rgba(255, 255, 255, .3);
+}
+
+dcc--widgets--SwitchWidget:hover {
+    background-color: rgba(255, 255, 255, .3);
+}

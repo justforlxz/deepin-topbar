@@ -28,7 +28,7 @@ Settings::Settings(QObject *parent)
     qDebug() << "configPath" << m_configPath;
     auto backend = new DTK_CORE_NAMESPACE::QSettingBackend(m_configPath);
 
-    m_settings = DTK_CORE_NAMESPACE::DSettings::fromJsonFile(":/settings.json");
+    m_settings = DTK_CORE_NAMESPACE::DSettings::fromJsonFile(":/frame/settings.json");
     m_settings->setBackend(backend);
 
     connect(m_settings, &DTK_CORE_NAMESPACE::DSettings::valueChanged, this, &Settings::valueChanged);

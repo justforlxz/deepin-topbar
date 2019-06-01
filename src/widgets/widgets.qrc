@@ -1,5 +1,7 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="/widgets">
         <file>segoe-mdl2-assets.ttf</file>
+        <file>themes/dark/dark.qss</file>
+        <file>themes/common/common.qss</file>
     </qresource>
 </RCC>

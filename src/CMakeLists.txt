@@ -75,6 +75,12 @@ set(WIDGETS_FILES
 ./widgets/itempopupwindow.h
 ./widgets/switchitem.cpp
 ./widgets/switchitem.h
+./widgets/settingsgroup.h
+./widgets/settingsitem.h
+./widgets/translucentframe.h
+./widgets/settingsgroup.cpp
+./widgets/settingsitem.cpp
+./widgets/translucentframe.cpp
 )
 
 set(INTERFACES_FILES

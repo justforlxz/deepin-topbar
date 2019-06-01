@@ -1,5 +1,6 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="/frame">
         <file>settings.json</file>
+        <file>themes/dark/dark.qss</file>
     </qresource>
 </RCC>
