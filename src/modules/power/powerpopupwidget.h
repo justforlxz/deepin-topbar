@@ -10,11 +10,14 @@ class TitleValueItem;
 class SwitchWidget;
 }
 namespace power {
+class PowerModel;
 class PowerPopupWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit PowerPopupWidget(QWidget *parent = nullptr);
+
+    void setModel(PowerModel* model);
 
 signals:
 
@@ -24,6 +27,7 @@ private:
     widgets::SettingsGroup* m_powerSettingsGrp;
     widgets::TitleValueItem* m_sourceItem;
     widgets::SwitchWidget* m_rcentageSwitcher;
+    PowerModel* m_model;
 };
 }
 }

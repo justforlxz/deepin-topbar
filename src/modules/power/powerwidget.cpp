@@ -2,6 +2,7 @@
 #include "widgets/fontlabel.h"
 #include "widgets/dwidgetaction.h"
 #include "frame/utils/global.h"
+#include "powermodel.h"
 
 #include <QHBoxLayout>
 #include <QIcon>
@@ -9,6 +10,7 @@
 #include <QPainter>
 #include <QSignalMapper>
 #include <DHiDPIHelper>
+#include <cmath>
 
 DWIDGET_USE_NAMESPACE
 
@@ -34,35 +36,23 @@ PowerWidget::PowerWidget(QWidget *parent)
 
     setLayout(layout);
 
-    m_powerInter = new PowerInter("com.deepin.daemon.Power", "/com/deepin/daemon/Power",
-                                  QDBusConnection::sessionBus(), this);
-
-    m_systemPowerInter =
-        new SystemPowerInter("com.deepin.system.Power", "/com/deepin/system/Power",
-                             QDBusConnection::systemBus(), this);
-    m_systemPowerInter->setSync(true, true);
-    m_powerInter->setSync(true, true);
-
-    connect(m_systemPowerInter, &SystemPowerInter::BatteryStatusChanged, this,
-            &PowerWidget::refreshTipsData);
-    connect(m_systemPowerInter, &SystemPowerInter::BatteryTimeToEmptyChanged, this,
-            &PowerWidget::refreshTipsData);
-    connect(m_systemPowerInter, &SystemPowerInter::BatteryTimeToFullChanged, this,
-            &PowerWidget::refreshTipsData);
-
     initMenu();
 
     updateBatteryIcon();
+}
 
-    connect(m_powerInter, &PowerInter::BatteryPercentageChanged, this, &PowerWidget::updateBatteryIcon);
-    connect(m_powerInter, &PowerInter::BatteryStateChanged, this, &PowerWidget::updateBatteryIcon);
-    connect(m_powerInter, &PowerInter::OnBatteryChanged, this, &PowerWidget::updateBatteryIcon);
+void PowerWidget::setModel(PowerModel *model)
+{
+    m_model = model;
+
+    updateBatteryIcon();
+
 }
 
 void PowerWidget::updateBatteryIcon() {
-    const BatteryPercentageInfo data = m_powerInter->batteryPercentage();
+    const BatteryState status = m_model->batteryStateInfo();
 
-    if (data.isEmpty()) {
+    if (status == BatteryState::FULLY_CHARGED) {
         m_battery->hide();
         m_batteryIcon->setPixmap(DHiDPIHelper::loadNxPixmap(":/Icons/full-battery.svg"));
         return;
@@ -70,9 +60,9 @@ void PowerWidget::updateBatteryIcon() {
 
     m_battery->show();
 
-    const uint value = qMin(100.0, qMax(0.0, data.value("Display")));
+    const uint value = qMin(100.0, qMax(0.0, m_model->batteryPercentage()));
     const int percentage = std::round(value);
-    const bool plugged = !m_powerInter->onBattery();
+    const bool plugged = true;
 
     if (plugged) {
         m_batteryIcon->setPixmap(DHiDPIHelper::loadNxPixmap(":/Icons/full-battery.svg"));

@@ -164,6 +164,8 @@ set(POWER_FILES
 ./modules/power/powerwidget.h
 ./modules/power/powerpopupwidget.h
 ./modules/power/powerpopupwidget.cpp
+./modules/power/powermodel.h
+./modules/power/powermodel.cpp
 )
 
 set(SEARCH_FILES

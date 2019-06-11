@@ -6,11 +6,6 @@
 #include <QWidget>
 #include <QLabel>
 #include <QMenu>
-#include <com_deepin_daemon_power.h>
-#include <com_deepin_system_systempower.h>
-
-using SystemPowerInter = com::deepin::system::Power;
-using PowerInter = com::deepin::daemon::Power;
 
 namespace dtb {
 
@@ -19,28 +14,13 @@ class FontLabel;
 }
 
 namespace power {
-
-// from https://upower.freedesktop.org/docs/Device.html#Device:State
-enum BatteryState
-{
-    UNKNOWN = 0,
-    CHARGING = 1,
-    DISCHARGING = 2,
-    EMPTY = 3,
-    FULLY_CHARGED = 4,
-    PENDING_CHARGE = 5,
-    PENDING_DISCHARGE = 6
-};
-
-class PowerWidgetAction;
-
+class PowerModel;
 class PowerWidget : public ContentModule
 {
     Q_OBJECT
 public:
     explicit PowerWidget(QWidget *parent = nullptr);
-
-    inline QMenu *menu() { return m_menu;}
+    void setModel(PowerModel* model);
 
 signals:
     void requestHidePopupWindow();
@@ -56,11 +36,9 @@ private:
     void initMenu();
 
 private:
-    PowerWidgetAction *m_powerActionWidget;
+    PowerModel* m_model;
     QLabel *m_batteryIcon;
     QLabel *m_battery;
-    PowerInter* m_powerInter;
-    SystemPowerInter *m_systemPowerInter;
     QMenu *m_menu;
     QAction *m_sourceAction;
     bool m_showLastTime;
