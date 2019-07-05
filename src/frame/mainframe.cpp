@@ -437,5 +437,6 @@ QPainterPath MainFrame::pathHandle() const {
 }
 
 void MainFrame::updateBorderPath() {
-    setMaskPath(pathHandle());
+    DPlatformWindowHandle handle(this);
+    handle.setClipPath(pathHandle());
 }
