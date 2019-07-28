@@ -86,6 +86,10 @@ void MainFrame::init()
     setBlendMode(DBlurEffectWidget::BehindWindowBlend);
     setAttribute(Qt::WA_TranslucentBackground);
     setMaskColor(DBlurEffectWidget::DarkColor);
+    setFull(true);
+
+    DPlatformWindowHandle handle(this);
+    handle.setShadowColor(QColor(0, 0, 0, 0));
 
     m_defaultBgColor.setAlpha(maskAlpha());
 
