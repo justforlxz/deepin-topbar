@@ -62,6 +62,7 @@ SoundItem::SoundItem(QWidget *parent)
 
     setLayout(layout);
 
+    m_mprisTitle->setStyleSheet("background-color:transparent;");
     m_mprisTitle->setVisible(false);
     m_mediaControl->setVisible(false);
 
