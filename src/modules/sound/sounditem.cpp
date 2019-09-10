@@ -51,7 +51,6 @@ SoundItem::SoundItem(QWidget *parent)
     m_tickScrollArea->hide();
 
     m_tickEffect->setDirection(DTickEffect::RightToLeft);
-    m_tickEffect->setDuration(3000);
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->setMargin(0);
