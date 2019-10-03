@@ -19,7 +19,7 @@
     <message>
         <location filename="../modules/timewidget/datetimeplugin.cpp" line="74"/>
         <source>Time Settings</source>
-        <translation>Réglage</translation>
+        <translation>Réglage de l'heure</translation>
     </message>
 </context>
 <context>
@@ -63,7 +63,7 @@
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="84"/>
         <source>Restart</source>
-        <translation>Redémarer</translation>
+        <translation>Redémarrer</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="85"/>
