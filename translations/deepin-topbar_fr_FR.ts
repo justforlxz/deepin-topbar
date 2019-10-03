@@ -11,6 +11,17 @@
         <source>12 Hour Time</source>
         <translation>12 heures</translation>
     </message>
+    <message numerus="yes">
+        <location filename="../src/modules/notify/notifydelegate.cpp" line="217"/>
+        <source>%n day(s) ago</source>
+        <translation type="il y a %n jour(s)">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>NotifyWidget</name>
     <message>
         <location filename="../modules/timewidget/datetimeplugin.cpp" line="69"/>
         <source>Time Format</source>
