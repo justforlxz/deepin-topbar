@@ -40,3 +40,7 @@ qrc_*
 build/
 .vscode/
 *.user
+
+.idea/
+Build/
+cmake-build-debug/

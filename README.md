@@ -77,7 +77,7 @@ If you use Arch, you can install deepin-topbar in Community repo.
 
 ## Installation
 
-### Build from source code
+### Build from source code method 1
 
 1. Make sure you have installed all dependencies.
 
@@ -96,6 +96,14 @@ $ sudo make install
 ```
 
 The executable binary file could be found at `/usr/bin/deepin-topbar` after the installation is finished.
+
+### Build from source code method 2
+```shell script
+git clone [this repo]
+cd deepin-toolbar
+chmod +x install.sh
+./install.sh
+```
 
 ## Getting help
 

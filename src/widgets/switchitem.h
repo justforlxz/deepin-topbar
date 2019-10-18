@@ -15,7 +15,7 @@ public:
     explicit SwitchItem(QWidget *parent = 0);
 
     const QString text() const { return m_text->text(); }
-    bool checked() const { return m_switch->isChecked(); }
+    bool checked() const { return m_switch->checked(); }
     const QString value() const {return m_value; }
 
 signals:
