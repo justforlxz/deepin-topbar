@@ -47,7 +47,7 @@ void PluginsItem::mouseReleaseEvent(QMouseEvent *event)
     showTips();
 }
 
-QWidget *PluginsItem::contextMenu() const
+QMenu *PluginsItem::contextMenu() const
 {
     return m_pluginInter->itemContextMenu(m_itemKey);
 }
@@ -61,15 +61,23 @@ void PluginsItem::detachPluginWidget()
 
 void PluginsItem::showTips()
 {
-    QWidget *w = contextMenu();
-    if (!w) return;
+    QPoint p(mapToGlobal(QPoint(pos().x(), height()) - pos()));
+    if (itemInter()->itemPopupWindow(m_itemKey)) {
+         if (PopupWindow->getContent()) {
+             PopupWindow->getContent()->setParent(nullptr);
+             PopupWindow->getContent()->hide();
+         }
 
-    if (PopupWindow->getContent()) {
-        PopupWindow->getContent()->setParent(nullptr);
-        PopupWindow->getContent()->hide();
+         PopupWindow->setContent(itemInter()->itemPopupWindow(m_itemKey));
+         PopupWindow->show(p.x(), p.y());
+         return;
     }
 
-    PopupWindow->setContent(w);
-    QPoint p(mapToGlobal(QPoint(pos().x() + width() / 2, height()) - pos()));
-    PopupWindow->show(p.x(), p.y());
+    QMenu* menu = contextMenu();
+    if (!menu) {
+        return;
+    }
+
+    menu->move(p);
+    menu->exec();
 }

@@ -36,7 +36,7 @@ QWidget *NotifyPlugin::itemWidget(const QString &itemKey)
     return m_notifyBtn;
 }
 
-QWidget *NotifyPlugin::itemContextMenu(const QString &itemKey)
+QWidget *NotifyPlugin::itemPopupWindow(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 

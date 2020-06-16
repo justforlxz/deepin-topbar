@@ -57,7 +57,7 @@ QWidget *IndicatorPlugin::itemWidget(const QString &itemKey)
         return m_centralWidget;
 }
 
-QWidget *IndicatorPlugin::itemContextMenu(const QString &itemKey)
+QMenu *IndicatorPlugin::itemContextMenu(const QString &itemKey)
 {
     if (itemKey == "Logo")
         return m_logo->menu();

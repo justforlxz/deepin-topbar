@@ -21,7 +21,7 @@ public:
     void init(PluginProxyInterface *proxyInter) Q_DECL_OVERRIDE;
 
     QWidget *itemWidget(const QString &itemKey) Q_DECL_OVERRIDE;
-    QWidget* itemContextMenu(const QString &itemKey) Q_DECL_OVERRIDE;
+    QWidget* itemPopupWindow(const QString &itemKey) Q_DECL_OVERRIDE;
 
     void setDefaultColor(PluginProxyInterface::DefaultColor color) Q_DECL_OVERRIDE;
 

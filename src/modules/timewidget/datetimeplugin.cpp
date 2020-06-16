@@ -62,7 +62,7 @@ QWidget *DateTimePlugin::itemWidget(const QString &itemKey) {
     return m_centralWidget;
 }
 
-QWidget *DateTimePlugin::itemContextMenu(const QString &itemKey)
+QMenu *DateTimePlugin::itemContextMenu(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 

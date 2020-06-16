@@ -50,7 +50,9 @@ public:
     ///
     virtual QWidget *itemWidget(const QString &itemKey) = 0;
 
-    virtual QWidget* itemContextMenu(const QString &itemKey) { Q_UNUSED(itemKey); return nullptr;}
+    virtual QMenu* itemContextMenu(const QString &itemKey) { Q_UNUSED(itemKey); return nullptr;}
+
+    virtual QWidget* itemPopupWindow(const QString& itemkey) { Q_UNUSED(itemkey); return nullptr;}
 
     virtual void setDefaultColor(PluginProxyInterface::DefaultColor) {}
 

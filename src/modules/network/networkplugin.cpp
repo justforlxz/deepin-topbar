@@ -49,7 +49,7 @@ QWidget *NetworkPlugin::itemWidget(const QString &itemKey)
     return m_networkWidget;
 }
 
-QWidget *NetworkPlugin::itemContextMenu(const QString &itemKey)
+QWidget *NetworkPlugin::itemPopupWindow(const QString &itemKey)
 {
     Q_UNUSED(itemKey);
 

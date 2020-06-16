@@ -14,7 +14,7 @@ public:
     ~PluginsItem();
 
     const QString name() const Q_DECL_OVERRIDE;
-    QWidget* contextMenu() const Q_DECL_OVERRIDE;
+    QMenu* contextMenu() const Q_DECL_OVERRIDE;
     void detachPluginWidget();
 
 private:
