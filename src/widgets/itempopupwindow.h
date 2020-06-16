@@ -6,6 +6,7 @@
 #include <dregionmonitor.h>
 
 DWIDGET_USE_NAMESPACE
+DGUI_USE_NAMESPACE
 
 class ItemPopupWindow : public DArrowRectangle
 {
