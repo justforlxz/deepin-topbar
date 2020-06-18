@@ -75,6 +75,24 @@ set(WIDGETS_FILES
 ./widgets/itempopupwindow.h
 ./widgets/switchitem.cpp
 ./widgets/switchitem.h
+./widgets/settingsgroup.h
+./widgets/settingsitem.h
+./widgets/translucentframe.h
+./widgets/settingsgroup.cpp
+./widgets/settingsitem.cpp
+./widgets/translucentframe.cpp
+./widgets/switchwidget.h
+./widgets/switchwidget.cpp
+./widgets/labels/largelabel.h
+./widgets/labels/normallabel.h
+./widgets/labels/smalllabel.h
+./widgets/labels/tipslabel.h
+./widgets/titlevalueitem.h
+./widgets/titlevalueitem.cpp
+./widgets/settingsheaderitem.h
+./widgets/settingsheaderitem.cpp
+./widgets/settingshead.h
+./widgets/settingshead.cpp
 )
 
 set(INTERFACES_FILES
@@ -140,12 +158,14 @@ set(NOTIFY_FILES
 )
 
 set(POWER_FILES
-./modules/power/powerwidgetaction.h
 ./modules/power/powerplugin.cpp
 ./modules/power/powerplugin.h
 ./modules/power/powerwidget.cpp
 ./modules/power/powerwidget.h
-./modules/power/powerwidgetaction.cpp
+./modules/power/powerpopupwidget.h
+./modules/power/powerpopupwidget.cpp
+./modules/power/powermodel.h
+./modules/power/powermodel.cpp
 )
 
 set(SEARCH_FILES

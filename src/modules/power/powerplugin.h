@@ -4,10 +4,14 @@
 #include "interfaces/pluginsiteminterface.h"
 #include "powerwidget.h"
 #include <QObject>
+#include <com_deepin_system_systempower.h>
+
+using SystemPowerInter = com::deepin::system::Power;
 
 namespace dtb {
 namespace power {
-
+class PowerPopupWidget;
+class PowerModel;
 class PowerPlugin : public QObject, public PluginsItemInterface
 {
     Q_OBJECT
@@ -24,9 +28,15 @@ public:
 
     void setDefaultColor(PluginProxyInterface::DefaultColor color) Q_DECL_OVERRIDE;
 
+private slots:
+    void onbatteryStatusChanged(uint state);
+
 private:
     PluginProxyInterface *m_proxyInter;
     PowerWidget *m_centralWidget;
+    PowerPopupWidget* m_popupWidget;
+    PowerModel* m_model;
+    SystemPowerInter *m_systemPowerInter;
 };
 }
 }
