@@ -63,17 +63,17 @@
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="84"/>
         <source>Restart</source>
-        <translation>Перезапуск</translation>
+        <translation>Перезагрузка</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="85"/>
         <source>Power off</source>
-        <translation>Выключение</translation>
+        <translation>Выключить</translation>
     </message>
     <message>
         <location filename="../modules/indicator/View/systemlogo.cpp" line="86"/>
         <source>Logout for %1</source>
-        <translation>Выход для %1</translation>
+        <translation>Завершить сеанс %1</translation>
     </message>
 </context>
 <context>
@@ -135,7 +135,7 @@
     <message numerus="yes">
         <location filename="../modules/notify/notifymodel.cpp" line="189"/>
         <source>%n day(s) ago</source>
-        <translation><numerusform>%n день(дни) назад</numerusform></translation>
+        <translation><numerusform>%n день(дней) назад</numerusform></translation>
     </message>
 </context>
 <context>
@@ -143,7 +143,7 @@
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="49"/>
         <source>Power source:</source>
-        <translation>Источник питания:</translation>
+        <translation>Питание от: </translation>
     </message>
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="49"/>
@@ -153,17 +153,17 @@
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="49"/>
         <source>Direct current</source>
-        <translation>От сети</translation>
+        <translation>Сеть</translation>
     </message>
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="135"/>
         <source>Show percentage</source>
-        <translation>Показать процент</translation>
+        <translation>Показать проценты</translation>
     </message>
     <message>
         <location filename="../modules/power/powerwidget.cpp" line="136"/>
         <source>Open Energy saver preferences</source>
-        <translation>Открыть настройки экономии энергии</translation>
+        <translation>Управление питанием</translation>
     </message>
 </context>
 <context>
@@ -184,7 +184,7 @@
     <message>
         <location filename="../modules/sound/sounditem.cpp" line="56"/>
         <source>Advanced Settings</source>
-        <translation>Дополнительно</translation>
+        <translation>Настройка звука</translation>
     </message>
 </context>
 </TS>
