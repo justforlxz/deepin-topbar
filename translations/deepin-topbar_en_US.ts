@@ -10,12 +10,12 @@
     </message>
     <message>
         <location filename="../src/modules/notify/notifydelegate.cpp" line="211"/>
-        <source>The day before yesterday</source>
+        <source>2 Days Ago</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <location filename="../src/modules/notify/notifydelegate.cpp" line="217"/>
-        <source>%n day(s) ago</source>
+        <source>%n Day(s) Ago</source>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -26,12 +26,12 @@
     <name>NotifyWidget</name>
     <message>
         <location filename="../src/modules/notify/notifywidget.cpp" line="33"/>
-        <source>No system notifications</source>
+        <source>No New Notifications</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/modules/notify/notifywidget.cpp" line="36"/>
-        <source>Clear all</source>
+        <source>Clear All</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -49,17 +49,17 @@
     </message>
     <message>
         <location filename="../src/modules/indicator/View/positionwidget.cpp" line="31"/>
-        <source>Document</source>
+        <source>Documents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/modules/indicator/View/positionwidget.cpp" line="32"/>
-        <source>Photo</source>
+        <source>Pictures</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/modules/indicator/View/positionwidget.cpp" line="33"/>
-        <source>Video</source>
+        <source>Videos</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -72,7 +72,7 @@
     </message>
     <message>
         <location filename="../src/modules/account/accountwidget.cpp" line="99"/>
-        <source>Logout</source>
+        <source>Log Out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -82,7 +82,7 @@
     </message>
     <message>
         <location filename="../src/modules/account/accountwidget.cpp" line="101"/>
-        <source>Shutdown</source>
+        <source>Shut Down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -95,12 +95,12 @@
     <name>dtb::datetime::DateTimePlugin</name>
     <message>
         <location filename="../src/modules/timewidget/datetimeplugin.cpp" line="33"/>
-        <source>24 Hour Time</source>
+        <source>24-Hour Time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/modules/timewidget/datetimeplugin.cpp" line="38"/>
-        <source>Time Settings</source>
+        <source>Time and Date Settings...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -108,7 +108,7 @@
     <name>dtb::indicator::AppstoreAction</name>
     <message numerus="yes">
         <location filename="../src/modules/indicator/View/appstoreaction.cpp" line="108"/>
-        <source>%n update(s)</source>
+        <source>%n Update(s)</source>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -119,7 +119,7 @@
     <name>dtb::indicator::PositionWidget</name>
     <message>
         <location filename="../src/modules/indicator/View/positionwidget.cpp" line="46"/>
-        <source>Position</source>
+        <source>Go</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -127,17 +127,17 @@
     <name>dtb::indicator::SystemLogo</name>
     <message>
         <location filename="../src/modules/indicator/View/systemlogo.cpp" line="61"/>
-        <source>About</source>
+        <source>System Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/modules/indicator/View/systemlogo.cpp" line="73"/>
-        <source>Preference setting</source>
+        <source>Preferences...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/modules/indicator/View/systemlogo.cpp" line="79"/>
-        <source>Force quit</source>
+        <source>Force Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -147,17 +147,17 @@
     </message>
     <message>
         <location filename="../src/modules/indicator/View/systemlogo.cpp" line="81"/>
-        <source>Restart</source>
+        <source>Restart...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/modules/indicator/View/systemlogo.cpp" line="82"/>
-        <source>Power off</source>
+        <source>Shut Down...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/modules/indicator/View/systemlogo.cpp" line="83"/>
-        <source>Logout for %1</source>
+        <source>Log Out %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -165,7 +165,7 @@
     <name>dtb::network::RefreshAction</name>
     <message>
         <location filename="../src/modules/network/item/applet/refreshaction.cpp" line="16"/>
-        <source>List state: %1</source>
+        <source>List State: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -175,7 +175,7 @@
     </message>
     <message>
         <location filename="../src/modules/network/item/applet/refreshaction.cpp" line="16"/>
-        <source>No refresh</source>
+        <source>Nothing to Refresh</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -183,7 +183,7 @@
     <name>dtb::power::PowerWidget</name>
     <message>
         <location filename="../src/modules/power/powerwidget.cpp" line="54"/>
-        <source>Power source:</source>
+        <source>Power Source: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -193,17 +193,17 @@
     </message>
     <message>
         <location filename="../src/modules/power/powerwidget.cpp" line="54"/>
-        <source>Direct current</source>
+        <source>Plugged In</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/modules/power/powerwidget.cpp" line="111"/>
-        <source>Show percentage</source>
+        <source>Show Percentage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/modules/power/powerwidget.cpp" line="112"/>
-        <source>Open Energy saver preferences</source>
+        <source>Power Management...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -211,7 +211,7 @@
     <name>dtb::sound::SoundApplet</name>
     <message>
         <location filename="../src/modules/sound/soundapplet.cpp" line="41"/>
-        <source>Device</source>
+        <source>Output Device</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -224,7 +224,7 @@
     <name>dtb::sound::SoundItem</name>
     <message>
         <location filename="../src/modules/sound/sounditem.cpp" line="77"/>
-        <source>Advanced Settings</source>
+        <source>Sound Preferences...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -252,7 +252,7 @@
     </message>
     <message>
         <location filename="../src/modules/wallpaper/wallpapersettings.cpp" line="67"/>
-        <source>Add Path</source>
+        <source>Add Path...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -265,12 +265,12 @@
     </message>
     <message>
         <location filename="../src/modules/wallpaper/wallpaperwidget.cpp" line="79"/>
-        <source>Skip to next wallpaper</source>
+        <source>Skip to Next Wallpaper</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/modules/wallpaper/wallpaperwidget.cpp" line="80"/>
-        <source>Browsing mode</source>
+        <source>Browsing Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
