@@ -23,7 +23,7 @@ I'll release messages on my twitter.
 - [x] system tray
 - [x] Sound and media control
 - [x] power and battery
-- [x] datetime
+- [x] date time
 - [x] Notify list
 
 ## Dependencies
@@ -99,7 +99,7 @@ The executable binary file could be found at `/usr/bin/deepin-topbar` after the 
 
 ## Getting help
 
-You can create a issue, I will help you.
+You can create an issue, I will help you.
 
 You may also find these channels useful if you encounter any other issues:
 
