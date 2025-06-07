@@ -114,3 +114,5 @@ Deepin-topbar is licensed under [GPLv3](LICENSE).
 It's simple.
 
 * fork and pull request. I want more people to help me improve it.
+
+[![Powered by DartNode](https://dartnode.com/branding/DN-Open-Source-sm.png)](https://dartnode.com "Powered by DartNode - Free VPS for Open Source")
